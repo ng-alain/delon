@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 
@@ -17,43 +17,48 @@ import type { SFTransferWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-transfer',
-  template: `<sf-item-wrap
-    [id]="id"
-    [schema]="schema"
-    [ui]="ui"
-    [showError]="showError"
-    [error]="error"
-    [showTitle]="schema.title"
-  >
-    <nz-transfer
-      [nzDisabled]="disabled"
-      [nzDataSource]="$any(list)"
-      [nzTitles]="i.titles"
-      [nzOperations]="i.operations"
-      [nzListStyle]="ui.listStyle!"
-      [nzItemUnit]="i.itemUnit"
-      [nzItemsUnit]="i.itemsUnit"
-      [nzShowSearch]="ui.showSearch"
-      [nzShowSelectAll]="ui.showSelectAll!"
-      [nzFilterOption]="ui.filterOption"
-      [nzSearchPlaceholder]="ui.searchPlaceholder"
-      [nzNotFoundContent]="ui.notFoundContent"
-      [nzOneWay]="ui.oneWay"
-      [nzCanMove]="_canMove"
-      (nzChange)="_change($event)"
-      (nzSearchChange)="_searchChange($event)"
-      (nzSelectChange)="_selectChange($event)"
-    />
-  </sf-item-wrap> `,
+  template: `
+    <sf-item-wrap
+      [id]="id"
+      [schema]="schema"
+      [ui]="ui"
+      [showError]="showError"
+      [error]="error"
+      [showTitle]="schema.title"
+    >
+      <nz-transfer
+        [nzDisabled]="disabled"
+        [nzDataSource]="$any(list())"
+        [nzTitles]="i.titles"
+        [nzOperations]="i.operations"
+        [nzListStyle]="ui.listStyle!"
+        [nzItemUnit]="i.itemUnit"
+        [nzItemsUnit]="i.itemsUnit"
+        [nzShowSearch]="ui.showSearch"
+        [nzShowSelectAll]="ui.showSelectAll!"
+        [nzFilterOption]="ui.filterOption"
+        [nzSearchPlaceholder]="ui.searchPlaceholder"
+        [nzNotFoundContent]="ui.notFoundContent"
+        [nzOneWay]="ui.oneWay"
+        [nzCanMove]="_canMove"
+        (nzChange)="_change($event)"
+        (nzSearchChange)="_searchChange($event)"
+        (nzSelectChange)="_selectChange($event)"
+      />
+    </sf-item-wrap>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [FormsModule, DelonFormModule, NzTransferModule]
 })
 export class TransferWidget extends ControlUIWidget<SFTransferWidgetSchema> implements OnInit {
   static readonly KEY = 'transfer';
 
-  list: SFSchemaEnum[] = [];
+  protected readonly list = signal<SFSchemaEnum[]>([]);
+
   i!: { titles: string[]; operations: string[]; itemUnit: string; itemsUnit: string };
-  private _data: SFSchemaEnum[] = [];
+
+  private readonly _data = signal<SFSchemaEnum[]>([]);
 
   ngOnInit(): void {
     const { titles, operations, itemUnit, itemsUnit } = this.ui;
@@ -66,26 +71,25 @@ export class TransferWidget extends ControlUIWidget<SFTransferWidgetSchema> impl
   }
 
   reset(value: SFValue): void {
-    getData(this.schema, this.ui, null).subscribe(list => {
+    getData(this.schema, this.ui, null).subscribe(items => {
       let formData = value;
       if (!Array.isArray(formData)) {
         formData = [formData];
       }
-      list.forEach((item: SFSchemaEnum) => {
+      items.forEach((item: SFSchemaEnum) => {
         if (~(formData as NzSafeAny[]).indexOf(item.value)) {
           item.direction = 'right';
         }
       });
-      this.list = list;
-      this._data = list.filter(w => w.direction === 'right');
+      this.list.set(items);
+      this._data.set(items.filter(w => w.direction === 'right'));
       this.notify();
-      this.detectChanges(true);
     });
   }
 
   private notify(): void {
     this.formProperty.setValue(
-      this._data.map(i => i.value),
+      this._data().map(i => i.value),
       false
     );
   }
@@ -96,21 +100,19 @@ export class TransferWidget extends ControlUIWidget<SFTransferWidgetSchema> impl
 
   _change(options: TransferChange): void {
     if (options.to === 'right') {
-      this._data = this._data.concat(...options.list);
+      this._data.set(this._data().concat(...options.list));
     } else {
-      this._data = this._data.filter((w: SFSchemaEnum) => options.list.indexOf(w as TransferItem) === -1);
+      this._data.set(this._data().filter((w: SFSchemaEnum) => options.list.indexOf(w as TransferItem) === -1));
     }
-    if (this.ui.change) this.ui.change(options);
+    this.ui.change?.(options);
     this.notify();
   }
 
   _searchChange(options: TransferSearchChange): void {
-    if (this.ui.searchChange) this.ui.searchChange(options);
-    this.detectChanges(true);
+    this.ui.searchChange?.(options);
   }
 
   _selectChange(options: TransferSelectChange): void {
-    if (this.ui.selectChange) this.ui.selectChange(options);
-    this.detectChanges(true);
+    this.ui.selectChange?.(options);
   }
 }

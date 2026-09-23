@@ -52,6 +52,7 @@ describe('form: widget: slider', () => {
     spyOn(comp, '_formatter');
     page.time();
     getWidget()._afterChange(1);
+    page.dc();
     expect(comp._formatter).toHaveBeenCalled();
   }));
 
@@ -93,6 +94,7 @@ describe('form: widget: slider', () => {
     const comp = getWidget();
     spyOn(comp, '_formatter');
     page.time();
+    page.dc();
     expect(comp._formatter).toHaveBeenCalled();
     expect((s.properties!.a.ui as NzSafeAny).formatter).toHaveBeenCalled();
   }));

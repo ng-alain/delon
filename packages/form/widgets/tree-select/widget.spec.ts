@@ -1,5 +1,6 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 
 import { SFSchema } from '@delon/form';
@@ -132,6 +133,35 @@ describe('form: widget: tree-select', () => {
       .checkValue('a', 'TRADE_SUCCESS')
       .asyncEnd(1000);
     expect((s.properties!.a.ui as NzSafeAny).expandChange).toHaveBeenCalled();
+  }));
+
+  it('#expandChange should render async children into the DOM', fakeAsync(() => {
+    page.newSchema({
+      properties: {
+        a: {
+          type: 'string',
+          enum: [{ title: 'A', key: 'A' }],
+          ui: {
+            widget,
+            expandChange: () =>
+              of([
+                { title: 'Child1', key: 'C1' },
+                { title: 'Child2', key: 'C2' }
+              ])
+          }
+        }
+      }
+    });
+    page.typeEvent('click', '.ant-select').typeEvent('click', '.ant-select-tree-switcher-icon').asyncEnd(1000);
+
+    // DOM 级断言：异步子节点必须真的渲染出来
+    const titles = dl.queryAll(By.css('nz-tree-node-title')).map(d => (d.nativeElement.textContent ?? '').trim());
+    expect(titles).toContain('Child1');
+    expect(titles).toContain('Child2');
+
+    // `addChildren()` 还会把子节点写回 `origin`（= data 里的对象），所以数据层也是同步的
+    const w = page.getWidget<NzSafeAny>('sf-tree-select');
+    expect(w['data']()[0].children.length).toBe(2);
   }));
 
   it('#openChange', () => {

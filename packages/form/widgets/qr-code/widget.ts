@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { ControlUIWidget, DelonFormModule } from '@delon/form';
@@ -8,30 +8,33 @@ import type { SFQrCodeWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-qr-code',
-  template: `<sf-item-wrap
-    [id]="id"
-    [schema]="schema"
-    [ui]="ui"
-    [showError]="showError"
-    [error]="error"
-    [showTitle]="schema.title"
-  >
-    <nz-qrcode
-      [nzValue]="value"
-      [nzPadding]="ui.padding ?? 0"
-      [nzColor]="ui.color ?? '#000'"
-      [nzBgColor]="ui.bgColor ?? '#FFF'"
-      [nzSize]="ui.qrSize ?? 160"
-      [nzIcon]="ui.icon ?? ''"
-      [nzIconSize]="ui.iconSize ?? 40"
-      [nzBordered]="ui.bordered ?? true"
-      [nzType]="ui.type ?? 'canvas'"
-      [nzStatus]="ui.status ?? 'active'"
-      [nzLevel]="ui.level ?? 'M'"
-      [nzBoostLevel]="ui.boostLevel ?? true"
-      (nzRefresh)="refresh($event)"
-    />
-  </sf-item-wrap>`,
+  template: `
+    <sf-item-wrap
+      [id]="id"
+      [schema]="schema"
+      [ui]="ui"
+      [showError]="showError"
+      [error]="error"
+      [showTitle]="schema.title"
+    >
+      <nz-qrcode
+        [nzValue]="value"
+        [nzPadding]="ui.padding ?? 0"
+        [nzColor]="ui.color ?? '#000'"
+        [nzBgColor]="ui.bgColor ?? '#FFF'"
+        [nzSize]="ui.qrSize ?? 160"
+        [nzIcon]="ui.icon ?? ''"
+        [nzIconSize]="ui.iconSize ?? 40"
+        [nzBordered]="ui.bordered ?? true"
+        [nzType]="ui.type ?? 'canvas'"
+        [nzStatus]="ui.status ?? 'active'"
+        [nzLevel]="ui.level ?? 'M'"
+        [nzBoostLevel]="ui.boostLevel ?? true"
+        (nzRefresh)="refresh($event)"
+      />
+    </sf-item-wrap>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [FormsModule, DelonFormModule, NzQRCodeModule]
 })
@@ -40,6 +43,6 @@ export class QrCodeWidget extends ControlUIWidget<SFQrCodeWidgetSchema> {
 
   refresh(qr: string): void {
     this.setValue(qr);
-    if (this.ui.refresh) this.ui.refresh(qr);
+    this.ui.refresh?.(qr);
   }
 }

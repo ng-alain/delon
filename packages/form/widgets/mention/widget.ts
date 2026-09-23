@@ -1,5 +1,5 @@
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { map, tap } from 'rxjs';
 
@@ -12,74 +12,78 @@ import type { SFMentionWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-mention',
-  template: `<sf-item-wrap
-    [id]="id"
-    [schema]="schema"
-    [ui]="ui"
-    [showError]="showError"
-    [error]="error"
-    [showTitle]="schema.title"
-  >
-    <nz-mention
-      #mentions
-      [nzSuggestions]="data"
-      [nzValueWith]="i.valueWith"
-      [nzLoading]="loading"
-      [nzNotFoundContent]="i.notFoundContent"
-      [nzPlacement]="i.placement"
-      [nzPrefix]="i.prefix"
-      [nzAllowClear]="ui.allowClear!"
-      [nzVariant]="ui.variant ?? 'outlined'"
-      (nzOnSelect)="_select($event)"
-      (nzOnSearchChange)="_search($event)"
-      (nzOnClear)="_clear()"
+  template: `
+    @let maxLength = schema.maxLength ?? null;
+    <sf-item-wrap
+      [id]="id"
+      [schema]="schema"
+      [ui]="ui"
+      [showError]="showError"
+      [error]="error"
+      [showTitle]="schema.title"
     >
-      @if (ui.inputStyle === 'textarea') {
-        <textarea
-          nzMentionTrigger
-          nz-input
-          [attr.id]="id"
-          [disabled]="disabled"
-          [attr.disabled]="disabled"
-          [nzSize]="ui.size!"
-          [ngModel]="value"
-          [ngModelOptions]="{ standalone: true }"
-          (ngModelChange)="setValue($event)"
-          [attr.maxLength]="schema.maxLength ?? null"
-          [attr.placeholder]="ui.placeholder"
-          cdkTextareaAutosize
-          [cdkAutosizeMinRows]="i.autosize?.minRows ?? 1"
-          [cdkAutosizeMaxRows]="i.autosize?.maxRows ?? 0"
-        >
-        </textarea>
-      } @else {
-        <input
-          nzMentionTrigger
-          nz-input
-          [attr.id]="id"
-          [disabled]="disabled"
-          [attr.disabled]="disabled"
-          [nzSize]="ui.size!"
-          [ngModel]="value"
-          [ngModelOptions]="{ standalone: true }"
-          (ngModelChange)="setValue($event)"
-          [attr.maxLength]="schema.maxLength ?? null"
-          [attr.placeholder]="ui.placeholder"
-          autocomplete="off"
-        />
-      }
-    </nz-mention>
-  </sf-item-wrap>`,
+      <nz-mention
+        #mentions
+        [nzSuggestions]="data()"
+        [nzValueWith]="i.valueWith"
+        [nzLoading]="loading()"
+        [nzNotFoundContent]="i.notFoundContent"
+        [nzPlacement]="i.placement"
+        [nzPrefix]="i.prefix"
+        [nzAllowClear]="ui.allowClear!"
+        [nzVariant]="ui.variant ?? 'outlined'"
+        (nzOnSelect)="_select($event)"
+        (nzOnSearchChange)="_search($event)"
+        (nzOnClear)="_clear()"
+      >
+        @if (ui.inputStyle === 'textarea') {
+          <textarea
+            nzMentionTrigger
+            nz-input
+            [attr.id]="id"
+            [disabled]="disabled"
+            [attr.disabled]="disabled"
+            [nzSize]="ui.size!"
+            [ngModel]="value"
+            [ngModelOptions]="{ standalone: true }"
+            (ngModelChange)="setValue($event)"
+            [attr.maxLength]="maxLength"
+            [attr.placeholder]="ui.placeholder"
+            cdkTextareaAutosize
+            [cdkAutosizeMinRows]="i.autosize?.minRows ?? 1"
+            [cdkAutosizeMaxRows]="i.autosize?.maxRows ?? 0"
+          >
+          </textarea>
+        } @else {
+          <input
+            nzMentionTrigger
+            nz-input
+            [attr.id]="id"
+            [disabled]="disabled"
+            [attr.disabled]="disabled"
+            [nzSize]="ui.size!"
+            [ngModel]="value"
+            [ngModelOptions]="{ standalone: true }"
+            (ngModelChange)="setValue($event)"
+            [attr.maxLength]="maxLength"
+            [attr.placeholder]="ui.placeholder"
+            autocomplete="off"
+          />
+        }
+      </nz-mention>
+    </sf-item-wrap>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [FormsModule, DelonFormModule, NzInputModule, NzMentionModule, CdkTextareaAutosize]
 })
 export class MentionWidget extends ControlUIWidget<SFMentionWidgetSchema> implements OnInit {
   static readonly KEY = 'mention';
 
-  @ViewChild('mentions', { static: true }) private mentionChild!: NzMentionComponent;
-  data: SFSchemaEnum[] = [];
+  private readonly mentionChild = viewChild.required<NzMentionComponent>('mentions');
+  protected readonly data = signal<SFSchemaEnum[]>([]);
   i: NzSafeAny;
-  loading = false;
+  protected readonly loading = signal(false);
 
   ngOnInit(): void {
     const { valueWith, notFoundContent, placement, prefix, autosize } = this.ui;
@@ -97,7 +101,7 @@ export class MentionWidget extends ControlUIWidget<SFMentionWidgetSchema> implem
 
     if (!this.ui.validator && (min !== -1 || max !== -1)) {
       this.ui.validator = (() => {
-        const count = this.mentionChild.getMentions().length;
+        const count = this.mentionChild().getMentions().length;
         if (min !== -1 && count < min) {
           return [{ keyword: 'mention', message: `最少提及 ${min} 次` }];
         }
@@ -111,33 +115,31 @@ export class MentionWidget extends ControlUIWidget<SFMentionWidgetSchema> implem
 
   reset(): void {
     getData(this.schema, this.ui, null).subscribe(list => {
-      this.data = list;
-      this.detectChanges(true);
+      this.data.set(list);
     });
   }
 
   _select(options: NzSafeAny): void {
-    if (this.ui.select) this.ui.select(options);
+    this.ui.select?.(options);
   }
 
   _search(option: MentionOnSearchTypes): void {
     if (typeof this.ui.loadData !== 'function') return;
 
-    this.loading = true;
+    this.loading.set(true);
     this.ui
       .loadData(option)
       .pipe(
-        tap(() => (this.loading = false)),
+        tap(() => this.loading.set(false)),
         map(res => getEnum(res, null, this.schema.readOnly!))
       )
       .subscribe(res => {
-        this.data = res;
-        this.detectChanges(true);
+        this.data.set(res);
       });
   }
 
   _clear(): void {
     this.setValue('');
-    if (this.ui.onClear) this.ui.onClear();
+    this.ui.onClear?.();
   }
 }

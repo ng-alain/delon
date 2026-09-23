@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
 
 import { NzButtonType } from 'ng-zorro-antd/button';
@@ -72,6 +72,7 @@ import { ArrayLayoutWidget } from '../../widget';
   </nz-form-item>`,
   host: { '[class.sf__array]': 'true' },
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   // eslint-disable-next-line @angular-eslint/prefer-standalone
   standalone: false
 })

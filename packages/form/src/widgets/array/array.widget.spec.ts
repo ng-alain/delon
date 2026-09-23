@@ -71,6 +71,24 @@ describe('form: widget: array', () => {
       .checkCount('.sf__array-remove', 3)
       .checkCount('.sf__array-item', 3);
   });
+  it('should not repeat the child error in the array layout', () => {
+    page.newSchema({
+      properties: {
+        arr: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: { a: { type: 'string' } },
+            required: ['a']
+          }
+        }
+      }
+    });
+    page.add();
+
+    // 子字段的错误只在行内显示一次；布局 widget 的 `errorsChanges` 是子节点的聚合，不重复显示
+    page.checkCount('.ant-form-item-explain-error', 1).checkCount('.ant-form-explain', 0);
+  });
   it(`should be maximum ${maxItems}`, () => {
     page
       .newSchema(schema)

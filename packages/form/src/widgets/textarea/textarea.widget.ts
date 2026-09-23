@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { SFTextareaWidgetSchema } from './schema';
 import { ControlUIWidget } from '../../widget';
@@ -85,6 +85,7 @@ import { ControlUIWidget } from '../../widget';
     </sf-item-wrap>
   `,
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   // eslint-disable-next-line @angular-eslint/prefer-standalone
   standalone: false
 })
@@ -105,14 +106,14 @@ export class TextareaWidget extends ControlUIWidget<SFTextareaWidgetSchema> impl
 
   change(val: string): void {
     this.setValue(val);
-    if (this.ui.change) this.ui.change(val);
+    this.ui.change?.(val);
   }
 
   focus(e: FocusEvent): void {
-    if (this.ui.focus) this.ui.focus(e);
+    this.ui.focus?.(e);
   }
 
   blur(e: FocusEvent): void {
-    if (this.ui.blur) this.ui.blur(e);
+    this.ui.blur?.(e);
   }
 }

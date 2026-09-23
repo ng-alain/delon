@@ -82,7 +82,11 @@ Wrap your custom content in the template with the `sf-item-wrap` component, whic
 
 **Change detection**
 
-The widget is manually trigger changed detection during the rendering process. In most cases, the `ControlWidget` is well manage of changing detection. but the asynchronous operation may be encountered, you can call the `detectChanges()` method to trigger a change detection of the widget.
+Widget state is fully signal-driven: `ui` / `schema` are reactive objects, and your own state should use `signal`.
+Therefore **manual change detection is no longer needed** (`detectChanges()` has been removed) — the view refreshes automatically.
+
+> Note: `ui` / `schema` must be **replaced as a whole** (e.g. `ui.optionalHelp = { ...ui.optionalHelp, text }`);
+> mutating nested structures in place (e.g. `schema.enum.push(...)`) is not tracked.
 
 ### Register
 

@@ -95,9 +95,9 @@ describe('form: widget: checkbox', () => {
       const comp = page.getWidget<CheckboxWidget>('sf-checkbox');
       const checkAllBtn = page.getEl('.sf__checkbox-list .ant-checkbox');
       checkAllBtn.click();
-      expect(comp.allChecked).toBe(true);
+      expect(comp['allChecked']()).toBe(true);
       checkAllBtn.click();
-      expect(comp.allChecked).toBe(false);
+      expect(comp['allChecked']()).toBe(false);
     });
     it('should be indeterminate when defaut inlcudes value', () => {
       page

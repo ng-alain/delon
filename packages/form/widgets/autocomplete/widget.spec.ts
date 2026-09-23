@@ -36,7 +36,7 @@ describe('form: widget: autocomplete', () => {
       })
       .setValue('/a', 'bbb');
     const widgetInstance = page.getProperty('/a').widget as AutoCompleteWidget;
-    const list = widgetInstance['fixData'] as SFSchemaEnum[];
+    const list = widgetInstance['fixData']() as SFSchemaEnum[];
     const item = list.find(w => w.checked === true) as SFSchemaEnum;
     expect(item != null).toBe(true);
     expect(item.value).toBe('bbb');
@@ -94,7 +94,7 @@ describe('form: widget: autocomplete', () => {
         }
       });
       const comp = page.getWidget<AutoCompleteWidget>('sf-autocomplete');
-      comp.list.subscribe(res => {
+      comp['list']()!.subscribe(res => {
         expect(res[0].value).toBe('1');
       });
     });
@@ -114,7 +114,7 @@ describe('form: widget: autocomplete', () => {
         })
         .time(100);
       const selectWidget = page.getWidget<AutoCompleteWidget>(`sf-${widget}`);
-      expect(selectWidget.typing).toBe(`label1`);
+      expect(selectWidget['typing']()).toBe(`label1`);
       page.asyncEnd();
     }));
     xit('with email of format', fakeAsync(() => {

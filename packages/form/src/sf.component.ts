@@ -1,15 +1,13 @@
 import { Platform } from '@angular/cdk/platform';
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  EventEmitter,
+  computed,
   Injector,
-  Input,
   OnChanges,
   OnDestroy,
   OnInit,
-  Output,
   SimpleChange,
   SimpleChanges,
   TemplateRef,
@@ -17,12 +15,14 @@ import {
   booleanAttribute,
   inject,
   input,
+  linkedSignal,
   model,
+  output,
   signal
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DomSanitizer } from '@angular/platform-browser';
-import { merge, filter } from 'rxjs';
+import { merge, filter, skip } from 'rxjs';
 
 import { ACLService } from '@delon/acl';
 import { ALAIN_I18N_TOKEN, DelonLocaleService, LocaleData } from '@delon/theme';
@@ -34,7 +34,7 @@ import type { NzFormControlStatusType } from 'ng-zorro-antd/form';
 import { mergeConfig } from './config';
 import { SF_SEQ } from './const';
 import type { ErrorData } from './errors';
-import type { SFButton, SFLayout, SFMode, SFValueChange } from './interface';
+import type { SFButton, SFLayout, SFMode, SFValue, SFValueChange } from './interface';
 import { FormProperty, PropertyGroup } from './model/form.property';
 import { FormPropertyFactory } from './model/form.property.factory';
 import type { SFSchema } from './schema/index';
@@ -66,14 +66,14 @@ export function useFactory(
     TerminatorService
   ],
   host: {
-    '[class.sf]': 'true',
-    '[class.sf__inline]': `layout === 'inline'`,
-    '[class.sf__horizontal]': `layout === 'horizontal'`,
-    '[class.sf__search]': `mode === 'search'`,
-    '[class.sf__edit]': `mode === 'edit'`,
-    '[class.sf__no-error]': `onlyVisual`,
-    '[class.sf__no-colon]': `noColon`,
-    '[class.sf__compact]': `compact`,
+    class: 'sf',
+    '[class.sf__inline]': `layout() === 'inline'`,
+    '[class.sf__horizontal]': `layout() === 'horizontal'`,
+    '[class.sf__search]': `mode() === 'search'`,
+    '[class.sf__edit]': `mode() === 'edit'`,
+    '[class.sf__no-error]': `onlyVisual()`,
+    '[class.sf__no-colon]': `noColon()`,
+    '[class.sf__compact]': `compact()`,
     '[class.sf__collapse]': `expandable() && !expanded()`
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -81,121 +81,228 @@ export function useFactory(
   // eslint-disable-next-line @angular-eslint/prefer-standalone
   standalone: false
 })
-export class SFComponent implements OnInit, OnChanges, OnDestroy {
+export class SFComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
   private readonly formPropertyFactory = inject(FormPropertyFactory);
   private readonly terminator = inject(TerminatorService);
   private readonly dom = inject(DomSanitizer);
-  private readonly cdr = inject(ChangeDetectorRef);
   private readonly localeSrv = inject(DelonLocaleService);
   private readonly aclSrv = inject(ACLService);
   private readonly i18nSrv = inject(ALAIN_I18N_TOKEN);
   private readonly platform = inject(Platform);
   private readonly cogSrv = inject(AlainConfigService);
+  readonly options: AlainSFConfig = mergeConfig(this.cogSrv);
 
   private _renders = new Map<string, TemplateRef<void>>();
   private _item!: Record<string, unknown>;
-  private _valid = true;
   private _defUi!: SFUISchemaItem;
-  readonly options: AlainSFConfig;
 
   _inited = false;
-  locale: LocaleData = {};
-  rootProperty: FormProperty | null = null;
+
+  /**
+   * @internal 首次渲染是否已完成
+   *
+   * 用于 `Widget.ngAfterViewInit` 里「不显示首次校验视觉」的门控。
+   * 不能用 `_inited`：它在 `ngOnInit` 里就置真，而 widget 的 `errorsChanges` 订阅
+   * 是在 `BehaviorSubject` 上**订阅即回放**的——若那时 `_inited` 已为真，抑制就失效。
+   * `ngAfterViewInit` 晚于子 widget 的订阅建立，才是正确时机。
+   */
+  _rendered = false;
+
+  /** @internal 静默窗口标记，见 `_runSilently()` */
+  private _silent = false;
+
+  /**
+   * @internal 在静默窗口内执行 `fn`：期间的值变更不触发 `formChange` / `formValueChange`
+   *
+   * widget 在自身 `ngAfterViewInit` 里推入初值时用它——那是初值同步（含格式化 `schema.default`），
+   * 不是用户变更，否则页面加载就会被当成一次改动。
+   */
+  _runSilently(fn: () => void): void {
+    const prev = this._silent;
+    this._silent = true;
+    try {
+      fn();
+    } finally {
+      this._silent = prev;
+    }
+  }
   _formData!: Record<string, unknown>;
-  _btn!: SFButton;
   _schema!: SFSchema;
   _ui!: SFUISchema;
   readonly expandable = input(false, { transform: booleanAttribute });
   readonly expanded = model(false);
+
+  // #region 响应式状态
+  //
+  // 以下状态被 `<sf>` 模板直接读取。采用 signal 内核 + 同名 getter/setter，
+  // 使外部写法（`sf.locale` / `sf.rootProperty` / `sf.valid` / `sf._btn`）保持有效，
+  // 同时在模板中读取时自动建立依赖。
+
+  private readonly _valid$ = signal(true);
+  /** @internal 内部可写 */
+  get _valid(): boolean {
+    return this._valid$();
+  }
+  set _valid(value: boolean) {
+    this._valid$.set(value);
+  }
+  get valid(): boolean {
+    return this._valid$();
+  }
+
+  private readonly _locale$ = signal<LocaleData>({});
+  get locale(): LocaleData {
+    return this._locale$();
+  }
+  set locale(value: LocaleData) {
+    this._locale$.set(value);
+  }
+
+  private readonly _rootProperty$ = signal<FormProperty | null>(null);
+  get rootProperty(): FormProperty | null {
+    return this._rootProperty$();
+  }
+  set rootProperty(value: FormProperty | null) {
+    this._rootProperty$.set(value);
+  }
+
+  private readonly _btn$ = signal<SFButton | null>(null);
+  /** @internal */
+  get _btn(): SFButton {
+    return this._btn$()!;
+  }
+  set _btn(value: SFButton) {
+    this._btn$.set(value);
+  }
 
   /** @internal 是否存在 collapse: true 的字段 */
   protected _hasCollapse = signal(false);
   get btnGrid(): NzSafeAny {
     return this._btn.render!.grid;
   }
+  // #endregion
 
   // #region fields
 
   /** 表单布局，等同 `nzLayout`，默认：horizontal */
-  @Input() layout: SFLayout = 'horizontal';
+  readonly layoutInput = input<SFLayout | undefined>(undefined, { alias: 'layout' });
+  readonly layout = linkedSignal<SFLayout | undefined, SFLayout>({
+    source: () => this.layoutInput(),
+    computation: (next, prev) => next ?? prev?.value ?? 'horizontal'
+  });
   /** JSON Schema */
-  @Input() schema!: SFSchema;
+  readonly schemaInput = input<SFSchema | undefined>(undefined, { alias: 'schema' });
+  /**
+   * 输入侧的有效 schema：`refreshSchema(newSchema)` 可在内部替换它；
+   * 渲染用的仍是 `coverProperty()` 产出的 `_schema`
+   */
+  private readonly _schemaValue$ = linkedSignal<SFSchema | undefined, SFSchema | undefined>({
+    source: () => this.schemaInput(),
+    computation: next => next
+  });
   /** UI Schema */
-  @Input() ui!: SFUISchema;
+  readonly uiInput = input<SFUISchema | undefined>(undefined, { alias: 'ui' });
+  /**
+   * 输入侧的有效 ui：`refreshSchema(_, newUI)` 可在内部替换它；
+   * 渲染用的仍是 `coverProperty()` 产出的 `_ui`
+   */
+  private readonly _uiValue$ = linkedSignal<SFUISchema | undefined, SFUISchema | undefined>({
+    source: () => this.uiInput(),
+    computation: next => next
+  });
   /** 表单默认值 */
-  @Input() formData?: Record<string, NzSafeAny>;
+  readonly formData = input<Record<string, NzSafeAny> | undefined>();
   /**
    * 按钮
    * - 值为 `null` 或 `undefined` 表示手动添加按钮，但保留容器
    * - 值为 `none` 表示手动添加按钮，且不保留容器
    * - 使用 `spanLabelFixed` 固定标签宽度时，若无 `render.class` 则默认为居中状态
    */
-  @Input() button?: SFButton | 'none' | null = {};
+  readonly button = input<SFButton | 'none' | null | undefined>({});
   /**
    * 是否实时校验，默认：`true`
    * - `true` 每一次都校验
    * - `false` 提交时校验
    */
-  @Input({ transform: booleanAttribute }) liveValidate = true;
-  /** 指定表单 `autocomplete` 值 */
-  @Input() autocomplete: 'on' | 'off';
+  readonly liveValidateInput = input<unknown>(undefined, { alias: 'liveValidate' });
+  readonly liveValidate = linkedSignal<unknown, boolean>({
+    source: () => this.liveValidateInput(),
+    computation: (next, prev) =>
+      next === undefined ? (prev?.value ?? Boolean(this.options.liveValidate)) : booleanAttribute(next)
+  });
+  /**
+   * 指定表单 `autocomplete` 值
+   *
+   * 未绑定时回落到全局配置 `options.autocomplete`
+   */
+  readonly autocompleteInput = input<'on' | 'off' | undefined>(undefined, { alias: 'autocomplete' });
+  readonly autocomplete = computed<'on' | 'off'>(
+    () => this.autocompleteInput() ?? (this.options.autocomplete as 'on' | 'off')
+  );
   /**
    * Whether to display error visuals immediately
    *
    * 是否立即显示错误视觉
    */
-  @Input({ transform: booleanAttribute }) firstVisual = true;
+  readonly firstVisualInput = input<unknown>(undefined, { alias: 'firstVisual' });
+  readonly firstVisual = linkedSignal<unknown, boolean>({
+    source: () => this.firstVisualInput(),
+    computation: (next, prev) =>
+      next === undefined ? (prev?.value ?? Boolean(this.options.firstVisual)) : booleanAttribute(next)
+  });
   /**
    * Whether to only display error visuals but not error text
    *
    * 是否只展示错误视觉不显示错误文本
    */
-  @Input({ transform: booleanAttribute }) onlyVisual = false;
-  @Input({ transform: booleanAttribute }) compact = false;
+  readonly onlyVisual = input(false, { transform: booleanAttribute });
+  readonly compact = input(false, { transform: booleanAttribute });
   /**
    * Form default mode, will force override `layout`, `firstVisual`, `liveValidate` parameters
    *
    * 表单预设模式，会强制覆盖 `layout`，`firstVisual`，`liveValidate` 参数
    */
-  @Input()
-  set mode(value: SFMode) {
-    switch (value) {
+  readonly mode = input<SFMode | undefined>(undefined);
+
+  /** 预设模式的级联：输入变化时（`ngOnChanges`）与按钮重建后（`coverButtonProperty`）都要应用 */
+  private _applyMode(mode: SFMode | undefined): void {
+    switch (mode) {
       case 'search':
-        this.layout = 'inline';
-        this.firstVisual = false;
-        this.liveValidate = false;
+        this.layout.set('inline');
+        this.firstVisual.set(false);
+        this.liveValidate.set(false);
         if (this._btn) {
           this._btn.submit = this._btn.search;
         }
         break;
       case 'edit':
-        this.layout = 'horizontal';
-        this.firstVisual = false;
-        this.liveValidate = true;
+        this.layout.set('horizontal');
+        this.firstVisual.set(false);
+        this.liveValidate.set(true);
         if (this._btn) {
           this._btn.submit = this._btn.edit;
         }
         break;
     }
-    this._mode = value;
   }
-  get mode(): SFMode {
-    return this._mode;
-  }
-  private _mode!: SFMode;
   /**
    * Whether to load status，when `true` reset button is disabled status, submit button is loading status
    */
-  @Input({ transform: booleanAttribute }) loading = false;
-  @Input({ transform: booleanAttribute }) disabled = false;
-  @Input({ transform: booleanAttribute }) noColon = false;
-  @Input({ transform: booleanAttribute }) cleanValue = false;
-  @Input({ transform: booleanAttribute }) delay = false;
-  @Output() readonly formValueChange = new EventEmitter<SFValueChange>();
-  @Output() readonly formChange = new EventEmitter<Record<string, unknown>>();
-  @Output() readonly formSubmit = new EventEmitter<Record<string, unknown>>();
-  @Output() readonly formReset = new EventEmitter<Record<string, unknown>>();
-  @Output() readonly formError = new EventEmitter<ErrorData[]>();
+  readonly loading = input(false, { transform: booleanAttribute });
+  readonly disabled = input(false, { transform: booleanAttribute });
+  readonly noColon = input(false, { transform: booleanAttribute });
+  readonly cleanValue = input(false, { transform: booleanAttribute });
+  readonly delayInput = input<unknown>(undefined, { alias: 'delay' });
+  readonly delay = linkedSignal<unknown, boolean>({
+    source: () => this.delayInput(),
+    computation: (next, prev) =>
+      next === undefined ? (prev?.value ?? Boolean(this.options.delay)) : booleanAttribute(next)
+  });
+  readonly formValueChange = output<SFValueChange>();
+  readonly formChange = output<Record<string, unknown>>();
+  readonly formSubmit = output<Record<string, unknown>>();
+  readonly formReset = output<Record<string, unknown>>();
+  readonly formError = output<ErrorData[]>();
   // #endregion
 
   /**
@@ -203,10 +310,6 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
    *
    * 表单是否有效
    */
-  get valid(): boolean {
-    return this._valid;
-  }
-
   /**
    * The value of the form
    *
@@ -259,7 +362,6 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       throw new Error(`Invalid path: ${path}`);
     }
     property.schema.readOnly = status;
-    property.widget.cd.markForCheck();
     return this;
   }
 
@@ -282,9 +384,9 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     } else {
       if (idx !== -1) parentRequired.splice(idx, 1);
     }
-    property.parent!.schema.required = parentRequired;
+    // 就地 push/splice 后写回同一个引用时，代理按 `Object.is` 判定相等、不会通知，因此写入新数组
+    property.parent!.schema.required = [...parentRequired];
     property.ui._required = status;
-    property.widget.detectChanges();
     this.validator({ onlyRoot: false });
     return this;
   }
@@ -309,23 +411,17 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   onSubmit(e: Event): void {
     e.preventDefault();
     e.stopPropagation();
-    if (!this.liveValidate) this.validator();
+    if (!this.liveValidate()) this.validator();
     if (!this.valid) return;
     this.formSubmit.emit(this.value);
   }
 
   constructor() {
-    this.options = mergeConfig(this.cogSrv);
-    this.liveValidate = this.options.liveValidate as boolean;
-    this.firstVisual = this.options.firstVisual as boolean;
-    this.autocomplete = this.options.autocomplete as 'on' | 'off';
-    this.delay = this.options.delay as boolean;
     this.localeSrv.change.pipe(takeUntilDestroyed()).subscribe(() => {
       this.locale = this.localeSrv.getData('sf');
       if (this._inited) {
         this.validator({ emitError: false, onlyRoot: false });
         this.coverButtonProperty();
-        this.cdr.markForCheck();
       }
     });
     merge(this.aclSrv.change, this.i18nSrv.change)
@@ -345,8 +441,8 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private coverProperty(): void {
-    const isHorizontal = this.layout === 'horizontal';
-    const _schema = deepCopy(this.schema);
+    const isHorizontal = this.layout() === 'horizontal';
+    const _schema = deepCopy(this._schemaValue$()!);
     const { definitions } = _schema;
 
     // 重置折叠检测状态
@@ -409,11 +505,11 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
           ui.offsetControl = null;
         }
         // 内联强制清理 `grid` 参数
-        if (this.layout === 'inline') {
+        if (this.layout() === 'inline') {
           delete ui.grid;
         }
         // 非水平布局强制清理 `spanLabelFixed` 值
-        if (this.layout !== 'horizontal') {
+        if (this.layout() !== 'horizontal') {
           ui.spanLabelFixed = null;
         }
         // 当指定标签为固定宽度时无须指定 `spanLabel`，`spanControl`
@@ -498,27 +594,27 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       });
     };
 
-    if (this.ui == null) this.ui = {};
+    if (this._uiValue$() == null) this._uiValue$.set({});
     this._defUi = {
       onlyVisual: this.options.onlyVisual,
       size: this.options.size,
-      liveValidate: this.liveValidate,
+      liveValidate: this.liveValidate(),
       ...this.options.ui,
       ...(_schema as NzSafeAny).ui,
-      ...this.ui['*']
+      ...this._uiValue$()!['*']
     };
-    if (this.onlyVisual === true) {
+    if (this.onlyVisual() === true) {
       this._defUi.onlyVisual = true;
     }
     // 内联强制清理 `grid` 参数
-    if (this.layout === 'inline') {
+    if (this.layout() === 'inline') {
       delete this._defUi.grid;
     }
 
     // root
     this._ui = { ...this._defUi };
 
-    inFn(_schema, _schema, this.ui, this.ui, this._ui);
+    inFn(_schema, _schema, this._uiValue$()!, this._uiValue$()!, this._ui);
 
     // cond
     resolveIfSchema(_schema, this._ui);
@@ -534,11 +630,11 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       render: { size: 'default' },
       ...this.locale,
       ...this.options.button,
-      ...(this.button as SFButton)
+      ...(this.button() as SFButton)
     };
     const firstKey = Object.keys(this._ui).find(w => w.startsWith('$'));
     const btnRender = this._btn.render!;
-    if (this.layout === 'horizontal') {
+    if (this.layout() === 'horizontal') {
       const btnUi = firstKey ? this._ui[firstKey] : this._defUi;
       if (!btnRender.grid) {
         btnRender.grid = {
@@ -557,8 +653,8 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     } else {
       btnRender.grid = {};
     }
-    if (this._mode) {
-      this.mode = this._mode;
+    if (this.mode()) {
+      this._applyMode(this.mode());
     }
 
     di(this._ui, 'button property', this._btn);
@@ -572,16 +668,24 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     this._inited = true;
   }
 
+  ngAfterViewInit(): void {
+    this._rendered = true;
+  }
+
   ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
     if (!this.platform.isBrowser) {
       return;
     }
+    // 级联与原先 setter 的时机一致（都早于模板检查）
+    if (changes['mode']) {
+      this._applyMode(this.mode());
+    }
+    // `disabled` / `loading` 只驱动各自的 signal 与模板，不需要重建 schema
     const ingoreRender = ['disabled', 'loading'];
     if (Object.keys(changes).every(key => ingoreRender.includes(key))) {
-      this.cdr.detectChanges();
       return;
     }
-    if (!this.delay) {
+    if (!this.delay()) {
       this.refreshSchema();
     }
   }
@@ -608,7 +712,6 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         return;
       }
       property.ui._render = tpl;
-      property.widget?.cd.markForCheck();
     });
   }
 
@@ -641,7 +744,6 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     const errors = this.rootProperty!.errors;
     this._valid = !(errors && errors.length);
     if (options.emitError && !this._valid) this.formError.emit(errors!);
-    this.cdr.detectChanges();
     return this._valid;
   }
 
@@ -664,16 +766,16 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     if (!this.platform.isBrowser) {
       return this;
     }
-    if (newSchema) this.schema = newSchema;
-    if (newUI) this.ui = newUI;
+    if (newSchema) this._schemaValue$.set(newSchema);
+    if (newUI) this._uiValue$.set(newUI);
 
-    if (!this.schema || typeof this.schema.properties === 'undefined') throw new Error(`Invalid Schema`);
-    if (this.schema.ui && typeof this.schema.ui === 'string')
-      throw new Error(`Don't support string with root ui property`);
+    const schema = this._schemaValue$();
+    if (!schema || typeof schema.properties === 'undefined') throw new Error(`Invalid Schema`);
+    if (schema.ui && typeof schema.ui === 'string') throw new Error(`Don't support string with root ui property`);
 
-    this.schema.type = 'object';
+    schema.type = 'object';
 
-    this._formData = { ...this.formData };
+    this._formData = { ...this.formData() };
 
     if (this._inited) this.terminator.destroy();
 
@@ -682,25 +784,34 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     this.coverProperty();
     this.coverButtonProperty();
 
-    this.rootProperty = this.formPropertyFactory.createProperty(this._schema, this._ui, this.formData!);
+    this.rootProperty = this.formPropertyFactory.createProperty(this._schema, this._ui, this.formData()!);
+    // 把 `cleanValue` 镜像到属性树：`reset()` 早于 widget 创建，模型层不能经 widget 读取它
+    this.rootProperty._cleanValue = this.cleanValue();
     this.attachCustomRender();
-    this.cdr.detectChanges();
+    // 此处不需要额外的结构 CD，`reset()` 直接作用于属性树：
+    //  ① `setErrors()` 的文案在 widget 缺失时回落到 `DelonLocaleService`；
+    //  ② widget 在自身 `ngAfterViewInit` 里推入初值，那时 `ngOnInit` 已跑完；
+    //  ③ 首次校验视觉由 `_rendered` 门控，不依赖 widget 的创建时机。
     this.reset();
 
-    let isFirst = true;
-    this.rootProperty.valueChanges.subscribe(res => {
-      this._item = { ...(this.cleanValue ? null : this.formData), ...res.value };
-      if (isFirst) {
-        isFirst = false;
-        return;
-      }
+    // `valueChanges` 是 `BehaviorSubject`，订阅时会回放当前值：先用它初始化 `_item`，
+    // 再用 `skip(1)` 把这条回放排除掉——回放是初值，不是变更
+    const rootProperty = this.rootProperty!;
+    const toItem = (value: SFValue): Record<string, unknown> => ({
+      ...(this.cleanValue() ? null : this.formData()),
+      ...value
+    });
+    this._item = toItem(rootProperty.value);
+    rootProperty.valueChanges.pipe(skip(1)).subscribe(res => {
+      this._item = toItem(res.value);
+      // 初值同步也是值变更，但它不是用户改的，见 `_runSilently()`
+      if (this._silent) return;
       this.formChange.emit(this._item);
       this.formValueChange.emit({ value: this._item, path: res.path, pathValue: res.pathValue });
     });
     this.rootProperty.errorsChanges.subscribe(errors => {
       this._valid = !(errors && errors.length);
       this.formError.emit(errors!);
-      this.cdr.detectChanges();
     });
 
     return this;
@@ -717,8 +828,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     if (this.rootProperty == null || !this.platform.isBrowser) {
       return this;
     }
-    this.rootProperty.resetValue(this.formData, false);
-    Promise.resolve().then(() => this.cdr.detectChanges());
+    this.rootProperty.resetValue(this.formData(), false);
     if (emit) {
       this.formReset.emit(this.value);
     }

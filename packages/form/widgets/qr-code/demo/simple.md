@@ -44,7 +44,7 @@ export class DemoComponent {
         default: 'https://ng-alain.com/',
         ui: {
           widget: 'qr-code',
-          icon: 'https://ng-alain.com/assets/logo-color.svg',
+          icon: 'https://ng-alain.com/assets/img/logo-color.png',
           bordered: true
         } as SFQrCodeWidgetSchema
       },

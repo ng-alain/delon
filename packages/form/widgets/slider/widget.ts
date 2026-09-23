@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { ControlUIWidget, DelonFormModule } from '@delon/form';
@@ -8,34 +8,37 @@ import type { SFSliderWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-slider',
-  template: `<sf-item-wrap
-    [id]="id"
-    [schema]="schema"
-    [ui]="ui"
-    [showError]="showError"
-    [error]="error"
-    [showTitle]="schema.title"
-  >
-    <nz-slider
-      [ngModel]="value"
-      [ngModelOptions]="{ standalone: true }"
-      (ngModelChange)="setValue($event)"
-      [nzDisabled]="disabled"
-      [nzRange]="ui.range"
-      [nzMin]="min"
-      [nzMax]="max"
-      [nzStep]="step"
-      [nzMarks]="marks"
-      [nzDots]="ui.dots"
-      [nzIncluded]="included"
-      [nzVertical]="ui.vertical"
-      [nzReverse]="ui.reverse"
-      [nzTooltipVisible]="ui.tooltipVisible!"
-      [nzTooltipPlacement]="ui.tooltipPlacement!"
-      [nzTipFormatter]="_formatter"
-      (nzOnAfterChange)="_afterChange($event)"
-    />
-  </sf-item-wrap>`,
+  template: `
+    <sf-item-wrap
+      [id]="id"
+      [schema]="schema"
+      [ui]="ui"
+      [showError]="showError"
+      [error]="error"
+      [showTitle]="schema.title"
+    >
+      <nz-slider
+        [ngModel]="value"
+        [ngModelOptions]="{ standalone: true }"
+        (ngModelChange)="setValue($event)"
+        [nzDisabled]="disabled"
+        [nzRange]="ui.range"
+        [nzMin]="min"
+        [nzMax]="max"
+        [nzStep]="step"
+        [nzMarks]="marks"
+        [nzDots]="ui.dots"
+        [nzIncluded]="included"
+        [nzVertical]="ui.vertical"
+        [nzReverse]="ui.reverse"
+        [nzTooltipVisible]="ui.tooltipVisible!"
+        [nzTooltipPlacement]="ui.tooltipPlacement!"
+        [nzTipFormatter]="_formatter"
+        (nzOnAfterChange)="_afterChange($event)"
+      />
+    </sf-item-wrap>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [FormsModule, DelonFormModule, NzSliderModule]
 })

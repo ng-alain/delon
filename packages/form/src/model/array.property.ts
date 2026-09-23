@@ -42,9 +42,8 @@ export class ArrayProperty extends PropertyGroup {
 
   setValue(value: SFValue, onlySelf: boolean): void {
     this.properties = [];
-    this.clearErrors();
+    this._objErrors.clear();
     this.resetProperties(value);
-    this.cd(onlySelf);
     this.updateValueAndValidity({ onlySelf, emitValueEvent: true });
   }
 
@@ -61,7 +60,8 @@ export class ArrayProperty extends PropertyGroup {
     const value: NzSafeAny[] = [];
     this.forEachChild((property: FormProperty) => {
       if (property.visible) {
-        value.push({ ...(this.widget?.cleanValue ? null : property.formData), ...property.value });
+        // 从根节点读 `_cleanValue`：`reset()` 早于 widget 创建，此时经 widget 读不到
+        value.push({ ...(this.root._cleanValue ? null : property.formData), ...property.value });
       }
     });
     this._value = value;
@@ -74,7 +74,8 @@ export class ArrayProperty extends PropertyGroup {
       formData,
       this as PropertyGroup
     ) as ObjectProperty;
-    (this.properties as FormProperty[]).push(newProperty);
+    // 整值替换（不能就地 push），这样 `properties` 的 signal 才会通知 array 模板
+    this.properties = [...(this.properties as FormProperty[]), newProperty];
     return newProperty;
   }
 
@@ -83,10 +84,6 @@ export class ArrayProperty extends PropertyGroup {
       const property = this.addProperty(item);
       property.resetValue(item, true);
     }
-  }
-
-  private clearErrors(property?: FormProperty): void {
-    (property ?? this)._objErrors = {};
   }
 
   // #region actions
@@ -98,21 +95,22 @@ export class ArrayProperty extends PropertyGroup {
   }
 
   remove(index: number): void {
-    const list = this.properties as FormProperty[];
-    this.clearErrors();
-    list.splice(index, 1);
+    const list = [...(this.properties as FormProperty[])];
+    const [removed] = list.splice(index, 1);
     list.forEach((property, idx) => {
       property.path = [property.parent!.path, idx].join(SF_SEQ);
-      this.clearErrors(property);
-      // TODO: 受限于 sf 的设计思路，对于移除数组项需要重新对每个子项进行校验，防止错误被父级合并后引起始终是错误的现象
-      if (property instanceof ObjectProperty) {
-        property.forEachChild(p => {
-          p.updateValueAndValidity({ emitValueEvent: false });
-        });
-      }
     });
+    // 被删项自己的错误要一起丢掉；其余子项的错误按实例保留，不受 `path` 重编号影响
+    this._objErrors.delete(removed);
+    // 整值替换，理由同 `addProperty`
+    this.properties = list;
     if (list.length === 0) {
+      // 空数组要校验自身：`minItems` 这类规则只有它自己能报
       this.updateValueAndValidity();
+    } else {
+      // 下标变了要重算值（不需要校验），随后按剩下的子项重算聚合
+      this.updateValueAndValidity({ emitValidator: false, emitValueEvent: false });
+      this._refreshObjErrors();
     }
   }
 

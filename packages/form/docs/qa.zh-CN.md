@@ -104,8 +104,7 @@ Schema 的 `default` 用于设置初始化，一般情况下当修改表单时�
 const statusProperty = this.sf.getProperty('/status')!;
 statusProperty.schema.enum = ['1', '2', '3'];
 statusProperty.widget.reset('2');
-// 或手动触发 `detectChanges`
-// statusProperty.widget.detectChanges();
+// 无需手动触发变更检测：状态由 signal 驱动会自动刷新
 ```
 
 如果单纯更新某个元素数据，则：
@@ -151,7 +150,7 @@ const alainConfig: AlainConfig = {
 ## 如何切换显示或隐藏某元素
 
 ```ts
-this.sf.getProperty('/mobile')?.setVisible(status).widget.detectChanges();
+this.sf.getProperty('/mobile')?.setVisible(status);
 ```
 
 ## 控制台出现 `NG01354` 警告怎么办

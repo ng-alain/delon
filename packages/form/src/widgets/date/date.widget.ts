@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, signal } from '@angular/core';
 
 import { format } from 'date-fns';
 
@@ -13,143 +13,147 @@ import { ControlUIWidget } from '../../widget';
 
 @Component({
   selector: 'sf-date',
-  template: `<sf-item-wrap
-    [id]="id"
-    [schema]="schema"
-    [ui]="ui"
-    [showError]="showError"
-    [error]="error"
-    [showTitle]="schema.title"
-  >
-    @switch (mode) {
-      @case ('year') {
-        <nz-year-picker
-          [nzId]="id"
-          [nzDisabled]="disabled"
-          [nzSize]="ui.size!"
-          [nzAutoFocus]="ui.autoFocus"
-          [nzFormat]="displayFormat"
-          [(ngModel)]="displayValue"
-          [ngModelOptions]="{ standalone: true }"
-          (ngModelChange)="_change($event)"
-          [nzAllowClear]="i.allowClear"
-          [class]="ui.className!"
-          [nzDisabledDate]="ui.disabledDate"
-          [nzLocale]="ui.locale!"
-          [nzPlaceHolder]="ui.placeholder!"
-          [nzPopupStyle]="ui.popupStyle!"
-          [nzDropdownClassName]="ui.dropdownClassName"
-          (nzOnOpenChange)="_openChange($event)"
-          [nzRenderExtraFooter]="ui.renderExtraFooter"
-          [nzInputReadOnly]="ui.inputReadOnly"
-          [nzInline]="ui.inline!"
-        />
+  template: `
+    @let showWeekNumber = ui.showWeekNumber ?? false;
+    <sf-item-wrap
+      [id]="id"
+      [schema]="schema"
+      [ui]="ui"
+      [showError]="showError"
+      [error]="error"
+      [showTitle]="schema.title"
+    >
+      @switch (mode) {
+        @case ('year') {
+          <nz-year-picker
+            [nzId]="id"
+            [nzDisabled]="disabled"
+            [nzSize]="ui.size!"
+            [nzAutoFocus]="ui.autoFocus"
+            [nzFormat]="displayFormat"
+            [(ngModel)]="displayValue"
+            [ngModelOptions]="{ standalone: true }"
+            (ngModelChange)="_change($event)"
+            [nzAllowClear]="i.allowClear"
+            [class]="ui.className!"
+            [nzDisabledDate]="ui.disabledDate"
+            [nzLocale]="ui.locale!"
+            [nzPlaceHolder]="ui.placeholder!"
+            [nzPopupStyle]="ui.popupStyle!"
+            [nzDropdownClassName]="ui.dropdownClassName"
+            (nzOnOpenChange)="_openChange($event)"
+            [nzRenderExtraFooter]="ui.renderExtraFooter"
+            [nzInputReadOnly]="ui.inputReadOnly"
+            [nzInline]="ui.inline!"
+          />
+        }
+        @case ('month') {
+          <nz-month-picker
+            [nzId]="id"
+            [nzDisabled]="disabled"
+            [nzSize]="ui.size!"
+            [nzAutoFocus]="ui.autoFocus"
+            [nzFormat]="displayFormat"
+            [(ngModel)]="displayValue"
+            [ngModelOptions]="{ standalone: true }"
+            (ngModelChange)="_change($event)"
+            [nzAllowClear]="i.allowClear"
+            [class]="ui.className!"
+            [nzDisabledDate]="ui.disabledDate"
+            [nzLocale]="ui.locale!"
+            [nzPlaceHolder]="ui.placeholder!"
+            [nzPopupStyle]="ui.popupStyle!"
+            [nzDropdownClassName]="ui.dropdownClassName"
+            (nzOnOpenChange)="_openChange($event)"
+            [nzRenderExtraFooter]="ui.renderExtraFooter"
+            [nzInputReadOnly]="ui.inputReadOnly"
+            [nzInline]="ui.inline!"
+          />
+        }
+        @case ('week') {
+          <nz-week-picker
+            [nzId]="id"
+            [nzDisabled]="disabled"
+            [nzSize]="ui.size!"
+            [nzAutoFocus]="ui.autoFocus"
+            [nzFormat]="displayFormat"
+            [(ngModel)]="displayValue"
+            [ngModelOptions]="{ standalone: true }"
+            (ngModelChange)="_change($event)"
+            [nzAllowClear]="i.allowClear"
+            [class]="ui.className!"
+            [nzDisabledDate]="ui.disabledDate"
+            [nzLocale]="ui.locale!"
+            [nzPlaceHolder]="ui.placeholder!"
+            [nzPopupStyle]="ui.popupStyle!"
+            [nzDropdownClassName]="ui.dropdownClassName"
+            [nzInputReadOnly]="ui.inputReadOnly"
+            [nzInline]="ui.inline!"
+            (nzOnOpenChange)="_openChange($event)"
+          />
+        }
+        @case ('range') {
+          <nz-range-picker
+            [nzId]="id"
+            [nzDisabled]="disabled"
+            [nzSize]="ui.size!"
+            [nzAutoFocus]="ui.autoFocus"
+            [nzFormat]="displayFormat"
+            [(ngModel)]="displayValue"
+            [ngModelOptions]="{ standalone: true }"
+            (ngModelChange)="_change($event)"
+            [nzAllowClear]="i.allowClear"
+            [class]="ui.className!"
+            [nzDisabledDate]="ui.disabledDate"
+            [nzLocale]="ui.locale!"
+            [nzPlaceHolder]="ui.placeholder!"
+            [nzPopupStyle]="ui.popupStyle!"
+            [nzDropdownClassName]="ui.dropdownClassName"
+            (nzOnOpenChange)="_openChange($event)"
+            [nzDisabledTime]="ui.disabledTime"
+            [nzRenderExtraFooter]="ui.renderExtraFooter"
+            [nzRanges]="ui.ranges"
+            [nzShowTime]="ui.showTime"
+            [nzSeparator]="ui.separator"
+            [nzShowWeekNumber]="showWeekNumber"
+            [nzMode]="$any(ui.rangeMode)"
+            [nzInputReadOnly]="ui.inputReadOnly"
+            [nzInline]="ui.inline!"
+            (nzOnOk)="_ok($event)"
+          />
+        }
+        @default {
+          <nz-date-picker
+            [nzId]="id"
+            [nzDisabled]="disabled"
+            [nzSize]="ui.size!"
+            [nzAutoFocus]="ui.autoFocus"
+            [nzFormat]="displayFormat"
+            [(ngModel)]="displayValue"
+            [ngModelOptions]="{ standalone: true }"
+            (ngModelChange)="_change($event)"
+            [nzAllowClear]="i.allowClear"
+            [class]="ui.className!"
+            [nzDisabledDate]="ui.disabledDate"
+            [nzLocale]="ui.locale!"
+            [nzPlaceHolder]="ui.placeholder!"
+            [nzPopupStyle]="ui.popupStyle!"
+            [nzDropdownClassName]="ui.dropdownClassName"
+            (nzOnOpenChange)="_openChange($event)"
+            [nzDisabledTime]="ui.disabledTime"
+            [nzRenderExtraFooter]="ui.renderExtraFooter"
+            [nzShowTime]="ui.showTime"
+            [nzShowToday]="i.showToday"
+            [nzShowWeekNumber]="showWeekNumber"
+            [nzInputReadOnly]="ui.inputReadOnly"
+            [nzInline]="ui.inline!"
+            (nzOnOk)="_ok($event)"
+          />
+        }
       }
-      @case ('month') {
-        <nz-month-picker
-          [nzId]="id"
-          [nzDisabled]="disabled"
-          [nzSize]="ui.size!"
-          [nzAutoFocus]="ui.autoFocus"
-          [nzFormat]="displayFormat"
-          [(ngModel)]="displayValue"
-          [ngModelOptions]="{ standalone: true }"
-          (ngModelChange)="_change($event)"
-          [nzAllowClear]="i.allowClear"
-          [class]="ui.className!"
-          [nzDisabledDate]="ui.disabledDate"
-          [nzLocale]="ui.locale!"
-          [nzPlaceHolder]="ui.placeholder!"
-          [nzPopupStyle]="ui.popupStyle!"
-          [nzDropdownClassName]="ui.dropdownClassName"
-          (nzOnOpenChange)="_openChange($event)"
-          [nzRenderExtraFooter]="ui.renderExtraFooter"
-          [nzInputReadOnly]="ui.inputReadOnly"
-          [nzInline]="ui.inline!"
-        />
-      }
-      @case ('week') {
-        <nz-week-picker
-          [nzId]="id"
-          [nzDisabled]="disabled"
-          [nzSize]="ui.size!"
-          [nzAutoFocus]="ui.autoFocus"
-          [nzFormat]="displayFormat"
-          [(ngModel)]="displayValue"
-          [ngModelOptions]="{ standalone: true }"
-          (ngModelChange)="_change($event)"
-          [nzAllowClear]="i.allowClear"
-          [class]="ui.className!"
-          [nzDisabledDate]="ui.disabledDate"
-          [nzLocale]="ui.locale!"
-          [nzPlaceHolder]="ui.placeholder!"
-          [nzPopupStyle]="ui.popupStyle!"
-          [nzDropdownClassName]="ui.dropdownClassName"
-          [nzInputReadOnly]="ui.inputReadOnly"
-          [nzInline]="ui.inline!"
-          (nzOnOpenChange)="_openChange($event)"
-        />
-      }
-      @case ('range') {
-        <nz-range-picker
-          [nzId]="id"
-          [nzDisabled]="disabled"
-          [nzSize]="ui.size!"
-          [nzAutoFocus]="ui.autoFocus"
-          [nzFormat]="displayFormat"
-          [(ngModel)]="displayValue"
-          [ngModelOptions]="{ standalone: true }"
-          (ngModelChange)="_change($event)"
-          [nzAllowClear]="i.allowClear"
-          [class]="ui.className!"
-          [nzDisabledDate]="ui.disabledDate"
-          [nzLocale]="ui.locale!"
-          [nzPlaceHolder]="ui.placeholder!"
-          [nzPopupStyle]="ui.popupStyle!"
-          [nzDropdownClassName]="ui.dropdownClassName"
-          (nzOnOpenChange)="_openChange($event)"
-          [nzDisabledTime]="ui.disabledTime"
-          [nzRenderExtraFooter]="ui.renderExtraFooter"
-          [nzRanges]="ui.ranges"
-          [nzShowTime]="ui.showTime"
-          [nzSeparator]="ui.separator"
-          [nzShowWeekNumber]="ui.showWeekNumber ?? false"
-          [nzMode]="$any(ui.rangeMode)"
-          [nzInputReadOnly]="ui.inputReadOnly"
-          [nzInline]="ui.inline!"
-          (nzOnOk)="_ok($event)"
-        />
-      }
-      @default {
-        <nz-date-picker
-          [nzId]="id"
-          [nzDisabled]="disabled"
-          [nzSize]="ui.size!"
-          [nzAutoFocus]="ui.autoFocus"
-          [nzFormat]="displayFormat"
-          [(ngModel)]="displayValue"
-          [ngModelOptions]="{ standalone: true }"
-          (ngModelChange)="_change($event)"
-          [nzAllowClear]="i.allowClear"
-          [class]="ui.className!"
-          [nzDisabledDate]="ui.disabledDate"
-          [nzLocale]="ui.locale!"
-          [nzPlaceHolder]="ui.placeholder!"
-          [nzPopupStyle]="ui.popupStyle!"
-          [nzDropdownClassName]="ui.dropdownClassName"
-          (nzOnOpenChange)="_openChange($event)"
-          [nzDisabledTime]="ui.disabledTime"
-          [nzRenderExtraFooter]="ui.renderExtraFooter"
-          [nzShowTime]="ui.showTime"
-          [nzShowToday]="i.showToday"
-          [nzShowWeekNumber]="ui.showWeekNumber ?? false"
-          [nzInputReadOnly]="ui.inputReadOnly"
-          [nzInline]="ui.inline!"
-          (nzOnOk)="_ok($event)"
-        />
-      }
-    }
-  </sf-item-wrap>`,
+    </sf-item-wrap>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   // eslint-disable-next-line @angular-eslint/prefer-standalone
   standalone: false
@@ -159,7 +163,7 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
   private endFormat?: string;
   private flatRange = false;
   mode!: string;
-  displayValue: Date | Date[] | null = null;
+  protected readonly displayValue = signal<Date | Date[] | null>(null);
   displayFormat!: string;
   i!: { allowClear: boolean; showToday: boolean };
 
@@ -208,14 +212,22 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
         formatString: this.endFormat ?? this.startFormat,
         defaultValue: null
       });
-      this.displayValue = value == null || endValue == null ? [] : [value, endValue];
+      this.displayValue.set(value == null || endValue == null ? [] : [value, endValue]);
     } else {
-      this.displayValue = value;
+      this.displayValue.set(value);
     }
-    this.detectChanges(true);
-    // TODO: Need to wait for the rendering to complete, otherwise it will be overwritten of end widget
-    if (this.displayValue) {
-      setTimeout(() => this._change(this.displayValue, false));
+    // `flatRange` 缺一端时 `displayValue` 是 `[]`、单值模式是 `Date`，
+    // 只有拿到完整值才回写：`_change()` 会把不完整的值当成空值，把仅剩的一端清掉
+    const displayValue = this.displayValue();
+    if (displayValue != null && (!Array.isArray(displayValue) || displayValue.length >= 2)) {
+      // `ui.end` 指向的属性会被 `coverProperty` 置为 `hidden`，
+      // 因此它**没有 widget**：整轮 reset 走到它时，`AtomicProperty.resetValue` 会把
+      // `schema.default` 原样写回 `_value`，没有 widget 会再去格式化它。
+      // → 同步回写一定会被这一步覆盖，必须等**整轮 reset 走完**。
+      // 用微任务而不是渲染回调：整轮 reset 期间随时可能被别处的强制 CD 冲出来，
+      // 那时 reset 还没走完，回写又会被覆盖。
+      // 这次也是在补初值，不算用户变更。
+      queueMicrotask(() => this.sfComp._runSilently(() => this._change(this.displayValue(), false)));
     }
   }
 
@@ -242,11 +254,11 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
   }
 
   _openChange(status: boolean): void {
-    if (this.ui.onOpenChange) this.ui.onOpenChange(status);
+    this.ui.onOpenChange?.(status);
   }
 
   _ok(value: NzSafeAny): void {
-    if (this.ui.onOk) this.ui.onOk(value);
+    this.ui.onOk?.(value);
   }
 
   private get endProperty(): FormProperty {

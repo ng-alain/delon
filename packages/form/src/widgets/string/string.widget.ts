@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject, debounceTime, switchMap, takeUntil } from 'rxjs';
 
 import { SFStringWidgetSchema } from './schema';
@@ -8,6 +8,8 @@ import { ControlUIWidget } from '../../widget';
 @Component({
   selector: 'sf-string',
   template: `
+    @let maxLength = schema.maxLength ?? null;
+    @let inputType = ui.type ?? 'text';
     <sf-item-wrap
       [id]="id"
       [schema]="schema"
@@ -34,8 +36,8 @@ import { ControlUIWidget } from '../../widget';
             [ngModel]="value"
             [ngModelOptions]="{ standalone: true }"
             (ngModelChange)="change($event)"
-            [attr.maxLength]="schema.maxLength ?? null"
-            [attr.type]="ui.type ?? 'text'"
+            [attr.maxLength]="maxLength"
+            [attr.type]="inputType"
             [attr.placeholder]="ui.placeholder"
             [attr.autocomplete]="ui.autocomplete"
             [attr.autoFocus]="ui.autofocus"
@@ -55,8 +57,8 @@ import { ControlUIWidget } from '../../widget';
           [ngModel]="value"
           [ngModelOptions]="{ standalone: true }"
           (ngModelChange)="change($event)"
-          [attr.maxLength]="schema.maxLength ?? null"
-          [attr.type]="ui.type ?? 'text'"
+          [attr.maxLength]="maxLength"
+          [attr.type]="inputType"
           [attr.placeholder]="ui.placeholder"
           [attr.autocomplete]="ui.autocomplete"
           [attr.autoFocus]="ui.autofocus"
@@ -67,6 +69,7 @@ import { ControlUIWidget } from '../../widget';
       }
     </sf-item-wrap>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   // eslint-disable-next-line @angular-eslint/prefer-standalone
   standalone: false
@@ -130,18 +133,18 @@ export class StringWidget extends ControlUIWidget<SFStringWidgetSchema> implemen
       this.change$.next(val);
       return;
     }
-    if (this.ui.change) this.ui.change(val);
+    this.ui.change?.(val);
   }
 
   focus(e: FocusEvent): void {
-    if (this.ui.focus) this.ui.focus(e);
+    this.ui.focus?.(e);
   }
 
   blur(e: FocusEvent): void {
-    if (this.ui.blur) this.ui.blur(e);
+    this.ui.blur?.(e);
   }
 
   enter(e: Event): void {
-    if (this.ui.enter) this.ui.enter(e);
+    this.ui.enter?.(e);
   }
 }

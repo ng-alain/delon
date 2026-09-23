@@ -8,7 +8,6 @@ export class StringProperty extends AtomicProperty {
 
   setValue(value: SFValue, onlySelf: boolean): void {
     this._value = value;
-    this.cd(onlySelf);
     this.updateValueAndValidity({ onlySelf, emitValueEvent: true });
   }
 }
