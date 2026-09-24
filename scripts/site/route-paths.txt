@@ -195,8 +195,6 @@
 /docs/ssr/zh
 /docs/style-guide/en
 /docs/style-guide/zh
-/docs/superpowers-specs-2026-06-16-tailwindcss-schematics-design/en
-/docs/superpowers-specs-2026-06-16-tailwindcss-schematics-design/zh
 /docs/theme/en
 /docs/theme/zh
 /docs/upgrade-v22/en

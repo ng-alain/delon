@@ -57,6 +57,8 @@ function getFiles(
       if (target !== 'init' && !fullPath.includes(target)) continue;
       // 过滤所有 demo
       if (fullPath.includes(`${sep}demo${sep}`)) continue;
+      // 过滤本地规划文档（docs/superpowers、.superpowers），它们不纳入版本控制
+      if (/[\\/]\.?superpowers[\\/]/.test(fullPath)) continue;
 
       const key = dirCfg.reName
         ? dirCfg.reName
