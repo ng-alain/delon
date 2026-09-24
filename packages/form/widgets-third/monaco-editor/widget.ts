@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { NuMonacoEditorComponent, type NuMonacoEditorEvent } from '@ng-util/monaco-editor';
@@ -32,6 +32,7 @@ import type { MonacoEditorWidgetSchema } from './schema';
       />
     </sf-item-wrap>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [FormsModule, DelonFormModule, NuMonacoEditorComponent]
 })
@@ -40,10 +41,10 @@ export class MonacoEditorWidget extends ControlUIWidget<MonacoEditorWidgetSchema
 
   _change(value: string): void {
     this.setValue(value);
-    if (this.ui.change) this.ui.change(value);
+    this.ui.change?.(value);
   }
 
   _event(ev: NuMonacoEditorEvent): void {
-    if (this.ui.event) this.ui.event(ev);
+    this.ui.event?.(ev);
   }
 }

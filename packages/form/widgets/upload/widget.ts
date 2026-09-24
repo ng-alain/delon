@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 
@@ -14,59 +14,64 @@ import type { SFUploadWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-upload',
-  template: `<sf-item-wrap
-    [id]="id"
-    [schema]="schema"
-    [ui]="ui"
-    [showError]="showError"
-    [error]="error"
-    [showTitle]="schema.title"
-  >
-    <nz-upload
-      [nzType]="i.type"
-      [(nzFileList)]="fileList"
-      [nzDisabled]="disabled"
-      [nzAction]="i.action"
-      [nzDirectory]="i.directory"
-      [nzOpenFileDialogOnClick]="i.openFileDialogOnClick"
-      [nzAccept]="i.accept"
-      [nzLimit]="i.limit"
-      [nzMaxCount]="i.maxCount"
-      [nzFilter]="i.filter"
-      [nzSize]="i.size"
-      [nzFileType]="i.fileType"
-      [nzHeaders]="ui.headers"
-      [nzData]="ui.data"
-      [nzListType]="i.listType"
-      [nzMultiple]="i.multiple"
-      [nzName]="i.name"
-      [nzShowUploadList]="i.showUploadList"
-      [nzWithCredentials]="i.withCredentials"
-      [nzBeforeUpload]="i.beforeUpload"
-      [nzCustomRequest]="i.customRequest"
-      [nzRemove]="ui.remove ?? handleRemove"
-      [nzPreview]="handlePreview"
-      [nzPreviewFile]="ui.previewFile"
-      [nzDownload]="ui.download"
-      (nzChange)="change($event)"
-      [nzShowButton]="fileList.length < i.limitFileCount"
+  template: `
+    @let files = fileList();
+    <sf-item-wrap
+      [id]="id"
+      [schema]="schema"
+      [ui]="ui"
+      [showError]="showError"
+      [error]="error"
+      [showTitle]="schema.title"
     >
-      @switch (btnType) {
-        @case ('plus') {
-          <nz-icon nzType="plus" />
-          <div class="ant-upload-text" [innerHTML]="i.text"></div>
+      <nz-upload
+        [nzType]="i.type"
+        [nzFileList]="files"
+        (nzFileListChange)="fileList.set($event)"
+        [nzDisabled]="disabled"
+        [nzAction]="i.action"
+        [nzDirectory]="i.directory"
+        [nzOpenFileDialogOnClick]="i.openFileDialogOnClick"
+        [nzAccept]="i.accept"
+        [nzLimit]="i.limit"
+        [nzMaxCount]="i.maxCount"
+        [nzFilter]="i.filter"
+        [nzSize]="i.size"
+        [nzFileType]="i.fileType"
+        [nzHeaders]="ui.headers"
+        [nzData]="ui.data"
+        [nzListType]="i.listType"
+        [nzMultiple]="i.multiple"
+        [nzName]="i.name"
+        [nzShowUploadList]="i.showUploadList"
+        [nzWithCredentials]="i.withCredentials"
+        [nzBeforeUpload]="i.beforeUpload"
+        [nzCustomRequest]="i.customRequest"
+        [nzRemove]="ui.remove ?? handleRemove"
+        [nzPreview]="handlePreview"
+        [nzPreviewFile]="ui.previewFile"
+        [nzDownload]="ui.download"
+        (nzChange)="change($event)"
+        [nzShowButton]="files.length < i.limitFileCount"
+      >
+        @switch (btnType) {
+          @case ('plus') {
+            <nz-icon nzType="plus" />
+            <div class="ant-upload-text" [innerHTML]="i.text"></div>
+          }
+          @case ('drag') {
+            <p class="ant-upload-drag-icon"><nz-icon nzType="inbox" /></p>
+            <p class="ant-upload-text" [innerHTML]="i.text"></p>
+            <p class="ant-upload-hint" [innerHTML]="i.hint"></p>
+          }
+          @default {
+            <button type="button" nz-button><nz-icon nzType="upload" /><span [innerHTML]="i.text"></span></button>
+          }
         }
-        @case ('drag') {
-          <p class="ant-upload-drag-icon"><nz-icon nzType="inbox" /></p>
-          <p class="ant-upload-text" [innerHTML]="i.text"></p>
-          <p class="ant-upload-hint" [innerHTML]="i.hint"></p>
-        }
-        @default {
-          <button type="button" nz-button><nz-icon nzType="upload" /><span [innerHTML]="i.text"></span></button>
-        }
-      }
-    </nz-upload>
-  </sf-item-wrap>`,
+      </nz-upload>
+    </sf-item-wrap>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [FormsModule, DelonFormModule, NzUploadModule, NzIconModule, NzButtonModule]
 })
@@ -74,7 +79,7 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
   static readonly KEY = 'upload';
 
   i: NzSafeAny;
-  fileList: NzUploadFile[] = [];
+  protected readonly fileList = signal<NzUploadFile[]>([]);
   btnType = '';
 
   ngOnInit(): void {
@@ -138,19 +143,18 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
   }
 
   change(args: NzUploadChangeParam): void {
-    if (this.ui.change) this.ui.change(args);
+    this.ui.change?.(args);
     if (args.type !== 'success') return;
     this._setValue(args.fileList);
   }
 
   reset(value: SFValue): void {
-    const { fileList } = this.ui;
-    (fileList ? of(fileList) : Array.isArray(value) ? of(value) : getData(this.schema, this.ui, null)).subscribe(
-      list => {
-        this.fileList = list as NzUploadFile[];
-        this.formProperty._value = this.pureValue(list);
+    const { fileList: uiFileList } = this.ui;
+    (uiFileList ? of(uiFileList) : Array.isArray(value) ? of(value) : getData(this.schema, this.ui, null)).subscribe(
+      items => {
+        this.fileList.set(items as NzUploadFile[]);
+        this.formProperty._value = this.pureValue(items);
         this.formProperty.updateValueAndValidity({ onlySelf: false, emitValueEvent: false, emitValidator: false });
-        this.cd.markForCheck();
       }
     );
   }
@@ -159,22 +163,22 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
     return deepGet(file.response, this.i.resReName, file.response);
   }
 
-  private pureValue(fileList: NzUploadFile[]): NzSafeAny {
-    fileList
+  private pureValue(files: NzUploadFile[]): NzSafeAny {
+    files
       .filter(file => !file.url)
       .forEach(file => {
         file.url = deepGet(file.response, this.i.urlReName);
       });
-    const res = fileList.filter(w => w.status === 'done').map(file => this._getValue(file));
+    const res = files.filter(w => w.status === 'done').map(file => this._getValue(file));
     return this.i.multiple === true ? res : res.pop();
   }
 
-  private _setValue(fileList: NzUploadFile[]): void {
-    this.setValue(this.pureValue(fileList));
+  private _setValue(files: NzUploadFile[]): void {
+    this.setValue(this.pureValue(files));
   }
 
   handleRemove = (): boolean => {
-    this._setValue(this.fileList);
+    this._setValue(this.fileList());
     return true;
   };
 

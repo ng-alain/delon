@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { format } from 'date-fns';
@@ -11,40 +11,43 @@ import type { SFTimeWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-time',
-  template: `<sf-item-wrap
-    [id]="id"
-    [schema]="schema"
-    [ui]="ui"
-    [showError]="showError"
-    [error]="error"
-    [showTitle]="schema.title"
-  >
-    <nz-time-picker
-      [nzId]="id"
-      [(ngModel)]="displayValue"
-      [ngModelOptions]="{ standalone: true }"
-      (ngModelChange)="_change($event)"
-      [nzDisabled]="disabled"
-      [nzSize]="$any(ui.size)"
-      [nzFormat]="i.displayFormat"
-      [nzAllowEmpty]="i.allowEmpty"
-      [nzClearText]="i.clearText"
-      [nzDefaultOpenValue]="i.defaultOpenValue"
-      [nzDisabledHours]="ui.disabledHours"
-      [nzDisabledMinutes]="ui.disabledMinutes"
-      [nzDisabledSeconds]="ui.disabledSeconds"
-      [nzHideDisabledOptions]="i.hideDisabledOptions"
-      [nzUse12Hours]="i.use12Hours"
-      [nzHourStep]="i.hourStep"
-      [nzMinuteStep]="i.minuteStep"
-      [nzSecondStep]="i.secondStep"
-      [nzPopupClassName]="ui.popupClassName!"
-      [nzPlaceHolder]="ui.placeholder!"
-      [nzNowText]="ui.nowText!"
-      [nzOkText]="ui.okText!"
-      (nzOpenChange)="_openChange($event)"
-    />
-  </sf-item-wrap>`,
+  template: `
+    <sf-item-wrap
+      [id]="id"
+      [schema]="schema"
+      [ui]="ui"
+      [showError]="showError"
+      [error]="error"
+      [showTitle]="schema.title"
+    >
+      <nz-time-picker
+        [nzId]="id"
+        [(ngModel)]="displayValue"
+        [ngModelOptions]="{ standalone: true }"
+        (ngModelChange)="_change($event)"
+        [nzDisabled]="disabled"
+        [nzSize]="$any(ui.size)"
+        [nzFormat]="i.displayFormat"
+        [nzAllowEmpty]="i.allowEmpty"
+        [nzClearText]="i.clearText"
+        [nzDefaultOpenValue]="i.defaultOpenValue"
+        [nzDisabledHours]="ui.disabledHours"
+        [nzDisabledMinutes]="ui.disabledMinutes"
+        [nzDisabledSeconds]="ui.disabledSeconds"
+        [nzHideDisabledOptions]="i.hideDisabledOptions"
+        [nzUse12Hours]="i.use12Hours"
+        [nzHourStep]="i.hourStep"
+        [nzMinuteStep]="i.minuteStep"
+        [nzSecondStep]="i.secondStep"
+        [nzPopupClassName]="ui.popupClassName!"
+        [nzPlaceHolder]="ui.placeholder!"
+        [nzNowText]="ui.nowText!"
+        [nzOkText]="ui.okText!"
+        (nzOpenChange)="_openChange($event)"
+      />
+    </sf-item-wrap>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [FormsModule, DelonFormModule, NzTimePickerModule]
 })
@@ -52,7 +55,7 @@ export class TimeWidget extends ControlUIWidget<SFTimeWidgetSchema> implements O
   static readonly KEY = 'time';
 
   private valueFormat: string | undefined;
-  displayValue: Date | null = null;
+  protected readonly displayValue = signal<Date | null>(null);
   i: NzSafeAny;
 
   ngOnInit(): void {
@@ -77,8 +80,7 @@ export class TimeWidget extends ControlUIWidget<SFTimeWidgetSchema> implements O
 
   reset(value: SFValue): void {
     if (value instanceof Date) {
-      this.displayValue = value;
-      this.detectChanges(true);
+      this.displayValue.set(value);
       return;
     }
     let v = value != null && value.toString().length ? new Date(value) : null;
@@ -90,14 +92,11 @@ export class TimeWidget extends ControlUIWidget<SFTimeWidgetSchema> implements O
       }
       v = new Date(`1970-1-1 ${value}`);
     }
-    this.displayValue = v;
-    this.detectChanges(true);
+    this.displayValue.set(v);
   }
 
   _change(value: Date | null): void {
-    if (this.ui.change) {
-      this.ui.change(value);
-    }
+    this.ui.change?.(value);
     if (value == null) {
       this.setValue(null);
       return;
@@ -110,8 +109,6 @@ export class TimeWidget extends ControlUIWidget<SFTimeWidgetSchema> implements O
   }
 
   _openChange(status: boolean): void {
-    if (this.ui.openChange) {
-      this.ui.openChange(status);
-    }
+    this.ui.openChange?.(status);
   }
 }

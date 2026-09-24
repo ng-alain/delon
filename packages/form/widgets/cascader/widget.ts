@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { ControlUIWidget, DelonFormModule, SFSchemaEnum, SFValue, getData, toBool } from '@delon/form';
@@ -23,7 +23,7 @@ import type { SFCascaderWidgetSchema } from './schema';
       [ngModel]="value"
       [ngModelOptions]="{ standalone: true }"
       (ngModelChange)="_change($event)"
-      [nzOptions]="data"
+      [nzOptions]="data()"
       [nzAllowClear]="ui.allowClear"
       [nzAutoFocus]="ui.autoFocus"
       [nzChangeOn]="ui.changeOn"
@@ -50,6 +50,7 @@ import type { SFCascaderWidgetSchema } from './schema';
       (nzSelectionChange)="_selectionChange($event)"
     />
   </sf-item-wrap>`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [FormsModule, DelonFormModule, NzCascaderModule]
 })
@@ -60,7 +61,7 @@ export class CascaderWidget extends ControlUIWidget<SFCascaderWidgetSchema> impl
   showArrow!: boolean;
   showInput!: boolean;
   triggerAction: NzCascaderTriggerType[] = ['click'];
-  data: SFSchemaEnum[] = [];
+  protected readonly data = signal<SFSchemaEnum[]>([]);
   loadData?: (node: NzCascaderOption, index: number) => PromiseLike<NzSafeAny>;
 
   ngOnInit(): void {
@@ -70,36 +71,37 @@ export class CascaderWidget extends ControlUIWidget<SFCascaderWidgetSchema> impl
     this.showInput = toBool(showInput, true);
     this.triggerAction = triggerAction ?? ['click'];
     if (asyncData) {
-      this.loadData = (node: NzCascaderOption, index: number) =>
-        asyncData(node, index, this).then(() => this.detectChanges(true));
+      // 不需要任何后处理：ng-zorro 的 cascader 在 `loadChildren()` 里已经做了全部工作：
+      //   const option = node?.origin || {}      // 传给回调的就是原始选项对象
+      //   wrapIntoObservable(loadFn(option, i))  // 用户写 option.children
+      //     .subscribe({ next: () => { ...; this.setColumnData(nodes, i + 1) } })
+      //     .pipe(finalize(() => { ...; this.$redraw.next(); }))
+      // 即「读用户写的 children → 自己建下一列 → 自己触发重绘」。
+      // 数据层与视图都由 ng-zorro 处理，因此不需要替换 `data`，也不需要补一次刷新。
+      this.loadData = (node: NzCascaderOption, index: number) => asyncData(node, index, this);
     }
   }
 
   reset(value: SFValue): void {
     getData(this.schema, {}, value).subscribe(list => {
-      this.data = list;
-      this.detectChanges(true);
+      this.data.set(list);
     });
   }
 
   _openChange(status: boolean): void {
-    if (this.ui.openChange) this.ui.openChange(status);
+    this.ui.openChange?.(status);
   }
 
   _change(value: NzSafeAny[] | null): void {
     this.setValue(value == null ? this.ui.clearValue : value);
-    if (this.ui.change) {
-      this.ui.change(value);
-    }
+    this.ui.change?.(value);
   }
 
   _selectionChange(options: NzCascaderOption[]): void {
-    if (this.ui.selectionChange) {
-      this.ui.selectionChange(options);
-    }
+    this.ui.selectionChange?.(options);
   }
 
   _clear(): void {
-    if (this.ui.clear) this.ui.clear();
+    this.ui.clear?.();
   }
 }

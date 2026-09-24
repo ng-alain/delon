@@ -116,7 +116,20 @@ export class SFPage {
     return this;
   }
 
+  /**
+   * 观察 DOM 之前跑一次**普通**变更检测
+   *
+   * `fixture.detectChanges()` 不会强制刷新未被标脏的视图（OnPush 视图尊重 dirty 标记），
+   * 因此它既补齐了「signal 的刷新是调度式的」这一事实，又不会掩盖「signal 依赖没有建立」
+   * 这类真问题。断言 DOM 之前必须先调用它，测试不依赖产品代码里的手工 `detectChanges()`。
+   */
+  flush(): this {
+    fixture.detectChanges();
+    return this;
+  }
+
   getDl(cls: string): DebugElement {
+    this.flush();
     return dl.query(By.css(cls));
   }
 
@@ -127,7 +140,8 @@ export class SFPage {
   }
 
   getWidget<T>(cls: string): T {
-    return this.getDl(cls).componentInstance as T;
+    this.flush();
+    return dl.query(By.css(cls)).componentInstance as T;
   }
 
   private fixPath(path: string): string {
@@ -253,6 +267,7 @@ export class SFPage {
   }
 
   checkElText(cls: string, value: NzSafeAny, viaDocument: boolean = false): this {
+    this.flush();
     const node = viaDocument ? document.querySelector(cls) : this.getEl(cls);
     if (value == null) {
       expect(node).toBeNull();
@@ -283,12 +298,14 @@ export class SFPage {
   }
 
   checkCount(cls: string, count: number, viaDocument: boolean = false): this {
+    this.flush();
     const len = viaDocument ? document.querySelectorAll(cls).length : dl.queryAll(By.css(cls)).length;
     expect(len).toBe(count);
     return this;
   }
 
   checkInput(cls: string, value: NzSafeAny, viaDocument: boolean = false): this {
+    this.flush();
     const ipt = (viaDocument ? document.querySelector(cls) : dl.query(By.css(cls)).nativeElement) as HTMLInputElement;
     expect(ipt.value).toBe(value);
     return this;
@@ -351,6 +368,7 @@ export class SFPage {
   }
 
   typeEvent(eventName: string | Event, cls: string | HTMLElement = 'input'): this {
+    this.flush();
     const node = typeof cls === 'string' ? (document.querySelector(cls) as HTMLInputElement) : cls;
     if (node == null) {
       expect(true).withContext(`won't found '${cls}' class element`).toBe(false);

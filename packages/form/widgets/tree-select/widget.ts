@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { ControlUIWidget, DelonFormModule, SFSchemaEnum, SFValue, getData, toBool } from '@delon/form';
@@ -10,54 +10,57 @@ import type { SFTreeSelectWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-tree-select',
-  template: `<sf-item-wrap
-    [id]="id"
-    [schema]="schema"
-    [ui]="ui"
-    [showError]="showError"
-    [error]="error"
-    [showTitle]="schema.title"
-  >
-    <nz-tree-select
-      [nzId]="id"
-      [nzAllowClear]="i.allowClear"
-      [nzPlaceHolder]="ui.placeholder!"
-      [nzDropdownStyle]="ui.dropdownStyle!"
-      [nzDropdownClassName]="ui.dropdownClassName"
-      [nzSize]="ui.size!"
-      [nzExpandedKeys]="ui.expandedKeys!"
-      [nzNotFoundContent]="ui.notFoundContent"
-      [nzMaxTagCount]="ui.maxTagCount!"
-      [nzMaxTagPlaceholder]="ui.maxTagPlaceholder ?? null"
-      [nzTreeTemplate]="ui.treeTemplate!"
-      [nzDisabled]="disabled"
-      [nzShowSearch]="i.showSearch"
-      [nzShowIcon]="i.showIcon"
-      [nzDropdownMatchSelectWidth]="i.dropdownMatchSelectWidth"
-      [nzMultiple]="i.multiple"
-      [nzHideUnMatched]="i.hideUnMatched"
-      [nzCheckable]="i.checkable"
-      [nzShowExpand]="i.showExpand"
-      [nzShowLine]="i.showLine"
-      [nzCheckStrictly]="i.checkStrictly"
-      [nzAsyncData]="asyncData"
-      [nzNodes]="$any(data)"
-      [nzDefaultExpandAll]="i.defaultExpandAll"
-      [nzDisplayWith]="i.displayWith!"
-      [ngModel]="value"
-      [ngModelOptions]="{ standalone: true }"
-      [nzVirtualHeight]="ui.virtualHeight!"
-      [nzVirtualItemSize]="ui.virtualItemSize ?? 28"
-      [nzVirtualMaxBufferPx]="ui.virtualMaxBufferPx ?? 500"
-      [nzVirtualMinBufferPx]="ui.virtualMinBufferPx ?? 28"
-      [nzPlacement]="ui.placement ?? 'bottomLeft'"
-      [nzVariant]="ui.variant ?? 'outlined'"
-      [nzSuffixIcon]="ui.suffixIcon!"
-      (ngModelChange)="change($event)"
-      (nzExpandChange)="expandChange($event)"
-      (nzOpenChange)="openChange($event)"
-    />
-  </sf-item-wrap>`,
+  template: `
+    <sf-item-wrap
+      [id]="id"
+      [schema]="schema"
+      [ui]="ui"
+      [showError]="showError"
+      [error]="error"
+      [showTitle]="schema.title"
+    >
+      <nz-tree-select
+        [nzId]="id"
+        [nzAllowClear]="i.allowClear"
+        [nzPlaceHolder]="ui.placeholder!"
+        [nzDropdownStyle]="ui.dropdownStyle!"
+        [nzDropdownClassName]="ui.dropdownClassName"
+        [nzSize]="ui.size!"
+        [nzExpandedKeys]="ui.expandedKeys!"
+        [nzNotFoundContent]="ui.notFoundContent"
+        [nzMaxTagCount]="ui.maxTagCount!"
+        [nzMaxTagPlaceholder]="ui.maxTagPlaceholder ?? null"
+        [nzTreeTemplate]="ui.treeTemplate!"
+        [nzDisabled]="disabled"
+        [nzShowSearch]="i.showSearch"
+        [nzShowIcon]="i.showIcon"
+        [nzDropdownMatchSelectWidth]="i.dropdownMatchSelectWidth"
+        [nzMultiple]="i.multiple"
+        [nzHideUnMatched]="i.hideUnMatched"
+        [nzCheckable]="i.checkable"
+        [nzShowExpand]="i.showExpand"
+        [nzShowLine]="i.showLine"
+        [nzCheckStrictly]="i.checkStrictly"
+        [nzAsyncData]="asyncData"
+        [nzNodes]="$any(data())"
+        [nzDefaultExpandAll]="i.defaultExpandAll"
+        [nzDisplayWith]="i.displayWith!"
+        [ngModel]="value"
+        [ngModelOptions]="{ standalone: true }"
+        [nzVirtualHeight]="ui.virtualHeight!"
+        [nzVirtualItemSize]="ui.virtualItemSize ?? 28"
+        [nzVirtualMaxBufferPx]="ui.virtualMaxBufferPx ?? 500"
+        [nzVirtualMinBufferPx]="ui.virtualMinBufferPx ?? 28"
+        [nzPlacement]="ui.placement ?? 'bottomLeft'"
+        [nzVariant]="ui.variant ?? 'outlined'"
+        [nzSuffixIcon]="ui.suffixIcon!"
+        (ngModelChange)="change($event)"
+        (nzExpandChange)="expandChange($event)"
+        (nzOpenChange)="openChange($event)"
+      />
+    </sf-item-wrap>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [FormsModule, DelonFormModule, NzTreeSelectModule]
 })
@@ -65,7 +68,7 @@ export class TreeSelectWidget extends ControlUIWidget<SFTreeSelectWidgetSchema> 
   static readonly KEY = 'tree-select';
 
   i!: SFTreeSelectWidgetSchema;
-  data: SFSchemaEnum[] = [];
+  protected readonly data = signal<SFSchemaEnum[]>([]);
   asyncData = false;
 
   ngOnInit(): void {
@@ -89,27 +92,25 @@ export class TreeSelectWidget extends ControlUIWidget<SFTreeSelectWidgetSchema> 
 
   reset(value: SFValue): void {
     getData(this.schema, this.ui, value).subscribe(list => {
-      this.data = list;
-      this.detectChanges(true);
+      this.data.set(list);
     });
   }
 
   change(value: NzSafeAny[] | NzSafeAny): void {
-    if (this.ui.change) this.ui.change(value);
+    this.ui.change?.(value);
     this.setValue(value == null ? this.ui.clearValue : value);
   }
 
   openChange(status: boolean): void {
-    if (this.ui.openChange) this.ui.openChange(status);
+    this.ui.openChange?.(status);
   }
 
   expandChange(e: NzFormatEmitEvent): void {
-    const { ui } = this;
+    const ui = this.ui;
     if (typeof ui.expandChange !== 'function') return;
     ui.expandChange(e).subscribe(res => {
-      e.node!.clearChildren();
-      e.node!.addChildren(res);
-      this.detectChanges(true);
+      e.node?.clearChildren();
+      e.node?.addChildren(res);
     });
   }
 }

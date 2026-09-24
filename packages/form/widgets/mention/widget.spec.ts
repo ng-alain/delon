@@ -55,7 +55,7 @@ describe('form: widget: mention', () => {
     };
     page.newSchema(s).dc(1).typeChar('@').checkError(`最少提及 1 次`);
 
-    spyOn(getWidget()['mentionChild'], 'getMentions').and.returnValue(['', '', '', '']);
+    spyOn(getWidget()['mentionChild'](), 'getMentions').and.returnValue(['', '', '', '']);
     page.dc(1).typeChar('@').checkError(`最多提及 2 次`);
   }));
 

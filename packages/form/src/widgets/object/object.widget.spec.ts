@@ -34,6 +34,7 @@ describe('form: widget: object', () => {
     const property = page.getProperty('/a');
     property.setValue({ b: 1, c: 0 }, false);
     page.time();
+    page.dc();
     const ipt = page.getEl('.ant-input') as HTMLInputElement;
     expect(ipt.value).toBe('1');
   }));

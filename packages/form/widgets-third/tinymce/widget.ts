@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TinymceComponent } from 'ngx-tinymce';
@@ -31,6 +31,7 @@ import type { TinymceWidgetSchema } from './schema';
       />
     </sf-item-wrap>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [FormsModule, DelonFormModule, TinymceComponent]
 })
@@ -39,10 +40,10 @@ export class TinymceWidget extends ControlUIWidget<TinymceWidgetSchema> {
 
   change(value: string): void {
     this.setValue(value);
-    if (this.ui.change) this.ui.change(value);
+    this.ui.change?.(value);
   }
 
   _ready(instance: NzSafeAny): void {
-    if (this.ui.ready) this.ui.ready(instance);
+    this.ui.ready?.(instance);
   }
 }

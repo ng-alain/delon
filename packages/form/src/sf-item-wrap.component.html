@@ -1,18 +1,20 @@
+@let ui = this.ui();
+@let oh = this.oh();
 <nz-form-item
   [style.width.px]="ui.width"
-  [class.ant-form-item-has-error]="showError"
-  [class.ant-form-item-with-help]="showError"
+  [class.ant-form-item-has-error]="showError()"
+  [class.ant-form-item-with-help]="showError()"
   [class.ant-form-item-has-success]="ui.feedback === 'success'"
   [class.ant-form-item-has-warning]="ui.feedback === 'warning'"
   [class.ant-form-item-has-error]="ui.feedback === 'error'"
   [class.ant-form-item-is-validating]="ui.feedback === 'validating'"
   [class.ant-form-item-has-feedback]="ui.feedback"
 >
-  @if (_showTitle) {
+  @if (_showTitle()) {
     <div nz-col [nzSpan]="ui.spanLabel!" class="ant-form-item-label">
-      @if (t) {
-        <label [attr.for]="id" [class.ant-form-item-required]="ui._required">
-          <span class="sf__label-text">{{ t }}</span>
+      @if (t()) {
+        <label [attr.for]="id()" [class.ant-form-item-required]="ui._required">
+          <span class="sf__label-text">{{ t() }}</span>
           @if (ui.optional || oh) {
             <span class="sf__optional">
               {{ ui.optional }}
@@ -42,18 +44,18 @@
         <ng-content />
       </div>
     </div>
-    @if (!ui.onlyVisual && showError) {
+    @if (!ui.onlyVisual && showError()) {
       <div
         [animate.enter]="nzValidateAnimationEnter()"
         [animate.leave]="nzValidateAnimationLeave()"
         class="ant-form-item-explain ant-form-item-explain-connected"
       >
         <div role="alert" class="ant-form-item-explain-error">
-          {{ error }}
+          {{ error() }}
         </div>
       </div>
     }
-    @if (schema.description) {
+    @if (schema().description) {
       <div class="ant-form-item-extra" [innerHTML]="ui._description"></div>
     }
   </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { ControlUIWidget, DelonFormModule, toBool } from '@delon/form';
@@ -8,31 +8,34 @@ import type { SFRateWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-rate',
-  template: `<sf-item-wrap
-    [id]="id"
-    [schema]="schema"
-    [ui]="ui"
-    [showError]="showError"
-    [error]="error"
-    [showTitle]="schema.title"
-  >
-    <nz-rate
-      [nzDisabled]="disabled"
-      [ngModel]="value"
-      [ngModelOptions]="{ standalone: true }"
-      (ngModelChange)="setValue($event)"
-      [nzAllowClear]="allowClear"
-      [nzAllowHalf]="allowHalf"
-      [nzTooltips]="ui.tooltips ?? []"
-      [nzAutoFocus]="autoFocus"
-      [nzCount]="$any(count)"
-      [nzCharacter]="ui.character!"
-      (nzOnHoverChange)="hoverChange($event)"
-    />
-    @if (hasText && formProperty.value) {
-      <span class="ant-rate-text">{{ text }}</span>
-    }
-  </sf-item-wrap>`,
+  template: `
+    <sf-item-wrap
+      [id]="id"
+      [schema]="schema"
+      [ui]="ui"
+      [showError]="showError"
+      [error]="error"
+      [showTitle]="schema.title"
+    >
+      <nz-rate
+        [nzDisabled]="disabled"
+        [ngModel]="value"
+        [ngModelOptions]="{ standalone: true }"
+        (ngModelChange)="setValue($event)"
+        [nzAllowClear]="allowClear"
+        [nzAllowHalf]="allowHalf"
+        [nzTooltips]="ui.tooltips ?? []"
+        [nzAutoFocus]="autoFocus"
+        [nzCount]="$any(count)"
+        [nzCharacter]="ui.character!"
+        (nzOnHoverChange)="hoverChange($event)"
+      />
+      @if (hasText && formProperty.value) {
+        <span class="ant-rate-text">{{ text }}</span>
+      }
+    </sf-item-wrap>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [FormsModule, DelonFormModule, NzRateModule]
 })
@@ -50,7 +53,7 @@ export class RateWidget extends ControlUIWidget<SFRateWidgetSchema> implements O
   }
 
   hoverChange(value: number): void {
-    if (this.ui.hoverChange) this.ui.hoverChange(value);
+    this.ui.hoverChange?.(value);
   }
 
   ngOnInit(): void {

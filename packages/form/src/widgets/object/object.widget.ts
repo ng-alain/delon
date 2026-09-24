@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, signal } from '@angular/core';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -11,7 +11,8 @@ import { ObjectLayoutWidget } from '../../widget';
 
 @Component({
   selector: 'sf-object',
-  template: `<ng-template #default let-noTitle>
+  template: `@let isExpand = expand();
+    <ng-template #default let-noTitle>
       @if (!noTitle && title) {
         <div class="sf__title">{{ title }}</div>
       }
@@ -52,12 +53,12 @@ import { ObjectLayoutWidget } from '../../widget';
         [nzBodyStyle]="ui.cardBodyStyle!"
         [nzBordered]="ui.cardBordered ?? true"
         class="sf__object-card"
-        [class.sf__object-card-fold]="!expand"
+        [class.sf__object-card-fold]="!isExpand"
       >
         <ng-template #cardTitleTpl>
           <div [class.point]="showExpand" (click)="changeExpand()">
             @if (showExpand) {
-              <nz-icon [nzType]="expand ? 'down' : 'up'" class="mr-xs text-xs" />
+              <nz-icon [nzType]="isExpand ? 'down' : 'up'" class="mr-xs text-xs" />
             }
             {{ title }}
             @if (ui.optional || oh) {
@@ -86,6 +87,7 @@ import { ObjectLayoutWidget } from '../../widget';
     } @else {
       <ng-template [ngTemplateOutlet]="default" />
     }`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   // eslint-disable-next-line @angular-eslint/prefer-standalone
   standalone: false
@@ -96,14 +98,16 @@ export class ObjectWidget extends ObjectLayoutWidget implements OnInit {
   list: NzSafeAny[] = [];
   title?: string;
   showExpand = true;
-  expand = true;
+
+  protected readonly expand = signal(true);
 
   ngOnInit(): void {
     const { formProperty, ui } = this;
     const { grid, showTitle, type } = ui;
     this.showExpand = toBool(ui.showExpand, true);
-    this.expand = toBool(ui.expand, true);
+    this.expand.set(toBool(ui.expand, true));
     this.type = type ?? 'default';
+    // 默认渲染下只有「非根字段、父级不是数组、且显式 showTitle === true」才用 schema.title 作标题
     if (
       this.type === 'card' ||
       (!formProperty.isRoot() && !(formProperty.parent instanceof ArrayProperty) && showTitle === true)
@@ -114,6 +118,7 @@ export class ObjectWidget extends ObjectLayoutWidget implements OnInit {
     const list: NzSafeAny[] = [];
     for (const key of formProperty.propertiesId) {
       const property = (formProperty.properties as Record<string, FormProperty>)[key] as FormProperty;
+      // `show` 只看 `ui.hidden === false`（未显式设置即隐藏），与动态的 `property.visible` 是两个来源
       const item = {
         property,
         grid: property.ui.grid ?? grid ?? {},
@@ -126,10 +131,10 @@ export class ObjectWidget extends ObjectLayoutWidget implements OnInit {
   }
 
   changeExpand(): void {
+    // 标题上的点击始终绑定，`showExpand` 为 false 时只能在这里拦截
     if (!this.showExpand) {
       return;
     }
-    this.expand = !this.expand;
-    this.detectChanges(true);
+    this.expand.set(!this.expand());
   }
 }

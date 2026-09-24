@@ -1,8 +1,9 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 
 import { SFCustomWidgetSchema } from './schema';
 import { ControlUIWidget } from '../../widget';
 
+/** 自定义模板 widget：模板里的 `ui._render` 由 `SFTemplateDirective` 注册，经 `SFComponent.attachCustomRender()` 注入 */
 @Component({
   selector: 'sf-custom',
   template: `
@@ -21,6 +22,7 @@ import { ControlUIWidget } from '../../widget';
     </sf-item-wrap>
   `,
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   // eslint-disable-next-line @angular-eslint/prefer-standalone
   standalone: false
 })

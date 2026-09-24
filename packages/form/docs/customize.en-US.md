@@ -74,7 +74,9 @@ class TestWidget extends ControlWidget implements OnInit {
 
 **ngModel and form registration**
 
-The `ngModel` inside a widget template is only a local binding synchronized with `FormProperty`, it neither needs nor should be registered with any form, so it must be declared as `standalone`; otherwise Angular v22 reports a `NG01354` warning in the console (see [FAQ](/form/qa) for details).
+The `ngModel` inside a widget template is only a local binding synchronized with `FormProperty`, it neither needs nor should be registered with any form, so it must be declared as `standalone`; otherwise Angular v22 reports a `NG01354` warning in the console.
+
+> Note: Do not follow that warning and add `viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]`: it makes `ngModel` try to register with the internal form of SF, and since it has no `name`, it throws `NG01352` immediately.
 
 **sf-item-wrap**
 
@@ -82,7 +84,11 @@ Wrap your custom content in the template with the `sf-item-wrap` component, whic
 
 **Change detection**
 
-The widget is manually trigger changed detection during the rendering process. In most cases, the `ControlWidget` is well manage of changing detection. but the asynchronous operation may be encountered, you can call the `detectChanges()` method to trigger a change detection of the widget.
+Widget state is fully signal-driven: `ui` / `schema` are reactive objects, and your own state should use `signal`.
+Therefore **manual change detection is no longer needed** (`detectChanges()` has been removed) — the view refreshes automatically.
+
+> Note: `ui` / `schema` must be **replaced as a whole** (e.g. `ui.optionalHelp = { ...ui.optionalHelp, text }`);
+> mutating nested structures in place (e.g. `schema.enum.push(...)`) is not tracked.
 
 ### Register
 

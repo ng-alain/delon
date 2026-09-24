@@ -2,7 +2,7 @@
   <ng-content />
 </ng-template>
 <ng-template #btnTpl>
-  @if (button !== 'none') {
+  @if (button() !== 'none') {
     @let btnRender = _btn.render;
     @if (btnRender) {
       <nz-form-item [class]="btnRender.class!" class="sf-btns" [fixed-label]="btnRender.spanLabelFixed!">
@@ -20,15 +20,15 @@
         >
           <div class="ant-form-item-control-input">
             <div class="ant-form-item-control-input-content">
-              @if (button) {
+              @if (button()) {
                 <button
                   type="submit"
                   nz-button
                   data-type="submit"
                   [nzType]="_btn.submit_type!"
                   [nzSize]="btnRender.size!"
-                  [nzLoading]="loading"
-                  [disabled]="liveValidate && !valid"
+                  [nzLoading]="loading()"
+                  [disabled]="liveValidate() && !valid"
                 >
                   @if (_btn.submit_icon) {
                     <nz-icon
@@ -47,7 +47,7 @@
                     data-type="reset"
                     [nzType]="_btn.reset_type!"
                     [nzSize]="btnRender.size!"
-                    [disabled]="loading"
+                    [disabled]="loading()"
                     (click)="reset(true)"
                   >
                     @let resetIcon = _btn.reset_icon;
@@ -86,7 +86,14 @@
     <ng-template [ngTemplateOutlet]="con" />
   }
 </ng-template>
-<form nz-form ngNoForm novalidate [nzLayout]="layout" (submit)="onSubmit($event)" [attr.autocomplete]="autocomplete">
+<form
+  nz-form
+  ngNoForm
+  novalidate
+  [nzLayout]="layout()"
+  (submit)="onSubmit($event)"
+  [attr.autocomplete]="autocomplete()"
+>
   @if (rootProperty) {
     <sf-item [formProperty]="rootProperty" [footer]="btnTpl" />
   }

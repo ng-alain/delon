@@ -1,6 +1,7 @@
-import { afterNextRender, Injector, NgZone, ɵNoopNgZone } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable, distinctUntilChanged, map, take } from 'rxjs';
+import { afterNextRender, computed, Injector, signal } from '@angular/core';
+import { BehaviorSubject, combineLatest, Observable, distinctUntilChanged, map } from 'rxjs';
 
+import { DelonLocaleService } from '@delon/theme';
 import { AlainSFConfig } from '@delon/util/config';
 import { NzFormStatusService } from 'ng-zorro-antd/core/form';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -9,6 +10,7 @@ import type { NzFormControlStatusType } from 'ng-zorro-antd/form';
 import { SF_SEQ } from '../const';
 import type { ErrorData } from '../errors';
 import type { SFFormValueChange, SFUpdateValueAndValidity, SFValue } from '../interface';
+import { reactive } from '../reactive';
 import type { SFSchema, SFSchemaType } from '../schema';
 import type { SFUISchema, SFUISchemaItem, SFUISchemaItemRun, SFVisibleIfReturn } from '../schema/ui';
 import { isBlank } from '../utils';
@@ -16,22 +18,66 @@ import { SchemaValidatorFactory } from '../validator.factory';
 import type { Widget } from '../widget';
 
 export abstract class FormProperty {
-  private _errors: ErrorData[] | null = null;
-  private _valueChanges = new BehaviorSubject<SFFormValueChange>({ path: null, pathValue: null, value: null });
-  private _errorsChanges = new BehaviorSubject<ErrorData[] | null>(null);
-  private _visible = true;
-  private _visibilityChanges = new BehaviorSubject<boolean>(true);
+  private readonly _valueChanges = new BehaviorSubject<SFFormValueChange>({ path: null, pathValue: null, value: null });
+  private readonly _errorsChanges = new BehaviorSubject<ErrorData[] | null>(null);
+  private readonly _visibilityChanges = new BehaviorSubject<boolean>(true);
   private _root: PropertyGroup;
   private _parent: PropertyGroup | null;
-  _objErrors: Record<string, ErrorData[]> = {};
+  /**
+   * @internal 直接子节点上报的错误（key 是子属性**实例**）
+   *
+   * 子节点的 `path` 会随数组增删被重编号，重编号后就无法再指回原来的节点，
+   * 因此这里用实例当 key。
+   */
+  protected readonly _objErrors = new Map<FormProperty, ErrorData[]>();
+  /**
+   * @internal `SFComponent.cleanValue` 在属性树上的镜像
+   *
+   * 供模型层读取（如 `ArrayProperty._updateValue` 合并 `formData` 时）。
+   * **不要经由 `widget` 读取**——`reset()` 发生在 widget 创建之前，
+   * 那时 `this.widget` 还是 undefined。
+   */
+  _cleanValue = false;
   schemaValidator: (value: SFValue) => ErrorData[];
   schema: SFSchema;
   ui: SFUISchema | SFUISchemaItemRun;
   formData: Record<string, unknown>;
-  _value: SFValue = null;
   widget!: Widget<FormProperty, SFUISchemaItem>;
   path: string;
   propertyId?: string;
+
+  // #region 响应式状态
+  //
+  // `_value` / `_errors` / `_visible` 的唯一存储是 signal。对外暴露同名的
+  // getter（`value` / `errors` / `visible` / `valid`），因此在模板或 `computed` 中
+  // 读取时会**自动建立依赖**，而读法本身与普通字段无异。
+  // 写入一律保持同步（不引入 effect），以免改变事件时序。
+
+  /** @internal 值的唯一存储 */
+  private readonly _value$ = signal<SFValue>(null);
+  /** @internal 错误的唯一存储 */
+  private readonly _errors$ = signal<ErrorData[] | null>(null);
+  /** @internal 可见性的唯一存储 */
+  private readonly _visible$ = signal(true);
+  private readonly _valid$ = computed(() => {
+    const errors = this._errors$();
+    return errors === null || errors.length === 0;
+  });
+
+  /**
+   * @internal 值的兼容读写通道
+   *
+   * 子类会直接写 `this._value = x`，`widgets/upload` 这类 widget 也会写
+   * `formProperty._value`，因此保留它并与 `_value$` 读写同一份存储。
+   * 内部新代码请优先使用 `_value$`。
+   */
+  get _value(): SFValue {
+    return this._value$();
+  }
+  set _value(value: SFValue) {
+    this._value$.set(value);
+  }
+  // #endregion
 
   constructor(
     private injector: Injector,
@@ -43,8 +89,10 @@ export abstract class FormProperty {
     path: string,
     private _options: AlainSFConfig
   ) {
-    this.schema = schema;
-    this.ui = ui;
+    // 浅响应式包装：让 `property.ui.xxx = yyy` / `property.schema.enum = [...]` 之类的
+    // 就地赋值也能进入 signal 依赖图。`schemaValidator` 用原始 `schema`，避免把代理交给 ajv。
+    this.schema = reactive(schema);
+    this.ui = reactive(ui);
     this.schemaValidator = schemaValidatorFactory.createValidatorFn(schema, {
       ingoreKeywords: this.ui.ingoreKeywords as string[],
       debug: (ui as SFUISchemaItem)!.debug!
@@ -79,20 +127,24 @@ export abstract class FormProperty {
     return this._root;
   }
 
+  /** 表单值（读取时若处于响应式上下文则建立依赖） */
   get value(): SFValue {
-    return this._value;
+    return this._value$();
   }
 
+  /** 当前错误列表 */
   get errors(): ErrorData[] | null {
-    return this._errors;
+    return this._errors$();
   }
 
+  /** 是否可见 */
   get visible(): boolean {
-    return this._visible;
+    return this._visible$();
   }
 
+  /** 是否有效 */
   get valid(): boolean {
-    return this._errors === null || this._errors.length === 0;
+    return this._valid$();
   }
 
   get options(): AlainSFConfig {
@@ -122,10 +174,6 @@ export abstract class FormProperty {
    *  @internal
    */
   abstract _updateValue(): void;
-
-  cd(onlySelf: boolean = false): void {
-    this.widget?.detectChanges(onlySelf);
-  }
 
   /**
    * 更新值且校验数据
@@ -206,13 +254,13 @@ export abstract class FormProperty {
     // The definition of some rules:
     // 1. Should not ajv validator when is empty data and required fields
     // 2. Should not ajv validator when is empty data
-    const isEmpty = this.isEmptyData(this._value);
+    const isEmpty = this.isEmptyData(this._value$());
     if (isEmpty && this.ui._required) {
       errors = [{ keyword: 'required' }];
     } else if (isEmpty) {
       errors = [];
     } else {
-      errors = this.schemaValidator(this._value) ?? [];
+      errors = this.schemaValidator(this._value$()) ?? [];
     }
     const customValidator = (this.ui as SFUISchemaItemRun).validator;
     if (typeof customValidator === 'function') {
@@ -220,7 +268,6 @@ export abstract class FormProperty {
       if (customErrors instanceof Observable) {
         customErrors.subscribe(res => {
           this.setCustomErrors(errors, res);
-          this.cd(false);
         });
         return;
       }
@@ -228,8 +275,8 @@ export abstract class FormProperty {
       return;
     }
 
-    this._errors = errors;
-    this.setErrors(this._errors);
+    this._errors$.set(errors);
+    this.setErrors(errors);
   }
 
   private setCustomErrors(errors: ErrorData[], list: ErrorData[]): void {
@@ -242,8 +289,9 @@ export abstract class FormProperty {
         err.keyword = null;
       });
     }
-    this._errors = hasCustomError ? errors.concat(...list) : errors;
-    this.setErrors(this._errors);
+    const nextErrors = hasCustomError ? errors.concat(...list) : errors;
+    this._errors$.set(nextErrors);
+    this.setErrors(nextErrors);
   }
 
   /**
@@ -263,7 +311,7 @@ export abstract class FormProperty {
     let arrErrs = Array.isArray(errors) ? errors : [errors];
 
     if (emitFormat && arrErrs && !this.ui.onlyVisual) {
-      const l = (this.widget && this.widget.l.error) ?? {};
+      const l = this._localeError();
       arrErrs = arrErrs.map((err: ErrorData) => {
         let message: string | ((err: ErrorData) => string) =
           err.keyword == null && err.message
@@ -283,23 +331,53 @@ export abstract class FormProperty {
         return err;
       });
     }
-    this._errors = arrErrs;
+    this._errors$.set(arrErrs);
     this._errorsChanges.next(arrErrs);
     // Should send errors to parent field
-    if (this._parent) {
-      this._parent.setParentAndPlatErrors(arrErrs, this.path);
-    }
+    // 自身错误为空时改为上报子树：手写 `setErrors`、必填空串、自定义校验器这类错误
+    // 本节点自己校验不出来，不能因为自身为空就把子树的上报一起清掉
+    this._parent?.setParentAndPlatErrors(arrErrs.length ? arrErrs : this._collectChildErrors(), this);
   }
 
-  setParentAndPlatErrors(errors: ErrorData[], path: string): void {
-    this._objErrors[path] = errors;
-    const platErrors: ErrorData[] = [];
-    Object.keys(this._objErrors).forEach(p => {
-      const property = this.searchProperty(p);
-      if (property && !property.visible) return;
-      platErrors.push(...this._objErrors[p]);
+  /**
+   * 错误文案的本地化映射
+   *
+   * widget 已实例化时取它的 `l`；**widget 尚未实例化时回落到 `DelonLocaleService`**，
+   * 因此 `setErrors()` 不依赖 widget 是否已存在。
+   */
+  private _localeError(): Record<string, string | ((err: ErrorData) => string)> {
+    if (this.widget) {
+      return (this.widget.l.error ?? {}) as Record<string, string>;
+    }
+    const srv = this.injector.get(DelonLocaleService, null);
+    return (srv?.getData('sf')?.error ?? {}) as Record<string, string>;
+  }
+
+  /**
+   * @internal 记录某个子节点上报的错误，并据此重新聚合本节点的错误
+   */
+  setParentAndPlatErrors(errors: ErrorData[], property: FormProperty): void {
+    this._objErrors.set(property, errors);
+    this._refreshObjErrors();
+  }
+
+  /**
+   * @internal 用可见子节点上报的错误重新聚合本节点，通知订阅者并向上传递
+   */
+  protected _refreshObjErrors(): void {
+    const errors = this._collectChildErrors();
+    this._errors$.set(errors);
+    this._errorsChanges.next(errors);
+    this._parent?.setParentAndPlatErrors(errors, this);
+  }
+
+  private _collectChildErrors(): ErrorData[] {
+    const errors: ErrorData[] = [];
+    this._objErrors.forEach((childErrors, property) => {
+      if (!property.visible) return;
+      errors.push(...childErrors);
     });
-    this.setErrors(platErrors, false);
+    return errors;
   }
 
   // #endregion
@@ -311,23 +389,19 @@ export abstract class FormProperty {
    * 设置小部件的隐藏或显示
    */
   setVisible(visible: boolean): this {
-    this._visible = visible;
+    this._visible$.set(visible);
     this._visibilityChanges.next(visible);
     // 渲染时需要重新触发 reset
+    //
+    // `afterNextRender` 在 zone 与 zoneless 两种模式下都表示「下一次渲染之后」，
+    // 不需要探测 `ɵNoopNgZone` 这类私有 API。
     if (visible) {
-      const ngZone = this.injector.get(NgZone, null);
-      if (ngZone instanceof ɵNoopNgZone) {
-        afterNextRender(
-          () => {
-            this.resetValue(this.value, true);
-          },
-          { injector: this.injector }
-        );
-      } else {
-        ngZone?.onStable.pipe(take(1)).subscribe(() => {
+      afterNextRender(
+        () => {
           this.resetValue(this.value, true);
-        });
-      }
+        },
+        { injector: this.injector }
+      );
     }
     return this;
   }
@@ -358,6 +432,8 @@ export abstract class FormProperty {
                       } else {
                         if (idx !== -1) parentRequired.splice(idx, 1);
                       }
+                      // 与 `SFComponent.setRequired()` 同理：必须写入新数组，代理才会通知读取方
+                      this.parent!.schema.required = [...parentRequired];
                       this.ui._required = fixViFnRes.required;
                     }
                     return fixViFnRes.show;
@@ -393,15 +469,24 @@ export abstract class FormProperty {
 
   // #endregion
 
+  /** 更新 widget 反馈状态：写 `ui.feedback`（模板类名），并推给 `NzFormStatusService`（与 `sf-item-wrap` 的 `effect` 同一通道） */
   updateFeedback(status: NzFormControlStatusType = ''): void {
     this.ui.feedback = status;
     this.widget?.injector.get(NzFormStatusService).formStatusChanges.next({ status, hasFeedback: !!status });
-    this.cd(true);
   }
 }
 
 export abstract class PropertyGroup extends FormProperty {
-  properties: Record<string, FormProperty> | FormProperty[] | null = null;
+  // `properties` 被 `array.widget.ts` 的模板直接读取（`@for (... of formProperty.properties)`），
+  // 用 signal 支撑 + 同名 getter/setter，数组增删后视图自动刷新。
+  // 写入**只能整值替换**：就地 push/splice 不会触发通知。
+  private readonly _properties$ = signal<Record<string, FormProperty> | FormProperty[] | null>(null);
+  get properties(): Record<string, FormProperty> | FormProperty[] | null {
+    return this._properties$();
+  }
+  set properties(value: Record<string, FormProperty> | FormProperty[] | null) {
+    this._properties$.set(value);
+  }
 
   getProperty(path: string): FormProperty | undefined {
     const subPathIdx = path.indexOf(SF_SEQ);

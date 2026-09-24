@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation, signal } from '@angular/core';
 
 import { SFRadioWidgetSchema } from './schema';
 import { SFValue } from '../../interface';
@@ -8,55 +8,58 @@ import { ControlUIWidget } from '../../widget';
 
 @Component({
   selector: 'sf-radio',
-  template: `<sf-item-wrap
-    [id]="id"
-    [schema]="schema"
-    [ui]="ui"
-    [showError]="showError"
-    [error]="error"
-    [showTitle]="schema.title"
-  >
-    <nz-radio-group
-      [nzSize]="ui.size!"
-      [nzName]="id"
-      [ngModel]="value"
-      [ngModelOptions]="{ standalone: true }"
-      (ngModelChange)="_setValue($event)"
-      [nzButtonStyle]="ui.buttonStyle ?? 'outline'"
+  template: `
+    @let list = data();
+    <sf-item-wrap
+      [id]="id"
+      [schema]="schema"
+      [ui]="ui"
+      [showError]="showError"
+      [error]="error"
+      [showTitle]="schema.title"
     >
-      @if (styleType) {
-        @for (option of data; track $index) {
-          <label nz-radio [nzValue]="option.value" [nzDisabled]="disabled || option.disabled">
-            <span [innerHTML]="option.label"></span>
-          </label>
+      <nz-radio-group
+        [nzSize]="ui.size!"
+        [nzName]="id"
+        [ngModel]="value"
+        [ngModelOptions]="{ standalone: true }"
+        (ngModelChange)="_setValue($event)"
+        [nzButtonStyle]="ui.buttonStyle ?? 'outline'"
+      >
+        @if (styleType()) {
+          @for (option of list; track $index) {
+            <label nz-radio [nzValue]="option.value" [nzDisabled]="disabled || option.disabled">
+              <span [innerHTML]="option.label"></span>
+            </label>
+          }
+        } @else {
+          @for (option of list; track $index) {
+            <label nz-radio-button [nzValue]="option.value" [nzDisabled]="disabled || option.disabled">
+              <span [innerHTML]="option.label"></span>
+            </label>
+          }
         }
-      } @else {
-        @for (option of data; track $index) {
-          <label nz-radio-button [nzValue]="option.value" [nzDisabled]="disabled || option.disabled">
-            <span [innerHTML]="option.label"></span>
-          </label>
-        }
-      }
-    </nz-radio-group>
-  </sf-item-wrap>`,
+      </nz-radio-group>
+    </sf-item-wrap>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   // eslint-disable-next-line @angular-eslint/prefer-standalone
   standalone: false
 })
 export class RadioWidget extends ControlUIWidget<SFRadioWidgetSchema> {
-  data: SFSchemaEnum[] = [];
-  styleType!: boolean;
+  protected readonly data = signal<SFSchemaEnum[]>([]);
+  protected readonly styleType = signal(false);
 
   reset(value: SFValue): void {
-    this.styleType = (this.ui.styleType ?? 'default') === 'default';
+    this.styleType.set((this.ui.styleType ?? 'default') === 'default');
     getData(this.schema, this.ui, value).subscribe(list => {
-      this.data = list;
-      this.cd.markForCheck();
+      this.data.set(list);
     });
   }
 
   _setValue(value: SFValue): void {
     this.setValue(value);
-    if (this.ui.change) this.ui.change(value);
+    this.ui.change?.(value);
   }
 }

@@ -452,6 +452,36 @@ describe('form: component', () => {
         expect(context.formChange).toHaveBeenCalled();
       });
 
+      it('#formChange, should not be triggered by the initial value push', fakeAsync(() => {
+        page.newSchema({
+          properties: {
+            color: { type: 'string', format: 'color' },
+            one: { type: 'string', ui: { widget: 'date' }, default: new Date(2019, 0, 1) },
+            start: { type: 'string', ui: { widget: 'date', end: 'end' }, default: new Date(2019, 0, 1) },
+            end: { type: 'string', ui: { widget: 'date' }, default: new Date(2019, 0, 2) }
+          }
+        } as SFSchema);
+        page.time();
+
+        // 初值由 widget 推送 / 格式化，不是用户变更
+        expect((context.formChange as jasmine.Spy).calls.count()).toBe(0);
+        expect(page.getProperty('/color').value).toBe('#000000');
+        expect(page.getProperty('/one').value).toBe('2019-01-01 00:00:00');
+        expect(page.getProperty('/start').value).toBe('2019-01-01 00:00:00');
+        expect(page.getProperty('/end').value).toBe('2019-01-02 00:00:00');
+
+        // 用户改动照旧上报
+        page.setValue('/color', '#fff');
+        expect((context.formChange as jasmine.Spy).calls.count()).toBe(1);
+
+        // `refreshSchema()` 会重建 widget，初值推送同样不算用户变更
+        (context.formChange as jasmine.Spy).calls.reset();
+        context.comp.refreshSchema();
+        page.time();
+        expect((context.formChange as jasmine.Spy).calls.count()).toBe(0);
+        page.asyncEnd();
+      }));
+
       describe('#formValueChange', () => {
         it('should be working', () => {
           page.setValue('/name', 'cipchk');
@@ -494,6 +524,7 @@ describe('form: component', () => {
           .newSchema({ properties: { name: { type: 'string', readOnly: true } } })
           .getEl('input') as HTMLInputElement;
         tick();
+        page.dc();
         expect(el.disabled).toBe(true);
         expect(el.classList).toContain('ant-input-disabled');
       }));

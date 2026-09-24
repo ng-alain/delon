@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { ControlUIWidget, DelonFormModule, SFValue, getData } from '@delon/form';
@@ -8,46 +8,45 @@ import type { SFSegmentedWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-segmented',
-  template: `<sf-item-wrap
-    [id]="id"
-    [schema]="schema"
-    [ui]="ui"
-    [showError]="showError"
-    [error]="error"
-    [showTitle]="schema.title"
-  >
-    <nz-segmented
-      [ngModel]="value"
-      [ngModelOptions]="{ standalone: true }"
-      (ngModelChange)="setValue($event)"
-      [nzDisabled]="disabled"
-      [nzSize]="$any(ui.size)"
-      [nzBlock]="ui.block ?? false"
-      [nzVertical]="ui.vertical"
-      [nzShape]="ui.shape ?? 'default'"
-      [nzOptions]="list"
-      (nzValueChange)="valueChange($event)"
-    />
-  </sf-item-wrap>`,
+  template: `
+    <sf-item-wrap
+      [id]="id"
+      [schema]="schema"
+      [ui]="ui"
+      [showError]="showError"
+      [error]="error"
+      [showTitle]="schema.title"
+    >
+      <nz-segmented
+        [ngModel]="value"
+        [ngModelOptions]="{ standalone: true }"
+        (ngModelChange)="setValue($event)"
+        [nzDisabled]="disabled"
+        [nzSize]="$any(ui.size)"
+        [nzBlock]="ui.block ?? false"
+        [nzVertical]="ui.vertical"
+        [nzShape]="ui.shape ?? 'default'"
+        [nzOptions]="list()"
+        (nzValueChange)="valueChange($event)"
+      />
+    </sf-item-wrap>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [FormsModule, DelonFormModule, NzSegmentedComponent]
 })
 export class SegmentedWidget extends ControlUIWidget<SFSegmentedWidgetSchema> {
   static readonly KEY = 'segmented';
-  private _list?: NzSegmentedOption[];
-  get list(): NzSegmentedOption[] {
-    return this._list ?? [];
-  }
+  protected readonly list = signal<NzSegmentedOption[]>([]);
 
   reset(value: SFValue): void {
-    getData(this.schema, this.ui, value).subscribe(list => {
-      this._list = list as NzSegmentedOption[];
-      this.detectChanges(true);
+    getData(this.schema, this.ui, value).subscribe(items => {
+      this.list.set(items as NzSegmentedOption[]);
     });
   }
 
   valueChange(v: string | number): void {
-    const list = this.list;
+    const list = this.list();
     this.ui.valueChange?.({
       index: v,
       item: typeof v === 'number' ? (list[v] as SFValue) : list.find(w => w.value === v)
