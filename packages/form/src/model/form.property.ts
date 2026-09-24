@@ -469,6 +469,7 @@ export abstract class FormProperty {
 
   // #endregion
 
+  /** 更新 widget 反馈状态：写 `ui.feedback`（模板类名），并推给 `NzFormStatusService`（与 `sf-item-wrap` 的 `effect` 同一通道） */
   updateFeedback(status: NzFormControlStatusType = ''): void {
     this.ui.feedback = status;
     this.widget?.injector.get(NzFormStatusService).formStatusChanges.next({ status, hasFeedback: !!status });

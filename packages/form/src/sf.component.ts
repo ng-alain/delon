@@ -146,6 +146,11 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit 
   set _valid(value: boolean) {
     this._valid$.set(value);
   }
+  /**
+   * Whether the form is valid
+   *
+   * 表单是否有效
+   */
   get valid(): boolean {
     return this._valid$();
   }
@@ -306,11 +311,6 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit 
   // #endregion
 
   /**
-   * Whether the form is valid
-   *
-   * 表单是否有效
-   */
-  /**
    * The value of the form
    *
    * 表单值
@@ -448,6 +448,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit 
     // 重置折叠检测状态
     this._hasCollapse.set(false);
 
+    // 递归展开一层 schema：为每个属性算出最终 ui 写入 `uiRes['$key']`，并就地修正 schema
     const inFn = (
       schema: SFSchema,
       _parentSchema: SFSchema,
@@ -455,6 +456,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit 
       parentUiSchema: SFUISchemaItemRun,
       uiRes: SFUISchemaItemRun
     ): void => {
+      // 供下面的 `hidden` 分支剔除，先保证 `required` 存在
       if (!Array.isArray(schema.required)) schema.required = [];
 
       Object.keys(schema.properties!).forEach(key => {
@@ -468,7 +470,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit 
         const ui = {
           ...this._defUi,
           ...parentUiSchema,
-          // 忽略部分会引起呈现的属性
+          // 这四项只对当前层有意义，从父级继承会误伤子字段（如父级 `hidden` 会隐藏所有子字段），固定清空
           visibleIf: undefined,
           hidden: undefined,
           optional: undefined,
@@ -481,6 +483,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit 
             : null),
           ...curUi
         } as SFUISchemaItemRun;
+        // `$` 开头的键属于子级，不属于当前 widget 的 ui
         Object.keys(ui)
           .filter(key => key.startsWith(uiKeyPrefix))
           .forEach(key => delete ui[key]);
@@ -517,6 +520,8 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit 
           ui.spanLabel = null;
           ui.spanControl = null;
         }
+        // 区间日期：`ui.end` 指向的结束字段不出现在表单里，改为隐藏并复用 date widget，
+        // 整个区间由起始端渲染；schema 中找不到该字段时退化为单值日期
         if (ui.widget === 'date' && ui.end != null) {
           const dateEndProperty = schema.properties![ui.end];
           if (dateEndProperty) {
@@ -572,6 +577,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit 
         delete property.ui;
 
         if (ui.hidden === true) {
+          // 隐藏字段不参与必填校验
           const idx = schema.required!.indexOf(key);
           if (idx !== -1) {
             schema.required!.splice(idx, 1);
@@ -579,6 +585,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit 
         }
 
         if (property.items) {
+          // 数组项：项级 ui 收在 `$items` 上，并以 item 的 schema 作为下一层继续展开
           ui.$items = {
             ...(property.items.ui as SFUISchemaItem),
             ...uiSchema[uiKey],
@@ -589,12 +596,14 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit 
         }
 
         if (property.properties && Object.keys(property.properties).length) {
+          // 对象子属性：以当前层的 ui 作为父级 ui 继续展开
           inFn(property, schema, uiSchema[uiKey] ?? {}, ui, ui);
         }
       });
     };
 
     if (this._uiValue$() == null) this._uiValue$.set({});
+    // 默认 ui 的合并顺序（后写覆盖先写）：options 三个字段的初值 → `options.ui` → schema 的 `ui` → `ui['*']`（通配默认值）
     this._defUi = {
       onlyVisual: this.options.onlyVisual,
       size: this.options.size,
@@ -611,12 +620,12 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit 
       delete this._defUi.grid;
     }
 
-    // root
     this._ui = { ...this._defUi };
 
     inFn(_schema, _schema, this._uiValue$()!, this._uiValue$()!, this._ui);
 
-    // cond
+    // 把 JSON Schema 的 `if/then/else` 编译成子字段的 `visibleIf`：`then.required` 的字段在条件
+    // 成立时可见，`else.required` 的字段在条件不成立时可见；两边的 `required` 同时合并进当前层
     resolveIfSchema(_schema, this._ui);
 
     this._schema = _schema;

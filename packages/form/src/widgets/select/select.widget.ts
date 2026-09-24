@@ -135,9 +135,11 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
 
     const onSearch = this.ui.onSearch!;
     if (onSearch) {
+      // 订阅随 `sf-item` 销毁结束：widget 会随 `ui.widget` 变化重建，旧搜索不能再写回
+      // `catchError(() => [])` 必须留在管道内，否则一次失败会终止整条订阅、后续搜索全部失效
       this.search$
         .pipe(
-          takeUntil(this.sfItemComp!.destroy$),
+          takeUntil(this.sfItemComp.destroy$),
           distinctUntilChanged(),
           debounceTime(this.ui.searchDebounceTime ?? 300),
           switchMap(text => onSearch(text)),

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
-import { BehaviorSubject, debounceTime, switchMap, takeUntil } from 'rxjs';
+import { BehaviorSubject, debounceTime, switchMap, take, takeUntil, timer } from 'rxjs';
 
 import { SFStringWidgetSchema } from './schema';
 import { SFValue } from '../../interface';
@@ -99,11 +99,13 @@ export class StringWidget extends ControlUIWidget<SFStringWidgetSchema> implemen
       this.type = 'addon';
     }
     if (autofocus === true) {
-      setTimeout(() => {
-        (
-          (this.injector.get(ElementRef).nativeElement as HTMLElement).querySelector(`#${this.id}`) as HTMLElement
-        ).focus();
-      }, 20);
+      // `ngOnInit` 时输入框尚未渲染：等一拍再按 id 聚焦；widget 在这之前被销毁则不再执行
+      timer(20)
+        .pipe(takeUntil(this.sfItemComp.destroy$), take(1))
+        .subscribe(() => {
+          const root = this.injector.get(ElementRef).nativeElement as HTMLElement;
+          (root.querySelector(`#${this.id}`) as HTMLElement).focus();
+        });
     }
     this.initChange();
   }
@@ -120,7 +122,7 @@ export class StringWidget extends ControlUIWidget<SFStringWidgetSchema> implemen
     if (dueTime == null || dueTime <= 0 || changeFn == null) return;
 
     this.change$ = new BehaviorSubject<string>(this.value);
-    let obs = this.change$.asObservable().pipe(debounceTime(dueTime), takeUntil(this.sfItemComp!.destroy$));
+    let obs = this.change$.asObservable().pipe(debounceTime(dueTime), takeUntil(this.sfItemComp.destroy$));
     if (this.ui.changeMap != null) {
       obs = obs.pipe(switchMap(this.ui.changeMap));
     }

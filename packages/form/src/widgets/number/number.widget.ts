@@ -54,6 +54,7 @@ export class NumberWidget extends ControlUIWidget<SFNumberWidgetSchema> implemen
   ngOnInit(): void {
     const { minimum, exclusiveMinimum, maximum, exclusiveMaximum, multipleOf, type } = this.schema;
     this.step = multipleOf ?? 1;
+    // `exclusiveMinimum` / `exclusiveMaximum` 的语义是「不含边界」，这里按 ± 一个 step 收敛到最近的可选值
     if (typeof minimum !== 'undefined') {
       this.min = exclusiveMinimum ? minimum + this.step : minimum;
     }
@@ -67,6 +68,7 @@ export class NumberWidget extends ControlUIWidget<SFNumberWidgetSchema> implemen
     }
 
     const ui = this.ui;
+    // `prefix` 与 `unit` 写的是同一组 formatter/parser，同时配置时 `unit` 覆盖 `prefix`
     if (ui.prefix != null) {
       ui.formatter = value => (value == null ? '' : `${ui.prefix} ${value}`);
       ui.parser = value => +value.replace(`${ui.prefix} `, '');

@@ -34,6 +34,7 @@ export class TextWidget extends ControlUIWidget<SFTextWidgetSchema> implements O
   protected readonly text = signal('');
 
   ngOnInit(): void {
+    // 只做展示：置空 `_required`，否则空值会走必填校验、标题也带上必填标记
     this.ui._required = false;
     this.ui.html = toBool(this.ui.html, true);
   }

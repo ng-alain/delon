@@ -110,6 +110,7 @@ export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
     this.removeTitle = removable === false ? null : (removeTitle ?? this.l.removeText);
   }
 
+  /** 增删后的统一收尾：`onlySelf: false` 让变更沿父链传播；默认不抛 `valueChanges`，删除时才显式打开并带上路径 */
   private reValid(options?: SFUpdateValueAndValidity): void {
     this.formProperty.updateValueAndValidity({
       onlySelf: false,
@@ -126,6 +127,7 @@ export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
   }
 
   removeItem(index: number): void {
+    // 必须在删除前取下标的 path：`remove()` 会把后续兄弟节点重新编号
     const updatePath = (this.formProperty.properties as FormProperty[])[index].path;
     this.formProperty.remove(index);
     this.reValid({ updatePath, emitValueEvent: true });

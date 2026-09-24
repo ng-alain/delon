@@ -107,6 +107,7 @@ export class ObjectWidget extends ObjectLayoutWidget implements OnInit {
     this.showExpand = toBool(ui.showExpand, true);
     this.expand.set(toBool(ui.expand, true));
     this.type = type ?? 'default';
+    // 默认渲染下只有「非根字段、父级不是数组、且显式 showTitle === true」才用 schema.title 作标题
     if (
       this.type === 'card' ||
       (!formProperty.isRoot() && !(formProperty.parent instanceof ArrayProperty) && showTitle === true)
@@ -117,6 +118,7 @@ export class ObjectWidget extends ObjectLayoutWidget implements OnInit {
     const list: NzSafeAny[] = [];
     for (const key of formProperty.propertiesId) {
       const property = (formProperty.properties as Record<string, FormProperty>)[key] as FormProperty;
+      // `show` 只看 `ui.hidden === false`（未显式设置即隐藏），与动态的 `property.visible` 是两个来源
       const item = {
         property,
         grid: property.ui.grid ?? grid ?? {},
@@ -129,6 +131,7 @@ export class ObjectWidget extends ObjectLayoutWidget implements OnInit {
   }
 
   changeExpand(): void {
+    // 标题上的点击始终绑定，`showExpand` 为 false 时只能在这里拦截
     if (!this.showExpand) {
       return;
     }

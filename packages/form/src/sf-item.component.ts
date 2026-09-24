@@ -82,6 +82,7 @@ export class SFItemComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    // `refreshSchema()` 会通过 `TerminatorService` 通知旧属性树上的 widget 容器清理
     this.terminator.onDestroy.subscribe(() => this.ngOnDestroy());
   }
 
