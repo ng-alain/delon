@@ -1,4 +1,4 @@
-import { Component, signal, ViewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 
 import { checkDelay, PageG2, PageG2Height } from '@delon/testing';
@@ -97,7 +97,7 @@ describe('chart: mini-area', () => {
   imports: [G2MiniAreaComponent]
 })
 class TestComponent {
-  @ViewChild('comp', { static: true }) comp!: G2MiniAreaComponent;
+  readonly comp = viewChild.required<G2MiniAreaComponent>('comp');
   readonly line = signal(false);
   height = PageG2Height;
   readonly xAxis = signal<NzSafeAny>(undefined);

@@ -8,7 +8,7 @@ title:
 基础用法。
 
 ```ts
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { G2RadarClickItem, G2RadarData, G2RadarModule } from '@delon/chart/radar';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -19,12 +19,12 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   selector: 'app-demo',
   template: `
     <button nz-button (click)="refresh()" nzType="primary">Refresh</button>
-    <g2-radar [hasLegend]="true" [data]="radarData" height="286" (clickItem)="handleClick($event)" />
+    <g2-radar [hasLegend]="true" [data]="radarData()" height="286" (clickItem)="handleClick($event)" />
   `,
   imports: [NzButtonModule, G2RadarModule]
 })
 export class DemoComponent {
-  radarData: G2RadarData[] = [];
+  readonly radarData = signal<G2RadarData[]>([]);
 
   constructor(private msg: NzMessageService) {
     this.refresh();
@@ -62,7 +62,7 @@ export class DemoComponent {
         }
       });
     });
-    this.radarData = res;
+    this.radarData.set(res);
   }
 
   handleClick(data: G2RadarClickItem): void {

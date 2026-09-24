@@ -185,6 +185,15 @@ export default defineConfig(
     }
   },
   {
+    // 含 spec：chart 包的宿主组件（含 15 个 spec）统一使用 signal 查询 / signal 输入
+    files: ['packages/chart/**/*.ts'],
+    rules: {
+      '@angular-eslint/prefer-signals': 'error',
+      '@angular-eslint/prefer-output-emitter-ref': 'error',
+      '@angular-eslint/no-uncalled-signals': 'error'
+    }
+  },
+  {
     files: ['**/*.html'],
     plugins: {
       prettier

@@ -1,15 +1,15 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Input,
-  Output,
   TemplateRef,
   ViewEncapsulation,
   booleanAttribute,
-  numberAttribute
+  input,
+  numberAttribute,
+  output
 } from '@angular/core';
-import { fromEvent, debounceTime, filter, takeUntil } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { debounceTime, fromEvent } from 'rxjs';
 
 import type { Chart, Event } from '@antv/g2';
 
@@ -36,16 +36,16 @@ export interface G2BarClickItem {
   selector: 'g2-bar',
   exportAs: 'g2Bar',
   template: `
-    <ng-container *nzStringTemplateOutlet="title">
-      <h4 style="margin-bottom: 20px;">{{ title }}</h4>
+    <ng-container *nzStringTemplateOutlet="title()">
+      <h4 style="margin-bottom: 20px;">{{ title() }}</h4>
     </ng-container>
-    @if (!loaded) {
+    @if (!loaded()) {
       <nz-skeleton />
     }
     <div #container></div>
   `,
   host: {
-    '[style.height.px]': 'height'
+    '[style.height.px]': 'height()'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
@@ -54,31 +54,31 @@ export interface G2BarClickItem {
 export class G2BarComponent extends G2BaseComponent {
   // #region fields
 
-  @Input() title?: string | TemplateRef<void>;
-  @Input() color = 'rgba(24, 144, 255, 0.85)';
-  @Input({ transform: numberAttribute }) height = 0;
-  @Input() padding: number | number[] | 'auto' = 'auto';
-  @Input() data: G2BarData[] = [];
-  @Input({ transform: booleanAttribute }) autoLabel = true;
-  @Input() interaction: G2InteractionType = 'none';
-  @Output() readonly clickItem = new EventEmitter<G2BarClickItem>();
+  readonly title = input<string | TemplateRef<void>>();
+  readonly color = input('rgba(24, 144, 255, 0.85)');
+  readonly height = input(0, { transform: numberAttribute });
+  readonly padding = input<number | number[] | 'auto'>('auto');
+  readonly data = input<G2BarData[]>([]);
+  readonly autoLabel = input(true, { transform: booleanAttribute });
+  readonly interaction = input<G2InteractionType>('none');
+  readonly clickItem = output<G2BarClickItem>();
 
   // #endregion
 
   private getHeight(): number {
-    return this.title ? this.height - TITLE_HEIGHT : this.height;
+    return this.title() ? this.height() - TITLE_HEIGHT : this.height();
   }
 
   install(): void {
     const { node, padding, interaction, theme } = this;
 
-    const container = node.nativeElement as HTMLElement;
+    const container = node().nativeElement as HTMLElement;
     const chart: Chart = (this._chart = new this.winG2.Chart({
       container,
       autoFit: true,
       height: this.getHeight(),
-      padding,
-      theme
+      padding: padding(),
+      theme: theme()
     }));
     this.updatelabel();
     chart.axis('y', {
@@ -97,24 +97,24 @@ export class G2BarComponent extends G2BaseComponent {
     chart.tooltip({
       showTitle: false
     });
-    if (interaction !== 'none') {
-      chart.interaction(interaction);
+    if (interaction() !== 'none') {
+      chart.interaction(interaction());
     }
     chart.legend(false);
     chart
       .interval()
       .position('x*y')
       .color('x*y', (x, y) => {
-        const colorItem = this.data.find(w => w.x === x && w.y === y);
-        return colorItem && colorItem.color ? colorItem.color : this.color;
+        const colorItem = this.data().find(w => w.x === x && w.y === y);
+        return colorItem && colorItem.color ? colorItem.color : this.color();
       })
       .tooltip('x*y', (x, y) => ({ name: x, value: y }));
 
     chart.on(`interval:click`, (ev: Event) => {
-      this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
+      this.clickItem.emit({ item: ev.data?.data, ev });
     });
 
-    this.ready.next(chart);
+    this.ready.emit(chart);
 
     this.changeData();
     chart.render();
@@ -123,27 +123,28 @@ export class G2BarComponent extends G2BaseComponent {
 
   changeData(): void {
     const { _chart, data } = this;
-    if (!_chart || !Array.isArray(data) || data.length <= 0) return;
+    if (!_chart || !Array.isArray(data()) || data().length <= 0) return;
 
-    _chart.changeData(data);
+    _chart.changeData(data());
   }
 
   private updatelabel(): void {
-    const { node, data, _chart } = this;
-    const canvasWidth = node.nativeElement.clientWidth;
+    const { node, _chart } = this;
+    const data = this.data();
+    const canvasWidth = node().nativeElement.clientWidth;
     const minWidth = data.length * 30;
-    _chart.axis('x', canvasWidth > minWidth).render();
+    _chart!.axis('x', canvasWidth > minWidth).render();
   }
 
-  private installResizeEvent(): void {
-    if (!this.autoLabel || this.resize$) return;
+  private resizeInstalled = false;
 
-    this.resize$ = fromEvent(window, 'resize')
-      .pipe(
-        takeUntil(this.destroy$),
-        filter(() => !!this._chart),
-        debounceTime(200)
-      )
-      .subscribe(() => this.ngZone.runOutsideAngular(() => this.updatelabel()));
+  private installResizeEvent(): void {
+    if (!this.autoLabel() || this.resizeInstalled) {
+      return;
+    }
+    this.resizeInstalled = true;
+    fromEvent(window, 'resize')
+      .pipe(takeUntilDestroyed(this.destroyRef), debounceTime(200))
+      .subscribe(() => this.updatelabel());
   }
 }

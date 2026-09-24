@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { fakeAsync, tick } from '@angular/core/testing';
 
 import { checkDelay, PageG2 } from '@delon/testing';
@@ -43,7 +43,7 @@ describe('chart: tag-cloud', () => {
   imports: [G2TagCloudComponent]
 })
 class TestComponent {
-  @ViewChild('comp', { static: true }) comp!: G2TagCloudComponent;
+  readonly comp = viewChild.required<G2TagCloudComponent>('comp');
   data: G2TagCloudData[] = [
     { name: 'China1', value: 1 },
     { name: 'China2', value: 2 },

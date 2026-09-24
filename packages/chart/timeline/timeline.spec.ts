@@ -1,4 +1,4 @@
-import { Component, signal, ViewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 
 import { checkDelay, PageG2 } from '@delon/testing';
@@ -67,7 +67,7 @@ describe('chart: timeline', () => {
   imports: [G2TimelineComponent]
 })
 class TestComponent {
-  @ViewChild('comp', { static: true }) comp!: G2TimelineComponent;
+  readonly comp = viewChild.required<G2TimelineComponent>('comp');
   title = 'title';
   readonly titleMap = signal<G2TimelineMap>({ y1: '客流量', y2: '支付笔数' });
   readonly colorMap = signal<G2TimelineMap>({ y1: '#1890FF', y2: '#2FC25B' });

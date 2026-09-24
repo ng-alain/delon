@@ -1,6 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
+import { G2BaseComponent } from '@delon/chart/core';
 import { createTestContext } from '@delon/testing';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -39,7 +40,7 @@ describe('chart: custom', () => {
   it('should be load scripts by cdn', () => {
     const srv = TestBed.inject(G2Service);
     spyOn(srv, 'libLoad');
-    spyOnProperty(context.comp, 'winG2').and.returnValue(null as NzSafeAny);
+    spyOnProperty(G2BaseComponent.prototype, 'winG2', 'get').and.returnValue(null as NzSafeAny);
     fixture.detectChanges();
     expect(srv.libLoad).toHaveBeenCalled();
   });
@@ -50,7 +51,7 @@ describe('chart: custom', () => {
   imports: [G2CustomComponent]
 })
 class TestComponent {
-  @ViewChild('comp', { static: true }) comp!: G2CustomComponent;
+  readonly comp = viewChild.required<G2CustomComponent>('comp');
   resizeTime = 0;
   render(): void {}
   resize(): void {}

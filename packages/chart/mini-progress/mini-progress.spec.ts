@@ -1,4 +1,4 @@
-import { Component, signal, ViewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { createTestContext, PageG2 } from '@delon/testing';
@@ -48,7 +48,7 @@ describe('chart: mini-progress', () => {
   imports: [G2MiniProgressComponent]
 })
 class TestComponent {
-  @ViewChild('comp', { static: true }) comp!: G2MiniProgressComponent;
+  readonly comp = viewChild.required<G2MiniProgressComponent>('comp');
   color = '#1890FF';
   target: number = 1;
   readonly percent = signal<number>(10);

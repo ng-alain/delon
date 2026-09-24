@@ -1,24 +1,21 @@
-import { Platform } from '@angular/cdk/platform';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   DestroyRef,
   ElementRef,
-  EventEmitter,
-  Input,
-  NgZone,
   OnDestroy,
-  OnInit,
-  Output,
-  ViewChild,
   ViewEncapsulation,
-  inject
+  afterNextRender,
+  inject,
+  input,
+  output,
+  signal,
+  viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { fromEvent, debounceTime, filter } from 'rxjs';
 
-import { ZoneOutside } from '@delon/util/decorator';
+import { watchInputs } from '@delon/chart/core';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzSkeletonComponent } from 'ng-zorro-antd/skeleton';
 
@@ -31,102 +28,113 @@ import {
   ChartEChartsOption
 } from './echarts.types';
 
+/** 数字补 px；null/undefined 产出空串（旧 setter 会产出字面量 'null'） */
+function toCssSize(value: number | string | null | undefined): string {
+  if (value == null) {
+    return '';
+  }
+  return typeof value === 'number' ? `${value}px` : `${value}`;
+}
+
 @Component({
   selector: 'chart-echarts, [chart-echarts]',
   exportAs: 'chartECharts',
   template: `
-    @if (!loaded) {
+    @if (!loaded()) {
       <nz-skeleton />
     }
-    <div #container [style.width]="_width" [style.height]="_height"></div>
+    <div #container [style.width]="width()" [style.height]="height()"></div>
   `,
   host: {
     '[style.display]': `'inline-block'`,
-    '[style.width]': `_width`,
-    '[style.height]': `_height`
+    '[style.width]': `width()`,
+    '[style.height]': `height()`
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [NzSkeletonComponent]
 })
-export class ChartEChartsComponent implements OnInit, OnDestroy {
+export class ChartEChartsComponent implements OnDestroy {
   private readonly srv = inject(ChartEChartsService);
-  private readonly cdr = inject(ChangeDetectorRef);
-  private readonly ngZone = inject(NgZone);
-  private readonly platform = inject(Platform);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly node = viewChild.required<ElementRef<HTMLElement>>('container');
 
-  @ViewChild('container', { static: true }) private node!: ElementRef;
-  private destroy$ = inject(DestroyRef);
+  readonly width = input<number | string | null, number | string | null | undefined>('100%', {
+    transform: toCssSize
+  });
+  readonly height = input<number | string | null, number | string | null | undefined>('400px', {
+    transform: toCssSize
+  });
+  readonly theme = input<string | Record<string, unknown> | null | undefined>(this.srv.cog.echartsTheme);
+  readonly initOpt = input<NzSafeAny>();
+  readonly option = input<ChartEChartsOption>();
+  /** 事件绑定；变更时不重建图表（与旧行为一致） */
+  readonly on = input<ChartEChartsOn[]>([]);
+  readonly events = output<ChartEChartsEvent>();
+
   private _chart: ChartECharts | null = null;
-  private _theme?: string | Record<string, unknown> | null;
-  private _initOpt?: {
-    renderer?: NzSafeAny;
-    devicePixelRatio?: number;
-    width?: number;
-    height?: number;
-    locale?: NzSafeAny;
-  };
-  private _option!: ChartEChartsOption;
-  _width = '100%';
-  _height = '400px';
-
-  @Input()
-  set width(val: number | string | null | undefined) {
-    this._width = typeof val === 'number' ? `${val}px` : `${val}`;
-  }
-  @Input() set height(val: number | string | null | undefined) {
-    this._height = typeof val === 'number' ? `${val}px` : `${val}`;
-  }
-  @Input()
-  set theme(value: string | Record<string, unknown> | null | undefined) {
-    this._theme = value;
-    if (this._chart) {
-      this.install();
-    }
-  }
-  @Input()
-  set initOpt(value: NzSafeAny) {
-    this._initOpt = value;
-    if (this._chart) {
-      this.install();
-    }
-  }
-  @Input()
-  set option(value: ChartEChartsOption) {
-    this._option = value;
-    if (this._chart) {
-      this.setOption(value, true);
-    }
-  }
-  @Input() on: ChartEChartsOn[] = [];
-  @Output() readonly events = new EventEmitter<ChartEChartsEvent>();
+  private readonly _loaded = signal(false);
+  readonly loaded = this._loaded.asReadonly();
+  private prev?: { theme: unknown; initOpt: unknown; option: unknown };
 
   get chart(): ChartECharts | null {
     return this._chart;
   }
-  loaded = false;
 
   constructor() {
+    watchInputs(this, () => this.dispatch());
+
     this.srv.notify
       .pipe(
-        takeUntilDestroyed(),
-        filter(() => !this.loaded)
+        takeUntilDestroyed(this.destroyRef),
+        filter(() => !this._loaded())
       )
       .subscribe(() => this.load());
 
-    this.theme = this.srv.cog.echartsTheme;
+    afterNextRender(() => {
+      fromEvent(window, 'resize')
+        .pipe(
+          takeUntilDestroyed(this.destroyRef),
+          filter(() => !!this._chart),
+          debounceTime(200)
+        )
+        .subscribe(() => this._chart!.resize());
+
+      if ((window as NzSafeAny).echarts) {
+        this.load();
+      } else {
+        this.srv.libLoad();
+      }
+    });
+  }
+
+  /** theme / initOpt 变更 → 重建；option 变更 → 增量更新 */
+  private dispatch(): void {
+    const theme = this.theme();
+    const initOpt = this.initOpt();
+    const option = this.option();
+    const prev = this.prev;
+    this.prev = { theme, initOpt, option };
+
+    if (!this._chart || !prev) {
+      return;
+    }
+    if (theme !== prev.theme || initOpt !== prev.initOpt) {
+      this.install();
+    } else if (option !== prev.option) {
+      this.setOption(option!, true);
+    }
   }
 
   private emit(type: ChartEChartsEventType, other?: ChartEChartsEvent): void {
     this.events.emit({ type, chart: this.chart!, ...other });
   }
 
-  @ZoneOutside()
   private load(): void {
-    this.ngZone.run(() => {
-      this.loaded = true;
-      this.cdr.detectChanges();
-    });
+    if (this._loaded()) {
+      return;
+    }
+    this._loaded.set(true);
     this.emit('ready');
     this.install();
   }
@@ -134,20 +142,23 @@ export class ChartEChartsComponent implements OnInit, OnDestroy {
   install(): this {
     this.destroy();
     const chart = (this._chart = (window as NzSafeAny).echarts.init(
-      this.node.nativeElement,
-      this._theme,
-      this._initOpt
+      this.node().nativeElement,
+      this.theme(),
+      this.initOpt()
     )) as ChartECharts;
     this.emit('init');
-    this.setOption(this._option);
+    this.setOption(this.option()!);
     // on
-    this.on.forEach(item => {
+    this.on().forEach(item => {
       if (item.query != null) {
         chart.on(item.eventName, item.query, event => item.handler({ event, chart }));
       } else {
         chart.on(item.eventName, event => item.handler({ event, chart }));
       }
     });
+    // 安装即代表图表已与当前输入同步，故以其为 dispatch 的比较基线
+    // （watchInputs 首次执行只建立基线、不回调，不补这一步会把安装后的首次变更吞掉）
+    this.prev = { theme: this.theme(), initOpt: this.initOpt(), option: this.option() };
     return this;
   }
 
@@ -167,27 +178,8 @@ export class ChartEChartsComponent implements OnInit, OnDestroy {
     return this;
   }
 
-  ngOnInit(): void {
-    if (!this.platform.isBrowser) {
-      return;
-    }
-    if ((window as NzSafeAny).echarts) {
-      this.load();
-    } else {
-      this.srv.libLoad();
-    }
-
-    fromEvent(window, 'resize')
-      .pipe(
-        takeUntilDestroyed(this.destroy$),
-        filter(() => !!this._chart),
-        debounceTime(200)
-      )
-      .subscribe(() => this._chart!.resize());
-  }
-
   ngOnDestroy(): void {
-    this.on.forEach(item => this._chart?.off(item.eventName));
+    this.on().forEach(item => this._chart?.off(item.eventName));
     this.destroy();
   }
 }

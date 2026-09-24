@@ -1,36 +1,37 @@
-@if (!loaded) {
+@if (!loaded()) {
   <nz-skeleton />
 }
 <div class="g2-pie__chart">
   <div #container></div>
-  @if (subTitle || total) {
+  @if (subTitle() || total()) {
     <div class="g2-pie__total">
-      @if (subTitle) {
+      @if (subTitle()) {
         <h4 class="g2-pie__total-title">
-          <ng-container *nzStringTemplateOutlet="subTitle">
-            <div [innerHTML]="subTitle"></div>
+          <ng-container *nzStringTemplateOutlet="subTitle()">
+            <div [innerHTML]="subTitle()"></div>
           </ng-container>
         </h4>
       }
-      @if (total) {
+      @if (total()) {
         <div class="g2-pie__total-stat">
-          <ng-container *nzStringTemplateOutlet="total">
-            <div [innerHTML]="total"></div>
+          <ng-container *nzStringTemplateOutlet="total()">
+            <div [innerHTML]="total()"></div>
           </ng-container>
         </div>
       }
     </div>
   }
 </div>
-@if (hasLegend && legendData.length > 0) {
+@if (hasLegend() && legendData().length > 0) {
   <ul class="g2-pie__legend">
-    @for (item of legendData; track $index) {
+    @for (item of legendData(); track $index) {
       <li (click)="_click($index)" class="g2-pie__legend-item">
         <span class="g2-pie__legend-dot" [style]="{ 'background-color': !item.checked ? '#aaa' : item.color }"></span>
         <span class="g2-pie__legend-title">{{ item.x }}</span>
         <nz-divider nzType="vertical" />
         <span class="g2-pie__legend-percent">{{ item.percent }}%</span>
-        <span class="g2-pie__legend-value" [innerHTML]="valueFormat ? valueFormat(item.y) : item.y"></span>
+        @let vf = valueFormat();
+        <span class="g2-pie__legend-value" [innerHTML]="vf ? vf(item.y) : item.y"></span>
       </li>
     }
   </ul>

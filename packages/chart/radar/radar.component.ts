@@ -1,13 +1,13 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Input,
-  Output,
   TemplateRef,
   ViewEncapsulation,
   booleanAttribute,
-  numberAttribute
+  input,
+  numberAttribute,
+  output,
+  signal
 } from '@angular/core';
 
 import type { Chart, Event } from '@antv/g2';
@@ -35,7 +35,7 @@ export interface G2RadarClickItem {
   exportAs: 'g2Radar',
   templateUrl: './radar.component.html',
   host: {
-    '[style.height.px]': 'height',
+    '[style.height.px]': 'height()',
     '[class.g2-radar]': 'true'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -43,34 +43,34 @@ export interface G2RadarClickItem {
   imports: [NzSkeletonComponent, NzStringTemplateOutletDirective, NzRowDirective, NzColDirective]
 })
 export class G2RadarComponent extends G2BaseComponent {
-  legendData: NzSafeAny[] = [];
+  readonly legendData = signal<NzSafeAny[]>([]);
 
   // #region fields
 
-  @Input() title?: string | TemplateRef<void> | null;
-  @Input({ transform: numberAttribute }) height = 0;
-  @Input() padding: number | number[] | 'auto' = [44, 30, 16, 30];
-  @Input({ transform: booleanAttribute }) hasLegend = true;
-  @Input({ transform: numberAttribute }) tickCount = 4;
-  @Input() data: G2RadarData[] = [];
-  @Input() colors = ['#1890FF', '#FACC14', '#2FC25B', '#8543E0', '#F04864', '#13C2C2', '#fa8c16', '#a0d911'];
-  @Output() readonly clickItem = new EventEmitter<G2RadarClickItem>();
+  readonly title = input<string | TemplateRef<void> | null>();
+  readonly height = input(0, { transform: numberAttribute });
+  readonly padding = input<number | number[] | 'auto'>([44, 30, 16, 30]);
+  readonly hasLegend = input(true, { transform: booleanAttribute });
+  readonly tickCount = input(4, { transform: numberAttribute });
+  readonly data = input<G2RadarData[]>([]);
+  readonly colors = input(['#1890FF', '#FACC14', '#2FC25B', '#8543E0', '#F04864', '#13C2C2', '#fa8c16', '#a0d911']);
+  readonly clickItem = output<G2RadarClickItem>();
 
   // #endregion
 
   private getHeight(): number {
-    return this.height - (this.hasLegend ? 80 : 22);
+    return this.height() - (this.hasLegend() ? 80 : 22);
   }
 
   install(): void {
     const { node, padding, theme, tickCount } = this;
 
     const chart: Chart = (this._chart = new this.winG2.Chart({
-      container: node.nativeElement,
+      container: node().nativeElement,
       autoFit: true,
       height: this.getHeight(),
-      padding,
-      theme
+      padding: padding(),
+      theme: theme()
     }));
 
     chart.coordinate('polar');
@@ -105,22 +105,22 @@ export class G2RadarComponent extends G2BaseComponent {
     chart.scale({
       value: {
         min: 0,
-        tickCount
+        tickCount: tickCount()
       }
     });
     chart.filter('name', (name: string) => {
-      const legendItem = this.legendData.find(w => w.name === name);
+      const legendItem = this.legendData().find(w => w.name === name);
       return legendItem ? legendItem.checked !== false : true;
     });
 
-    chart.line().position('label*value').color('name', this.colors);
+    chart.line().position('label*value').color('name', this.colors());
     chart.point().position('label*value').shape('circle').size(3);
 
     chart.on(`point:click`, (ev: Event) => {
-      this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
+      this.clickItem.emit({ item: ev.data?.data, ev });
     });
 
-    this.ready.next(chart);
+    this.ready.emit(chart);
 
     this.changeData();
 
@@ -129,38 +129,39 @@ export class G2RadarComponent extends G2BaseComponent {
 
   changeData(): void {
     const { _chart, data } = this;
-    if (!_chart || !Array.isArray(data) || data.length <= 0) return;
-    _chart.changeData(data);
+    if (!_chart || !Array.isArray(data()) || data().length <= 0) return;
+    _chart.changeData(data());
 
-    this.ngZone.run(() => this.genLegend());
+    this.genLegend();
   }
 
   private genLegend(): void {
-    const { hasLegend, cdr, _chart } = this;
-    if (!hasLegend) return;
+    const { hasLegend, _chart } = this;
+    if (!hasLegend()) return;
 
-    this.legendData = _chart.geometries[0].dataArray.map(item => {
-      const origin = item[0]._origin;
-      const result = {
-        name: origin.name,
-        color: item[0].color,
-        checked: true,
-        value: item.reduce((p, n) => p + n._origin.value, 0)
-      };
+    this.legendData.set(
+      _chart!.geometries[0].dataArray.map(item => {
+        const origin = item[0]._origin;
+        const result = {
+          name: origin.name,
+          color: item[0].color,
+          checked: true,
+          value: item.reduce((p, n) => p + n._origin.value, 0)
+        };
 
-      return result;
-    });
-
-    cdr.detectChanges();
+        return result;
+      })
+    );
   }
 
   _click(i: number): void {
-    const { legendData, _chart } = this;
+    const legendData = this.legendData();
     legendData[i].checked = !legendData[i].checked;
-    _chart.render(true);
+    this._chart!.render(true);
   }
 
-  onChanges(): void {
-    this.legendData.forEach(i => (i.checked = true));
+  /** 等价旧 onChanges()：任何输入变更都重置图例选中态 */
+  protected override onInputChanges(): void {
+    this.legendData().forEach(i => (i.checked = true));
   }
 }

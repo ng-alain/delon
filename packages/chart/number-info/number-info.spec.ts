@@ -1,4 +1,4 @@
-import { Component, DebugElement, signal, TemplateRef, ViewChild } from '@angular/core';
+import { Component, DebugElement, signal, TemplateRef, viewChild } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -34,7 +34,7 @@ describe('abc: number-info', () => {
       isText('.number-info__title', context.title() as string);
     });
     it('with template', () => {
-      context.title.set(context.titleTpl);
+      context.title.set(context.titleTpl());
       fixture.detectChanges();
       isExists('#titleTpl');
     });
@@ -45,7 +45,7 @@ describe('abc: number-info', () => {
       isText('.number-info__title-sub', context.subTitle() as string);
     });
     it('with template', () => {
-      context.subTitle.set(context.subTitleTpl);
+      context.subTitle.set(context.subTitleTpl());
       fixture.detectChanges();
       isExists('#subTitleTpl');
     });
@@ -53,10 +53,10 @@ describe('abc: number-info', () => {
 
   describe('#total', () => {
     it('with string', () => {
-      expect(context.total()).toBe(context.comp.total!);
+      expect(context.total()).toBe(context.comp().total()!);
     });
     it('with template', () => {
-      context.total.set(context.totalTpl);
+      context.total.set(context.totalTpl());
       fixture.detectChanges();
       isExists('#totalTpl');
     });
@@ -67,7 +67,7 @@ describe('abc: number-info', () => {
       isExists('.number-info__value-sub');
     });
     it('with template', () => {
-      context.subTotal.set(context.subTotalTpl);
+      context.subTotal.set(context.subTotalTpl());
       fixture.detectChanges();
       isExists('#subTotalTpl');
     });
@@ -109,11 +109,11 @@ describe('abc: number-info', () => {
   imports: [NumberInfoComponent]
 })
 class TestComponent {
-  @ViewChild('ni', { static: true }) comp!: NumberInfoComponent;
-  @ViewChild('titleTpl', { static: true }) titleTpl!: TemplateRef<void>;
-  @ViewChild('subTitleTpl', { static: true }) subTitleTpl!: TemplateRef<void>;
-  @ViewChild('totalTpl', { static: true }) totalTpl!: TemplateRef<void>;
-  @ViewChild('subTotalTpl', { static: true }) subTotalTpl!: TemplateRef<void>;
+  readonly comp = viewChild.required<NumberInfoComponent>('ni');
+  readonly titleTpl = viewChild.required<TemplateRef<void>>('titleTpl');
+  readonly subTitleTpl = viewChild.required<TemplateRef<void>>('subTitleTpl');
+  readonly totalTpl = viewChild.required<TemplateRef<void>>('totalTpl');
+  readonly subTotalTpl = viewChild.required<TemplateRef<void>>('subTotalTpl');
   readonly title = signal<string | TemplateRef<void>>('title');
   readonly subTitle = signal<string | TemplateRef<void>>('subTitle');
   readonly total = signal<string | number | TemplateRef<void>>('total');

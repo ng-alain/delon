@@ -9,34 +9,32 @@ title:
 
 ```ts
 import { Platform } from '@angular/cdk/platform';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { interval } from 'rxjs';
 
 import { G2GaugeModule } from '@delon/chart/gauge';
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 @Component({
   selector: 'app-demo',
-  template: ` <g2-gauge [title]="'核销率'" height="164" [percent]="percent" [color]="color" /> `,
+  template: ` <g2-gauge [title]="'核销率'" height="164" [percent]="percent()" [color]="color()" /> `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [G2GaugeModule]
 })
-export class DemoComponent implements OnDestroy {
-  percent = 36;
-  color = '#2f9cff';
-  private time$: NzSafeAny;
+export class DemoComponent {
+  readonly percent = signal(36);
+  readonly color = signal('#2f9cff');
 
-  constructor(platform: Platform, cdr: ChangeDetectorRef) {
+  constructor(platform: Platform) {
     if (!platform.isBrowser) return;
 
-    this.time$ = setInterval(() => {
-      this.percent = parseInt((Math.random() * 100).toString(), 10);
-      this.color = this.percent > 50 ? '#f50' : '#2f9cff';
-      cdr.detectChanges();
-    }, 1000);
-  }
-
-  ngOnDestroy(): void {
-    clearInterval(this.time$);
+    interval(1000)
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => {
+        const percent = parseInt((Math.random() * 100).toString(), 10);
+        this.percent.set(percent);
+        this.color.set(percent > 50 ? '#f50' : '#2f9cff');
+      });
   }
 }
 ```

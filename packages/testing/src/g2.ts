@@ -1,4 +1,4 @@
-import { DebugElement, Type } from '@angular/core';
+import { DebugElement, isSignal, Type } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, flush, TestBed, tick } from '@angular/core/testing';
 
 import { Chart } from '@antv/g2';
@@ -22,7 +22,8 @@ export class PageG2<T> {
   }
 
   get comp(): NzSafeAny {
-    return (this.context as NzSafeAny)['comp'];
+    const c = (this.context as NzSafeAny)['comp'];
+    return isSignal(c) ? c() : c;
   }
 
   get chart(): Chart {
@@ -41,6 +42,10 @@ export class PageG2<T> {
     this.dc();
     flush();
     discardPeriodicTasks();
+    // `install()` 被推迟到宏任务执行，并在其中写入驱动视图的状态（如图例信号）；
+    // fakeAsync 下调度器的补渲染回调注册在 fakeAsync 区之外，flush() 驱动不了它，
+    // 因此这里由测试夹具显式补一次 CD。
+    this.dc();
     // FIX: `Error during cleanup of component`
     if (this.comp && typeof this.comp.chart !== 'undefined') {
       spyOn(this.comp.chart, 'destroy');
@@ -178,8 +183,9 @@ export function checkDelay<T>(comp: Type<T>, page: PageG2<T> | null = null): voi
     context.delay = 100;
   }
   page.dc();
-  page.comp.ngOnDestroy();
+  page.fixture!.destroy();
   expect(page.chart == null).toBe(true);
   tick(201);
+  expect(page.chart == null).toBe(true);
   discardPeriodicTasks();
 }

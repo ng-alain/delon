@@ -1,24 +1,23 @@
-import { Platform } from '@angular/cdk/platform';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
+  DestroyRef,
   ElementRef,
-  Input,
-  NgZone,
-  OnChanges,
   OnDestroy,
-  OnInit,
   Renderer2,
   TemplateRef,
-  ViewChild,
   ViewEncapsulation,
+  afterNextRender,
   booleanAttribute,
   inject,
-  numberAttribute
+  input,
+  numberAttribute,
+  viewChild
 } from '@angular/core';
-import { fromEvent, Subscription, debounceTime } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { fromEvent, debounceTime } from 'rxjs';
 
+import { watchInputs } from '@delon/chart/core';
 import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 
 @Component({
@@ -30,41 +29,60 @@ import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
   encapsulation: ViewEncapsulation.None,
   imports: [NzStringTemplateOutletDirective]
 })
-export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
+export class G2WaterWaveComponent implements OnDestroy {
   private readonly el: HTMLElement = inject(ElementRef).nativeElement;
   private readonly renderer = inject(Renderer2);
-  private readonly ngZone = inject(NgZone);
-  private readonly cdr = inject(ChangeDetectorRef);
-  private readonly platform = inject(Platform);
+  private readonly destroyRef = inject(DestroyRef);
 
-  private resize$: Subscription | null = null;
-  @ViewChild('container', { static: true }) private node!: ElementRef;
+  private readonly node = viewChild.required<ElementRef>('container');
   private timer!: number;
+  private started = false;
+  private destroyed = false;
 
-  // #region fields
+  readonly animate = input(true, { transform: booleanAttribute });
+  readonly delay = input(0, { transform: numberAttribute });
+  readonly title = input<string | TemplateRef<void> | null>(null);
+  readonly color = input('#1890FF');
+  readonly height = input(160, { transform: numberAttribute });
+  readonly percent = input<number>();
 
-  @Input({ transform: booleanAttribute }) animate = true;
-  @Input({ transform: numberAttribute }) delay = 0;
-  @Input() title?: string | TemplateRef<void> | null;
-  @Input() color = '#1890FF';
-  @Input({ transform: numberAttribute }) height = 160;
-  @Input({ transform: numberAttribute }) percent?: number;
+  constructor() {
+    // 输入变更 → 重绘（isUpdate = true）
+    watchInputs(this, () => {
+      if (this.started) {
+        this.renderChart(true);
+      }
+    });
 
-  // #endregion
+    afterNextRender(() => {
+      fromEvent(window, 'resize')
+        .pipe(takeUntilDestroyed(this.destroyRef), debounceTime(200))
+        .subscribe(() => this.updateRadio());
+
+      // 同基类 `load()`：这里必须用 setTimeout，不能用 rxjs 一次性 `timer()`
+      // （后者底层是 setInterval，`flush()` 不驱动它）。
+      setTimeout(() => {
+        if (!this.destroyed) {
+          this.started = true;
+          this.render();
+        }
+      }, this.delay());
+    });
+  }
 
   private renderChart(isUpdate: boolean): void {
-    if (!this.resize$) return;
-
     this.updateRadio();
 
-    const { percent, color, node, animate } = this;
+    const percent = this.percent();
+    const color = this.color();
+    const animate = this.animate();
 
     const data = Math.min(Math.max(percent! / 100, 0), 100);
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this;
     cancelAnimationFrame(this.timer);
 
-    const canvas = node.nativeElement as HTMLCanvasElement;
+    const canvas = this.node().nativeElement as HTMLCanvasElement;
     const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
@@ -200,7 +218,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
 
   private updateRadio(): void {
     const { offsetWidth } = this.el.parentNode! as HTMLElement;
-    const radio = offsetWidth < this.height ? offsetWidth / this.height : 1;
+    const radio = offsetWidth < this.height() ? offsetWidth / this.height() : 1;
     this.renderer.setStyle(this.el, 'transform', `scale(${radio})`);
   }
 
@@ -208,31 +226,8 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     this.renderChart(false);
   }
 
-  private installResizeEvent(): void {
-    this.resize$ = fromEvent(window, 'resize')
-      .pipe(debounceTime(200))
-      .subscribe(() => this.updateRadio());
-  }
-
-  ngOnInit(): void {
-    if (!this.platform.isBrowser) {
-      return;
-    }
-    this.installResizeEvent();
-    this.ngZone.runOutsideAngular(() => setTimeout(() => this.render(), this.delay));
-  }
-
-  ngOnChanges(): void {
-    this.ngZone.runOutsideAngular(() => this.renderChart(true));
-    this.cdr.detectChanges();
-  }
-
   ngOnDestroy(): void {
-    if (this.timer) {
-      cancelAnimationFrame(this.timer);
-    }
-    if (this.resize$) {
-      this.resize$.unsubscribe();
-    }
+    this.destroyed = true;
+    cancelAnimationFrame(this.timer);
   }
 }

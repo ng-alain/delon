@@ -8,7 +8,7 @@ title:
 基础用法。
 
 ```ts
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, signal } from '@angular/core';
 
 import { G2SingleBarModule } from '@delon/chart/single-bar';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -18,7 +18,7 @@ import { NzTableModule } from 'ng-zorro-antd/table';
   selector: 'app-demo',
   template: `
     <button nz-button (click)="refresh()" nzType="primary">Refresh</button>
-    <nz-table [nzData]="list" [nzShowPagination]="false">
+    <nz-table [nzData]="list()" [nzShowPagination]="false">
       <thead>
         <tr>
           <th>序号</th>
@@ -27,7 +27,7 @@ import { NzTableModule } from 'ng-zorro-antd/table';
         </tr>
       </thead>
       <tbody>
-        @for (i of list; track $index) {
+        @for (i of list(); track $index) {
           <tr>
             <td>{{ $index + 1 }}</td>
             <td>
@@ -52,18 +52,24 @@ import { NzTableModule } from 'ng-zorro-antd/table';
   imports: [NzButtonModule, NzTableModule, G2SingleBarModule]
 })
 export class DemoComponent {
-  list: Array<{ id: number; value: number; other: number }> = new Array(5).fill({}).map(() => ({
-    id: Math.floor(Math.random() * 10000),
-    value: Math.floor(Math.random() * 100),
-    other: Math.floor(Math.random() * 100) > 50 ? Math.floor(Math.random() * 100) : -Math.floor(Math.random() * 100)
-  }));
+  readonly list = signal<Array<{ id: number; value: number; other: number }>>(
+    new Array(5).fill({}).map(() => ({
+      id: Math.floor(Math.random() * 10000),
+      value: Math.floor(Math.random() * 100),
+      other:
+        Math.floor(Math.random() * 100) > 50 ? Math.floor(Math.random() * 100) : -Math.floor(Math.random() * 100)
+    }))
+  );
 
   refresh(): void {
-    this.list.forEach(v => {
-      v.value = Math.floor(Math.random() * 100);
-      v.other =
-        Math.floor(Math.random() * 100) > 50 ? Math.floor(Math.random() * 100) : -Math.floor(Math.random() * 100);
-    });
+    this.list.update(list =>
+      list.map(v => ({
+        ...v,
+        value: Math.floor(Math.random() * 100),
+        other:
+          Math.floor(Math.random() * 100) > 50 ? Math.floor(Math.random() * 100) : -Math.floor(Math.random() * 100)
+      }))
+    );
   }
 }
 ```
