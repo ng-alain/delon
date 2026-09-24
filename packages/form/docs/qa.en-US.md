@@ -152,16 +152,3 @@ const alainConfig: AlainConfig = {
 ```ts
 this.sf.getProperty('/mobile')?.setVisible(status);
 ```
-
-## What to do with the `NG01354` warning
-
-`NG01354` is a new dev-mode warning in Angular v22: the `ngModel` in a component template cannot register with the `NgForm` of the parent form because `@Host()` stops injection at the component boundary. Every `@delon/form` widget is a component and the `ngModel` inside its template is only a local binding synchronized with `FormProperty`, it never needs to register with any form, so it is always declared as `standalone`:
-
-```html
-<input [ngModel]="value" [ngModelOptions]="{ standalone: true }" (ngModelChange)="setValue($event)" />
-```
-
-All widgets of `@delon/form`, `@delon/form/widgets` and `@delon/form/widgets-third` are already updated; if the warning comes from your own widget, just add `[ngModelOptions]="{ standalone: true }"`.
-
-> **Note:** Do not follow the Angular suggestion and add `viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]` to your widget. It makes `ngModel` try to register with the internal form of SF, and since it has no `name`, it throws `NG01352` immediately.
-

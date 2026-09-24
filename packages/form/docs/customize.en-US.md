@@ -74,7 +74,9 @@ class TestWidget extends ControlWidget implements OnInit {
 
 **ngModel and form registration**
 
-The `ngModel` inside a widget template is only a local binding synchronized with `FormProperty`, it neither needs nor should be registered with any form, so it must be declared as `standalone`; otherwise Angular v22 reports a `NG01354` warning in the console (see [FAQ](/form/qa) for details).
+The `ngModel` inside a widget template is only a local binding synchronized with `FormProperty`, it neither needs nor should be registered with any form, so it must be declared as `standalone`; otherwise Angular v22 reports a `NG01354` warning in the console.
+
+> Note: Do not follow that warning and add `viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]`: it makes `ngModel` try to register with the internal form of SF, and since it has no `name`, it throws `NG01352` immediately.
 
 **sf-item-wrap**
 

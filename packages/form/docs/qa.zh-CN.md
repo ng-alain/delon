@@ -152,15 +152,3 @@ const alainConfig: AlainConfig = {
 ```ts
 this.sf.getProperty('/mobile')?.setVisible(status);
 ```
-
-## 控制台出现 `NG01354` 警告怎么办
-
-`NG01354` 是 Angular v22 新增的 dev 模式提示：组件模板里的 `ngModel` 由于 `@Host()` 在组件边界处截断注入，无法注册到父级表单中的 `NgForm`。`@delon/form` 的小部件都是组件，其模板内的 `ngModel` 只是与 `FormProperty` 同步的局部绑定，本来就无需注册到任何表单，因此统一声明为 `standalone`：
-
-```html
-<input [ngModel]="value" [ngModelOptions]="{ standalone: true }" (ngModelChange)="setValue($event)" />
-```
-
-`@delon/form` 的内置、`@delon/form/widgets` 与 `@delon/form/widgets-third` 小部件均已处理；如果你自己的小部件出现该警告，加上 `[ngModelOptions]="{ standalone: true }"` 即可。
-
-> **注意：** 不要按 Angular 提示为自定义小部件添加 `viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]`。这会让 `ngModel` 尝试注册到 SF 的内部表单，而它并没有 `name`，会直接抛出 `NG01352`。
