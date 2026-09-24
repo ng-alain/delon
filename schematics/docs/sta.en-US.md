@@ -93,3 +93,7 @@ When all `path`s have a fixed output format, such as success and exceptions have
 ```
 
 If an interceptor is used to handle exception messages, when subscribing only needs to always get the data of the `result` field, it can be solved by specifying `--responseDataField="result"`.
+
+### Code style
+
+Generated files start with `/* eslint-disable */` and `/* eslint-enable prettier/prettier */`: the former keeps generated code away from every other lint rule, the latter hands formatting back to the project's own `prettier/prettier` rule. Run `eslint --fix` (the scaffold already does this on commit through lint-staged, or let your IDE do it on save) to align the generated code with the project code style.
