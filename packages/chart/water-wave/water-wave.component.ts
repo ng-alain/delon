@@ -35,7 +35,7 @@ export class G2WaterWaveComponent implements OnDestroy {
   private readonly destroyRef = inject(DestroyRef);
 
   private readonly node = viewChild.required<ElementRef>('container');
-  private timer!: number;
+  private timer = 0;
   private started = false;
   private destroyed = false;
 
@@ -228,6 +228,8 @@ export class G2WaterWaveComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.destroyed = true;
-    cancelAnimationFrame(this.timer);
+    if (this.timer) {
+      cancelAnimationFrame(this.timer);
+    }
   }
 }
