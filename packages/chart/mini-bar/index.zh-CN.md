@@ -24,8 +24,8 @@ module: import { G2MiniBarModule } from '@delon/chart/mini-bar';
 | `[padding]` | 图表内部间距 | `array` | `[8, 8, 8, 8]` |
 | `[data]` | 数据 | `G2MiniBarData[]` | - |
 | `[theme]` | 定制图表主题 | `string | LooseObject` | - |
-| `(clickItem)` | 点击项回调 | `EventEmitter<G2MiniBarClickItem>` | - |
-| `(ready)` | 当G2完成初始化后调用 | `EventEmitter<Chart>` | - |
+| `(clickItem)` | 点击项回调 | `output<G2MiniBarClickItem>` | - |
+| `(ready)` | 当G2完成初始化后调用 | `output<Chart>` | - |
 
 ### G2MiniBarData
 

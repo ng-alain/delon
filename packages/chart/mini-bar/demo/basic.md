@@ -8,7 +8,7 @@ title:
 基础用法。
 
 ```ts
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 
 import { format } from 'date-fns';
 
@@ -21,13 +21,13 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   selector: 'app-demo',
   template: `
     <button nz-button (click)="refresh()" nzType="primary">Refresh</button>
-    <g2-mini-bar height="45" [data]="visitData" (clickItem)="handleClick($event)" />
+    <g2-mini-bar height="45" [data]="visitData()" (clickItem)="handleClick($event)" />
   `,
   imports: [NzButtonModule, G2MiniBarModule]
 })
 export class DemoComponent {
   private readonly msg = inject(NzMessageService);
-  visitData = this.genData();
+  readonly visitData = signal(this.genData());
 
   private genData(): G2MiniAreaData[] {
     const beginDay = new Date().getTime();
@@ -42,7 +42,7 @@ export class DemoComponent {
   }
 
   refresh(): void {
-    this.visitData = this.genData();
+    this.visitData.set(this.genData());
   }
 
   handleClick(data: G2MiniAreaClickItem): void {

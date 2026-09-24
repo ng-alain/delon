@@ -2,13 +2,13 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  EventEmitter,
-  Input,
-  Output,
   ViewEncapsulation,
-  numberAttribute
+  input,
+  numberAttribute,
+  output
 } from '@angular/core';
-import { fromEvent, debounceTime, takeUntil } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Subscription, debounceTime, fromEvent } from 'rxjs';
 
 import { G2BaseComponent } from '@delon/chart/core';
 import { NzSkeletonComponent } from 'ng-zorro-antd/skeleton';
@@ -17,13 +17,13 @@ import { NzSkeletonComponent } from 'ng-zorro-antd/skeleton';
   selector: 'g2,g2-custom',
   exportAs: 'g2Custom',
   template: `
-    @if (!loaded) {
+    @if (!loaded()) {
       <nz-skeleton />
     }
     <ng-content />
   `,
   host: {
-    '[style.height.px]': 'height'
+    '[style.height.px]': 'height()'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
@@ -32,11 +32,11 @@ import { NzSkeletonComponent } from 'ng-zorro-antd/skeleton';
 export class G2CustomComponent extends G2BaseComponent {
   // #region fields
 
-  @Input({ transform: numberAttribute }) height?: number;
-  @Input({ transform: numberAttribute }) resizeTime = 0;
-  @Output() readonly render = new EventEmitter<ElementRef>();
-  @Output() readonly resize = new EventEmitter<ElementRef>();
-  @Output() readonly destroy = new EventEmitter<ElementRef>();
+  readonly height = input(undefined, { transform: numberAttribute });
+  readonly resizeTime = input(0, { transform: numberAttribute });
+  readonly render = output<ElementRef>();
+  readonly resize = output<ElementRef>();
+  readonly destroy = output<ElementRef>();
 
   // #endregion
 
@@ -46,11 +46,15 @@ export class G2CustomComponent extends G2BaseComponent {
     this.installResizeEvent();
   }
 
-  private installResizeEvent(): void {
-    if (this.resizeTime <= 0) return;
+  private resize$?: Subscription;
 
-    fromEvent(window, 'resize')
-      .pipe(takeUntil(this.destroy$), debounceTime(Math.min(200, this.resizeTime)))
+  private installResizeEvent(): void {
+    this.resize$?.unsubscribe();
+    if (this.resizeTime() <= 0) {
+      return;
+    }
+    this.resize$ = fromEvent(window, 'resize')
+      .pipe(takeUntilDestroyed(this.destroyRef), debounceTime(Math.min(200, this.resizeTime())))
       .subscribe(() => this.resize.emit(this.el));
   }
 }

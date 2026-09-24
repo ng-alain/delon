@@ -1,10 +1,10 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
-  SimpleChanges,
+  Signal,
   ViewEncapsulation,
   booleanAttribute,
+  input,
   numberAttribute
 } from '@angular/core';
 
@@ -18,7 +18,7 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
   exportAs: 'g2SingleBar',
   template: ``,
   host: {
-    '[style.height.px]': 'height'
+    '[style.height.px]': 'height()'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
@@ -26,17 +26,17 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 export class G2SingleBarComponent extends G2BaseComponent {
   // #region fields
 
-  @Input() plusColor = '#40a9ff';
-  @Input() minusColor = '#ff4d4f';
-  @Input({ transform: numberAttribute }) height = 60;
-  @Input({ transform: numberAttribute }) barSize = 30;
-  @Input({ transform: numberAttribute }) min = 0;
-  @Input({ transform: numberAttribute }) max = 100;
-  @Input({ transform: numberAttribute }) value = 0;
-  @Input({ transform: booleanAttribute }) line = false;
-  @Input() format?: (value: number, item: NzSafeAny, index: number) => string;
-  @Input() padding: number | number[] | 'auto' = 0;
-  @Input() textStyle: Record<string, NzSafeAny> = { fontSize: 12, color: '#595959' };
+  readonly plusColor = input('#40a9ff');
+  readonly minusColor = input('#ff4d4f');
+  readonly height = input(60, { transform: numberAttribute });
+  readonly barSize = input(30, { transform: numberAttribute });
+  readonly min = input(0, { transform: numberAttribute });
+  readonly max = input(100, { transform: numberAttribute });
+  readonly value = input(0, { transform: numberAttribute });
+  readonly line = input(false, { transform: booleanAttribute });
+  readonly format = input<(value: number, item: NzSafeAny, index: number) => string>();
+  readonly padding = input<number | number[] | 'auto'>(0);
+  readonly textStyle = input<Record<string, NzSafeAny>>({ fontSize: 12, color: '#595959' });
 
   // #endregion
 
@@ -45,28 +45,28 @@ export class G2SingleBarComponent extends G2BaseComponent {
     const chart: Chart = (this._chart = new this.winG2.Chart({
       container: el.nativeElement,
       autoFit: true,
-      height,
-      padding,
-      theme
+      height: height(),
+      padding: padding(),
+      theme: theme()
     }));
     chart.legend(false);
     chart.axis(false);
-    chart.scale({ value: { max, min } });
+    chart.scale({ value: { max: max(), min: min() } });
     chart.tooltip(false);
     chart.coordinate().transpose();
     chart
       .interval()
       .position('1*value')
-      .color('value', (val: number) => (val > 0 ? plusColor : minusColor))
-      .size(barSize)
+      .color('value', (val: number) => (val > 0 ? plusColor() : minusColor()))
+      .size(barSize())
       .label('value', () => ({
-        formatter: format,
+        formatter: format(),
         style: {
-          ...textStyle
+          ...textStyle()
         }
       }));
 
-    if (line) {
+    if (line()) {
       chart.annotation().line({
         start: ['50%', '0%'],
         end: ['50%', '100%'],
@@ -77,20 +77,22 @@ export class G2SingleBarComponent extends G2BaseComponent {
       });
     }
 
-    this.ready.next(chart);
+    this.ready.emit(chart);
 
     this.changeData();
 
     chart.render();
   }
 
-  onlyChangeData = (changes: SimpleChanges): boolean => {
-    return Object.keys(changes).length === 1 && !!changes.value;
-  };
+  /** 等价旧 onlyChangeData：仅 value 变更时平滑更新 */
+  protected override isDataOnly(changed: ReadonlyArray<Signal<unknown>>): boolean {
+    // `Object.is` 按引用比较（对信号对象与 `===` 等价），避免 `no-uncalled-signals` 误报
+    return changed.length === 1 && Object.is(changed[0], this.value);
+  }
 
   changeData(): void {
     const { _chart, value } = this;
     if (!_chart) return;
-    _chart.changeData([{ value }]);
+    _chart.changeData([{ value: value() }]);
   }
 }

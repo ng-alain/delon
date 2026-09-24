@@ -29,8 +29,8 @@ module: import { G2TimelineModule } from '@delon/chart/timeline';
 | `[position]` | 标题位置 | `'top','right','bottom','left'` | `'top'` |
 | `[slider]` | 是否需要滑动条 | `boolean` | `true` |
 | `[theme]` | 定制图表主题 | `string | LooseObject` | - |
-| `(clickItem)` | 点击项回调 | `EventEmitter<G2TimelineClickItem>` | - |
-| `(ready)` | 当G2完成初始化后调用 | `EventEmitter<Chart>` | - |
+| `(clickItem)` | 点击项回调 | `output<G2TimelineClickItem>` | - |
+| `(ready)` | 当G2完成初始化后调用 | `output<Chart>` | - |
 
 ### G2TimelineData
 

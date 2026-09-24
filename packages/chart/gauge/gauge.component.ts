@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation, numberAttribute } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation, input, numberAttribute } from '@angular/core';
 
 import type { Chart } from '@antv/g2';
 
@@ -9,7 +9,7 @@ import { NzSkeletonComponent } from 'ng-zorro-antd/skeleton';
 @Component({
   selector: 'g2-gauge',
   exportAs: 'g2Gauge',
-  template: `@if (!loaded) {
+  template: `@if (!loaded()) {
     <nz-skeleton />
   }`,
   host: {
@@ -22,13 +22,13 @@ import { NzSkeletonComponent } from 'ng-zorro-antd/skeleton';
 export class G2GaugeComponent extends G2BaseComponent {
   // #region fields
 
-  @Input() title?: string;
-  @Input({ transform: numberAttribute }) height?: number;
-  @Input() color = '#2f9cff';
-  @Input() bgColor?: string; // = '#f0f2f5';
-  @Input() format?: (text: string, item: NzSafeAny, index: number) => string;
-  @Input({ transform: numberAttribute }) percent?: number;
-  @Input() padding: number | number[] | 'auto' = [10, 10, 30, 10];
+  readonly title = input<string>();
+  readonly height = input(undefined, { transform: numberAttribute });
+  readonly color = input('#2f9cff');
+  readonly bgColor = input<string>(); // = '#f0f2f5';
+  readonly format = input<(text: string, item: NzSafeAny, index: number) => string>();
+  readonly percent = input(undefined, { transform: numberAttribute });
+  readonly padding = input<number | number[] | 'auto'>([10, 10, 30, 10]);
 
   // #endregion
 
@@ -70,9 +70,9 @@ export class G2GaugeComponent extends G2BaseComponent {
     const chart: Chart = (this._chart = new this.winG2.Chart({
       container: el.nativeElement,
       autoFit: true,
-      height,
-      padding,
-      theme
+      height: height(),
+      padding: padding(),
+      theme: theme()
     }));
     chart.legend(false);
     chart.animate(false);
@@ -93,14 +93,14 @@ export class G2GaugeComponent extends G2BaseComponent {
       line: null,
       label: {
         offset: -14,
-        formatter: format
+        formatter: format()
       },
       tickLine: null,
       grid: null
     });
     chart.point().position('value*1').shape('pointer');
 
-    this.ready.next(chart);
+    this.ready.emit(chart);
 
     this.changeData();
 
@@ -111,17 +111,17 @@ export class G2GaugeComponent extends G2BaseComponent {
     const { _chart, percent, color, bgColor, title } = this;
     if (!_chart) return;
 
-    const data = [{ name: title, value: percent }];
+    const data = [{ name: title(), value: percent() }];
     const val = data[0].value;
     _chart.annotation().clear(true);
-    _chart.geometries[0].color(color);
+    _chart.geometries[0].color(color());
     // 绘制仪表盘背景
     _chart.annotation().arc({
       top: false,
       start: [0, 0.95],
       end: [100, 0.95],
       style: {
-        stroke: bgColor,
+        stroke: bgColor(),
         lineWidth: 12,
         lineDash: null
       }
@@ -130,7 +130,7 @@ export class G2GaugeComponent extends G2BaseComponent {
       start: [0, 0.95],
       end: [data[0].value!, 0.95],
       style: {
-        stroke: color,
+        stroke: color(),
         lineWidth: 12,
         lineDash: null
       }
@@ -138,10 +138,10 @@ export class G2GaugeComponent extends G2BaseComponent {
 
     _chart.annotation().text({
       position: ['50%', '85%'],
-      content: title,
+      content: title(),
       style: {
         fontSize: 12,
-        fill: this.theme === 'dark' ? 'rgba(255, 255, 255, 0.43)' : 'rgba(0, 0, 0, 0.43)',
+        fill: this.theme() === 'dark' ? 'rgba(255, 255, 255, 0.43)' : 'rgba(0, 0, 0, 0.43)',
         textAlign: 'center'
       }
     });
@@ -150,7 +150,7 @@ export class G2GaugeComponent extends G2BaseComponent {
       content: `${val} %`,
       style: {
         fontSize: 20,
-        fill: this.theme === 'dark' ? 'rgba(255, 255, 255, 0.85)' : 'rgba(0, 0, 0, 0.85)',
+        fill: this.theme() === 'dark' ? 'rgba(255, 255, 255, 0.85)' : 'rgba(0, 0, 0, 0.85)',
         textAlign: 'center'
       },
       offsetY: 15

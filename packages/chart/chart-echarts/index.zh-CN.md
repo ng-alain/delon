@@ -19,4 +19,4 @@ module: import { ChartEChartsModule } from '@delon/chart/chart-echarts';
 | `[option]` | [配置项](https://echarts.apache.org/zh/option.html#title) | `ChartEChartsOption` | - |
 | `[theme]` | [主题](https://echarts.apache.org/zh/theme-builder.html)配置 | `string, object` | - |
 | `[on]` | 等同于 ECharts [on](https://echarts.apache.org/zh/api.html#echartsInstance.on) | `ChartEChartsOn[]` | - |
-| `(events)` | 事件回调 | `EventEmitter<ChartEChartsEvent>` | - |
+| `(events)` | 事件回调 | `output<ChartEChartsEvent>` | - |

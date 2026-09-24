@@ -14,7 +14,7 @@ title:
 Simplest of usage.
 
 ```ts
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { ChartEChartsEvent, ChartEChartsModule, ChartEChartsOption } from '@delon/chart/chart-echarts';
@@ -26,15 +26,15 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
   template: `
     <div class="mb-md">
       <nz-switch [(ngModel)]="dark" /> Dark
-      <button nz-button (click)="two = !two" nzType="primary">Change Option</button>
+      <button nz-button (click)="two.set(!two())" nzType="primary">Change Option</button>
     </div>
-    <chart-echarts [option]="two ? option1 : option2" [theme]="dark ? 'dark' : null" (events)="handleEvents($event)" />
+    <chart-echarts [option]="two() ? option1 : option2" [theme]="dark() ? 'dark' : null" (events)="handleEvents($event)" />
   `,
   imports: [FormsModule, NzSwitchModule, NzButtonModule, ChartEChartsModule]
 })
 export class DemoComponent {
-  dark = false;
-  two = false;
+  readonly dark = signal(false);
+  readonly two = signal(false);
 
   option1: ChartEChartsOption = {
     tooltip: {

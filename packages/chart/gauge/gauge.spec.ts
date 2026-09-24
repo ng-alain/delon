@@ -1,4 +1,4 @@
-import { Component, signal, ViewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 
 import { checkDelay, PageG2 } from '@delon/testing';
@@ -29,7 +29,7 @@ describe('chart: gauge', () => {
   imports: [G2GaugeComponent]
 })
 class TestComponent {
-  @ViewChild('comp', { static: true }) comp!: G2GaugeComponent;
+  readonly comp = viewChild.required<G2GaugeComponent>('comp');
   readonly percent = signal(10);
   readonly delay = signal(0);
 }

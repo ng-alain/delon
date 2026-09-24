@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, signal, TemplateRef, viewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 
 import { checkDelay, PageG2, PageG2DataCount, PageG2Height } from '@delon/testing';
@@ -15,7 +15,11 @@ describe('chart: bar', () => {
     }));
 
     it('should be working', () => {
-      page.newData([{ x: `1月`, y: 10 }]).isYScalesCount(1);
+      // R1: 引导完成后不得残留骨架屏节点（`loaded()` 必须已翻转为 true）
+      page
+        .newData([{ x: `1月`, y: 10 }])
+        .isYScalesCount(1)
+        .isExists('nz-skeleton', false);
     });
 
     describe('#title', () => {
@@ -29,12 +33,12 @@ describe('chart: bar', () => {
         page.context.height.set(100);
         page
           .dc()
-          .isText('h4', page.context.comp.title as string)
+          .isText('h4', page.context.comp().title() as string)
           // 41 is TITLE_HEIGHT value
           .checkOptions('height', 100 - 41);
       });
       it('with template', () => {
-        page.context.title.set(page.context.titleTpl);
+        page.context.title.set(page.context.titleTpl());
         page.dc().isExists('#titleTpl');
       });
     });
@@ -87,10 +91,10 @@ describe('chart: bar', () => {
   imports: [G2BarComponent]
 })
 class TestComponent implements OnInit {
-  @ViewChild('comp', { static: true }) comp!: G2BarComponent;
+  readonly comp = viewChild.required<G2BarComponent>('comp');
   readonly data = signal<G2BarData[]>([]);
   readonly delay = signal(0);
-  @ViewChild('titleTpl', { static: true }) titleTpl!: TemplateRef<void>;
+  readonly titleTpl = viewChild.required<TemplateRef<void>>('titleTpl');
   readonly title = signal<string | TemplateRef<void> | null>('title');
   readonly height = signal(PageG2Height);
   readonly padding = signal<number[] | undefined>(undefined);

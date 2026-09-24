@@ -46,7 +46,7 @@ export class DemoComponent {
 | `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
 | `[height]` | 高 | `number` | - |
 | `[resizeTime]` | resize 事件去抖时长 | `number` | `200` |
-| `(render)` | 渲染事件 | `EventEmitter<ElementRef>` | - |
-| `(resize)` | resize 事件 | `EventEmitter<ElementRef>` | - |
-| `(destroy)` | 销毁事件 | `EventEmitter<ElementRef>` | - |
+| `(render)` | 渲染事件 | `output<ElementRef>` | - |
+| `(resize)` | resize 事件 | `output<ElementRef>` | - |
+| `(destroy)` | 销毁事件 | `output<ElementRef>` | - |
 | `[theme]` | 定制图表主题 | `string | LooseObject` | - |

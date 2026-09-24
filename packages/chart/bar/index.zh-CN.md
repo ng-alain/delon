@@ -24,8 +24,8 @@ module: import { G2BarModule } from '@delon/chart/bar';
 | `[autoLabel]` | 在宽度不足时，自动隐藏 x 轴的 label | `boolean` | `true` |
 | `[interaction]` | 交互类型，none 无 element-active 图形元素，active-region 图表组件，brush 框选，drag-move 移动 | `InteractionType` | `none` |
 | `[theme]` | 定制图表主题 | `string | LooseObject` | - |
-| `(clickItem)` | 点击项回调 | `EventEmitter<G2BarClickItem>` | - |
-| `(ready)` | 当G2完成初始化后调用 | `EventEmitter<Chart>` | - |
+| `(clickItem)` | 点击项回调 | `output<G2BarClickItem>` | - |
+| `(ready)` | 当G2完成初始化后调用 | `output<Chart>` | - |
 
 ### G2BarData
 

@@ -1,4 +1,4 @@
-import { Component, DebugElement, signal, ViewChild } from '@angular/core';
+import { Component, DebugElement, signal, viewChild } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -80,7 +80,7 @@ describe('abc: trend', () => {
   imports: [TrendComponent]
 })
 class TestComponent {
-  @ViewChild('comp', { static: true }) comp!: TrendComponent;
+  readonly comp = viewChild.required<TrendComponent>('comp');
   readonly flag = signal<'up' | 'down' | undefined>(undefined);
   readonly colorful = signal<boolean | undefined>(undefined);
   readonly reverseColor = signal<boolean | undefined>(undefined);

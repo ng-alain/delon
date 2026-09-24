@@ -1,4 +1,4 @@
-import { Component, DebugElement, signal, ViewChild } from '@angular/core';
+import { Component, DebugElement, signal, viewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -61,24 +61,24 @@ describe('chart: chart-echarts', () => {
   });
 
   it('should be update option', () => {
-    spyOn(context.cmp, 'setOption');
+    spyOn(context.cmp(), 'setOption');
     context.option.set({});
     fixture.detectChanges();
-    expect(context.cmp.setOption).toHaveBeenCalled();
+    expect(context.cmp().setOption).toHaveBeenCalled();
   });
 
   it('should be update theme', () => {
-    spyOn(context.cmp, 'install');
+    spyOn(context.cmp(), 'install');
     context.theme.set('dark');
     fixture.detectChanges();
-    expect(context.cmp.install).toHaveBeenCalled();
+    expect(context.cmp().install).toHaveBeenCalled();
   });
 
   it('should be update initOpt', () => {
-    spyOn(context.cmp, 'install');
+    spyOn(context.cmp(), 'install');
     context.initOpt.set({});
     fixture.detectChanges();
-    expect(context.cmp.install).toHaveBeenCalled();
+    expect(context.cmp().install).toHaveBeenCalled();
   });
 });
 
@@ -98,7 +98,7 @@ describe('chart: chart-echarts', () => {
   imports: [ChartEChartsComponent]
 })
 class TestComponent {
-  @ViewChild('cmp') readonly cmp!: ChartEChartsComponent;
+  readonly cmp = viewChild.required<ChartEChartsComponent>('cmp');
   readonly width = signal<string | number>(600);
   readonly height = signal<string | number>(400);
   readonly theme = signal<string | Record<string, unknown> | null>(null);

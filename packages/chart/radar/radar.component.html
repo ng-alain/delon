@@ -1,13 +1,13 @@
-@if (!loaded) {
+@if (!loaded()) {
   <nz-skeleton />
 }
-<ng-container *nzStringTemplateOutlet="title">
-  <h4>{{ title }}</h4>
+<ng-container *nzStringTemplateOutlet="title()">
+  <h4>{{ title() }}</h4>
 </ng-container>
 <div #container></div>
-@if (hasLegend) {
+@if (hasLegend()) {
   <div nz-row class="g2-radar__legend">
-    @for (i of legendData; track $index) {
+    @for (i of legendData(); track $index) {
       <div nz-col [nzSpan]="24 / $count" (click)="_click($index)" class="g2-radar__legend-item">
         <i class="g2-radar__legend-dot" [style]="{ 'background-color': !i.checked ? '#aaa' : i.color }"></i>
         {{ i.name }}

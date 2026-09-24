@@ -1,35 +1,35 @@
-<nz-card [nzBodyStyle]="{ padding: '20px 24px 8px 24px' }" [nzBordered]="bordered">
-  <nz-spin [nzSpinning]="loading">
+<nz-card [nzBodyStyle]="{ padding: '20px 24px 8px 24px' }" [nzBordered]="bordered()">
+  <nz-spin [nzSpinning]="loading()">
     <div class="g2-card__top">
       <div class="g2-card__avatar">
-        <ng-container *nzStringTemplateOutlet="avatar">{{ avatar }}</ng-container>
+        <ng-container *nzStringTemplateOutlet="avatar()">{{ avatar() }}</ng-container>
       </div>
       <div class="g2-card__meta-wrap">
         <div class="g2-card__meta">
-          @if (title) {
+          @if (title()) {
             <span class="g2-card__meta-title">
-              <ng-container *nzStringTemplateOutlet="title">{{ title }}</ng-container>
+              <ng-container *nzStringTemplateOutlet="title()">{{ title() }}</ng-container>
             </span>
           }
-          @if (action) {
+          @if (action()) {
             <span class="g2-card__meta-action">
-              <ng-container *nzStringTemplateOutlet="action">{{ action }}</ng-container>
+              <ng-container *nzStringTemplateOutlet="action()">{{ action() }}</ng-container>
             </span>
           }
         </div>
-        @if (total) {
-          <p class="g2-card__total" [innerHTML]="total"></p>
+        @if (total()) {
+          <p class="g2-card__total" [innerHTML]="total()"></p>
         }
       </div>
     </div>
-    <div class="g2-card__desc" [style.height]="_height">
-      <div [class.g2-card__fixed]="!!_orgHeight">
+    <div class="g2-card__desc" [style.height]="_height()">
+      <div [class.g2-card__fixed]="!!contentHeight()">
         <ng-content />
       </div>
     </div>
-    @if (footer) {
+    @if (footer()) {
       <div class="g2-card__footer">
-        <ng-container *nzStringTemplateOutlet="footer">{{ footer }}</ng-container>
+        <ng-container *nzStringTemplateOutlet="footer()">{{ footer() }}</ng-container>
       </div>
     }
   </nz-spin>

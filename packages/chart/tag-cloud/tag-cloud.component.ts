@@ -1,13 +1,6 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  ViewEncapsulation,
-  numberAttribute
-} from '@angular/core';
-import { fromEvent, debounceTime, filter } from 'rxjs';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation, input, numberAttribute, output } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { debounceTime, filter, fromEvent } from 'rxjs';
 
 import type { Chart, Event } from '@antv/g2';
 
@@ -29,7 +22,7 @@ export interface G2TagCloudClickItem {
 @Component({
   selector: 'g2-tag-cloud',
   exportAs: 'g2TagCloud',
-  template: `@if (!loaded) {
+  template: `@if (!loaded()) {
     <nz-skeleton />
   }`,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -37,13 +30,16 @@ export interface G2TagCloudClickItem {
   imports: [NzSkeletonComponent]
 })
 export class G2TagCloudComponent extends G2BaseComponent {
+  private _width = 0;
+  private _height = 0;
+
   // #region fields
 
-  @Input({ transform: numberAttribute }) width = 0;
-  @Input({ transform: numberAttribute }) height = 200;
-  @Input() padding: number | number[] | 'auto' = 0;
-  @Input() data: G2TagCloudData[] = [];
-  @Output() readonly clickItem = new EventEmitter<G2TagCloudClickItem>();
+  readonly width = input(0, { transform: numberAttribute });
+  readonly height = input(200, { transform: numberAttribute });
+  readonly padding = input<number | number[] | 'auto'>(0);
+  readonly data = input<G2TagCloudData[]>([]);
+  readonly clickItem = output<G2TagCloudClickItem>();
 
   // #endregion
 
@@ -79,20 +75,17 @@ export class G2TagCloudComponent extends G2BaseComponent {
     this.initTagCloud();
 
     const { el, padding, theme } = this;
-    if (this.height === 0) {
-      this.height = this.el.nativeElement.clientHeight;
-    }
-    if (this.width === 0) {
-      this.width = this.el.nativeElement.clientWidth;
-    }
+    const node = this.el.nativeElement;
+    this._width = this.width() === 0 ? node.clientWidth : this.width();
+    this._height = this.height() === 0 ? node.clientHeight : this.height();
 
     const chart: Chart = (this._chart = new this.winG2.Chart({
       container: el.nativeElement,
       autoFit: false,
-      padding,
-      height: this.height,
-      width: this.width,
-      theme
+      padding: padding(),
+      height: this._height,
+      width: this._width,
+      theme: theme()
     }));
     chart.scale({
       x: { nice: false },
@@ -120,10 +113,10 @@ export class G2TagCloudComponent extends G2BaseComponent {
     chart.interaction('element-active');
 
     chart.on('tag-cloud-text:click', (ev: Event) => {
-      this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
+      this.clickItem.emit({ item: ev.data?.data, ev });
     });
 
-    this.ready.next(chart);
+    this.ready.emit(chart);
 
     this.changeData();
     chart.render();
@@ -131,9 +124,10 @@ export class G2TagCloudComponent extends G2BaseComponent {
 
   changeData(): void {
     const { _chart, data } = this;
-    if (!_chart || !Array.isArray(data) || data.length <= 0) return;
+    const list = data();
+    if (!_chart || !Array.isArray(list) || list.length <= 0) return;
 
-    const dv = new (window as NzSafeAny).DataSet.View().source(data);
+    const dv = new (window as NzSafeAny).DataSet.View().source(list);
     const range = dv.range('value');
     const min = range[0];
     const max = range[1];
@@ -143,7 +137,7 @@ export class G2TagCloudComponent extends G2BaseComponent {
       fields: ['name', 'value'],
       // imageMask,
       font: 'Verdana',
-      size: [this.width, this.height], // 宽高设置最好根据 imageMask 做调整
+      size: [this._width, this._height], // 宽高设置最好根据 imageMask 做调整
       padding: 0,
       timeInterval: 5000, // max execute time
       rotate() {
@@ -162,8 +156,9 @@ export class G2TagCloudComponent extends G2BaseComponent {
   }
 
   private installResizeEvent(): void {
-    this.resize$ = fromEvent(window, 'resize')
+    fromEvent(window, 'resize')
       .pipe(
+        takeUntilDestroyed(this.destroyRef),
         filter(() => !!this._chart),
         debounceTime(200)
       )

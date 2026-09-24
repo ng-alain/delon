@@ -8,11 +8,12 @@ title:
 基础用法。默认情况下丝滑更新数据的判断标准是以只更新 `data` 为准，这里利用 `repaint` 进行手动调用 `changeData` 改变数据达到丝滑更新的效果。
 
 ```ts
-import { Component, ViewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 
 import { G2PieClickItem, G2PieComponent, G2PieData, G2PieModule } from '@delon/chart/pie';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-demo',
@@ -23,9 +24,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
       [hasLegend]="true"
       title="销售额"
       subTitle="销售额"
-      [total]="total"
+      [total]="total()"
       [valueFormat]="format"
-      [data]="salesPieData"
+      [data]="salesPieData()"
       height="294"
       repaint="false"
       (clickItem)="handleClick($event)"
@@ -34,9 +35,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   imports: [NzButtonModule, G2PieModule]
 })
 export class DemoComponent {
-  @ViewChild('pie', { static: false }) readonly pie!: G2PieComponent;
-  salesPieData: G2PieData[] = [];
-  total = '';
+  readonly pie = viewChild<G2PieComponent>('pie');
+  readonly salesPieData = signal<G2PieData[]>([]);
+  readonly total = signal('');
 
   constructor(private msg: NzMessageService) {
     this.refresh();
@@ -44,7 +45,7 @@ export class DemoComponent {
 
   refresh(): void {
     const rv = (min: number = 0, max: number = 5000): number => Math.floor(Math.random() * (max - min + 1) + min);
-    this.salesPieData = [
+    const salesPieData: G2PieData[] = [
       {
         x: '家用电器',
         y: rv()
@@ -67,15 +68,17 @@ export class DemoComponent {
       }
     ];
     if (Math.random() > 0.5) {
-      this.salesPieData.push({
+      salesPieData.push({
         x: '其他',
         y: rv()
       });
     }
-    this.total = `&yen ${this.salesPieData.reduce((pre, now) => now.y + pre, 0).toFixed(2)}`;
-    if (this.pie) {
-      // 等待组件渲染
-      setTimeout(() => this.pie.changeData());
+    this.salesPieData.set(salesPieData);
+    this.total.set(`&yen ${salesPieData.reduce((pre, now) => now.y + pre, 0).toFixed(2)}`);
+    const pie = this.pie();
+    if (pie) {
+      // 等待组件完成本次渲染后再手动更新数据
+      timer(0).subscribe(() => pie.changeData());
     }
   }
 

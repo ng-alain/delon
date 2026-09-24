@@ -1,11 +1,10 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  Input,
-  OnChanges,
   ViewEncapsulation,
+  computed,
   inject,
+  input,
   numberAttribute
 } from '@angular/core';
 
@@ -18,17 +17,17 @@ import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
   template: `
     <div
       nz-tooltip
-      [nzTooltipTitle]="locale().targetSuffix + target + '%'"
+      [nzTooltipTitle]="locale().targetSuffix + _target() + '%'"
       class="g2-mini-progress__target"
-      [style]="{ left: target + '%' }"
+      [style]="{ left: _target() + '%' }"
     >
-      <span class="g2-mini-progress__target-item" [style]="{ 'background-color': color }"></span>
-      <span class="g2-mini-progress__target-item" [style]="{ 'background-color': color }"></span>
+      <span class="g2-mini-progress__target-item" [style]="{ 'background-color': color() }"></span>
+      <span class="g2-mini-progress__target-item" [style]="{ 'background-color': color() }"></span>
     </div>
     <div class="g2-mini-progress__wrap">
       <div
         class="g2-mini-progress__value"
-        [style]="{ 'background-color': color, width: percent + '%', height: strokeWidth + 'px' }"
+        [style]="{ 'background-color': color(), width: _percent() + '%', height: strokeWidth() + 'px' }"
       ></div>
     </div>
   `,
@@ -37,22 +36,19 @@ import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
   encapsulation: ViewEncapsulation.None,
   imports: [NzTooltipDirective]
 })
-export class G2MiniProgressComponent implements OnChanges {
+export class G2MiniProgressComponent {
   locale = inject(DelonLocaleService).valueSignal('miniProgress');
-  private readonly cdr = inject(ChangeDetectorRef);
 
-  @Input() color = '#1890FF';
-  @Input({ transform: numberAttribute }) target?: number | null;
-  @Input({ transform: numberAttribute }) percent?: number | null;
-  @Input({ transform: numberAttribute }) strokeWidth?: number | null;
+  readonly color = input('#1890FF');
+  readonly target = input<number | null>(null, { transform: numberAttribute });
+  readonly percent = input<number | null>(null, { transform: numberAttribute });
+  readonly strokeWidth = input<number | null>(null, { transform: numberAttribute });
+
+  /** 等价旧 ngOnChanges 的钳位；输入本身保持原值 */
+  protected readonly _target = computed(() => this.fixNum(this.target()));
+  protected readonly _percent = computed(() => this.fixNum(this.percent()));
 
   private fixNum(value: number | undefined | null): number {
     return Math.min(Math.max(numberAttribute(value), 0), 100);
-  }
-
-  ngOnChanges(): void {
-    this.target = this.fixNum(this.target);
-    this.percent = this.fixNum(this.percent);
-    this.cdr.detectChanges();
   }
 }

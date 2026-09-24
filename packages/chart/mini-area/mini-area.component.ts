@@ -1,12 +1,11 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Input,
-  Output,
   ViewEncapsulation,
   booleanAttribute,
-  numberAttribute
+  input,
+  numberAttribute,
+  output
 } from '@angular/core';
 
 import type { Chart, Event } from '@antv/g2';
@@ -30,7 +29,7 @@ export interface G2MiniAreaClickItem {
   exportAs: 'g2MiniArea',
   template: ``,
   host: {
-    '[style.height.px]': 'height'
+    '[style.height.px]': 'height()'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
@@ -38,20 +37,20 @@ export interface G2MiniAreaClickItem {
 export class G2MiniAreaComponent extends G2BaseComponent {
   // #region fields
 
-  @Input() color = 'rgba(24, 144, 255, 0.2)';
-  @Input() borderColor = '#1890FF';
-  @Input({ transform: numberAttribute }) borderWidth = 2;
-  @Input({ transform: numberAttribute }) height = 56;
-  @Input({ transform: booleanAttribute }) fit = true;
-  @Input({ transform: booleanAttribute }) line = false;
-  @Input({ transform: booleanAttribute }) animate = true;
-  @Input() xAxis: NzSafeAny;
-  @Input() yAxis: NzSafeAny;
-  @Input() padding: number | number[] | 'auto' = [8, 8, 8, 8];
-  @Input() data: G2MiniAreaData[] = [];
-  @Input() yTooltipSuffix = '';
-  @Input() tooltipType: 'mini' | 'default' = 'default';
-  @Output() readonly clickItem = new EventEmitter<G2MiniAreaClickItem>();
+  readonly color = input('rgba(24, 144, 255, 0.2)');
+  readonly borderColor = input('#1890FF');
+  readonly borderWidth = input(2, { transform: numberAttribute });
+  readonly height = input(56, { transform: numberAttribute });
+  readonly fit = input(true, { transform: booleanAttribute });
+  readonly line = input(false, { transform: booleanAttribute });
+  readonly animate = input(true, { transform: booleanAttribute });
+  readonly xAxis = input<NzSafeAny>();
+  readonly yAxis = input<NzSafeAny>();
+  readonly padding = input<number | number[] | 'auto'>([8, 8, 8, 8]);
+  readonly data = input<G2MiniAreaData[]>([]);
+  readonly yTooltipSuffix = input('');
+  readonly tooltipType = input<'mini' | 'default'>('default');
+  readonly clickItem = output<G2MiniAreaClickItem>();
 
   // #endregion
 
@@ -74,49 +73,49 @@ export class G2MiniAreaComponent extends G2BaseComponent {
     } = this;
     const chart: Chart = (this._chart = new this.winG2.Chart({
       container: el.nativeElement,
-      autoFit: fit,
-      height,
-      padding,
-      theme
+      autoFit: fit(),
+      height: height(),
+      padding: padding(),
+      theme: theme()
     }));
-    chart.animate(animate);
+    chart.animate(animate());
 
-    if (!xAxis && !yAxis) {
+    if (!xAxis() && !yAxis()) {
       chart.axis(false);
     }
 
-    if (xAxis) {
-      chart.axis('x', xAxis);
+    if (xAxis()) {
+      chart.axis('x', xAxis());
     } else {
       chart.axis('x', false);
     }
 
-    if (yAxis) {
-      chart.axis('y', yAxis);
+    if (yAxis()) {
+      chart.axis('y', yAxis());
     } else {
       chart.axis('y', false);
     }
 
     chart.legend(false);
-    chart.tooltip(genMiniTooltipOptions(tooltipType));
+    chart.tooltip(genMiniTooltipOptions(tooltipType()));
 
     chart
       .area()
       .position('x*y')
-      .color(color)
-      .tooltip('x*y', (x, y) => ({ name: x, value: y + yTooltipSuffix }))
+      .color(color())
+      .tooltip('x*y', (x, y) => ({ name: x, value: y + yTooltipSuffix() }))
       .shape('smooth');
 
-    if (line) {
-      chart.line().position('x*y').shape('smooth').color(borderColor).size(borderWidth).tooltip(false);
+    if (line()) {
+      chart.line().position('x*y').shape('smooth').color(borderColor()).size(borderWidth()).tooltip(false);
     }
 
     chart.on(`plot:click`, (ev: Event) => {
-      const records = this._chart.getSnapRecords({ x: ev.x, y: ev.y });
-      this.ngZone.run(() => this.clickItem.emit({ item: records[0]._origin, ev }));
+      const records = this._chart!.getSnapRecords({ x: ev.x, y: ev.y });
+      this.clickItem.emit({ item: records[0]._origin, ev });
     });
 
-    this.ready.next(chart);
+    this.ready.emit(chart);
 
     this.changeData();
     chart.render();
@@ -124,8 +123,8 @@ export class G2MiniAreaComponent extends G2BaseComponent {
 
   changeData(): void {
     const { _chart, data } = this;
-    if (!_chart || !Array.isArray(data) || data.length <= 0) return;
+    if (!_chart || !Array.isArray(data()) || data().length <= 0) return;
 
-    _chart.changeData(data);
+    _chart.changeData(data());
   }
 }

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 
 import { checkDelay, PageG2 } from '@delon/testing';
@@ -47,10 +47,10 @@ describe('chart: pie', () => {
     });
 
     it('should be hide item via click it', () => {
-      expect(page.context.comp.legendData[0].checked).toBe(true);
+      expect(page.context.comp().legendData()[0].checked).toBe(true);
       page.getEl('.g2-pie__legend-item').click();
       page.dc();
-      expect(page.context.comp.legendData[0].checked).toBe(false);
+      expect(page.context.comp().legendData()[0].checked).toBe(false);
     });
   });
 
@@ -96,7 +96,7 @@ describe('chart: pie', () => {
   imports: [G2PieComponent]
 })
 class TestMiniComponent {
-  @ViewChild('comp', { static: true }) comp!: G2PieComponent;
+  readonly comp = viewChild.required<G2PieComponent>('comp');
   data?: NzSafeAny[];
   color: string | null = 'rgba(24, 144, 255, 0.85)';
   subTitle = 'subTitle';
@@ -135,7 +135,7 @@ class TestMiniComponent {
   imports: [G2PieComponent]
 })
 class TestFullComponent {
-  @ViewChild('comp', { static: true }) comp!: G2PieComponent;
+  readonly comp = viewChild.required<G2PieComponent>('comp');
   data: NzSafeAny[] = [];
   color = 'rgba(24, 144, 255, 0.85)';
   subTitle = 'subTitle';

@@ -1,14 +1,13 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Input,
-  Output,
-  SimpleChanges,
+  Signal,
   TemplateRef,
   ViewEncapsulation,
   booleanAttribute,
-  numberAttribute
+  input,
+  numberAttribute,
+  output
 } from '@angular/core';
 
 import type { Chart, Event, Types } from '@antv/g2';
@@ -67,10 +66,10 @@ export interface G2TimelineClickItem {
   selector: 'g2-timeline',
   exportAs: 'g2Timeline',
   template: `
-    <ng-container *nzStringTemplateOutlet="title">
-      <h4>{{ title }}</h4>
+    <ng-container *nzStringTemplateOutlet="title()">
+      <h4>{{ title() }}</h4>
     </ng-container>
-    @if (!loaded) {
+    @if (!loaded()) {
       <nz-skeleton />
     }
     <div #container></div>
@@ -82,44 +81,50 @@ export interface G2TimelineClickItem {
 export class G2TimelineComponent extends G2BaseComponent {
   // #region fields
 
-  @Input() title?: string | TemplateRef<void> | null;
-  @Input({ transform: numberAttribute }) maxAxis = 2;
-  @Input() data: G2TimelineData[] = [];
-  @Input() titleMap?: G2TimelineMap | null;
-  @Input() colorMap: G2TimelineMap = { y1: '#5B8FF9', y2: '#5AD8A6', y3: '#5D7092', y4: '#F6BD16', y5: '#E86452' };
-  @Input() mask: string = 'HH:mm';
-  @Input() maskSlider: string = 'HH:mm';
-  @Input() position: 'top' | 'right' | 'bottom' | 'left' = 'top';
-  @Input({ transform: numberAttribute }) height = 450;
-  @Input() padding: number[] = [40, 8, 64, 40];
-  @Input({ transform: numberAttribute }) borderWidth = 2;
-  @Input({ transform: booleanAttribute }) slider = true;
-  @Output() readonly clickItem = new EventEmitter<G2TimelineClickItem>();
+  readonly title = input<string | TemplateRef<void> | null>();
+  readonly maxAxis = input(2, { transform: numberAttribute });
+  readonly data = input<G2TimelineData[]>([]);
+  readonly titleMap = input<G2TimelineMap | null>();
+  readonly colorMap = input<G2TimelineMap>({
+    y1: '#5B8FF9',
+    y2: '#5AD8A6',
+    y3: '#5D7092',
+    y4: '#F6BD16',
+    y5: '#E86452'
+  });
+  readonly mask = input<string>('HH:mm');
+  readonly maskSlider = input<string>('HH:mm');
+  readonly position = input<'top' | 'right' | 'bottom' | 'left'>('top');
+  readonly height = input(450, { transform: numberAttribute });
+  readonly padding = input<number[]>([40, 8, 64, 40]);
+  readonly borderWidth = input(2, { transform: numberAttribute });
+  readonly slider = input(true, { transform: booleanAttribute });
+  readonly clickItem = output<G2TimelineClickItem>();
 
   // #endregion
 
-  onlyChangeData = (changes: SimpleChanges): boolean => {
-    const tm = changes.titleMap;
-    return !(tm && !tm.firstChange && tm.currentValue !== tm.previousValue);
-  };
+  /** 等价旧 onlyChangeData：除 titleMap 外，其余输入变更都只需更新数据 */
+  protected override isDataOnly(changed: ReadonlyArray<Signal<unknown>>): boolean {
+    return !changed.includes(this.titleMap);
+  }
 
   install(): void {
     const { node, height, padding, slider, maxAxis, theme, maskSlider } = this;
     const chart: Chart = (this._chart = new this.winG2.Chart({
-      container: node.nativeElement,
+      container: node().nativeElement,
       autoFit: true,
-      height,
-      padding,
-      theme
+      height: height(),
+      padding: padding(),
+      theme: theme()
     }));
     chart.axis('time', { title: null });
     chart.axis('y1', { title: null });
-    for (let i = 2; i <= maxAxis; i++) {
+    for (let i = 2; i <= maxAxis(); i++) {
       chart.axis(`y${i}`, false);
     }
 
     chart.line().position('time*y1');
-    for (let i = 2; i <= maxAxis; i++) {
+    for (let i = 2; i <= maxAxis(); i++) {
       chart.line().position(`time*y${i}`);
     }
 
@@ -128,9 +133,9 @@ export class G2TimelineComponent extends G2BaseComponent {
       shared: true
     });
 
-    const sliderPadding = { ...[], ...padding };
+    const sliderPadding = { ...[], ...padding() };
     sliderPadding[0] = 0;
-    if (slider) {
+    if (slider()) {
       chart.option('slider', {
         height: 26,
         start: 0,
@@ -139,13 +144,13 @@ export class G2TimelineComponent extends G2BaseComponent {
           isArea: false
         },
         minLimit: 2,
-        formatter: (val: Date) => format(val, maskSlider)
+        formatter: (val: Date) => format(val, maskSlider())
       });
     }
 
     chart.on(`plot:click`, (ev: Event) => {
-      const records = this._chart.getSnapRecords({ x: ev.x, y: ev.y });
-      this.ngZone.run(() => this.clickItem.emit({ item: records[0]._origin, ev }));
+      const records = this._chart!.getSnapRecords({ x: ev.x, y: ev.y });
+      this.clickItem.emit({ item: records[0]._origin, ev });
     });
 
     chart.on(`legend-item:click`, (ev: Event) => {
@@ -157,7 +162,7 @@ export class G2TimelineComponent extends G2BaseComponent {
       }
     });
 
-    this.ready.next(chart);
+    this.ready.emit(chart);
 
     this.changeData();
 
@@ -166,31 +171,31 @@ export class G2TimelineComponent extends G2BaseComponent {
 
   changeData(): void {
     const { _chart, height, padding, mask, titleMap, position, colorMap, borderWidth, maxAxis } = this;
-    let data = [...this.data];
+    let data = [...this.data()];
     if (!_chart || data.length <= 0) return;
 
-    const arrAxis = [...Array(maxAxis)].map((_, index) => index + 1);
+    const arrAxis = [...Array(maxAxis())].map((_, index) => index + 1);
 
     _chart.legend({
-      position,
+      position: position(),
       custom: true,
       items: arrAxis.map(id => {
         const key = `y${id}`;
         return {
           id: key,
-          name: titleMap![key],
+          name: titleMap()![key],
           value: key,
-          marker: { style: { fill: colorMap[key] } }
+          marker: { style: { fill: colorMap()[key] } }
         } as Types.LegendItem;
       })
     });
 
     // border
     _chart.geometries.forEach((v, idx: number) => {
-      v.color((colorMap as NzSafeAny)[`y${idx + 1}`]).size(borderWidth);
+      v.color((colorMap() as NzSafeAny)[`y${idx + 1}`]).size(borderWidth());
     });
-    _chart.height = height;
-    _chart.padding = padding;
+    _chart.height = height();
+    _chart.padding = padding();
 
     // 转换成日期类型
     data = data
@@ -206,7 +211,7 @@ export class G2TimelineComponent extends G2BaseComponent {
     arrAxis.forEach(id => {
       const key = `y${id}`;
       scaleOptions[key] = {
-        alias: titleMap![key],
+        alias: titleMap()![key],
         max,
         min: 0
       };
@@ -214,7 +219,7 @@ export class G2TimelineComponent extends G2BaseComponent {
     _chart.scale({
       time: {
         type: 'time',
-        mask,
+        mask: mask(),
         range: [0, 1]
       },
       ...scaleOptions

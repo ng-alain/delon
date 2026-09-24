@@ -1,25 +1,25 @@
-@if (title) {
+@if (title()) {
   <div class="number-info__title">
-    <ng-container *nzStringTemplateOutlet="title">{{ title }}</ng-container>
+    <ng-container *nzStringTemplateOutlet="title()">{{ title() }}</ng-container>
   </div>
 }
-@if (subTitle) {
+@if (subTitle()) {
   <div class="number-info__title-sub">
-    <ng-container *nzStringTemplateOutlet="subTitle">{{ subTitle }}</ng-container>
+    <ng-container *nzStringTemplateOutlet="subTitle()">{{ subTitle() }}</ng-container>
   </div>
 }
-<div class="number-info__value" [style.margin-top.px]="gap">
+<div class="number-info__value" [style.margin-top.px]="gap()">
   <span class="number-info__value-text">
-    <ng-container *nzStringTemplateOutlet="total">{{ total }}</ng-container>
-    @if (suffix) {
-      <em class="number-info__value-suffix">{{ suffix }}</em>
+    <ng-container *nzStringTemplateOutlet="total()">{{ total() }}</ng-container>
+    @if (suffix()) {
+      <em class="number-info__value-suffix">{{ suffix() }}</em>
     }
   </span>
-  @if (status || subTotal) {
+  @if (status() || subTotal()) {
     <span class="number-info__value-text number-info__value-sub">
-      <ng-container *nzStringTemplateOutlet="subTotal">{{ subTotal }}</ng-container>
-      @if (status) {
-        <nz-icon nzType="caret-{{ status }}" />
+      <ng-container *nzStringTemplateOutlet="subTotal()">{{ subTotal() }}</ng-container>
+      @if (status()) {
+        <nz-icon nzType="caret-{{ status() }}" />
       }
     </span>
   }

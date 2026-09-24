@@ -1,12 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  ViewEncapsulation,
-  numberAttribute
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation, input, numberAttribute, output } from '@angular/core';
 
 import type { Chart, Event } from '@antv/g2';
 
@@ -30,7 +22,7 @@ export interface G2MiniBarClickItem {
   exportAs: 'g2MiniBar',
   template: ``,
   host: {
-    '[style.height.px]': 'height'
+    '[style.height.px]': 'height()'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
@@ -38,14 +30,14 @@ export interface G2MiniBarClickItem {
 export class G2MiniBarComponent extends G2BaseComponent {
   // #region fields
 
-  @Input() color = '#1890FF';
-  @Input({ transform: numberAttribute }) height = 0;
-  @Input({ transform: numberAttribute }) borderWidth = 5;
-  @Input() padding: number | number[] | 'auto' = [8, 8, 8, 8];
-  @Input() data: G2MiniBarData[] = [];
-  @Input() yTooltipSuffix = '';
-  @Input() tooltipType: 'mini' | 'default' = 'default';
-  @Output() readonly clickItem = new EventEmitter<G2MiniBarClickItem>();
+  readonly color = input('#1890FF');
+  readonly height = input(0, { transform: numberAttribute });
+  readonly borderWidth = input(5, { transform: numberAttribute });
+  readonly padding = input<number | number[] | 'auto'>([8, 8, 8, 8]);
+  readonly data = input<G2MiniBarData[]>([]);
+  readonly yTooltipSuffix = input('');
+  readonly tooltipType = input<'mini' | 'default'>('default');
+  readonly clickItem = output<G2MiniBarClickItem>();
 
   // #endregion
 
@@ -54,9 +46,9 @@ export class G2MiniBarComponent extends G2BaseComponent {
     const chart: Chart = (this._chart = new this.winG2.Chart({
       container: el.nativeElement,
       autoFit: true,
-      height,
-      padding,
-      theme
+      height: height(),
+      padding: padding(),
+      theme: theme()
     }));
     chart.scale({
       x: {
@@ -68,22 +60,22 @@ export class G2MiniBarComponent extends G2BaseComponent {
     });
     chart.legend(false);
     chart.axis(false);
-    chart.tooltip(genMiniTooltipOptions(tooltipType, { showCrosshairs: false }));
+    chart.tooltip(genMiniTooltipOptions(tooltipType(), { showCrosshairs: false }));
     chart
       .interval()
       .position('x*y')
       .color('x*y', (x, y) => {
-        const colorItem = this.data.find(w => w.x === x && w.y === y);
-        return colorItem && colorItem.color ? colorItem.color : color;
+        const colorItem = this.data().find(w => w.x === x && w.y === y);
+        return colorItem && colorItem.color ? colorItem.color : color();
       })
-      .size(borderWidth)
-      .tooltip('x*y', (x: NzSafeAny, y: NzSafeAny) => ({ name: x, value: y + yTooltipSuffix }));
+      .size(borderWidth())
+      .tooltip('x*y', (x: NzSafeAny, y: NzSafeAny) => ({ name: x, value: y + yTooltipSuffix() }));
 
     chart.on(`interval:click`, (ev: Event) => {
-      this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
+      this.clickItem.emit({ item: ev.data?.data, ev });
     });
 
-    this.ready.next(chart);
+    this.ready.emit(chart);
 
     this.changeData();
     chart.render();
@@ -91,7 +83,7 @@ export class G2MiniBarComponent extends G2BaseComponent {
 
   changeData(): void {
     const { _chart, data } = this;
-    if (!_chart || !Array.isArray(data) || data.length <= 0) return;
-    _chart.changeData(data);
+    if (!_chart || !Array.isArray(data()) || data().length <= 0) return;
+    _chart.changeData(data());
   }
 }

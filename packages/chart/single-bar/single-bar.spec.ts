@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 
 import { checkDelay, PageG2 } from '@delon/testing';
@@ -52,7 +52,7 @@ describe('chart: single-bar', () => {
   imports: [G2SingleBarComponent]
 })
 class TestComponent {
-  @ViewChild('comp', { static: true }) comp!: G2SingleBarComponent;
+  readonly comp = viewChild.required<G2SingleBarComponent>('comp');
   value = 10;
   plusColor = '#40a9ff';
   minusColor = '#ff4d4f';

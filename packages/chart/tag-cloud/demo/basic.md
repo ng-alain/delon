@@ -8,7 +8,7 @@ title:
 基础用法。
 
 ```ts
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { G2TagCloudClickItem, G2TagCloudData, G2TagCloudModule } from '@delon/chart/tag-cloud';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -18,12 +18,12 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   selector: 'app-demo',
   template: `
     <button nz-button (click)="refresh()" nzType="primary">Refresh</button>
-    <g2-tag-cloud [data]="tags" height="400" (clickItem)="handleClick($event)" />
+    <g2-tag-cloud [data]="tags()" height="400" (clickItem)="handleClick($event)" />
   `,
   imports: [NzButtonModule, G2TagCloudModule]
 })
 export class DemoComponent {
-  tags: G2TagCloudData[] = [];
+  readonly tags = signal<G2TagCloudData[]>([]);
 
   constructor(private msg: NzMessageService) {
     this.refresh();
@@ -32,7 +32,7 @@ export class DemoComponent {
   refresh(): void {
     const rv = (min: number = 1, max: number = 10): number => Math.floor(Math.random() * (max - min + 1) + min);
 
-    this.tags = [
+    this.tags.set([
       { value: rv(), name: 'NG-ALAIN' },
       { value: rv(), name: 'AntV' },
       { value: rv(), name: 'F2' },
@@ -213,7 +213,7 @@ export class DemoComponent {
       { value: rv(), name: 'D3' },
       { value: rv(), name: 'Vega' },
       { value: rv(), name: '统计图表' }
-    ];
+    ]);
   }
 
   handleClick(data: G2TagCloudClickItem): void {

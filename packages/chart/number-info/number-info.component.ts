@@ -1,9 +1,9 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   TemplateRef,
   ViewEncapsulation,
+  input,
   numberAttribute
 } from '@angular/core';
 
@@ -16,8 +16,8 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
   templateUrl: './number-info.component.html',
   host: {
     '[class.number-info]': `true`,
-    '[class.number-info__light]': `theme === 'light'`,
-    '[class.number-info__default]': `theme === 'default'`
+    '[class.number-info__light]': `theme() === 'light'`,
+    '[class.number-info__default]': `theme() === 'default'`
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
@@ -25,19 +25,19 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
 })
 export class NumberInfoComponent {
   /** 标题 */
-  @Input() title?: string | TemplateRef<void> | null;
+  readonly title = input<string | TemplateRef<void> | null>();
   /** 子标题 */
-  @Input() subTitle?: string | TemplateRef<void> | null;
+  readonly subTitle = input<string | TemplateRef<void> | null>();
   /** 总量 */
-  @Input() total?: string | number | TemplateRef<void> | null;
+  readonly total = input<string | number | TemplateRef<void> | null>();
   /** 总量后缀 */
-  @Input() subTotal?: string | number | TemplateRef<void> | null;
+  readonly subTotal = input<string | number | TemplateRef<void> | null>();
   /** 子总量 */
-  @Input() suffix?: string | null;
+  readonly suffix = input<string | null>();
   /** 增加状态 */
-  @Input() status?: 'up' | 'down';
+  readonly status = input<'up' | 'down'>();
   /** 状态样式 */
-  @Input() theme: 'light' | 'default' = 'light';
+  readonly theme = input<'light' | 'default'>('light');
   /** 设置数字和描述直接的间距（像素） */
-  @Input({ transform: numberAttribute }) gap = 8;
+  readonly gap = input(8, { transform: numberAttribute });
 }

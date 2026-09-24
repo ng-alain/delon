@@ -8,7 +8,7 @@ title:
 带有时间轴的图表。
 
 ```ts
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 
 import { G2TimelineClickItem, G2TimelineData, G2TimelineModule } from '@delon/chart/timeline';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -16,7 +16,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 @Component({
   selector: 'app-demo',
   template: ` <g2-timeline
-    [data]="chartData"
+    [data]="chartData()"
     [titleMap]="{ y1: '客流量', y2: '支付笔数' }"
     [height]="200"
     (clickItem)="handleClick($event)"
@@ -25,16 +25,18 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 })
 export class DemoComponent implements OnInit {
   private readonly msg = inject(NzMessageService);
-  chartData: G2TimelineData[] = [];
+  readonly chartData = signal<G2TimelineData[]>([]);
 
   ngOnInit(): void {
+    const chartData: G2TimelineData[] = [];
     for (let i = 0; i < 20; i += 1) {
-      this.chartData.push({
+      chartData.push({
         time: new Date().getTime() + 1000 * 60 * 30 * i,
         y1: Math.floor(Math.random() * 100) + 1000,
         y2: Math.floor(Math.random() * 100) + 10
       });
     }
+    this.chartData.set(chartData);
   }
 
   handleClick(data: G2TimelineClickItem): void {
