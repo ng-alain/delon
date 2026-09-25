@@ -5,11 +5,11 @@ export interface ICache {
 }
 
 export interface ICacheStore {
-  get(key: string): ICache | null;
+  get(key: string): ICache | PromiseLike<ICache> | null;
 
-  set(key: string, value: ICache): boolean;
+  set(key: string, value: ICache): boolean | PromiseLike<boolean>;
 
-  remove(key: string): void;
+  remove(key: string): boolean | PromiseLike<boolean>;
 }
 
 export type CacheNotifyType = 'set' | 'remove' | 'expire';
