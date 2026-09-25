@@ -1,6 +1,10 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
 import { SFBooleanWidgetSchema } from './schema';
+import { SFItemWrapComponent } from '../../sf-item-wrap.component';
 import { ControlUIWidget } from '../../widget';
 
 @Component({
@@ -27,7 +31,6 @@ import { ControlUIWidget } from '../../widget';
   </sf-item-wrap>`,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [FormsModule, NzSwitchModule, SFItemWrapComponent]
 })
 export class BooleanWidget extends ControlUIWidget<SFBooleanWidgetSchema> {}

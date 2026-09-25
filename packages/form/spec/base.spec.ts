@@ -12,7 +12,8 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { SFWidgetProvideConfig, provideSFConfig } from '../src';
 import { SF_SEQ } from '../src/const';
-import { SFButton } from '../src/interface';
+import { ErrorData } from '../src/errors';
+import { SFButton, SFLayout, SFValueChange } from '../src/interface';
 import { FormProperty } from '../src/model/form.property';
 import { DelonFormModule } from '../src/module';
 import { SFSchema } from '../src/schema';
@@ -50,8 +51,7 @@ export function builder(options?: {
   options = { detectChanges: true, ...options };
   TestBed.configureTestingModule({
     providers: [provideNzNoAnimation()],
-    imports: [AlainThemeModule, DelonFormModule.forRoot()].concat(options.imports ?? []),
-    declarations: [TestFormComponent]
+    imports: [AlainThemeModule, DelonFormModule.forRoot(), TestFormComponent].concat(options.imports ?? [])
   });
   if (options.template) {
     TestBed.overrideTemplate(TestFormComponent, options.template);
@@ -83,8 +83,7 @@ export function configureSFTestSuite(options?: {
 }): void {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [AlainThemeModule, DelonFormModule, ...(options?.imports ?? [])],
-      declarations: [TestFormComponent],
+      imports: [AlainThemeModule, DelonFormModule, TestFormComponent, ...(options?.imports ?? [])],
       providers: [
         provideNzNoAnimation(),
         provideHttpClient(),
@@ -425,15 +424,14 @@ export class SFPage {
       (formError)="formError($event)"
     />
   `,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [DelonFormModule]
 })
 export class TestFormComponent {
   @ViewChild('comp', { static: true }) comp!: SFComponent;
   readonly mode = signal<'default' | 'search' | 'edit'>('default');
-  readonly layout = signal('horizontal');
-  readonly schema = signal<SFSchema | null>(SCHEMA.user);
-  readonly ui = signal<SFUISchema | null>({});
+  readonly layout = signal<SFLayout>('horizontal');
+  readonly schema = signal<SFSchema | undefined>(SCHEMA.user);
+  readonly ui = signal<SFUISchema | undefined>({});
   readonly formData = signal<NzSafeAny>(undefined);
   readonly button = signal<SFButton | 'none' | null | undefined>({});
   readonly liveValidate = signal(true);
@@ -446,9 +444,9 @@ export class TestFormComponent {
   readonly cleanValue = signal(false);
   readonly delay = signal(false);
 
-  formChange(): void {}
-  formValueChange(): void {}
-  formSubmit(): void {}
-  formReset(): void {}
-  formError(): void {}
+  formChange(_value: Record<string, unknown>): void {}
+  formValueChange(_value: SFValueChange): void {}
+  formSubmit(_value: Record<string, unknown>): void {}
+  formReset(_value: Record<string, unknown>): void {}
+  formError(_value: ErrorData[]): void {}
 }

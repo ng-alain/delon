@@ -1,13 +1,16 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { format } from 'date-fns';
 
 import { toDate } from '@delon/util/date-time';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 import { SFDateWidgetSchema } from './schema';
 import { SFValue } from '../../interface';
 import { FormProperty } from '../../model/form.property';
+import { SFItemWrapComponent } from '../../sf-item-wrap.component';
 import { toBool } from '../../utils';
 import { ControlUIWidget } from '../../widget';
 
@@ -155,8 +158,7 @@ import { ControlUIWidget } from '../../widget';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [FormsModule, NzDatePickerModule, SFItemWrapComponent]
 })
 export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements OnInit {
   private startFormat!: string;

@@ -26,13 +26,12 @@ describe('form: component', () => {
 
   function genModule(options: { acl?: boolean; i18n?: boolean } = {}): void {
     options = { acl: false, i18n: false, ...options };
-    const imports: NzSafeAny[] = [DelonFormModule.forRoot(), AlainThemeModule];
+    const imports: NzSafeAny[] = [DelonFormModule.forRoot(), AlainThemeModule, TestFormComponent, TestModeComponent];
     if (options.acl) {
       imports.push(DelonACLModule);
     }
     TestBed.configureTestingModule({
-      imports,
-      declarations: [TestFormComponent, TestModeComponent]
+      imports
     });
   }
 
@@ -72,7 +71,7 @@ describe('form: component', () => {
 
       it('should throw error when is invalid schema', () => {
         expect(() => {
-          context.schema.set(null);
+          context.schema.set(null as NzSafeAny);
           fixture.detectChanges();
         }).toThrowError('Invalid Schema');
       });
@@ -284,7 +283,7 @@ describe('form: component', () => {
       });
 
       describe('#layout', () => {
-        ['horizontal', 'vertical', 'inline'].forEach(type => {
+        (['horizontal', 'vertical', 'inline'] as const).forEach(type => {
           it(`with ${type}`, () => {
             context.layout.set(type);
             fixture.detectChanges();
@@ -945,7 +944,6 @@ describe('form: component', () => {
       [loading]="loading()"
     />
   `,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [DelonFormModule]
 })
 class TestModeComponent extends TestFormComponent {}

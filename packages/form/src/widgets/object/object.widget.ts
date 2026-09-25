@@ -1,11 +1,18 @@
+import { NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, signal } from '@angular/core';
 
+import { NzCardModule } from 'ng-zorro-antd/card';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
 import type { SFObjectWidgetRenderType } from './schema';
 import { ArrayProperty } from '../../model/array.property';
 import { FormProperty } from '../../model/form.property';
 import type { SFGridSchema } from '../../schema/ui';
+import { SFFixedDirective } from '../../sf-fixed.directive';
+import { SFItemComponent } from '../../sf-item.component';
 import { toBool } from '../../utils';
 import { ObjectLayoutWidget } from '../../widget';
 
@@ -89,8 +96,15 @@ import { ObjectLayoutWidget } from '../../widget';
     }`,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [
+    NgTemplateOutlet,
+    NzCardModule,
+    NzGridModule,
+    NzIconModule,
+    NzTooltipModule,
+    SFItemComponent,
+    SFFixedDirective
+  ]
 })
 export class ObjectWidget extends ObjectLayoutWidget implements OnInit {
   grid: NzSafeAny;

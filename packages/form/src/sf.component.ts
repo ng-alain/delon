@@ -1,4 +1,5 @@
 import { Platform } from '@angular/cdk/platform';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -28,8 +29,11 @@ import { ACLService } from '@delon/acl';
 import { ALAIN_I18N_TOKEN, DelonLocaleService, LocaleData } from '@delon/theme';
 import { AlainConfigService, AlainSFConfig } from '@delon/util/config';
 import { deepCopy } from '@delon/util/other';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
-import type { NzFormControlStatusType } from 'ng-zorro-antd/form';
+import { NzFormModule, type NzFormControlStatusType } from 'ng-zorro-antd/form';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 import { mergeConfig } from './config';
 import { SF_SEQ } from './const';
@@ -39,6 +43,8 @@ import { FormProperty, PropertyGroup } from './model/form.property';
 import { FormPropertyFactory } from './model/form.property.factory';
 import type { SFSchema } from './schema/index';
 import type { SFOptionalHelp, SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from './schema/ui';
+import { SFFixedDirective } from './sf-fixed.directive';
+import { SFItemComponent } from './sf-item.component';
 import { TerminatorService } from './terminator.service';
 import { di, resolveIfSchema, retrieveSchema } from './utils';
 import { SchemaValidatorFactory } from './validator.factory';
@@ -78,8 +84,15 @@ export function useFactory(
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [
+    NgTemplateOutlet,
+    NzButtonModule,
+    NzFormModule,
+    NzGridModule,
+    NzIconModule,
+    SFItemComponent,
+    SFFixedDirective
+  ]
 })
 export class SFComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
   private readonly formPropertyFactory = inject(FormPropertyFactory);

@@ -1,12 +1,16 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Subject, catchError, debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs';
 
 import { ArrayService } from '@delon/util/array';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 import { SFSelectWidgetSchema } from './schema';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
+import { SFItemWrapComponent } from '../../sf-item-wrap.component';
 import { getData, toBool } from '../../utils';
 import { ControlUIWidget } from '../../widget';
 
@@ -85,8 +89,7 @@ import { ControlUIWidget } from '../../widget';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [FormsModule, NzIconModule, NzSelectModule, SFItemWrapComponent]
 })
 export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implements OnInit {
   private search$ = new Subject<string>();

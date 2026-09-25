@@ -1,8 +1,12 @@
 import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BehaviorSubject, debounceTime, switchMap, take, takeUntil, timer } from 'rxjs';
+
+import { NzInputModule } from 'ng-zorro-antd/input';
 
 import { SFStringWidgetSchema } from './schema';
 import { SFValue } from '../../interface';
+import { SFItemWrapComponent } from '../../sf-item-wrap.component';
 import { ControlUIWidget } from '../../widget';
 
 @Component({
@@ -71,8 +75,7 @@ import { ControlUIWidget } from '../../widget';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [FormsModule, NzInputModule, SFItemWrapComponent]
 })
 export class StringWidget extends ControlUIWidget<SFStringWidgetSchema> implements OnInit {
   type!: string;

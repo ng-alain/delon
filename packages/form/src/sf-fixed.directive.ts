@@ -10,9 +10,7 @@ import {
 } from '@angular/core';
 
 @Directive({
-  selector: '[fixed-label]',
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  selector: '[fixed-label]'
 })
 export class SFFixedDirective implements AfterViewInit, OnChanges {
   private readonly el: HTMLElement = inject(ElementRef).nativeElement;
