@@ -19,23 +19,26 @@ module: import { G2PieModule } from '@delon/chart/pie';
 | `[animate]` | 是否显示动画 | `boolean` | `true` |
 | `[color]` | 图表颜色 | `string` | `rgba(24, 144, 255, 0.85)` |
 | `[height]` | 图表高度 | `number` | - |
+| `[fontSize]` | 图表文字基准字号（图例继承该字号，中心数值按 `em` 缩放） | `number` | `14` |
 | `[hasLegend]` | 是否显示 legend | `boolean` | `false` |
 | `[padding]` | 图表内部间距 | `number[]` | `[12, 0, 12, 0]` |
 | `[percent]` | 占比 | `number` | - |
+| `[select]` | 是否支持分片选中（**当前版本未实现，为兼容保留的空转输入**） | `boolean` | `true` |
 | `[lineWidth]` | 边框粗细 | `number` | `0` |
 | `[inner]` | 内部极坐标系的半径 | `number` | `0.75` |
 | `[blockMaxWidth]` | 多少宽度为块显示 | `number` | `380` |
 | `[tooltip]` | 是否显示 tooltip | `boolean` | `true` |
-| `[subTitle]` | 图表子标题 | `string,TemplateRef<void><void>` | - |
-| `[total]` | 总量 | `string,number,TemplateRef<void><void>` | - |
+| `[subTitle]` | 图表子标题 | `string,TemplateRef<void>` | - |
+| `[total]` | 总量 | `string,number,TemplateRef<void>` | - |
 | `[valueFormat]` | y轴格式化 | `(y: number) => string` | - |
 | `[data]` | 数据 | `G2PieData[]` | - |
 | `[colors]` | 颜色列表 | `string[]` | - |
 | `[interaction]` | 交互类型，none 无 element-active 图形元素，active-region 图表组件，brush 框选，drag-move 移动 | `InteractionType` | `none` |
 | `[ratio]` | 百分比配置项 | `G2PieRatio` | `{ text: '占比', inverse: '反比', color: '', inverseColor: '#F0F2F5' }` |
-| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
+| `[theme]` | 定制图表主题 | `string \| LooseObject` | - |
 | `(clickItem)` | 点击项回调 | `output<G2PieClickItem>` | - |
 | `(ready)` | 当G2完成初始化后调用 | `output<Chart>` | - |
+| `(error)` | 当渲染失败时调用（G2 未加载或渲染抛错），此时 `(ready)` 不会触发 | `output<unknown>` | - |
 
 ### G2PieData
 

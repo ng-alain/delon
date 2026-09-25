@@ -5,7 +5,13 @@ title:
   en-US: Style 2
 ---
 
+## zh-CN
+
 风格二用法。
+
+## en-US
+
+Usage of style 2.
 
 ```ts
 import { Component } from '@angular/core';

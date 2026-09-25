@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation, input, numberAtt
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { debounceTime, filter, fromEvent } from 'rxjs';
 
-import type { Chart, Event } from '@antv/g2';
+import type { Chart, G2Spec } from '@antv/g2';
 
-import { G2BaseComponent } from '@delon/chart/core';
+import { G2BaseComponent, G2Event, viewSpec } from '@delon/chart/core';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzSkeletonComponent } from 'ng-zorro-antd/skeleton';
 
@@ -16,23 +16,27 @@ export interface G2TagCloudData {
 
 export interface G2TagCloudClickItem {
   item: G2TagCloudData;
-  ev: Event;
+  ev: G2Event;
 }
 
 @Component({
   selector: 'g2-tag-cloud',
   exportAs: 'g2TagCloud',
-  template: `@if (!loaded()) {
-    <nz-skeleton />
-  }`,
+  template: `
+    @if (!loaded()) {
+      <div style="position: absolute; inset: 0; z-index: 1;">
+        <nz-skeleton />
+      </div>
+    }
+  `,
+  host: {
+    '[style.position]': '"relative"'
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [NzSkeletonComponent]
 })
 export class G2TagCloudComponent extends G2BaseComponent {
-  private _width = 0;
-  private _height = 0;
-
   // #region fields
 
   readonly width = input(0, { transform: numberAttribute });
@@ -43,116 +47,40 @@ export class G2TagCloudComponent extends G2BaseComponent {
 
   // #endregion
 
-  private initTagCloud(): void {
-    const winG2 = this.winG2;
-    winG2.registerShape('point', 'cloud', {
-      draw(cfg: NzSafeAny, container: NzSafeAny) {
-        const data = cfg.data as NzSafeAny;
-        const textShape = container.addShape({
-          type: 'text',
-          name: 'tag-cloud-text',
-          attrs: {
-            ...cfg.style,
-            fontSize: data.size,
-            text: data.text,
-            textAlign: 'center',
-            fontFamily: data.font,
-            fill: cfg.color,
-            textBaseline: 'Alphabetic',
-            x: cfg.x,
-            y: cfg.y
-          } as NzSafeAny
-        });
-        if (data.rotate) {
-          winG2.Util.rotate(textShape, (data.rotate * Math.PI) / 180);
-        }
-        return textShape;
-      }
-    });
-  }
-
-  install(): void {
-    this.initTagCloud();
-
-    const { el, padding, theme } = this;
+  protected override chartOptions(): NzSafeAny {
     const node = this.el.nativeElement;
-    this._width = this.width() === 0 ? node.clientWidth : this.width();
-    this._height = this.height() === 0 ? node.clientHeight : this.height();
-
-    const chart: Chart = (this._chart = new this.winG2.Chart({
-      container: el.nativeElement,
-      autoFit: false,
-      padding: padding(),
-      height: this._height,
-      width: this._width,
-      theme: theme()
-    }));
-    chart.scale({
-      x: { nice: false },
-      y: { nice: false }
-    });
-    chart.legend(false);
-    chart.axis(false);
-    chart.tooltip({
-      showTitle: false,
-      showMarkers: false
-    });
-    (chart.coordinate() as NzSafeAny).reflect();
-    chart
-      .point()
-      .position('x*y')
-      .color('text')
-      .shape('cloud')
-      .state({
-        active: {
-          style: {
-            fillOpacity: 0.4
-          }
-        }
-      });
-    chart.interaction('element-active');
-
-    chart.on('tag-cloud-text:click', (ev: Event) => {
-      this.clickItem.emit({ item: ev.data?.data, ev });
-    });
-
-    this.ready.emit(chart);
-
-    this.changeData();
-    chart.render();
+    const width = this.width() === 0 ? node.clientWidth : this.width();
+    const height = this.height() === 0 ? node.clientHeight : this.height();
+    // wordCloud 的布局尺寸取自渲染上下文，故必须显式给出画布尺寸并关闭 autoFit
+    return { container: node, autoFit: false, width, height };
   }
 
-  changeData(): void {
-    const { _chart, data } = this;
-    const list = data();
-    if (!_chart || !Array.isArray(list) || list.length <= 0) return;
-
-    const dv = new (window as NzSafeAny).DataSet.View().source(list);
-    const range = dv.range('value');
-    const min = range[0];
-    const max = range[1];
-
-    dv.transform({
-      type: 'tag-cloud',
-      fields: ['name', 'value'],
-      // imageMask,
-      font: 'Verdana',
-      size: [this._width, this._height], // 宽高设置最好根据 imageMask 做调整
-      padding: 0,
-      timeInterval: 5000, // max execute time
-      rotate() {
-        let random = ~~(Math.random() * 4) % 4;
-        if (random === 2) {
-          random = 0;
-        }
-        return random * 90; // 0, 90, 270
+  protected buildSpec(): G2Spec {
+    const { data, padding, theme } = this;
+    return {
+      ...viewSpec({ theme: theme(), padding: padding() }),
+      type: 'wordCloud',
+      data: data(),
+      encode: { text: 'name', value: 'value', color: 'name' },
+      layout: {
+        font: 'Verdana',
+        fontSize: [8, 32],
+        padding: 0,
+        timeInterval: 5000
       },
-      fontSize(d: NzSafeAny) {
-        return ((d.value - min) / (max - min)) * (32 - 8) + 8;
-      }
-    } as NzSafeAny);
+      legend: false,
+      axis: false,
+      tooltip: { title: false },
+      // 悬停高亮必须显式开启，漏掉不会报错、只会静默失去高亮
+      interaction: { elementHighlight: true }
+    } as G2Spec;
+  }
 
-    _chart.changeData(dv.rows);
+  protected override afterCreate(chart: Chart): void {
+    chart.on('element:click', (ev: G2Event) => {
+      this.clickItem.emit({ item: ev.data?.data as G2TagCloudData, ev });
+    });
+    this.installResizeEvent();
   }
 
   private installResizeEvent(): void {
@@ -162,10 +90,6 @@ export class G2TagCloudComponent extends G2BaseComponent {
         filter(() => !!this._chart),
         debounceTime(200)
       )
-      .subscribe(() => this.changeData());
-  }
-
-  onInit(): void {
-    this.installResizeEvent();
+      .subscribe(() => void this.repaintSpec());
   }
 }

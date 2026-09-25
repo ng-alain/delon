@@ -1,23 +1,30 @@
-import type { Types } from '@antv/g2';
+import type { G2Spec, TooltipComponent } from '@antv/g2';
 
-export function genMiniTooltipOptions(type: 'mini' | 'default', options?: Types.TooltipCfg): Types.TooltipCfg {
-  const res: Types.TooltipCfg = {
-    showTitle: false,
-    showMarkers: true,
-    enterable: true,
-    domStyles: {
-      'g2-tooltip': { padding: '0px' },
-      'g2-tooltip-title': { display: 'none' },
-      'g2-tooltip-list-item': { margin: '4px' }
-    },
-    ...options
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+
+/** mini tooltip 的 spec 片段：外观由 theme 承担，位置/偏移/指示线由 `interaction.tooltip` 承担 */
+export function genMiniTooltipOptions(
+  type: 'mini' | 'default',
+  options?: { crosshairs?: boolean }
+): { tooltip: TooltipComponent; interaction: G2Spec['interaction'] } {
+  const res: Record<string, NzSafeAny> = {
+    tooltip: { title: false },
+    interaction: {}
   };
-  if (type === 'mini') {
-    res.position = 'top';
-    res.domStyles!['g2-tooltip'] = { padding: '0px', backgroundColor: 'transparent', boxShadow: 'none' };
-    res.itemTpl = `<li>{value}</li>`;
-    res.offset = 8;
+  const tooltipInteraction: Record<string, NzSafeAny> = {};
+  if (options?.crosshairs != null) {
+    tooltipInteraction['crosshairs'] = options.crosshairs;
   }
-
-  return res;
+  if (type === 'mini') {
+    res['tooltip'] = {
+      title: false,
+      items: [{ channel: 'y', name: '' }]
+    };
+    tooltipInteraction['position'] = 'top';
+    tooltipInteraction['offset'] = [0, 8];
+  }
+  if (Object.keys(tooltipInteraction).length > 0) {
+    res['interaction'] = { tooltip: tooltipInteraction };
+  }
+  return res as { tooltip: TooltipComponent; interaction: G2Spec['interaction'] };
 }

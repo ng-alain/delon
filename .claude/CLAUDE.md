@@ -6,6 +6,15 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Prefer type inference when the type is obvious
 - Avoid the `any` type; use `unknown` when type is uncertain
 
+## Comments
+
+- Almost no comments: keep only a **one-line why** where the code cannot express it and omitting
+  it would let a future reader break the behaviour.
+- Never cite source paths/line numbers/internal function names, never restate the code, and never
+  record how the change was investigated or verified inside a comment — that belongs in the commit
+  message, the PR description or a test name.
+- Details: [DEVELOPMENT.md → Comments](./DEVELOPMENT.md#comments)
+
 ## Angular Best Practices
 
 - Always use standalone components over NgModules

@@ -15,13 +15,15 @@ module: import { G2TagCloudModule } from '@delon/chart/tag-cloud';
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
 | `[repaint]` | 数据再次变更时是否重绘 | `boolean` | `true` |
-| `[delay]` | 延迟渲染，单位：毫秒 | `number` | `200` |
+| `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
 | `[height]` | 高度值 | `number` | `200` |
 | `[width]` | 宽度值，若不指定自动按宿主元素的宽度 | `number` | `0` |
+| `[padding]` | 图表内部间距 | `number \| number[] \| 'auto'` | `0` |
 | `[data]` | 数据 | `G2TagCloudData[]` | `[]` |
-| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
+| `[theme]` | 定制图表主题 | `string \| LooseObject` | - |
 | `(clickItem)` | 点击项回调 | `output<G2TagCloudClickItem>` | - |
 | `(ready)` | 当G2完成初始化后调用 | `output<Chart>` | - |
+| `(error)` | 当渲染失败时调用（G2 未加载或渲染抛错），此时 `(ready)` 不会触发 | `output<unknown>` | - |
 
 ### G2TagCloudData
 

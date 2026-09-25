@@ -3,7 +3,13 @@ order: 2
 title: Mini tooltip
 ---
 
+## zh-CN
+
 指定 `tooltipType` 值来表示简化tooltip，可以更好的运用于表格。
+
+## en-US
+
+Set `tooltipType` to use a simplified tooltip, which works better inside tables.
 
 ```ts
 import { Component, OnInit, signal } from '@angular/core';

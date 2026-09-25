@@ -3,7 +3,13 @@ order: 0
 title: Tooltip
 ---
 
+## zh-CN
+
 指定 `yTooltipSuffix` 值来表示单位。
+
+## en-US
+
+Set `yTooltipSuffix` to show the unit.
 
 ```ts
 import { Component, OnInit, signal } from '@angular/core';

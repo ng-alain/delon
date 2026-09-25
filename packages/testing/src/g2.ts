@@ -1,11 +1,9 @@
 import { DebugElement, isSignal, Type } from '@angular/core';
-import { ComponentFixture, discardPeriodicTasks, flush, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Chart } from '@antv/g2';
+import type { Chart, G2Spec } from '@antv/g2';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
-
-export type PageG2Type = 'geometries' | 'views';
 
 export const PageG2DataCount = 2;
 export const PageG2Height = 100;
@@ -30,6 +28,36 @@ export class PageG2<T> {
     return this.comp.chart;
   }
 
+  /** 等待首次渲染完成并跑一次变更检测 */
+  async ready(): Promise<void> {
+    const comp = this.comp as NzSafeAny;
+    const isBase = typeof comp?.loaded === 'function' && typeof comp?.ready?.subscribe === 'function';
+    if (isBase) {
+      if (!comp.loaded()) {
+        await new Promise<void>((resolve, reject) => {
+          const readyRef = comp.ready.subscribe(() => {
+            readyRef?.unsubscribe?.();
+            errorRef?.unsubscribe?.();
+            resolve();
+          });
+          const errorRef = comp.error?.subscribe?.((err: unknown) => {
+            readyRef?.unsubscribe?.();
+            errorRef?.unsubscribe?.();
+            reject(err);
+          });
+        });
+      }
+    } else {
+      // 无 loaded() 信号的组件（如 chart-echarts 自行管理生命周期）退化为冲刷一个宏任务
+      await new Promise(resolve => setTimeout(resolve, 0));
+    }
+    // 再让出一次事件循环：渲染后的副作用仍在后续微任务里，少了它断言会读到旧 spec
+    if (isBase) {
+      await new Promise(resolve => setTimeout(resolve, 0));
+    }
+    this.dc();
+  }
+
   genComp(comp: Type<T>, dc: boolean = false): this {
     this.fixture = TestBed.createComponent(comp);
     if (dc) {
@@ -38,32 +66,19 @@ export class PageG2<T> {
     return this;
   }
 
+  /** 同步版引导：仅创建组件并补一次 CD；随后必须 `await page.ready()` */
   dcFirst(): this {
     this.dc();
-    flush();
-    discardPeriodicTasks();
-    // `install()` 被推迟到宏任务执行，并在其中写入驱动视图的状态（如图例信号）；
-    // fakeAsync 下调度器的补渲染回调注册在 fakeAsync 区之外，flush() 驱动不了它，
-    // 因此这里由测试夹具显式补一次 CD。
-    this.dc();
-    // FIX: `Error during cleanup of component`
-    if (this.comp && typeof this.comp.chart !== 'undefined') {
-      spyOn(this.comp.chart, 'destroy');
-    }
     return this;
+  }
+
+  async end(): Promise<void> {
+    await this.ready();
   }
 
   dc(): this {
     this.fixture!.changeDetectorRef.markForCheck();
     this.fixture!.detectChanges();
-    return this;
-  }
-
-  end(): this {
-    // The 201 value is delay value
-    tick(201);
-    flush();
-    discardPeriodicTasks();
     return this;
   }
 
@@ -90,8 +105,19 @@ export class PageG2<T> {
     return (this.dl.nativeElement as HTMLElement).querySelector(cls) as HTMLElement;
   }
 
-  getController(type: 'axis' | 'legend'): NzSafeAny {
-    return this.chart.getController(type) as NzSafeAny;
+  /** 断言当前生效的 v5 spec */
+  expectSpec(assert: (spec: G2Spec) => void): this {
+    assert(this.chart.options() as G2Spec);
+    return this;
+  }
+
+  /** 断言 spec 顶层 `data` 的行数 */
+  isDataCount(num: number): this {
+    this.expectSpec(spec => {
+      expect((spec as NzSafeAny).data).toBeDefined();
+      expect((spec as NzSafeAny).data.length).toBe(num);
+    });
+    return this;
   }
 
   isCanvas(stauts: boolean = true): this {
@@ -110,65 +136,14 @@ export class PageG2<T> {
     return this;
   }
 
-  checkOptions(key: string, value: NzSafeAny): this {
-    expect((this.chart as NzSafeAny)[key]).toBe(value);
-    return this;
-  }
-
-  checkAttrOptions(type: PageG2Type, key: string, value: NzSafeAny): this {
-    const x = (this.chart[type][0] as NzSafeAny).attributeOption[key];
-    expect(x.field).toBe(value);
-    return this;
-  }
-
-  isXScalesCount(num: number): this {
-    const x = this.chart.getXScale();
-    expect(x.values!.length).toBe(num);
-    return this;
-  }
-
-  isYScalesCount(num: number): this {
-    const y = this.chart.getYScales();
-    expect(y.length).toBe(1);
-    expect(y[0].values!.length).toBe(num);
-    return this;
-  }
-
-  isDataCount(type: PageG2Type, num: number): this {
-    const results = this.chart[type];
-    expect(results.length).toBeGreaterThan(0);
-    expect(results[0].data.length).toBe(num);
-    return this;
-  }
-
-  get firstDataPoint(): { x: number; y: number } {
-    const data = (this.context as NzSafeAny)['data'];
-    const list = typeof data === 'function' ? data() : data;
-    return this.chart.getXY(list[0]);
-  }
-
-  checkTooltip(_includeText: string | null, point?: { x: number; y: number }): this {
-    if (!point) {
-      point = this.firstDataPoint;
-    }
-    this.chart.showTooltip(point);
-    expect(this.chart.getController('tooltip') != null).toBe(true);
-    return this;
-  }
-
-  checkClickItem(): this {
-    const point = this.firstDataPoint;
-    const clientPoint = this.chart.canvas.getClientByPoint(point.x, point.y);
-    const event = new MouseEvent('click', {
-      clientX: clientPoint.x,
-      clientY: clientPoint.y
-    });
-    (this.chart.canvas.get('el') as HTMLElement).dispatchEvent(event);
+  /** 断言 spec 顶层字段 */
+  checkSpec(key: string, value: NzSafeAny): this {
+    this.expectSpec(spec => expect((spec as NzSafeAny)[key]).toEqual(value));
     return this;
   }
 }
 
-export function checkDelay<T>(comp: Type<T>, page: PageG2<T> | null = null): void {
+export async function checkDelay<T>(comp: Type<T>, page: PageG2<T> | null = null): Promise<void> {
   if (page == null) {
     page = new PageG2<T>().genComp(comp, false);
   }
@@ -183,9 +158,17 @@ export function checkDelay<T>(comp: Type<T>, page: PageG2<T> | null = null): voi
     context.delay = 100;
   }
   page.dc();
+
+  const instance = page.comp;
+  let settled = false;
+  // 首帧完成的判据是 `(ready)`；销毁先于 delay 到期时它必须不 emit
+  const readyRef = instance.ready?.subscribe?.(() => (settled = true));
+
   page.fixture!.destroy();
-  expect(page.chart == null).toBe(true);
-  tick(201);
-  expect(page.chart == null).toBe(true);
-  discardPeriodicTasks();
+  expect(settled).toBe(false);
+
+  // 跨过 100ms 的 delay，真实等待
+  await new Promise(resolve => setTimeout(resolve, 200));
+  expect(settled).toBe(false);
+  readyRef?.unsubscribe?.();
 }

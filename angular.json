@@ -152,7 +152,7 @@
               "zone.js/testing"
             ],
             "tsConfig": "packages/tsconfig.spec.json",
-            "scripts": ["node_modules/@antv/g2/dist/g2.min.js", "node_modules/@antv/data-set/dist/data-set.js"],
+            "scripts": ["node_modules/@antv/g2/dist/g2.min.js"],
             "codeCoverageExclude": ["schematics/**", "packages/testing/**"],
             "include": [
               "./test.ts",

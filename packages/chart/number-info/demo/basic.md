@@ -5,7 +5,13 @@ title:
   en-US: Basic
 ---
 
+## zh-CN
+
 各种数据文案的展现方式。
+
+## en-US
+
+Different ways to present number info.
 
 ```ts
 import { Component } from '@angular/core';

@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  Signal,
   ViewEncapsulation,
   booleanAttribute,
   input,
@@ -8,9 +9,9 @@ import {
   output
 } from '@angular/core';
 
-import type { Chart, Event } from '@antv/g2';
+import type { Chart, G2Spec } from '@antv/g2';
 
-import { G2BaseComponent, genMiniTooltipOptions } from '@delon/chart/core';
+import { G2BaseComponent, G2Event, genMiniTooltipOptions, viewSpec } from '@delon/chart/core';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface G2MiniAreaData {
@@ -21,7 +22,7 @@ export interface G2MiniAreaData {
 
 export interface G2MiniAreaClickItem {
   item: G2MiniAreaData;
-  ev: Event;
+  ev: G2Event;
 }
 
 @Component({
@@ -44,6 +45,7 @@ export class G2MiniAreaComponent extends G2BaseComponent {
   readonly fit = input(true, { transform: booleanAttribute });
   readonly line = input(false, { transform: booleanAttribute });
   readonly animate = input(true, { transform: booleanAttribute });
+
   readonly xAxis = input<NzSafeAny>();
   readonly yAxis = input<NzSafeAny>();
   readonly padding = input<number | number[] | 'auto'>([8, 8, 8, 8]);
@@ -54,9 +56,13 @@ export class G2MiniAreaComponent extends G2BaseComponent {
 
   // #endregion
 
-  install(): void {
+  protected override chartOptions(): NzSafeAny {
+    return { container: this.el.nativeElement, autoFit: this.fit() };
+  }
+
+  protected buildSpec(): G2Spec {
     const {
-      el,
+      data,
       fit,
       height,
       padding,
@@ -71,60 +77,52 @@ export class G2MiniAreaComponent extends G2BaseComponent {
       borderColor,
       borderWidth
     } = this;
-    const chart: Chart = (this._chart = new this.winG2.Chart({
-      container: el.nativeElement,
-      autoFit: fit(),
-      height: height(),
-      padding: padding(),
-      theme: theme()
-    }));
-    chart.animate(animate());
-
-    if (!xAxis() && !yAxis()) {
-      chart.axis(false);
-    }
-
-    if (xAxis()) {
-      chart.axis('x', xAxis());
-    } else {
-      chart.axis('x', false);
-    }
-
-    if (yAxis()) {
-      chart.axis('y', yAxis());
-    } else {
-      chart.axis('y', false);
-    }
-
-    chart.legend(false);
-    chart.tooltip(genMiniTooltipOptions(tooltipType()));
-
-    chart
-      .area()
-      .position('x*y')
-      .color(color())
-      .tooltip('x*y', (x, y) => ({ name: x, value: y + yTooltipSuffix() }))
-      .shape('smooth');
-
+    const children: Array<Record<string, NzSafeAny>> = [
+      {
+        type: 'area',
+        encode: { x: 'x', y: 'y', shape: 'smooth', color: { type: 'constant', value: color() } },
+        tooltip: { title: false, items: [(d: G2MiniAreaData) => ({ name: d.x, value: d.y + yTooltipSuffix() })] }
+      }
+    ];
     if (line()) {
-      chart.line().position('x*y').shape('smooth').color(borderColor()).size(borderWidth()).tooltip(false);
+      children.push({
+        type: 'line',
+        encode: { x: 'x', y: 'y', shape: 'smooth', color: { type: 'constant', value: borderColor() } },
+        style: { lineWidth: borderWidth() },
+        tooltip: false
+      });
     }
-
-    chart.on(`plot:click`, (ev: Event) => {
-      const records = this._chart!.getSnapRecords({ x: ev.x, y: ev.y });
-      this.clickItem.emit({ item: records[0]._origin, ev });
-    });
-
-    this.ready.emit(chart);
-
-    this.changeData();
-    chart.render();
+    const axis: Record<string, NzSafeAny> = {};
+    if (!xAxis() && !yAxis()) {
+      axis['x'] = false;
+      axis['y'] = false;
+    } else {
+      axis['x'] = xAxis() ?? false;
+      axis['y'] = yAxis() ?? false;
+    }
+    return {
+      ...viewSpec({ theme: theme(), padding: padding(), height: height(), animate: animate(), autoFit: fit() }),
+      ...genMiniTooltipOptions(tooltipType()),
+      data: data(),
+      legend: false,
+      axis,
+      children
+    } as G2Spec;
   }
 
-  changeData(): void {
-    const { _chart, data } = this;
-    if (!_chart || !Array.isArray(data()) || data().length <= 0) return;
+  protected override afterCreate(chart: Chart): void {
+    chart.on('plot:click', (ev: G2Event) => {
+      const records = chart.getDataByXY({ x: ev.x!, y: ev.y! });
+      this.clickItem.emit({ item: records[0] as G2MiniAreaData, ev });
+    });
+  }
 
-    _chart.changeData(data());
+  protected override isDataOnly(changed: ReadonlyArray<Signal<unknown>>): boolean {
+    // line 是非数据兄弟 mark，走 data-only 会让 changeData 把数据写死到它上面
+    if (this.line()) {
+      return false;
+    }
+    // 用 Object.is 比较信号引用，避免 no-uncalled-signals 误报
+    return changed.length > 0 && changed.every(s => Object.is(s, this.data));
   }
 }

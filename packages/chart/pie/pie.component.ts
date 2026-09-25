@@ -11,9 +11,9 @@ import {
   signal
 } from '@angular/core';
 
-import type { Chart, Event } from '@antv/g2';
+import type { Chart, G2Spec } from '@antv/g2';
 
-import { G2BaseComponent, G2InteractionType } from '@delon/chart/core';
+import { G2BaseComponent, G2Event, G2InteractionType, viewSpec } from '@delon/chart/core';
 import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
@@ -27,7 +27,7 @@ export interface G2PieData {
 
 export interface G2PieClickItem {
   item: G2PieData;
-  ev: Event;
+  ev: G2Event;
 }
 
 export interface G2PieRatio {
@@ -44,12 +44,58 @@ export interface G2PieRatio {
 @Component({
   selector: 'g2-pie',
   exportAs: 'g2Pie',
-  templateUrl: './pie.component.html',
+  template: `
+    @if (!loaded()) {
+      <div style="position: absolute; inset: 0; z-index: 1;">
+        <nz-skeleton />
+      </div>
+    }
+    <div class="g2-pie__chart">
+      <div #container></div>
+      @if (subTitle() || total()) {
+        <div class="g2-pie__total">
+          @if (subTitle()) {
+            <h4 class="g2-pie__total-title">
+              <ng-container *nzStringTemplateOutlet="subTitle()">
+                <div [innerHTML]="subTitle()"></div>
+              </ng-container>
+            </h4>
+          }
+          @if (total()) {
+            <div class="g2-pie__total-stat">
+              <ng-container *nzStringTemplateOutlet="total()">
+                <div [innerHTML]="total()"></div>
+              </ng-container>
+            </div>
+          }
+        </div>
+      }
+    </div>
+    @if (hasLegend() && legendData().length > 0) {
+      <ul class="g2-pie__legend">
+        @for (item of legendData(); track $index) {
+          <li (click)="_click($index)" class="g2-pie__legend-item">
+            <span
+              class="g2-pie__legend-dot"
+              [style]="{ 'background-color': !item.checked ? '#aaa' : item.color }"
+            ></span>
+            <span class="g2-pie__legend-title">{{ item.x }}</span>
+            <nz-divider nzType="vertical" />
+            <span class="g2-pie__legend-percent">{{ item.percent }}%</span>
+            @let vf = valueFormat();
+            <span class="g2-pie__legend-value" [innerHTML]="vf ? vf(item.y) : item.y"></span>
+          </li>
+        }
+      </ul>
+    }
+  `,
   host: {
-    '[class.g2-pie]': 'true',
+    class: 'g2-pie',
     '[class.g2-pie__legend-has]': 'hasLegend()',
     '[class.g2-pie__legend-block]': 'block()',
-    '[class.g2-pie__mini]': 'isPercent()'
+    '[class.g2-pie__mini]': 'isPercent()',
+    '[style.height.px]': 'height()',
+    '[style.font-size.px]': 'fontSize()'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
@@ -58,14 +104,15 @@ export interface G2PieRatio {
 export class G2PieComponent extends G2BaseComponent {
   readonly legendData = signal<NzSafeAny[]>([]);
   readonly block = signal(false);
-  /** percent 模式下为迷你图（旧 fixData() 的副作用改为派生量） */
+  /** percent 模式下为迷你图 */
   readonly isPercent = computed(() => this.percent() != null);
   private readonly runTooltip = computed(() => (this.isPercent() ? false : this.tooltip()));
   private readonly percentColor = computed(() => {
     const { text, color, inverseColor } = this.ratio();
-    return (value: string) => (value === text ? (color ?? this.color()) : inverseColor);
+    // `ratio.color` 默认为空串 ⇒ 视作未设置，回退组件 color（需用 `||`）
+    const textColor = color || this.color();
+    return (value: string) => (value === text ? textColor : inverseColor);
   });
-  /** percent 模式下 data 由 percent / ratio 派生 */
   private readonly runData = computed<G2PieData[]>(() => {
     const percent = this.percent();
     if (percent == null) {
@@ -85,6 +132,7 @@ export class G2PieComponent extends G2BaseComponent {
   readonly subTitle = input<string | TemplateRef<void> | null>();
   readonly total = input<string | number | TemplateRef<void> | null>();
   readonly height = input(0, { transform: numberAttribute });
+  readonly fontSize = input(14, { transform: numberAttribute });
   readonly hasLegend = input(false, { transform: booleanAttribute });
   readonly inner = input(0.75);
   readonly padding = input<number | number[] | 'auto'>([12, 0, 12, 0]);
@@ -111,107 +159,135 @@ export class G2PieComponent extends G2BaseComponent {
     this.block.set(!!this._chart && this.hasLegend() && this.el.nativeElement.clientWidth <= this.blockMaxWidth());
   }
 
-  install(): void {
-    const {
-      node,
-      height,
-      padding,
-      inner,
-      hasLegend,
-      interaction,
-      theme,
-      animate,
-      lineWidth,
-      isPercent,
-      percentColor,
-      colors
-    } = this;
-    const chart: Chart = (this._chart = new this.winG2.Chart({
-      container: node().nativeElement,
-      autoFit: true,
-      height: height(),
-      padding: padding(),
-      theme: theme()
-    }));
-    chart.animate(animate());
-
-    if (!this.runTooltip()) {
-      chart.tooltip(false);
-    } else {
-      chart.tooltip({
-        showTitle: false,
-        showMarkers: false
-      });
-    }
-    if (interaction() !== 'none') {
-      chart.interaction(interaction());
-    }
-    chart.axis(false).legend(false).coordinate('theta', { innerRadius: inner() });
-    chart.filter('x', (_val: NzSafeAny, item: NzSafeAny) => item.checked !== false);
-    chart
-      .interval()
-      .adjust('stack')
-      .position('y')
-      .style({ lineWidth: lineWidth(), stroke: '#fff' })
-      .color('x', isPercent() ? percentColor() : colors())
-      .tooltip('x*percent', (name: string, p: number) => ({
-        name,
-        value: `${hasLegend() ? p : (p * 100).toFixed(2)} %`
-      }))
-      .state({});
-    chart.scale({
-      x: {
-        type: 'cat',
-        range: [0, 1]
-      }
-    });
-
-    chart
-      .on(`interval:click`, (ev: Event) => {
-        this.clickItem.emit({ item: ev.data?.data, ev });
-      })
-      .on('afterrender', () => this.updateBlock());
-
-    this.ready.emit(chart);
-
-    this.changeData();
-
-    chart.render();
+  protected override containerOf(): HTMLElement {
+    return this.node().nativeElement;
   }
 
-  changeData(): void {
-    const { _chart } = this;
-    const data = this.runData();
-    if (!_chart || !Array.isArray(data) || data.length <= 0) return;
+  protected buildSpec(): G2Spec {
+    const { height, padding, inner, lineWidth, isPercent, percentColor, theme, animate, interaction } = this;
+    const legendData = this.legendData();
 
-    // 转化 percent
-    const totalSum = data.reduce((cur, item) => cur + item.y, 0);
-    for (const item of data) {
-      item.percent = totalSum === 0 ? 0 : item.y / totalSum;
+    // 过滤必须发生在**归一化之后**，否则 tooltip 的 `percent` 会与被过滤掉的行一起丢字段。
+    const data = this.normalizedData().filter(d => legendData.find(w => w.x === d.x)?.checked !== false);
+    const showTooltip = this.runTooltip();
+    return {
+      ...viewSpec({
+        autoFit: true,
+        height: height(),
+        theme: theme(),
+        padding: padding(),
+        animate: animate(),
+        interaction: interaction()
+      }),
+      data,
+      // `theta` 是坐标系类型（Transpose + Polar）；`transpose` 是坐标变换，写成 `coordinate.type` 会抛错
+      coordinate: { type: 'theta', innerRadius: inner() },
+      legend: false,
+      axis: false,
+      // 视图层 tooltip 只是占位，真正生效的是 mark 级；勿加 `items: false`（会连 mark 级一起关掉）
+      tooltip: showTooltip ? { title: false } : false,
+      children: [
+        {
+          type: 'interval',
+          transform: [{ type: 'stackY' }],
+          encode: {
+            // 只编码 y + color：带上 x 通道 stackY 会按 x 分组，饼图被切碎
+            y: 'y',
+            // `color` 必须是字段名：encode 的函数写法在 color 上不被 G2 读取
+            color: 'x'
+          },
+          ...(isPercent()
+            ? { scale: { color: { range: [percentColor()(this.ratio().text), percentColor()(this.ratio().inverse)] } } }
+            : this.colors()
+              ? { scale: { color: { range: this.colors() } } }
+              : {}),
+          style: { lineWidth: lineWidth(), stroke: '#fff' },
+          // tooltip 必须配置在 mark 级才生效
+          tooltip: showTooltip
+            ? {
+                items: [
+                  (d: G2PieData) => ({
+                    name: d.x,
+                    value: `${(d.percent * 100).toFixed(2)} %`
+                  })
+                ]
+              }
+            : false
+        }
+      ]
+    } as G2Spec;
+  }
+
+  private colorOf(x: NzSafeAny): string {
+    const list = this.colors() ?? this.chartColorRange();
+    if (!list || list.length === 0) {
+      return this.color();
     }
-    _chart.changeData(data);
+    const index = this.runData().findIndex(d => d.x === x);
+    return list[index % list.length];
+  }
 
+  /** 图表实际使用的颜色序列：未显式给 `colors` 时取 G2 解析出的调色板，使图例色点与扇形一致 */
+  private chartColorRange(): string[] | undefined {
+    if (!this._chart) {
+      return undefined;
+    }
+    const range = (this._chart as NzSafeAny).getScale?.()?.color?.getOptions?.().range;
+    return Array.isArray(range) ? (range as string[]) : undefined;
+  }
+
+  /** 派生一份带 0–1 `percent` 的数据，不改写输入 */
+  private normalizedData(): G2PieData[] {
+    const data = this.runData();
+    const totalSum = data.reduce((cur, item) => cur + item.y, 0);
+    return data.map(item => ({
+      ...item,
+      percent: totalSum === 0 ? 0 : item.y / totalSum
+    }));
+  }
+
+  protected override dataOf(): unknown {
+    // data-only 变更推给 G2 的 data 必须与 spec 同形（归一化 + 图例过滤）
+    return this.buildSpec()['data' as never];
+  }
+
+  /** onDataChange() 只在首次渲染之后的变更触发，首帧重建图例必须靠 onRendered() */
+  protected override onRendered(): void {
     this.genLegend();
   }
 
+  protected override onDataChange(): void {
+    this.genLegend();
+  }
+
+  protected override afterCreate(chart: Chart): void {
+    chart.on('interval:click', (ev: G2Event) => {
+      this.clickItem.emit({ item: ev.data?.data as G2PieData, ev });
+    });
+    chart.on('afterrender', () => this.updateBlock());
+  }
+
+  /** 图例数据由组件输入数据派生，而非渲染后的图形数据 */
   private genLegend(): void {
-    const { hasLegend, isPercent, _chart } = this;
+    const { hasLegend, isPercent } = this;
     if (!hasLegend() || isPercent()) return;
 
     this.legendData.set(
-      _chart!.geometries[0].dataArray.map((item: NzSafeAny) => {
-        const origin = item[0]._origin;
-        origin.color = item[0].color;
-        origin.checked = true;
-        origin.percent = (origin.percent * 100).toFixed(2);
-        return origin;
-      })
+      this.normalizedData().map(item => ({
+        x: item.x,
+        y: item.y,
+        color: this.colorOf(item.x),
+        // 保留勾选态，否则每次重下 spec 都会重置用户选择
+        checked: this.legendData().find(w => w.x === item.x)?.checked !== false,
+        percent: (item.percent * 100).toFixed(2)
+      }))
     );
   }
 
   _click(i: number): void {
     const legendData = this.legendData();
-    legendData[i].checked = !legendData[i].checked;
-    this._chart!.render(true);
+    const next = legendData.map((item, idx) => (idx === i ? { ...item, checked: item.checked === false } : item));
+    this.legendData.set(next);
+    void this.repaintSpec();
   }
 }

@@ -6,5 +6,5 @@
     "flatModuleFile": "chart",
     "entryFile": "public_api.ts"
   },
-  "allowedNonPeerDependencies": ["@delon/theme", "@delon/util", "@antv/g2", "@antv/data-set", "echarts"]
+  "allowedNonPeerDependencies": ["@delon/theme", "@delon/util", "@antv/g2", "echarts"]
 }

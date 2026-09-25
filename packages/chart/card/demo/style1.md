@@ -5,7 +5,13 @@ title:
   en-US: Style 1
 ---
 
+## zh-CN
+
 风格一用法。
+
+## en-US
+
+Usage of style 1.
 
 ```ts
 import { Component } from '@angular/core';

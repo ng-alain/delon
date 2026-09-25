@@ -1,9 +1,17 @@
 ---
 order: 0
-title: 演示
+title:
+  zh-CN: 演示
+  en-US: Demo
 ---
 
+## zh-CN
+
 在数值背后添加一个小图标来标识涨跌情况。
+
+## en-US
+
+Add a small icon behind the value to indicate the rise and fall.
 
 ```ts
 import { Component } from '@angular/core';

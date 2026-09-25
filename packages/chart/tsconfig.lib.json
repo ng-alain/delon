@@ -1,6 +1,10 @@
 {
   "extends": "../tsconfig.lib.prod.json",
   "compilerOptions": {
+    // 本包保留带 `@internal` 标记的声明：core/input.ts 的 resolveInputs / watchInputs
+    // 需要被 water-wave / chart-echarts 等入口点跨入口点导入，若被 stripInternal 剥离，
+    // 生成的类型里就没有它们，库构建会以 TS2305 失败（其余包沿用基座的 stripInternal: true）
+    "stripInternal": false,
     "rootDir": ".",
     "paths": {
       "@delon/chart/*": ["../../dist/@delon/chart/*"],

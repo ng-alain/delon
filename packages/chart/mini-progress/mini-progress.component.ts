@@ -44,7 +44,7 @@ export class G2MiniProgressComponent {
   readonly percent = input<number | null>(null, { transform: numberAttribute });
   readonly strokeWidth = input<number | null>(null, { transform: numberAttribute });
 
-  /** 等价旧 ngOnChanges 的钳位；输入本身保持原值 */
+  /** 钳位只作用于显示值，输入本身保持原值 */
   protected readonly _target = computed(() => this.fixNum(this.target()));
   protected readonly _percent = computed(() => this.fixNum(this.percent()));
 

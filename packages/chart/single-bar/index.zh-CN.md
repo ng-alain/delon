@@ -23,8 +23,10 @@ module: import { G2SingleBarModule } from '@delon/chart/single-bar';
 | `[min]` | 最小值 | `number` | `0` |
 | `[max]` | 最大值，若小于0表示显示负值 | `number` | `100` |
 | `[padding]` | 图表内部间距 | `any` | `0` |
+| `[line]` | 是否显示中位线（`(min + max) / 2` 处的横线） | `boolean` | `false` |
 | `[value]` | 值 | `number` | `0` |
 | `[format]` | 显示值格式 | `(value: number) => string` | - |
 | `[textStyle]` | 显示值样式 | `any` | `{ fontSize: 12, color: '#595959' }` |
-| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
+| `[theme]` | 定制图表主题 | `string \| LooseObject` | - |
 | `(ready)` | 当G2完成初始化后调用 | `output<Chart>` | - |
+| `(error)` | 当渲染失败时调用（G2 未加载或渲染抛错），此时 `(ready)` 不会触发 | `output<unknown>` | - |

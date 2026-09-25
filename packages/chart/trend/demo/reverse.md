@@ -1,9 +1,17 @@
 ---
 order: 1
-title: 颜色反转
+title:
+  zh-CN: 颜色反转
+  en-US: Color reverse
 ---
 
+## zh-CN
+
 在数值背后添加一个小图标来标识涨跌情况。
+
+## en-US
+
+Add a small icon behind the value to indicate the rise and fall.
 
 ```ts
 import { Component } from '@angular/core';

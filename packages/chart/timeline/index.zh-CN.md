@@ -21,22 +21,23 @@ module: import { G2TimelineModule } from '@delon/chart/timeline';
 | `[data]` | 数据，注：根据 `maxAxis` 值传递指标数据 | `G2TimelineData[]` | - |
 | `[titleMap]` | 指标别名 | `G2TimelineMap` | - |
 | `[colorMap]` | 颜色 | `G2TimelineMap` | `{ y1: '#5B8FF9', y2: '#5AD8A6', y3: '#5D7092', y4: '#F6BD16', y5: '#E86452' }` |
-| `[height]` | 高度值 | `number` | `400` |
+| `[height]` | 高度值 | `number` | `450` |
 | `[padding]` | 图表内部间距 | `number[]` | `[40, 8, 64, 40]` |
 | `[borderWidth]` | 线条 | `number` | `2` |
 | `[mask]` | 日期格式，使用 [G2 Mask日期格式](https://g2.antv.vision/zh/docs/manual/tutorial/scale#time) | `string` | `HH:mm` |
 | `[maskSlider]` | 滑动条日期格式，使用 [date-fns 日期格式](https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table) | `string` | `HH:mm` |
 | `[position]` | 标题位置 | `'top','right','bottom','left'` | `'top'` |
 | `[slider]` | 是否需要滑动条 | `boolean` | `true` |
-| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
+| `[theme]` | 定制图表主题 | `string \| LooseObject` | - |
 | `(clickItem)` | 点击项回调 | `output<G2TimelineClickItem>` | - |
 | `(ready)` | 当G2完成初始化后调用 | `output<Chart>` | - |
+| `(error)` | 当渲染失败时调用（G2 未加载或渲染抛错），此时 `(ready)` 不会触发 | `output<unknown>` | - |
 
 ### G2TimelineData
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
-| `[time]` | 日期格式 | `Date | number` | - |
+| `[time]` | 日期格式 | `Date \| number` | - |
 | `[y1]` | 指标1数据 | `number` | - |
 | `[y2]` | 指标2数据 | `number` | - |
 | `[y3]` | 指标3数据 | `number` | - |

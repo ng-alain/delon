@@ -14,8 +14,9 @@ import {
   viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { timer } from 'rxjs';
 
-import type { Chart, Types } from '@antv/g2';
+import { type Chart, type G2Spec, ChartEvent } from '@antv/g2';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -25,19 +26,20 @@ import { G2Input, watchInputs } from './input';
 @Directive()
 export abstract class G2BaseComponent implements OnDestroy {
   protected readonly srv = inject(G2Service);
-  protected readonly el: ElementRef<HTMLElement> = inject(ElementRef<HTMLElement>);
+  protected readonly el = inject(ElementRef<HTMLElement>);
   protected readonly destroyRef = inject(DestroyRef);
 
-  /** 图表容器 */
   protected readonly node = viewChild.required<ElementRef<HTMLElement>>('container');
 
   readonly delay = input(0, { transform: numberAttribute });
   readonly repaint = input(true, { transform: booleanAttribute });
-  readonly theme = input<string | Types.LooseObject>(this.srv.cog.theme!);
+  readonly theme = input<string | Record<string, unknown>>(this.srv.cog.theme ?? {});
+  /** 首帧渲染完成后 emit 一次 */
   readonly ready = output<Chart>();
+  /** 渲染失败（含未加载 G2、`buildSpec()` 抛错） */
+  readonly error = output<unknown>();
 
   private readonly _loaded = signal(false);
-  /** 是否已进入安装流程（模板据此切换骨架屏） */
   readonly loaded = this._loaded.asReadonly();
 
   protected _chart?: Chart;
@@ -48,23 +50,27 @@ export abstract class G2BaseComponent implements OnDestroy {
     return (window as NzSafeAny).G2;
   }
 
-  /** 约定：名为 `data` 的输入即数据输入（全包唯一一处字符串） */
+  /** 约定：名为 `data` 的输入即数据输入 */
   private dataInput?: G2Input;
   private destroyed = false;
+  private installed = false;
+
+  private readySettled = false;
+
+  /** 串行链：所有 v5 调用串行执行，保证不交错 */
+  private pending: Promise<void> = Promise.resolve();
+  /** 帧序号：超过当前值的帧一律丢弃 */
+  private epoch = 0;
 
   constructor() {
-    // ① 输入变更分发：等价旧 ngOnChanges + onlyChangeData
     watchInputs(this, (changed, inputs) => {
       this.dataInput ??= inputs.find(i => i.name === 'data');
       this.dispatchInputChanges(changed);
     });
 
-    // ② G2 类库就绪后启动（常驻订阅；load() 幂等，故无需 filter 双保险）
-    this.srv.notify.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.load());
+    this.srv.notify.pipe(takeUntilDestroyed()).subscribe(() => this.load());
 
-    // ③ 首次渲染后引导；SSR 下不执行，故无需 platform.isBrowser 判断
     afterNextRender(() => {
-      this.onInit();
       if (this.winG2) {
         this.load();
       } else {
@@ -73,67 +79,175 @@ export abstract class G2BaseComponent implements OnDestroy {
     });
   }
 
-  private dispatchInputChanges(changed: ReadonlyArray<Signal<unknown>>): void {
-    this.onInputChanges(changed);
-    // 首次安装由 load() 负责；install() 末尾的 changeData() 会兜住此前的变更
+  changeData(): void {
     if (!this._chart) {
       return;
     }
-    if (this.isDataOnly(changed)) {
-      this.changeData();
-      return;
-    }
-    if (!this.repaint()) {
-      return;
-    }
-    this.destroyChart().install();
+    void this.applyData();
   }
 
-  /** 输入变更前置钩子；等价旧 `onChanges(changes)` */
+  /** 组件声明的 v5 spec */
+  protected buildSpec(): G2Spec {
+    return {};
+  }
+
+  protected chartOptions(): G2Spec {
+    return { container: this.containerOf(), autoFit: true };
+  }
+
+  protected containerOf(): HTMLElement {
+    return this.el.nativeElement;
+  }
+
+  protected dataOf(): unknown {
+    return this.dataInput?.signal();
+  }
+
+  protected afterCreate(_chart: Chart): void {}
+
+  protected onRendered(): void {}
+
+  protected onDataChange(): void {}
+
   protected onInputChanges(_changed: ReadonlyArray<Signal<unknown>>): void {}
 
-  /**
-   * 本次变更是否可以只调用 `changeData()` 而不重建图表。
-   * 默认：变更集里只有名为 `data` 的输入 —— 等价旧 `onlyChangeData` 的默认实现。
-   *
-   * `Object.is` 与 `===` 对信号对象按引用比较完全等价；写成 `===` 会被
-   * `@angular-eslint/no-uncalled-signals` 误判为「忘记调用信号」。
-   */
+  /** 本次变更是否可以只调用 `changeData()` 而不重下 spec；默认仅名为 `data` 的输入 */
   protected isDataOnly(changed: ReadonlyArray<Signal<unknown>>): boolean {
     const dataInput = this.dataInput?.signal;
     return !!dataInput && changed.length > 0 && changed.every(s => Object.is(s, dataInput));
   }
 
-  /** 创建并渲染图表 */
-  abstract install(): void;
-  /** 仅数据变更时调用（G2 平滑过渡） */
-  changeData(): void {}
-  /** 等同旧 `ngOnInit`，但在首次渲染后调用 */
-  onInit(): void {}
+  protected repaintSpec(): Promise<void> {
+    return this.applySpec(this.buildSpec());
+  }
+
+  private dispatchInputChanges(changed: ReadonlyArray<Signal<unknown>>): void {
+    this.onInputChanges(changed);
+    if (!this._chart) {
+      return;
+    }
+    if (this.isDataOnly(changed)) {
+      void this.applyData();
+      return;
+    }
+    if (!this.repaint()) {
+      return;
+    }
+    void this.repaintSpec();
+  }
 
   /** 安装入口：幂等；delay 未到时组件已销毁则不会安装 */
   private load(): void {
-    if (this._loaded()) {
+    if (this.installed) {
       return;
     }
+    this.installed = true;
+    timer(this.delay())
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        if (this.destroyed) {
+          return;
+        }
+        if (!this.winG2) {
+          this.error.emit(new Error('[chart] G2 is not loaded'));
+          return;
+        }
+        this.install();
+      });
+  }
+
+  /** 安装入口：默认创建 v5 Chart 并应用 spec；自行管理图表的组件可覆盖本方法 */
+  protected install(): void {
+    const spec = this.buildSpec();
+    const chart: Chart = (this._chart = new this.winG2.Chart(this.chartOptions()));
+    chart.on(ChartEvent.AFTER_RENDER, () => this.settleReady(chart));
+    this.afterCreate(chart);
+    void this.applySpec(spec);
+  }
+
+  /** 标记首次渲染完成（收起骨架屏）；覆盖 `install()` 的组件需自行调用 */
+  protected markLoaded(): void {
     this._loaded.set(true);
-    // 此处用 zone 补丁的 setTimeout 而非 rxjs timer：afterNextRender 回调可能落在测试的
-    // fakeAsync 区之外，rxjs 的 asyncScheduler 不经过 zone 补丁，flush() 便不会触发安装
-    setTimeout(() => {
+  }
+
+  private settleReady(chart: Chart): void {
+    if (this.readySettled || this.destroyed) {
+      return;
+    }
+    this.readySettled = true;
+    this.markLoaded();
+    this.ready.emit(chart);
+  }
+
+  private applySpec(spec: G2Spec): Promise<void> {
+    const epoch = ++this.epoch;
+    const chart = this._chart!;
+    return this.enqueue(async () => {
+      chart.options(spec);
+      await chart.render();
+    })
+      .then(() => {
+        if (this.destroyed || epoch !== this.epoch) {
+          return;
+        }
+        this.onRendered();
+      })
+      .catch((err: unknown) => {
+        if (this.destroyed) {
+          return;
+        }
+        if (typeof ngDevMode === 'undefined' || ngDevMode) {
+          console.error('[chart] render failed', err);
+        }
+        this.error.emit(err);
+      });
+  }
+
+  private async applyData(): Promise<void> {
+    const data = this.dataOf();
+    if (data == null) {
+      return;
+    }
+    try {
+      await this.enqueue(async () => {
+        await this._chart!.changeData(data);
+      });
+    } catch (err) {
+      if (typeof ngDevMode === 'undefined' || ngDevMode) {
+        if (!this.destroyed) {
+          console.error('[chart] changeData failed', err);
+        }
+      }
+      // 失败时不执行副作用（图例重建等）
+      return;
+    }
+    if (this.destroyed) {
+      return;
+    }
+    this.onDataChange();
+  }
+
+  private enqueue(task: () => Promise<void>): Promise<void> {
+    const next = this.pending.then(() => {
       if (this.destroyed) {
         return;
       }
-      this.install();
-    }, this.delay());
-  }
-
-  protected destroyChart(): this {
-    this._chart?.destroy();
-    return this;
+      return task();
+    });
+    this.pending = next.catch(() => undefined);
+    return next;
   }
 
   ngOnDestroy(): void {
+    if (this.destroyed) {
+      return;
+    }
     this.destroyed = true;
-    this.destroyChart();
+    this.epoch++;
+    this.readySettled = true;
+    void this.pending.then(() => {
+      this._chart?.destroy();
+      this._chart = undefined;
+    });
   }
 }

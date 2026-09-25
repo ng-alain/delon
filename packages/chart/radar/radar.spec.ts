@@ -1,7 +1,7 @@
 import { Component, signal, viewChild } from '@angular/core';
-import { fakeAsync } from '@angular/core/testing';
 
 import { checkDelay, PageG2 } from '@delon/testing';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { G2RadarComponent, G2RadarData } from './radar.component';
 
@@ -9,10 +9,10 @@ describe('chart: radar', () => {
   describe('defualt', () => {
     let page: PageG2<TestComponent>;
 
-    beforeEach(fakeAsync(() => {
+    beforeEach(async () => {
       page = new PageG2<TestComponent>().genComp(TestComponent, true);
-      page.genComp(TestComponent, true);
-    }));
+      await page.ready();
+    });
 
     it('should be working', () => {
       page.isCanvas().isExists('.g2-radar__legend');
@@ -26,9 +26,60 @@ describe('chart: radar', () => {
       page.dc();
       expect(page.context.comp().legendData()[0].checked).toBe(false);
     });
+
+    it('should pin the key v5 spec fields ', async () => {
+      // 等首帧渲染 settle，否则读到的是半成品
+      await new Promise(resolve => setTimeout(resolve, 700));
+      page.expectSpec(spec => {
+        const ns = spec as NzSafeAny;
+        expect(ns.coordinate.type).toBe('polar');
+        expect(ns.axis.x.line).toBe(false);
+        expect(ns.legend).toBe(false);
+        expect(ns.children.length).toBe(2);
+        expect(ns.children.map((c: NzSafeAny) => c.type)).toEqual(['line', 'point']);
+        expect(ns.data.length).toBe(1);
+      });
+      const coordinate = (page.chart as NzSafeAny).getCoordinate();
+      expect((coordinate.getOptions().transformations as string[][]).map(t => t[0])).toContain('polar');
+      const doc = (page.chart as NzSafeAny).getContext().canvas.document as NzSafeAny;
+      const axisLines = (doc.getElementsByTagName('line') as NzSafeAny[]).filter(e =>
+        String(e.className).includes('axis-line')
+      );
+      expect(axisLines.length).toBe(1);
+      expect(axisLines[0].attributes.opacity).toBe(0);
+      const gridLines = (doc.getElementsByTagName('path') as NzSafeAny[]).filter(e =>
+        String(e.className).includes('grid-line')
+      );
+      expect(gridLines.length).toBeGreaterThan(0);
+      const axisX = ((page.chart as NzSafeAny).getView().components as NzSafeAny[]).find(c => c.type === 'axisArc');
+      expect(axisX).toBeDefined();
+      expect(axisX.line).toBe(false);
+      expect(axisX.labelSpacing).toBe(8);
+    });
+
+    it('data change must push the projected rows to marks and rebuild the legend ', async () => {
+      page.isDataCount(1);
+      expect(page.fixture!.componentInstance.legendData().map(i => i.name)).toEqual(['n']);
+      const changeData = spyOn(page.chart, 'changeData').and.callThrough();
+      page.newData([
+        { name: 'n', label: 'l', value: 10 },
+        { name: 'm', label: 'l', value: 20 }
+      ]);
+      page.dc();
+      await new Promise(resolve => setTimeout(resolve, 700));
+      expect(changeData).toHaveBeenCalledTimes(1);
+      // 图例里还没有新序列 'm'，投影只有 1 行（返回原始输入会是 2 行）
+      expect((changeData.calls.mostRecent().args[0] as unknown[]).length).toBe(1);
+      page.isDataCount(1);
+      expect((page.chart as NzSafeAny).getScale().color.getOptions().domain).toEqual(['n']);
+      const legendData = page.fixture!.componentInstance.legendData();
+      expect(legendData.map(i => i.name)).toEqual(['n', 'm']);
+      expect(legendData.map(i => i.value)).toEqual([10, 20]);
+      expect(legendData.every(i => i.checked !== false)).toBe(true);
+    });
   });
 
-  it('#delay', fakeAsync(() => checkDelay(TestComponent)));
+  it('#delay', async () => checkDelay(TestComponent));
 });
 
 @Component({
@@ -57,4 +108,7 @@ class TestComponent {
     }
   ]);
   readonly delay = signal(0);
+  legendData(): NzSafeAny[] {
+    return this.comp().legendData();
+  }
 }

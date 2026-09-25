@@ -15,7 +15,6 @@ class TestInputHostComponent {
   }
 }
 
-/** 关键机制探针：抽象 @Directive 基类声明 input()，由 @Component 子类继承（与 G2BaseComponent 同构） */
 @Directive()
 abstract class TestBaseHostDirective {
   readonly baseInput = input('b');

@@ -28,6 +28,7 @@
 ### 4. 测试 & Lint
 - 参考 TESTING.md，仅跑相关模块测试（提交前跑完整套件）
 - ESLint 0 错误 + `npx tsc -p packages/tsconfig.json --noEmit` 通过
+- 注释遵守 [DEVELOPMENT.md](./DEVELOPMENT.md#comments)：默认不写注释，只留必要的 1 行 why；禁止引源码路径/行号、复述代码、记录检索与验证过程（放 commit / PR / 测试名）
 
 ### 5. 文档
 参考 DOCUMENTATION.md。先判断是否需要：

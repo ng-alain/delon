@@ -5,7 +5,13 @@ title:
   en-US: Time mask format
 ---
 
+## zh-CN
+
 利用 `mask` 和 `maskSlider` 来改变时间格式。
+
+## en-US
+
+Use `mask` and `maskSlider` to change the time format.
 
 ```ts
 import { Component, OnInit, inject, signal } from '@angular/core';

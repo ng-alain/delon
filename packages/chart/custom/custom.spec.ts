@@ -35,6 +35,8 @@ describe('chart: custom', () => {
     window.dispatchEvent(new Event('resize'));
     tick(2);
     expect(context.resize).toHaveBeenCalled();
+    // 销毁 fixture 解除 window 级 resize 订阅
+    fixture.destroy();
   }));
 
   it('should be load scripts by cdn', () => {

@@ -18,10 +18,13 @@ module: import { G2GaugeModule } from '@delon/chart/gauge';
 | `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
 | `[title]` | 图表标题 | `string` | - |
 | `[height]` | 图表高度 | `number` | - |
+| `[width]` | 图表宽度 | `number` | - |
 | `[color]` | 图表颜色 | `string` | `#2F9CFF` |
 | `[bgColor]` | 图表背景色 | `string` | `#F0F2F5` |
 | `[percent]` | 进度比例 | `number` | - |
-| `[padding]` | 内边距 | `Array<number | string>` | `[10, 10, 30, 10]` |
+| `[fontSize]` | 图表字号，决定标题字号（数值为 `1.4em` 跟随缩放） | `number` | `14` |
+| `[padding]` | 内边距 | `Array<number \| string>` | `16` |
 | `[format]` | 坐标轴格式 | `(text: string, item: {}, index: number) => string` | - |
-| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
+| `[theme]` | 定制图表主题 | `string \| LooseObject` | - |
 | `(ready)` | 当G2完成初始化后调用 | `output<Chart>` | - |
+| `(error)` | 当渲染失败时调用（G2 未加载或渲染抛错），此时 `(ready)` 不会触发 | `output<unknown>` | - |

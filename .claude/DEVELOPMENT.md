@@ -13,6 +13,19 @@ import { STComponent } from '@delon/abc/st';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 ```
 
+### Comments
+
+- Write as few comments as possible; code should explain itself.
+- Keep a comment only where the code cannot express the reason **and** removing it would let a
+  future reader change the behaviour by mistake. Keep it to **one line of why**.
+- Never write a comment that:
+  - cites a source path, file/line reference or internal function name,
+  - restates what the code already says (e.g. `// set data`),
+  - records how the change was investigated, verified or reviewed — that belongs in the commit
+    message, the PR description or a test name.
+- A public API doc comment (`/** */` on `input()` / `output()` / a method) is limited to one line,
+  optionally including the unit or a hard constraint.
+
 ### Component Development
 
 - All code added to a component must be covered by unit tests. For guidelines on how to write unit tests, see the [testing](./TESTING.md) file.
