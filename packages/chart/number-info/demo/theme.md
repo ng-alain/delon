@@ -1,9 +1,17 @@
 ---
 order: 1
-title: 主题
+title:
+  zh-CN: 主题
+  en-US: Theme
 ---
 
+## zh-CN
+
 暗系。
+
+## en-US
+
+Dark theme.
 
 ```ts
 import { Component } from '@angular/core';

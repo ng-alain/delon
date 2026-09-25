@@ -5,7 +5,13 @@ title:
   en-US: Basic
 ---
 
+## zh-CN
+
 通过设置 `x`，`y` 属性，可以快速的构建出一个漂亮的柱状图，各种纬度的关系则是通过自定义的数据展现。
+
+## en-US
+
+By setting the `x` and `y` attributes, you can quickly build a beautiful bar chart, and the relationship between the various dimensions is presented through custom data.
 
 ```ts
 import { Component, inject, signal } from '@angular/core';

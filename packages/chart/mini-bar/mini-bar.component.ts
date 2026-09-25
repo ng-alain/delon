@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation, input, numberAttribute, output } from '@angular/core';
 
-import type { Chart, Event } from '@antv/g2';
+import type { Chart, G2Spec } from '@antv/g2';
 
-import { G2BaseComponent, genMiniTooltipOptions } from '@delon/chart/core';
+import { G2BaseComponent, G2Event, genMiniTooltipOptions, viewSpec } from '@delon/chart/core';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface G2MiniBarData {
@@ -14,7 +14,7 @@ export interface G2MiniBarData {
 
 export interface G2MiniBarClickItem {
   item: G2MiniBarData;
-  ev: Event;
+  ev: G2Event;
 }
 
 @Component({
@@ -41,49 +41,38 @@ export class G2MiniBarComponent extends G2BaseComponent {
 
   // #endregion
 
-  install(): void {
-    const { el, height, padding, yTooltipSuffix, tooltipType, theme, color, borderWidth } = this;
-    const chart: Chart = (this._chart = new this.winG2.Chart({
-      container: el.nativeElement,
-      autoFit: true,
-      height: height(),
-      padding: padding(),
-      theme: theme()
-    }));
-    chart.scale({
-      x: {
-        type: 'cat'
-      },
-      y: {
-        min: 0
-      }
-    });
-    chart.legend(false);
-    chart.axis(false);
-    chart.tooltip(genMiniTooltipOptions(tooltipType(), { showCrosshairs: false }));
-    chart
-      .interval()
-      .position('x*y')
-      .color('x*y', (x, y) => {
-        const colorItem = this.data().find(w => w.x === x && w.y === y);
-        return colorItem && colorItem.color ? colorItem.color : color();
-      })
-      .size(borderWidth())
-      .tooltip('x*y', (x: NzSafeAny, y: NzSafeAny) => ({ name: x, value: y + yTooltipSuffix() }));
-
-    chart.on(`interval:click`, (ev: Event) => {
-      this.clickItem.emit({ item: ev.data?.data, ev });
-    });
-
-    this.ready.emit(chart);
-
-    this.changeData();
-    chart.render();
+  protected buildSpec(): G2Spec {
+    const { color, data, borderWidth, yTooltipSuffix, tooltipType, theme, padding, height } = this;
+    return {
+      ...viewSpec({ theme: theme(), padding: padding(), height: height() }),
+      ...genMiniTooltipOptions(tooltipType(), { crosshairs: false }),
+      data: data(),
+      scale: { x: { type: 'band' }, y: { zero: true } },
+      legend: false,
+      axis: false,
+      children: [
+        {
+          type: 'interval',
+          encode: {
+            x: 'x',
+            y: 'y',
+            size: borderWidth(),
+            color: {
+              type: 'transform',
+              value: (d: G2MiniBarData) => d.color || color()
+            }
+          },
+          tooltip: {
+            items: [(d: G2MiniBarData) => ({ name: d.x, value: d.y + yTooltipSuffix() })]
+          }
+        }
+      ]
+    } as G2Spec;
   }
 
-  changeData(): void {
-    const { _chart, data } = this;
-    if (!_chart || !Array.isArray(data()) || data().length <= 0) return;
-    _chart.changeData(data());
+  protected override afterCreate(chart: Chart): void {
+    chart.on('interval:click', (ev: G2Event) => {
+      this.clickItem.emit({ item: ev.data?.data as G2MiniBarData, ev });
+    });
   }
 }

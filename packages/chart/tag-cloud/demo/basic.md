@@ -5,7 +5,13 @@ title:
   en-US: Basic
 ---
 
+## zh-CN
+
 基础用法。
+
+## en-US
+
+Basic usage.
 
 ```ts
 import { Component, signal } from '@angular/core';

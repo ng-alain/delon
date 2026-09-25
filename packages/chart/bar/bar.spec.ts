@@ -1,5 +1,4 @@
-import { Component, OnInit, signal, TemplateRef, viewChild } from '@angular/core';
-import { fakeAsync } from '@angular/core/testing';
+import { Component, signal, TemplateRef, viewChild } from '@angular/core';
 
 import { checkDelay, PageG2, PageG2DataCount, PageG2Height } from '@delon/testing';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -10,24 +9,42 @@ describe('chart: bar', () => {
   let page: PageG2<TestComponent>;
 
   describe('', () => {
-    beforeEach(fakeAsync(() => {
+    beforeEach(async () => {
       page = new PageG2<TestComponent>().genComp(TestComponent, true);
-    }));
+      await page.ready();
+    });
 
     it('should be working', () => {
-      // R1: 引导完成后不得残留骨架屏节点（`loaded()` 必须已翻转为 true）
-      page
-        .newData([{ x: `1月`, y: 10 }])
-        .isYScalesCount(1)
-        .isExists('nz-skeleton', false);
+      page.newData([{ x: `1月`, y: 10 }]).isExists('nz-skeleton', false);
+      page.expectSpec(s => expect((s as NzSafeAny).children.length).toBe(1));
+    });
+
+    it('should pin the key v5 spec fields ', () => {
+      page.expectSpec(spec => {
+        const ns = spec;
+        expect(ns.legend).toBe(false);
+        expect(ns.tooltip.title).toBe(false);
+        expect(ns.scale).toEqual({ x: { type: 'band' }, y: { zero: true } });
+        expect(ns.axis.y).toEqual({ title: false, line: false, tick: false });
+        // 夹具宽度大于 2 行 * 30px 阈值，故 axis.x 显示
+
+        expect(ns.axis.x).toEqual({ title: false });
+      });
+
+      const texts = (): string[] =>
+        ((page.chart as NzSafeAny).getContext().canvas.document as NzSafeAny)
+          .getElementsByTagName('text')
+          .map((e: NzSafeAny) => String(e.attributes?.text));
+      expect(texts()).not.toContain('x');
+      expect(texts()).toContain('1月');
     });
 
     describe('#title', () => {
-      it('with null', () => {
-        page.context.title.set(null);
+      it('with empty title', () => {
+        page.context.title.set('');
         page.context.height.set(100);
         page.dc();
-        page.checkOptions('height', 59);
+        page.expectSpec(s => expect(s.height).toBe(59));
       });
       it('with string', () => {
         page.context.height.set(100);
@@ -35,7 +52,7 @@ describe('chart: bar', () => {
           .dc()
           .isText('h4', page.context.comp().title() as string)
           // 41 is TITLE_HEIGHT value
-          .checkOptions('height', 100 - 41);
+          .expectSpec(s => expect(s.height).toBe(100 - 41));
       });
       it('with template', () => {
         page.context.title.set(page.context.titleTpl());
@@ -43,33 +60,64 @@ describe('chart: bar', () => {
       });
     });
 
-    it('#color', () => {
+    it('#color', async () => {
       const color = '#f50';
       page.context.color.set(color);
       page.dc();
-      expect((page.chart.geometries[0] as NzSafeAny).attributeOption.color.callback(1, 1)).toBe(color);
+      await page.ready();
+      page.expectSpec(spec => {
+        const encode = (spec as NzSafeAny).children[0].encode;
+        expect(encode.color.value({ x: 1, y: 1 })).toBe(color);
+      });
     });
 
-    it('#padding', () => {
+    it('#padding', async () => {
       const padding = [15];
       page.context.padding.set(padding);
       page.dc();
-      page.checkOptions('padding', padding);
+      // padding = [15] 只设 top，基类拆成 paddingTop 等扁平键
+      await page.ready();
+      page.expectSpec(s => expect(s.paddingTop).toBe(15));
     });
 
-    it('should be update label when window resize and autoLabel is true', fakeAsync(() => {
-      page.context.autoLabel.set(true);
-      page.dc();
-      spyOn(page.chart, 'render');
+    it('should be update label when window resize and autoLabel is true', async () => {
+      await page.ready();
+      const render = spyOn(page.chart, 'render').and.callThrough();
       window.dispatchEvent(new Event('resize'));
-      page.end();
-      expect(page.chart.render).toHaveBeenCalled();
-    }));
+      // 真实等待跨过 debounceTime(200)；700ms 留 CI 余量
+      await new Promise(resolve => setTimeout(resolve, 700));
+      expect(render).toHaveBeenCalled();
+      // 销毁 fixture 解除 window 级 resize 订阅
+      page.fixture!.destroy();
+    });
 
-    it('tooltip', () => page.checkTooltip('1月'));
+    it('tooltip', () => {
+      page.expectSpec(spec => {
+        const items = (spec as NzSafeAny).children[0].tooltip.items as Array<(d: NzSafeAny) => NzSafeAny>;
+        // value 是 d.y，无后缀（数字）
+        expect(items[0]({ x: '1月', y: 10 })).toEqual({ name: '1月', value: 10 });
+      });
+    });
+
+    it('data length change should re-render with new rows', async () => {
+      page.isDataCount(PageG2DataCount);
+      // 必须 spy 才能证明走的是 data-only 分支；callThrough 让 options() 真正更新
+      const changeData = spyOn(page.chart, 'changeData').and.callThrough();
+      page.newData([
+        { x: `1月`, y: 10 },
+        { x: `2月`, y: 20 },
+        { x: `3月`, y: 30 }
+      ]);
+      page.dc();
+      // 真实等待 changeData() settle；700ms 留 CI 余量
+      await new Promise(resolve => setTimeout(resolve, 700));
+      expect(changeData).toHaveBeenCalledTimes(1);
+      expect((changeData.calls.mostRecent().args[0] as unknown[]).length).toBe(3);
+      page.isDataCount(3);
+    });
   });
 
-  it('#delay', fakeAsync(() => checkDelay(TestComponent)));
+  it('#delay', async () => checkDelay(TestComponent));
 });
 
 @Component({
@@ -90,26 +138,22 @@ describe('chart: bar', () => {
   `,
   imports: [G2BarComponent]
 })
-class TestComponent implements OnInit {
+class TestComponent {
   readonly comp = viewChild.required<G2BarComponent>('comp');
-  readonly data = signal<G2BarData[]>([]);
+  // 字段初始化时生成数据，保证首帧即有数据
+  readonly data = signal<G2BarData[]>(
+    Array.from({ length: PageG2DataCount }, (_, i) => ({
+      x: `${i + 1}月`,
+      y: i === 0 ? 10 : Math.floor(Math.random() * 1000) + 200
+    }))
+  );
   readonly delay = signal(0);
   readonly titleTpl = viewChild.required<TemplateRef<void>>('titleTpl');
-  readonly title = signal<string | TemplateRef<void> | null>('title');
+  readonly title = signal<string | TemplateRef<void>>('title');
   readonly height = signal(PageG2Height);
-  readonly padding = signal<number[] | undefined>(undefined);
-  readonly autoLabel = signal(false);
+  readonly padding = signal<number | number[] | 'auto'>('auto');
+  // autoLabel 必须在首帧前为 true，否则不会订阅 resize
+  readonly autoLabel = signal(true);
   readonly color = signal('rgba(24, 144, 255, 0.85)');
-  clickItem(): void {}
-  ngOnInit(): void {
-    for (let i = 0; i < PageG2DataCount; i += 1) {
-      this.data.update(d => [
-        ...d,
-        {
-          x: `${i + 1}月`,
-          y: i === 0 ? 10 : Math.floor(Math.random() * 1000) + 200
-        }
-      ]);
-    }
-  }
+  clickItem(_ev: NzSafeAny): void {}
 }

@@ -5,7 +5,13 @@ title:
   en-US: Multiple indicators
 ---
 
+## zh-CN
+
 利用 `maxAxis` 属性来调整多个指标，最多支持 `5` 个指标值。
+
+## en-US
+
+Use `maxAxis` to adjust multiple indicators; up to `5` indicator values are supported.
 
 ```ts
 import { Component, signal } from '@angular/core';

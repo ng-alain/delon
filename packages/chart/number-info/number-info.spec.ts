@@ -75,7 +75,7 @@ describe('abc: number-info', () => {
 
   it('should be change theme', () => {
     isExists('.number-info__light');
-    context.theme.set('');
+    context.theme.set('default');
     fixture.detectChanges();
     isExists('.number-info__light', false);
   });
@@ -118,7 +118,7 @@ class TestComponent {
   readonly subTitle = signal<string | TemplateRef<void>>('subTitle');
   readonly total = signal<string | number | TemplateRef<void>>('total');
   readonly subTotal = signal<string | number | TemplateRef<void>>('subTotal');
-  status = 'up';
-  readonly theme = signal('light');
+  status: 'up' | 'down' | undefined = 'up';
+  readonly theme = signal<'default' | 'light'>('light');
   readonly gap = signal(8);
 }

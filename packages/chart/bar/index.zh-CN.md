@@ -18,14 +18,15 @@ module: import { G2BarModule } from '@delon/chart/bar';
 | `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
 | `[title]` | 图表标题 | `string,TemplateRef<void>` | - |
 | `[color]` | 图表颜色 | `string` | `rgba(24, 144, 255, 0.85)` |
-| `[padding]` | 图表内部间距 | `Array<number | string> | string` | `[32, 0, 32, 40]` |
+| `[padding]` | 图表内部间距，`'auto'` 表示由 G2 自动计算 | `Array<number \| string> \| string` | `'auto'` |
 | `[height]` | 图表高度 | `number` | - |
 | `[data]` | 数据 | `G2BarData[]` | `[]` |
 | `[autoLabel]` | 在宽度不足时，自动隐藏 x 轴的 label | `boolean` | `true` |
 | `[interaction]` | 交互类型，none 无 element-active 图形元素，active-region 图表组件，brush 框选，drag-move 移动 | `InteractionType` | `none` |
-| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
+| `[theme]` | 定制图表主题 | `string \| LooseObject` | - |
 | `(clickItem)` | 点击项回调 | `output<G2BarClickItem>` | - |
 | `(ready)` | 当G2完成初始化后调用 | `output<Chart>` | - |
+| `(error)` | 当渲染失败时调用（G2 未加载或渲染抛错），此时 `(ready)` 不会触发 | `output<unknown>` | - |
 
 ### G2BarData
 

@@ -34,8 +34,8 @@ export class DemoComponent {
 
 ## 链接
 
-- [G2 文档](https://www.yuque.com/antv/g2-docs)
-- [G2 示例](https://antv.alipay.com/zh-cn/g2/3.x/demo/index.html)
+- [G2 文档](https://g2.antv.antgroup.com/)
+- [G2 示例](https://g2.antv.antgroup.com/examples)
 
 ## API
 
@@ -43,10 +43,13 @@ export class DemoComponent {
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
+| `[repaint]` | 数据再次变更时是否重绘 | `boolean` | `true` |
 | `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
 | `[height]` | 高 | `number` | - |
-| `[resizeTime]` | resize 事件去抖时长 | `number` | `200` |
+| `[resizeTime]` | resize 事件去抖时长（`0` 表示关闭 resize 监听） | `number` | `0` |
 | `(render)` | 渲染事件 | `output<ElementRef>` | - |
 | `(resize)` | resize 事件 | `output<ElementRef>` | - |
-| `(destroy)` | 销毁事件 | `output<ElementRef>` | - |
-| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
+| `(destroy)` | 销毁事件（**当前版本不会触发，为兼容保留**） | `output<ElementRef>` | - |
+| `(ready)` | 当G2完成初始化后调用 | `output<Chart>` | - |
+| `(error)` | 当渲染失败时调用（G2 未加载或渲染抛错），此时 `(ready)` 不会触发 | `output<unknown>` | - |
+| `[theme]` | 定制图表主题 | `string \| LooseObject` | - |

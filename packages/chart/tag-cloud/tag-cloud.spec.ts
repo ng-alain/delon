@@ -1,7 +1,7 @@
-import { Component, viewChild } from '@angular/core';
-import { fakeAsync, tick } from '@angular/core/testing';
+import { Component, signal, viewChild } from '@angular/core';
 
 import { checkDelay, PageG2 } from '@delon/testing';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { G2TagCloudComponent, G2TagCloudData } from './tag-cloud.component';
 
@@ -9,48 +9,95 @@ describe('chart: tag-cloud', () => {
   describe('', () => {
     let page: PageG2<TestComponent>;
 
-    beforeEach(fakeAsync(() => {
+    beforeEach(async () => {
       page = new PageG2<TestComponent>().genComp(TestComponent, true);
-      page.genComp(TestComponent);
-    }));
+      await page.ready();
+    });
 
-    it('should be repaint when window resize', fakeAsync(() => {
-      page.dcFirst();
-      spyOn(page.chart, 'changeData');
+    /** buildSpec() 的根即 mark，v5 会把它规范化为 view + children[0] */
+    const markSpec = (): NzSafeAny => {
+      const o = page.chart.options() as NzSafeAny;
+      return Array.isArray(o.children) && o.children.length ? o.children[0] : o;
+    };
+
+    /** 渲染出的词条（过滤掉内置 wordCloud 变换追加的两个不可见边界文本） */
+    const words = (): Array<{ text: string; fontSize: number }> => {
+      const doc = (page.chart as NzSafeAny).getContext().canvas.document as NzSafeAny;
+      return (doc.getElementsByTagName('text') as NzSafeAny[])
+        .map(e => ({ text: String(e.attributes?.text), fontSize: Number(e.attributes?.fontSize) }))
+        .filter(d => d.text !== '');
+    };
+
+    it('should be repaint when window resize', async () => {
+      const render = spyOn(page.chart, 'render').and.callThrough();
       window.dispatchEvent(new Event('resize'));
-      tick(201);
-      expect(page.chart.changeData).toHaveBeenCalled();
-    }));
+      await new Promise(resolve => setTimeout(resolve, 700));
+      expect(render).toHaveBeenCalled();
+      // window 级 resize 订阅必须显式销毁，避免在 `destroyAfterEach: false` 下跨 spec 累积
+      page.fixture!.destroy();
+    });
 
-    it('shuld be not rotate when random is 2', fakeAsync(() => {
-      spyOn(Math, 'random').and.returnValue(0.6);
-      page.dcFirst();
-      expect(page.chart.getData()[0].rotate).toBe(0);
-    }));
+    it('should pin the key v5 spec fields ', async () => {
+      await new Promise(resolve => setTimeout(resolve, 700));
+      const authored = (page.comp as NzSafeAny).buildSpec() as NzSafeAny;
+      expect(authored.type).toBe('wordCloud');
+      expect(authored.children).toBeUndefined();
+      expect(authored.data.length).toBe(6);
+      expect(authored.encode).toEqual({ text: 'name', value: 'value', color: 'name' });
+      expect(authored.layout).toEqual({ font: 'Verdana', fontSize: [8, 32], padding: 0, timeInterval: 5000 });
+      expect(authored.legend).toBe(false);
+      expect(authored.axis).toBe(false);
+      expect(authored.tooltip).toEqual({ title: false });
+      expect(authored.interaction).toEqual({ elementHighlight: true });
+      page.expectSpec(spec => {
+        const ns = spec as NzSafeAny;
+        expect(ns.type).toBe('view');
+        expect(ns.children.length).toBe(1);
+        expect(ns.children[0].type).toBe('wordCloud');
+        expect(ns.interaction).toEqual({ elementHighlight: true });
+        expect(ns.children[0].layout.fontSize).toEqual([8, 32]);
+      });
+      const rendered = words();
+      expect(rendered.map(d => d.text).sort()).toEqual(['China1', 'China2', 'China3', 'China4', 'China5', 'China6']);
+      expect(rendered.map(d => d.fontSize).sort((a, b) => a - b)).toEqual([8, 12, 17, 22, 27, 32]);
+    });
 
-    it('shuld be font-size is 0 when value is empty', fakeAsync(() => {
-      page.context.data = [{ x: 'China', category: 'asia' }];
-      page.dcFirst();
-      expect(page.chart.getData()[0].size).toBe(0);
-    }));
+    it('data-only change keeps feeding the wordCloud mark ', async () => {
+      expect(markSpec().data.length).toBe(6);
+      const changeData = spyOn(page.chart, 'changeData').and.callThrough();
+      page.newData([
+        { name: 'A', value: 1 },
+        { name: 'B', value: 2 },
+        { name: 'C', value: 3 }
+      ]);
+      page.dc();
+      await new Promise(resolve => setTimeout(resolve, 700));
+      expect(changeData).toHaveBeenCalledTimes(1);
+      expect((changeData.calls.mostRecent().args[0] as unknown[]).length).toBe(3);
+      expect(markSpec().data.length).toBe(3);
+      const rendered = words();
+      expect(rendered.map(d => d.text).sort()).toEqual(['A', 'B', 'C']);
+      expect(rendered.map(d => d.fontSize).sort((a, b) => a - b)).toEqual([8, 20, 32]);
+      expect(Object.keys(page.context.data()[0]).sort()).toEqual(['name', 'value']);
+    });
   });
 
-  it('#delay', fakeAsync(() => checkDelay(TestComponent)));
+  it('#delay', async () => checkDelay(TestComponent));
 });
 
 @Component({
-  template: ` <g2-tag-cloud #comp height="200" width="200" [data]="data" [delay]="delay" />`,
+  template: ` <g2-tag-cloud #comp height="200" width="200" [data]="data()" [delay]="delay()" /> `,
   imports: [G2TagCloudComponent]
 })
 class TestComponent {
   readonly comp = viewChild.required<G2TagCloudComponent>('comp');
-  data: G2TagCloudData[] = [
+  readonly data = signal<G2TagCloudData[]>([
     { name: 'China1', value: 1 },
     { name: 'China2', value: 2 },
     { name: 'China3', value: 3 },
     { name: 'China4', value: 4 },
     { name: 'China5', value: 5 },
     { name: 'China6', value: 6 }
-  ];
-  delay = 0;
+  ]);
+  readonly delay = signal(0);
 }

@@ -5,7 +5,13 @@ title:
   en-US: Basic
 ---
 
+## zh-CN
+
 带有时间轴的图表。
+
+## en-US
+
+A chart with a time axis.
 
 ```ts
 import { Component, OnInit, inject, signal } from '@angular/core';

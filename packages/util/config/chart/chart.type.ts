@@ -1,16 +1,13 @@
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
-
 export interface AlainChartConfig {
   /**
    * [G2](https://g2.antv.vision/zh/docs/manual/getting-started) library path
    * default: `[
-   *  "https://gw.alipayobjects.com/os/lib/antv/g2/4.1.14/dist/g2.min.js",
-   *  "https://gw.alipayobjects.com/os/lib/antv/data-set/0.11.8/dist/data-set.js",
+   *  "https://gw.alipayobjects.com/os/lib/antv/g2/5.4.8/dist/g2.min.js",
    * ]`
    */
   libs?: string[];
 
-  theme?: string | Record<string, NzSafeAny>;
+  theme?: string | Record<string, unknown>;
 
   /**
    * [ECharts](https://echarts.apache.org/) library path

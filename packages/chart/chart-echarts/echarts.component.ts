@@ -28,7 +28,7 @@ import {
   ChartEChartsOption
 } from './echarts.types';
 
-/** 数字补 px；null/undefined 产出空串（旧 setter 会产出字面量 'null'） */
+/** 数字补 px；null/undefined 产出空串 */
 function toCssSize(value: number | string | null | undefined): string {
   if (value == null) {
     return '';
@@ -68,7 +68,7 @@ export class ChartEChartsComponent implements OnDestroy {
   readonly theme = input<string | Record<string, unknown> | null | undefined>(this.srv.cog.echartsTheme);
   readonly initOpt = input<NzSafeAny>();
   readonly option = input<ChartEChartsOption>();
-  /** 事件绑定；变更时不重建图表（与旧行为一致） */
+  /** 事件绑定 */
   readonly on = input<ChartEChartsOn[]>([]);
   readonly events = output<ChartEChartsEvent>();
 
@@ -108,7 +108,7 @@ export class ChartEChartsComponent implements OnDestroy {
     });
   }
 
-  /** theme / initOpt 变更 → 重建；option 变更 → 增量更新 */
+  /** theme / initOpt 变更则重建，option 变更则增量更新 */
   private dispatch(): void {
     const theme = this.theme();
     const initOpt = this.initOpt();
@@ -148,7 +148,6 @@ export class ChartEChartsComponent implements OnDestroy {
     )) as ChartECharts;
     this.emit('init');
     this.setOption(this.option()!);
-    // on
     this.on().forEach(item => {
       if (item.query != null) {
         chart.on(item.eventName, item.query, event => item.handler({ event, chart }));
@@ -156,8 +155,7 @@ export class ChartEChartsComponent implements OnDestroy {
         chart.on(item.eventName, event => item.handler({ event, chart }));
       }
     });
-    // 安装即代表图表已与当前输入同步，故以其为 dispatch 的比较基线
-    // （watchInputs 首次执行只建立基线、不回调，不补这一步会把安装后的首次变更吞掉）
+    // 以安装时的输入为变更比较基线：缺此步会吞掉安装后的首次输入变更
     this.prev = { theme: this.theme(), initOpt: this.initOpt(), option: this.option() };
     return this;
   }

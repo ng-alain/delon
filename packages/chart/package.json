@@ -25,7 +25,6 @@
     "component"
   ],
   "dependencies": {
-    "@antv/data-set": "@LIB-PLACEHOLDER",
     "@antv/g2": "@LIB-PLACEHOLDER",
     "echarts": "@LIB-PLACEHOLDER",
     "@delon/util": "PEER-0.0.0-PLACEHOLDER",

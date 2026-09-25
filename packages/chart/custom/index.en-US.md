@@ -34,8 +34,8 @@ If throw error `G2` not found, please refer to [Frequently Asked Questions](/cha
 
 ## Links
 
-- [G2 Document](https://www.yuque.com/antv/g2-docs-en)
-- [G2 Demo](https://antv.alipay.com/zh-cn/g2/3.x/demo/index.html)
+- [G2 Documents](https://g2.antv.antgroup.com/en/)
+- [G2 Examples](https://g2.antv.antgroup.com/examples)
 
 ## API
 
@@ -43,10 +43,13 @@ If throw error `G2` not found, please refer to [Frequently Asked Questions](/cha
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
+| `[repaint]` | Whether to repaint when the data changes again | `boolean` | `true` |
 | `[delay]` | Delayed rendering, unit: ms | `number` | `0` |
 | `[height]` | Height of chart container | `number` | - |
-| `[resizeTime]` | Resize event debounce time | `number` | `200` |
+| `[resizeTime]` | Resize event debounce time (`0` disables the resize listener) | `number` | `0` |
 | `(render)` | Render event | `output<ElementRef>` | - |
 | `(resize)` | Resize event | `output<ElementRef>` | - |
-| `(destroy)` | Destroy event | `output<ElementRef>` | - |
-| `[theme]` | Custom chart theme | `string | LooseObject` | - |
+| `(destroy)` | Destroy event (**not emitted in the current version, kept for compatibility**) | `output<ElementRef>` | - |
+| `(ready)` | Callback when G2 is initialized | `output<Chart>` | - |
+| `(error)` | Callback when rendering fails (G2 not loaded or render throws); `(ready)` will not fire | `output<unknown>` | - |
+| `[theme]` | Custom chart theme | `string \| LooseObject` | - |

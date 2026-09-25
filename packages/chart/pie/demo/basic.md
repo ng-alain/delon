@@ -5,7 +5,13 @@ title:
   en-US: Basic
 ---
 
+## zh-CN
+
 基础用法。默认情况下丝滑更新数据的判断标准是以只更新 `data` 为准，这里利用 `repaint` 进行手动调用 `changeData` 改变数据达到丝滑更新的效果。
+
+## en-US
+
+Basic usage. By default, a smooth data update is detected only when `data` changes, so here `repaint` is used to manually call `changeData` and update the data to achieve the same smooth effect.
 
 ```ts
 import { Component, signal, viewChild } from '@angular/core';

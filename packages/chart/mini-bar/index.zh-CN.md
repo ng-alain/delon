@@ -23,9 +23,10 @@ module: import { G2MiniBarModule } from '@delon/chart/mini-bar';
 | `[borderWidth]` | 线条粗细 | `number` | `5` |
 | `[padding]` | 图表内部间距 | `array` | `[8, 8, 8, 8]` |
 | `[data]` | 数据 | `G2MiniBarData[]` | - |
-| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
+| `[theme]` | 定制图表主题 | `string \| LooseObject` | - |
 | `(clickItem)` | 点击项回调 | `output<G2MiniBarClickItem>` | - |
 | `(ready)` | 当G2完成初始化后调用 | `output<Chart>` | - |
+| `(error)` | 当渲染失败时调用（G2 未加载或渲染抛错），此时 `(ready)` 不会触发 | `output<unknown>` | - |
 
 ### G2MiniBarData
 

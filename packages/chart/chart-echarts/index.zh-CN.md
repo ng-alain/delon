@@ -18,5 +18,6 @@ module: import { ChartEChartsModule } from '@delon/chart/chart-echarts';
 | `[height]` | 图表高度 | `number, string` | `400px`|
 | `[option]` | [配置项](https://echarts.apache.org/zh/option.html#title) | `ChartEChartsOption` | - |
 | `[theme]` | [主题](https://echarts.apache.org/zh/theme-builder.html)配置 | `string, object` | - |
+| `[initOpt]` | [init](https://echarts.apache.org/zh/api.html#echarts.init) 的初始化参数（如 `renderer`、`devicePixelRatio`），变更会重建实例 | `object` | - |
 | `[on]` | 等同于 ECharts [on](https://echarts.apache.org/zh/api.html#echartsInstance.on) | `ChartEChartsOn[]` | - |
 | `(events)` | 事件回调 | `output<ChartEChartsEvent>` | - |

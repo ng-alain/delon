@@ -10,7 +10,6 @@ import { ChartEChartsOn } from '.';
 import { ChartEChartsComponent } from './echarts.component';
 import { ChartEChartsOption } from './echarts.types';
 
-// let isClassECharts = false;
 class MockLazyService {
   load(): Promise<void> {
     (window as NzSafeAny).echarts = {
@@ -115,5 +114,5 @@ class TestComponent {
       handler: console.log
     }
   ];
-  handleEvents(): void {}
+  handleEvents(_ev: NzSafeAny): void {}
 }

@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Signal,
   TemplateRef,
   ViewEncapsulation,
   booleanAttribute,
@@ -10,48 +9,31 @@ import {
   output
 } from '@angular/core';
 
-import type { Chart, Event, Types } from '@antv/g2';
+import type { Chart, G2Spec } from '@antv/g2';
 import { format } from 'date-fns';
 
-import { G2BaseComponent, G2Time } from '@delon/chart/core';
+import { G2BaseComponent, G2Event, G2Time, genMiniTooltipOptions, viewSpec } from '@delon/chart/core';
 import { toDate } from '@delon/util/date-time';
 import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzSkeletonComponent } from 'ng-zorro-antd/skeleton';
 
-/**
- * 数据
- *
- * 注：根据 `maxAxis` 值传递指标数据
- */
+/** 按 `maxAxis` 传递对应数量的 `y1`…`yN` */
 export interface G2TimelineData {
-  /**
-   * 时间值
-   */
   time?: G2Time;
-  /** 指标1数据 */
   y1: number;
-  /** 指标2数据 */
   y2?: number;
-  /** 指标3数据 */
   y3?: number;
-  /** 指标4数据 */
   y4?: number;
-  /** 指标5数据 */
   y5?: number;
   [key: string]: NzSafeAny;
 }
 
 export interface G2TimelineMap {
-  /** 指标1 */
   y1: string;
-  /** 指标 */
   y2?: string;
-  /** 指标3 */
   y3?: string;
-  /** 指标4 */
   y4?: string;
-  /** 指标5 */
   y5?: string;
 
   [key: string]: string | undefined;
@@ -59,7 +41,7 @@ export interface G2TimelineMap {
 
 export interface G2TimelineClickItem {
   item: G2TimelineData;
-  ev: Event;
+  ev: G2Event;
 }
 
 @Component({
@@ -70,10 +52,15 @@ export interface G2TimelineClickItem {
       <h4>{{ title() }}</h4>
     </ng-container>
     @if (!loaded()) {
-      <nz-skeleton />
+      <div style="position: absolute; inset: 0; z-index: 1;">
+        <nz-skeleton />
+      </div>
     }
     <div #container></div>
   `,
+  host: {
+    '[style.position]': '"relative"'
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   imports: [NzStringTemplateOutletDirective, NzSkeletonComponent]
@@ -103,133 +90,93 @@ export class G2TimelineComponent extends G2BaseComponent {
 
   // #endregion
 
-  /** 等价旧 onlyChangeData：除 titleMap 外，其余输入变更都只需更新数据 */
-  protected override isDataOnly(changed: ReadonlyArray<Signal<unknown>>): boolean {
-    return !changed.includes(this.titleMap);
+  protected override containerOf(): HTMLElement {
+    return this.node().nativeElement;
   }
 
-  install(): void {
-    const { node, height, padding, slider, maxAxis, theme, maskSlider } = this;
-    const chart: Chart = (this._chart = new this.winG2.Chart({
-      container: node().nativeElement,
-      autoFit: true,
-      height: height(),
-      padding: padding(),
-      theme: theme()
-    }));
-    chart.axis('time', { title: null });
-    chart.axis('y1', { title: null });
-    for (let i = 2; i <= maxAxis(); i++) {
-      chart.axis(`y${i}`, false);
-    }
-
-    chart.line().position('time*y1');
-    for (let i = 2; i <= maxAxis(); i++) {
-      chart.line().position(`time*y${i}`);
-    }
-
-    chart.tooltip({
-      showCrosshairs: true,
-      shared: true
-    });
-
-    const sliderPadding = { ...[], ...padding() };
-    sliderPadding[0] = 0;
-    if (slider()) {
-      chart.option('slider', {
-        height: 26,
-        start: 0,
-        end: 1,
-        trendCfg: {
-          isArea: false
-        },
-        minLimit: 2,
-        formatter: (val: Date) => format(val, maskSlider())
-      });
-    }
-
-    chart.on(`plot:click`, (ev: Event) => {
-      const records = this._chart!.getSnapRecords({ x: ev.x, y: ev.y });
-      this.clickItem.emit({ item: records[0]._origin, ev });
-    });
-
-    chart.on(`legend-item:click`, (ev: Event) => {
-      const item = ev?.target?.get('delegateObject').item;
-      const id = item?.id;
-      const line = chart.geometries.find(w => w.getAttribute('position').getFields()[1] === id);
-      if (line) {
-        line.changeVisible(!item.unchecked);
-      }
-    });
-
-    this.ready.emit(chart);
-
-    this.changeData();
-
-    chart.render();
-  }
-
-  changeData(): void {
-    const { _chart, height, padding, mask, titleMap, position, colorMap, borderWidth, maxAxis } = this;
-    let data = [...this.data()];
-    if (!_chart || data.length <= 0) return;
-
-    const arrAxis = [...Array(maxAxis())].map((_, index) => index + 1);
-
-    _chart.legend({
-      position: position(),
-      custom: true,
-      items: arrAxis.map(id => {
-        const key = `y${id}`;
-        return {
-          id: key,
-          name: titleMap()![key],
-          value: key,
-          marker: { style: { fill: colorMap()[key] } }
-        } as Types.LegendItem;
-      })
-    });
-
-    // border
-    _chart.geometries.forEach((v, idx: number) => {
-      v.color((colorMap() as NzSafeAny)[`y${idx + 1}`]).size(borderWidth());
-    });
-    _chart.height = height();
-    _chart.padding = padding();
-
-    // 转换成日期类型
-    data = data
+  /** 必须同时供首次渲染与 data-only 变更使用，否则 marks 会拿到未折叠的原始数据 */
+  private foldedData(): {
+    axes: string[];
+    seriesNames: string[];
+    list: G2TimelineData[];
+    folded: Array<Record<string, NzSafeAny>>;
+  } {
+    const { data, maxAxis, titleMap } = this;
+    const axes = [...Array(maxAxis())].map((_, index) => `y${index + 1}`);
+    const list = data()
       .map(item => {
-        item.time = toDate(item.time!);
-        item._time = +item.time;
-        return item;
+        const time = toDate(item.time!);
+        return { ...item, time, _time: +time };
       })
       .sort((a, b) => a._time - b._time);
-
-    const max = Math.max(...arrAxis.map(id => [...data].sort((a, b) => b[`y${id}`] - a[`y${id}`])[0][`y${id}`]));
-    const scaleOptions: Record<string, Types.ScaleOption> = {};
-    arrAxis.forEach(id => {
-      const key = `y${id}`;
-      scaleOptions[key] = {
-        alias: titleMap()![key],
-        max,
-        min: 0
-      };
+    const seriesNames = axes.map(key => titleMap()?.[key] ?? key);
+    const folded: Array<Record<string, NzSafeAny>> = [];
+    list.forEach(row => {
+      axes.forEach((key, index) => {
+        folded.push({ time: row.time, series: seriesNames[index], value: (row as NzSafeAny)[key] });
+      });
     });
-    _chart.scale({
-      time: {
-        type: 'time',
-        mask: mask(),
-        range: [0, 1]
-      },
-      ...scaleOptions
-    });
-
-    const initialRange = {
-      start: data[0]._time,
-      end: data[data.length - 1]._time
-    };
-    const filterData = data.filter(val => val._time >= initialRange.start && val._time <= initialRange.end);
-    _chart.changeData(filterData);
+    return { axes, seriesNames, list, folded };
   }
+
+  protected buildSpec(): G2Spec {
+    const { padding, slider, theme, mask, position, colorMap, borderWidth, height } = this;
+    const { axes, seriesNames, list, folded } = this.foldedData();
+    // 空数据时 `Math.max()` 为 `-Infinity`，故 domain 退化为 `[0, 1]`
+    const max = list.length === 0 ? 0 : Math.max(...axes.map(key => Math.max(...list.map(d => d[key] as number))));
+    const scale: Record<string, NzSafeAny> = {
+      x: { type: 'time', mask: mask(), range: [0, 1] },
+      // v5 忽略 `min`/`max`，上下界必须用 `domain`
+      y: { domain: [0, max || 1] }
+    };
+    const axis: Record<string, NzSafeAny> = {
+      // 必须显式给 `size`：轴默认占位偏大，会留下空白带并把 slider 挤出 canvas
+      x: { title: false, size: 20 },
+      y: { title: false }
+    };
+    scale['color'] = {
+      domain: seriesNames,
+      range: axes.map(key => (colorMap() as NzSafeAny)[key])
+    };
+    const children = [
+      {
+        type: 'line',
+        encode: { x: 'time', y: 'value', color: 'series' },
+        style: { lineWidth: borderWidth() }
+      }
+    ];
+    const tooltipOptions = genMiniTooltipOptions('default', { crosshairs: true });
+    return {
+      ...viewSpec({ theme: theme(), padding: padding(), height: height() }),
+      ...tooltipOptions,
+      data: folded,
+      scale,
+      axis,
+      legend: { color: { position: position() } },
+      slider: slider()
+        ? {
+            x: {
+              values: [0, 1],
+              labelFormatter: (val: number) => format(val, this.maskSlider())
+            }
+          }
+        : false,
+      // 必须与 tooltip 的 `interaction` 合并，否则会覆盖掉 `crosshairs: true`
+      interaction: { ...tooltipOptions['interaction'], legendFilter: true },
+      children
+    } as G2Spec;
+  }
+
+  protected override dataOf(): unknown {
+    return this.foldedData().folded;
+  }
+
+  protected override afterCreate(chart: Chart): void {
+    chart.on('plot:click', (ev: G2Event) => {
+      const records = chart.getDataByXY({ x: ev.x!, y: ev.y! });
+      this.clickItem.emit({ item: records[0] as G2TimelineData, ev });
+    });
+  }
+
+  // 不覆盖 `isDataOnly()`：legend/slider/scale/axis 是 spec 级配置，只有 `data` 变更能走 data-only 快路径
 }

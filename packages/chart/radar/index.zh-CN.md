@@ -18,13 +18,15 @@ module: import { G2RadarModule } from '@delon/chart/radar';
 | `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
 | `[title]` | 图表标题 | `string,TemplateRef<void>` | - |
 | `[height]` | 图表高度 | `number` | - |
-| `[hasLegend]` | 是否显示 legend | `boolean` | `false` |
-| `[padding]` | 图表内部间距 | `array` | `[24, 30, 16, 30]` |
-| `[colors]` | 颜色列表 | `string[]` | - |
+| `[hasLegend]` | 是否显示 legend | `boolean` | `true` |
+| `[padding]` | 图表内部间距 | `array` | `[44, 30, 16, 30]` |
+| `[tickCount]` | y 轴刻度数量 | `number` | `4` |
+| `[colors]` | 颜色列表 | `string[]` | `['#1890FF', '#FACC14', '#2FC25B', '#8543E0', '#F04864', '#13C2C2', '#fa8c16', '#a0d911']` |
 | `[data]` | 数据 | `G2RadarData[]` | - |
-| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
+| `[theme]` | 定制图表主题 | `string \| LooseObject` | - |
 | `(clickItem)` | 点击项回调 | `output<G2RadarClickItem>` | - |
 | `(ready)` | 当G2完成初始化后调用 | `output<Chart>` | - |
+| `(error)` | 当渲染失败时调用（G2 未加载或渲染抛错），此时 `(ready)` 不会触发 | `output<unknown>` | - |
 
 ### G2RadarData
 

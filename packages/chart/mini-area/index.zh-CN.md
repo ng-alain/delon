@@ -18,18 +18,21 @@ module: import { G2MiniAreaModule } from '@delon/chart/mini-area';
 | `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
 | `[color]` | 图表颜色 | `string` | `rgba(24, 144, 255, 0.2)` |
 | `[borderColor]` | 图表边颜色 | `string` | `#1890FF` |
+| `[borderWidth]` | 图表边粗细 | `number` | `2` |
+| `[fit]` | 是否自适应容器尺寸（`autoFit`） | `boolean` | `true` |
 | `[height]` | 图表高度 | `number` | `56` |
 | `[line]` | 是否显示描边 | `boolean` | `false` |
 | `[animate]` | 是否显示动画 | `boolean` | `true` |
 | `[padding]` | 图表内部间距 | `array` | `[8, 8, 8, 8]` |
-| `[xAxis]` | [x 轴配置](https://www.yuque.com/antv/g2-docs/api-chart#ef1eaedc) | `object` | - |
-| `[yAxis]` | [y 轴配置](https://www.yuque.com/antv/g2-docs/api-chart#ef1eaedc) | `object` | - |
+| `[xAxis]` | x 轴配置（按 v5 AxisComponent 传参） | `object` | - |
+| `[yAxis]` | y 轴配置（按 v5 AxisComponent 传参） | `object` | - |
 | `[yTooltipSuffix]` | y 轴Tooltip后缀，一般指定单位 | `string` | - |
 | `[tooltipType]` | Tooltip显示类型 | `'mini','default'` | `'default'` |
 | `[data]` | 数据 | `G2MiniAreaData[]` | - |
-| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
+| `[theme]` | 定制图表主题 | `string \| LooseObject` | - |
 | `(clickItem)` | 点击项回调 | `output<G2MiniAreaClickItem>` | - |
 | `(ready)` | 当G2完成初始化后调用 | `output<Chart>` | - |
+| `(error)` | 当渲染失败时调用（G2 未加载或渲染抛错），此时 `(ready)` 不会触发 | `output<unknown>` | - |
 
 ### G2MiniAreaData
 

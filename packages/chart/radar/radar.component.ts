@@ -10,9 +10,9 @@ import {
   signal
 } from '@angular/core';
 
-import type { Chart, Event } from '@antv/g2';
+import type { Chart, G2Spec } from '@antv/g2';
 
-import { G2BaseComponent } from '@delon/chart/core';
+import { G2BaseComponent, G2Event, viewSpec } from '@delon/chart/core';
 import { NzStringTemplateOutletDirective } from 'ng-zorro-antd/core/outlet';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzColDirective, NzRowDirective } from 'ng-zorro-antd/grid';
@@ -27,13 +27,32 @@ export interface G2RadarData {
 
 export interface G2RadarClickItem {
   item: G2RadarData;
-  ev: Event;
+  ev: G2Event;
 }
 
 @Component({
   selector: 'g2-radar',
   exportAs: 'g2Radar',
-  templateUrl: './radar.component.html',
+  template: `
+    @if (!loaded()) {
+      <nz-skeleton />
+    }
+    <ng-container *nzStringTemplateOutlet="title()">
+      <h4>{{ title() }}</h4>
+    </ng-container>
+    <div #container></div>
+    @if (hasLegend()) {
+      <div nz-row class="g2-radar__legend">
+        @for (i of legendData(); track $index) {
+          <div nz-col [nzSpan]="24 / $count" (click)="_click($index)" class="g2-radar__legend-item">
+            <i class="g2-radar__legend-dot" [style]="{ 'background-color': !i.checked ? '#aaa' : i.color }"></i>
+            {{ i.name }}
+            <h6 class="g2-radar__legend-title">{{ i.value }}</h6>
+          </div>
+        }
+      </div>
+    }
+  `,
   host: {
     '[style.height.px]': 'height()',
     '[class.g2-radar]': 'true'
@@ -62,105 +81,101 @@ export class G2RadarComponent extends G2BaseComponent {
     return this.height() - (this.hasLegend() ? 80 : 22);
   }
 
-  install(): void {
-    const { node, padding, theme, tickCount } = this;
-
-    const chart: Chart = (this._chart = new this.winG2.Chart({
-      container: node().nativeElement,
-      autoFit: true,
-      height: this.getHeight(),
-      padding: padding(),
-      theme: theme()
-    }));
-
-    chart.coordinate('polar');
-    chart.legend(false);
-    chart.axis('label', {
-      line: null,
-      label: {
-        offset: 8
-      },
-      grid: {
-        line: {
-          style: {
-            stroke: '#e9e9e9',
-            lineWidth: 1,
-            lineDash: [0, 0]
-          }
-        }
-      }
-    });
-    chart.axis('value', {
-      grid: {
-        line: {
-          type: 'polygon',
-          style: {
-            stroke: '#e9e9e9',
-            lineWidth: 1,
-            lineDash: [0, 0]
-          }
-        }
-      }
-    });
-    chart.scale({
-      value: {
-        min: 0,
-        tickCount: tickCount()
-      }
-    });
-    chart.filter('name', (name: string) => {
-      const legendItem = this.legendData().find(w => w.name === name);
-      return legendItem ? legendItem.checked !== false : true;
-    });
-
-    chart.line().position('label*value').color('name', this.colors());
-    chart.point().position('label*value').shape('circle').size(3);
-
-    chart.on(`point:click`, (ev: Event) => {
-      this.clickItem.emit({ item: ev.data?.data, ev });
-    });
-
-    this.ready.emit(chart);
-
-    this.changeData();
-
-    chart.render();
+  protected override containerOf(): HTMLElement {
+    return this.node().nativeElement;
   }
 
-  changeData(): void {
-    const { _chart, data } = this;
-    if (!_chart || !Array.isArray(data()) || data().length <= 0) return;
-    _chart.changeData(data());
+  /** 必须同时供首次渲染与 data-only 变更使用，否则 marks 会拿到未过滤的原始数据 */
+  private filteredData(): G2RadarData[] {
+    const checkedNames = this.legendData()
+      .filter(w => w.checked !== false)
+      .map(w => w.name);
+    return this.data().filter(d => checkedNames.length === 0 || checkedNames.includes(d.name));
+  }
 
+  protected buildSpec(): G2Spec {
+    const { colors, padding, theme, tickCount } = this;
+    return {
+      ...viewSpec({ theme: theme(), padding: padding(), height: this.getHeight(), autoFit: true }),
+      data: this.filteredData(),
+      coordinate: { type: 'polar' },
+      legend: false,
+      axis: {
+        // `line: false` 隐藏轴线，可见的线由 grid 提供
+        x: { grid: true, gridStroke: '#e9e9e9', gridLineWidth: 1, labelSpacing: 8, line: false },
+        y: {
+          zIndex: 1,
+          title: false,
+          direction: 'center',
+          grid: true,
+          gridStroke: '#e9e9e9',
+          gridLineWidth: 1
+        }
+      },
+      scale: {
+        x: { padding: 0.5, align: 0 },
+        // v5 忽略 `min`/`max`，下界必须用 `domainMin`
+        y: { zero: true, domainMin: 0, tickCount: tickCount() }
+      },
+      children: [
+        { type: 'line', encode: { x: 'label', y: 'value', color: 'name' }, scale: { color: { range: colors() } } },
+        {
+          type: 'point',
+          encode: { x: 'label', y: 'value', color: 'name', shape: 'circle', size: 3 },
+          scale: { color: { range: colors() } }
+        }
+      ]
+    } as G2Spec;
+  }
+
+  protected override dataOf(): unknown {
+    return this.filteredData();
+  }
+
+  /** 首帧渲染不触发 `onDataChange()`，故在此重建自绘图例 */
+  protected override onRendered(): void {
     this.genLegend();
   }
 
+  protected override onDataChange(): void {
+    this.genLegend();
+  }
+
+  protected override afterCreate(chart: Chart): void {
+    chart.on('point:click', (ev: G2Event) => {
+      this.clickItem.emit({ item: ev.data?.data as G2RadarData, ev });
+    });
+  }
+
   private genLegend(): void {
-    const { hasLegend, _chart } = this;
-    if (!hasLegend()) return;
-
+    if (!this.hasLegend()) return;
+    const colors = this.colors();
+    const grouped = new Map<string, { value: number; color: string }>();
+    this.data().forEach(item => {
+      const prev = grouped.get(item.name);
+      grouped.set(item.name, {
+        value: (prev?.value ?? 0) + item.value,
+        color: colors[grouped.size % colors.length]
+      });
+    });
     this.legendData.set(
-      _chart!.geometries[0].dataArray.map(item => {
-        const origin = item[0]._origin;
-        const result = {
-          name: origin.name,
-          color: item[0].color,
-          checked: true,
-          value: item.reduce((p, n) => p + n._origin.value, 0)
-        };
-
-        return result;
-      })
+      [...grouped.entries()].map(([name, v]) => ({
+        name,
+        color: v.color,
+        checked: this.legendData().find(w => w.name === name)?.checked !== false,
+        value: v.value
+      }))
     );
   }
 
   _click(i: number): void {
-    const legendData = this.legendData();
-    legendData[i].checked = !legendData[i].checked;
-    this._chart!.render(true);
+    const next = this.legendData().map((item, idx) =>
+      idx === i ? { ...item, checked: item.checked === false } : item
+    );
+    this.legendData.set(next);
+    void this.repaintSpec();
   }
 
-  /** 等价旧 onChanges()：任何输入变更都重置图例选中态 */
   protected override onInputChanges(): void {
     this.legendData().forEach(i => (i.checked = true));
   }

@@ -30,9 +30,9 @@ export class NumberInfoComponent {
   readonly subTitle = input<string | TemplateRef<void> | null>();
   /** 总量 */
   readonly total = input<string | number | TemplateRef<void> | null>();
-  /** 总量后缀 */
-  readonly subTotal = input<string | number | TemplateRef<void> | null>();
   /** 子总量 */
+  readonly subTotal = input<string | number | TemplateRef<void> | null>();
+  /** 总量后缀 */
   readonly suffix = input<string | null>();
   /** 增加状态 */
   readonly status = input<'up' | 'down'>();

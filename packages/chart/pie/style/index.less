@@ -100,9 +100,17 @@
 
   &__mini {
     @{g2-pie-prefix}__total {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
       &-title {
-        margin-top: 4px;
-        margin-bottom: 0;
+        margin: 0;
+        font-size: .8em;
+      }
+
+      &-stat {
+        font-size: 1.4em;
       }
     }
   }

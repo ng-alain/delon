@@ -40,8 +40,9 @@ export class G2CustomComponent extends G2BaseComponent {
 
   // #endregion
 
-  install(): void {
+  protected override install(): void {
     this.el.nativeElement.innerHTML = '';
+    this.markLoaded();
     this.render.emit(this.el);
     this.installResizeEvent();
   }

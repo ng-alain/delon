@@ -2,10 +2,15 @@
 
 @{g2-water-wave-prefix} {
   position: relative;
-  transform-origin: left;
   display: inline-block;
 
+  &__chart {
+    position: relative;
+    overflow: hidden;
+  }
+
   &__desc {
+    pointer-events: none;
     position: absolute;
     top: 32px;
     left: 0;
@@ -17,16 +22,5 @@
       line-height: 22px;
       color: @text-color-secondary;
     }
-
-    &-percent {
-      font-size: 24px;
-      line-height: 32px;
-      color: @heading-color;
-    }
-  }
-
-  &__canvas {
-    transform-origin: 0 0;
-    transform: scale(0.5);
   }
 }
