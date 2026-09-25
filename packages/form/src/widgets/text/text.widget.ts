@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, signal }
 
 import { SFTextWidgetSchema } from './schema';
 import { SFValue } from '../../interface';
+import { SFItemWrapComponent } from '../../sf-item-wrap.component';
 import { toBool } from '../../utils';
 import { ControlUIWidget } from '../../widget';
 
@@ -27,8 +28,7 @@ import { ControlUIWidget } from '../../widget';
   `,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [SFItemWrapComponent]
 })
 export class TextWidget extends ControlUIWidget<SFTextWidgetSchema> implements OnInit {
   protected readonly text = signal('');

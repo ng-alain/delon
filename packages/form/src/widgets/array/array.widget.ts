@@ -1,10 +1,16 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
 
-import { NzButtonType } from 'ng-zorro-antd/button';
+import { NzButtonModule, NzButtonType } from 'ng-zorro-antd/button';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
 import { SFUpdateValueAndValidity } from '../../interface';
 import type { FormProperty } from '../../model/form.property';
+import { SFItemComponent } from '../../sf-item.component';
 import { ArrayLayoutWidget } from '../../widget';
 
 @Component({
@@ -73,8 +79,7 @@ import { ArrayLayoutWidget } from '../../widget';
   host: { '[class.sf__array]': 'true' },
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [NzButtonModule, NzCardModule, NzFormModule, NzGridModule, NzIconModule, NzTooltipModule, SFItemComponent]
 })
 export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
   addTitle!: SafeHtml;

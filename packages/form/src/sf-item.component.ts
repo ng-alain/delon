@@ -1,3 +1,4 @@
+import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -37,8 +38,7 @@ let nextUniqueId = 0;
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   providers: [NzFormStatusService],
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [NgTemplateOutlet]
 })
 export class SFItemComponent implements OnInit, OnDestroy {
   private readonly widgetFactory = inject(WidgetFactory);

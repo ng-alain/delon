@@ -1,8 +1,16 @@
+import { NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewEncapsulation, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
 import { SFCheckboxWidgetSchema } from './schema';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
+import { SFItemWrapComponent } from '../../sf-item-wrap.component';
 import { getData } from '../../utils';
 import { ControlUIWidget } from '../../widget';
 
@@ -106,8 +114,15 @@ import { ControlUIWidget } from '../../widget';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [
+    FormsModule,
+    NgTemplateOutlet,
+    NzCheckboxModule,
+    NzGridModule,
+    NzIconModule,
+    NzTooltipModule,
+    SFItemWrapComponent
+  ]
 })
 export class CheckboxWidget extends ControlUIWidget<SFCheckboxWidgetSchema> {
   protected readonly data = signal<SFSchemaEnum[]>([]);

@@ -2,7 +2,10 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation, computed, effect
 
 import { withAnimationCheck } from 'ng-zorro-antd/core/animation';
 import { NzFormStatusService } from 'ng-zorro-antd/core/form';
-import type { NzFormControlStatusType } from 'ng-zorro-antd/form';
+import { NzFormModule, type NzFormControlStatusType } from 'ng-zorro-antd/form';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 
 import type { SFSchema } from './schema/index';
 import type { SFOptionalHelp, SFUISchemaItem } from './schema/ui';
@@ -12,8 +15,7 @@ import type { SFOptionalHelp, SFUISchemaItem } from './schema/ui';
   templateUrl: './sf-item-wrap.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [NzFormModule, NzGridModule, NzIconModule, NzTooltipModule]
 })
 export class SFItemWrapComponent {
   private readonly statusSrv = inject(NzFormStatusService);

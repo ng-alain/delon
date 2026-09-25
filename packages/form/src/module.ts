@@ -83,8 +83,7 @@ const WIDGETS = [
 // #endregion
 
 @NgModule({
-  imports: [CommonModule, FormsModule, DelonLocaleModule, CdkTextareaAutosize, ...ZORROS],
-  declarations: [...COMPONENTS, ...WIDGETS],
+  imports: [CommonModule, FormsModule, DelonLocaleModule, CdkTextareaAutosize, ...ZORROS, ...COMPONENTS, ...WIDGETS],
   exports: COMPONENTS
 })
 export class DelonFormModule {

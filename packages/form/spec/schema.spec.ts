@@ -108,7 +108,7 @@ describe('form: schema', () => {
     }));
     it('support ui is null', () => {
       expect(() => {
-        context.ui.set(null);
+        context.ui.set(null as NzSafeAny);
         fixture.detectChanges();
       }).not.toThrow();
     });

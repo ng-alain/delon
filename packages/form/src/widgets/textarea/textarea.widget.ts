@@ -1,6 +1,11 @@
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+import { NzInputModule } from 'ng-zorro-antd/input';
 
 import { SFTextareaWidgetSchema } from './schema';
+import { SFItemWrapComponent } from '../../sf-item-wrap.component';
 import { ControlUIWidget } from '../../widget';
 
 @Component({
@@ -86,8 +91,7 @@ import { ControlUIWidget } from '../../widget';
   `,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [CdkTextareaAutosize, FormsModule, NzInputModule, SFItemWrapComponent]
 })
 export class TextareaWidget extends ControlUIWidget<SFTextareaWidgetSchema> implements OnInit {
   autosize?: {

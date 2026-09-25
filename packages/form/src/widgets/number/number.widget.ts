@@ -1,6 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 
 import { SFNumberWidgetSchema } from './schema';
+import { SFItemWrapComponent } from '../../sf-item-wrap.component';
 import { ControlUIWidget } from '../../widget';
 
 @Component({
@@ -40,8 +44,7 @@ import { ControlUIWidget } from '../../widget';
   </sf-item-wrap>`,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [FormsModule, NzInputNumberModule, SFItemWrapComponent]
 })
 export class NumberWidget extends ControlUIWidget<SFNumberWidgetSchema> implements OnInit {
   min = Number.MIN_SAFE_INTEGER;

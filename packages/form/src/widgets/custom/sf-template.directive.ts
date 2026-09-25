@@ -4,9 +4,7 @@ import { SF_SEQ } from '../../const';
 import { SFComponent } from '../../sf.component';
 
 @Directive({
-  selector: '[sf-template]',
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  selector: '[sf-template]'
 })
 export class SFTemplateDirective implements OnInit {
   private readonly table = inject(SFComponent);
