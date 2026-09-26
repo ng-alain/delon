@@ -1,6 +1,6 @@
 import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement, signal, ViewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivationEnd, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
@@ -12,6 +12,9 @@ import { FullContentComponent } from './full-content.component';
 import { FullContentService } from './full-content.service';
 
 describe('abc: full-content', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let context: TestComponent;
@@ -102,19 +105,19 @@ describe('abc: full-content', () => {
       fixture.detectChanges();
       expect(context.fullscreen()).toBe(false);
     });
-    it('should be recalculate height when trigger resize', fakeAsync(() => {
+    it('should be recalculate height when trigger resize', async () => {
       createComp();
       const bodyHeight = 10;
-      spyOn(bodyEl, 'getBoundingClientRect').and.returnValue({
+      vi.spyOn(bodyEl, 'getBoundingClientRect').mockReturnValue({
         height: bodyHeight
       } as NzSafeAny);
       expect(bodyEl.getBoundingClientRect).not.toHaveBeenCalled();
       window.dispatchEvent(new Event('resize'));
       fixture.detectChanges();
-      tick(210);
+      await vi.advanceTimersByTimeAsync(210);
       expect(bodyEl.getBoundingClientRect).toHaveBeenCalled();
       expect(context.comp._height()).toBe(bodyHeight - el.getBoundingClientRect().top - context.padding);
-    }));
+    });
     it('should be clear class when go to other route', () => {
       const eventsSub = new BehaviorSubject<NzSafeAny>(null);
       class MockRouter {

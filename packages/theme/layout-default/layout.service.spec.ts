@@ -52,9 +52,12 @@ describe('theme: #LayoutDefaultService', () => {
         {
           provide: BreakpointObserver,
           useFactory: () => {
-            const mock = jasmine.createSpyObj('BreakpointObserver', ['observe', 'isMatched']);
-            mock.isMatched.and.returnValue(false);
-            mock.observe.and.returnValue(
+            const mock = {
+              observe: vi.fn().mockName('BreakpointObserver.observe'),
+              isMatched: vi.fn().mockName('BreakpointObserver.isMatched')
+            };
+            mock.isMatched.mockReturnValue(false);
+            mock.observe.mockReturnValue(
               new Observable<BreakpointState>(subscriber => {
                 subscriber.next({ matches: false, breakpoints: {} });
               })
@@ -71,6 +74,34 @@ describe('theme: #LayoutDefaultService', () => {
 
     // LayoutDefaultService constructor calls checkMedia with isMatched=false (desktop)
     // It should NOT overwrite the persisted collapsed state
+    TestBed.inject(LayoutDefaultService);
+    expect(settings.layout.collapsed).toBe(true);
+  });
+
+  it('should be auto collapse on mobile', () => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      imports: [AlainThemeModule],
+      providers: [
+        {
+          provide: BreakpointObserver,
+          useFactory: () => ({
+            observe: vi
+              .fn()
+              .mockName('BreakpointObserver.observe')
+              .mockReturnValue(
+                new Observable<BreakpointState>(subscriber => {
+                  subscriber.next({ matches: true, breakpoints: {} });
+                })
+              ),
+            isMatched: vi.fn().mockName('BreakpointObserver.isMatched').mockReturnValue(true)
+          })
+        }
+      ]
+    });
+
+    const settings = TestBed.inject(SettingsService);
+    settings.setLayout('collapsed', false);
     TestBed.inject(LayoutDefaultService);
     expect(settings.layout.collapsed).toBe(true);
   });

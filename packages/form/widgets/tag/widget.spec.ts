@@ -1,5 +1,5 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 
 import { SFSchema } from '@delon/form';
 import { createTestContext } from '@delon/testing';
@@ -7,9 +7,12 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzTagComponent } from 'ng-zorro-antd/tag';
 
 import { withTagWidget } from './index';
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base';
 
 describe('form: widget: tag', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestFormComponent>;
   let dl: DebugElement;
   let context: TestFormComponent;
@@ -27,7 +30,7 @@ describe('form: widget: tag', () => {
     return page.getWidget<NzTagComponent>('nz-tag');
   }
 
-  it('should be working', fakeAsync(() => {
+  it('should be working', async () => {
     const s: SFSchema = {
       properties: {
         a: {
@@ -40,7 +43,7 @@ describe('form: widget: tag', () => {
           ],
           ui: {
             widget: 'tag',
-            checkedChange: jasmine.createSpy()
+            checkedChange: vi.fn()
           },
           default: [1, 2]
         }
@@ -51,9 +54,9 @@ describe('form: widget: tag', () => {
     expect(res.length).toBe(1);
     expect(res[0]).toBe(2);
     expect((s.properties!.a.ui as NzSafeAny).checkedChange).toHaveBeenCalled();
-  }));
+  });
 
-  it('#setValue', fakeAsync(() => {
+  it('#setValue', async () => {
     page.newSchema({
       properties: {
         a: { type: 'string', ui: { widget: 'tag' }, enum: ['item1', 'item2'] }
@@ -63,10 +66,10 @@ describe('form: widget: tag', () => {
     expect(page.getEl('.ant-tag-checkable-checked').textContent!.trim()).toBe('item1');
     page.setValue('/a', 'item2').dc(1);
     expect(page.getEl('.ant-tag-checkable-checked').textContent!.trim()).toBe('item2');
-  }));
+  });
 
   describe('#mode', () => {
-    it('with default', fakeAsync(() => {
+    it('with default', async () => {
       page
         .newSchema({
           properties: {
@@ -88,9 +91,9 @@ describe('form: widget: tag', () => {
         })
         .typeEvent('click', '.ant-tag');
       expect(getComp().nzMode).toBe('default');
-    }));
+    });
 
-    it('with default', fakeAsync(() => {
+    it('with default', async () => {
       page
         .newSchema({
           properties: {
@@ -112,10 +115,10 @@ describe('form: widget: tag', () => {
         })
         .typeEvent('click', '.ant-tag');
       expect(getComp().nzMode).toBe('checkable');
-    }));
+    });
 
     describe('with closeable', () => {
-      it('should be closed', fakeAsync(() => {
+      it('should be closed', async () => {
         page
           .newSchema({
             properties: {
@@ -137,8 +140,8 @@ describe('form: widget: tag', () => {
           })
           .typeEvent('click', '.anticon')
           .checkCount('.ant-tag', 2, true);
-      }));
-      it('should be call close events', fakeAsync(() => {
+      });
+      it('should be call close events', async () => {
         const s: SFSchema = {
           properties: {
             a: {
@@ -152,7 +155,7 @@ describe('form: widget: tag', () => {
               ui: {
                 widget: 'tag',
                 mode: 'closeable',
-                onClose: jasmine.createSpy()
+                onClose: vi.fn()
               },
               default: [1, 2]
             }
@@ -162,7 +165,7 @@ describe('form: widget: tag', () => {
 
         const ui = s.properties!.a.ui as NzSafeAny;
         expect(ui.onClose).toHaveBeenCalled();
-      }));
+      });
     });
   });
 });

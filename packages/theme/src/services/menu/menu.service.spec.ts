@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { filter } from 'rxjs';
+import { filter, firstValueFrom } from 'rxjs';
 
 import { ACLService } from '@delon/acl';
 import { deepCopy } from '@delon/util/other';
@@ -194,14 +194,13 @@ describe('Service: Menu', () => {
       expect((srv.menus[1] as MenuInner)._aclResult).toBe(false);
     });
 
-    it('#change', (done: () => void) => {
+    it('#change', async () => {
       const newMenus = [{ text: 'new menu' }];
-      srv.change.pipe(filter(ls => ls.length > 0)).subscribe(res => {
-        expect(res.length).toBe(1);
-        expect(res[0].text).toBe(newMenus[0].text);
-        done();
-      });
+      const res$ = firstValueFrom(srv.change.pipe(filter(ls => ls.length > 0)));
       srv.add(newMenus);
+      const res = await res$;
+      expect(res.length).toBe(1);
+      expect(res[0].text).toBe(newMenus[0].text);
     });
 
     it('#getItem', () => {
@@ -334,7 +333,7 @@ describe('Service: Menu', () => {
         expect(srv.find({ key: 'v1' }) != null).toBe(true);
       });
       it('via url', () => {
-        const cb = jasmine.createSpy('callback_via_key');
+        const cb = vi.fn().mockName('callback_via_key');
         expect(srv.find({ url: `/dashboard/v1`, cb: cb }) != null).toBe(true);
         expect(cb).toHaveBeenCalled();
       });
@@ -408,7 +407,7 @@ describe('Service: Menu', () => {
         ]
       });
       srv = TestBed.inject<MenuService>(MenuService);
-      spyOn(srv, 'resume');
+      vi.spyOn(srv, 'resume').mockReturnValue(undefined);
       expect(srv.resume).not.toHaveBeenCalled();
       TestBed.inject(ALAIN_I18N_TOKEN).use('en', {});
       expect(srv.resume).toHaveBeenCalled();

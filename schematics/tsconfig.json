@@ -11,12 +11,12 @@
     "sourceMap": true,
     "target": "es6",
     "types": [
-      "jasmine",
+      "vitest/globals",
       "node"
     ]
   },
   "include": [
     "**/*"
   ],
-  "exclude": ["test.ts", "*/files/**/*", "**/*.spec.ts"]
+  "exclude": ["*/files/**/*", "**/*.spec.ts"]
 }

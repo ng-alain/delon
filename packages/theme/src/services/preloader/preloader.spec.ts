@@ -13,7 +13,7 @@ describe('theme: preloader', () => {
   });
 
   it('should be remove preloader', () => {
-    spyOn(document, 'querySelector').and.callFake((type: string) => {
+    vi.spyOn(document, 'querySelector').mockImplementation((type: string) => {
       if (cached[type]) return cached[type];
       cached[type] = {
         className: [],
@@ -48,7 +48,7 @@ describe('theme: preloader', () => {
   });
 
   it('preloader value null when running --hmr', () => {
-    spyOn(document, 'querySelector').and.callFake((type: string) => {
+    vi.spyOn(document, 'querySelector').mockImplementation((type: string) => {
       if (type === '.preloader') return null;
       if (cached[type]) return cached[type];
       cached[type] = {
@@ -81,7 +81,7 @@ describe('theme: preloader', () => {
   });
 
   it('#ssr', () => {
-    spyOn(document, 'querySelector').and.callFake((type: string) => {
+    vi.spyOn(document, 'querySelector').mockImplementation((type: string) => {
       if (type === '.preloader') return null;
       if (cached[type]) return cached[type];
       cached[type] = {

@@ -1,5 +1,5 @@
 import { Component, viewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { G2BaseComponent } from '@delon/chart/core';
 import { createTestContext } from '@delon/testing';
@@ -9,40 +9,43 @@ import { G2Service } from '../core';
 import { G2CustomComponent } from './custom.component';
 
 describe('chart: custom', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestComponent>;
   let context: TestComponent;
 
   beforeEach(() => {
     ({ fixture, context } = createTestContext(TestComponent));
 
-    spyOn(context, 'render');
-    spyOn(context, 'resize');
+    vi.spyOn(context, 'render').mockReturnValue(undefined);
+    vi.spyOn(context, 'resize').mockReturnValue(undefined);
   });
 
-  it('should be working', fakeAsync(() => {
+  it('should be working', async () => {
     expect(context.render).not.toHaveBeenCalled();
     fixture.detectChanges();
-    tick(1);
+    await vi.advanceTimersByTimeAsync(1);
     expect(context.render).toHaveBeenCalled();
-  }));
+  });
 
-  it('should be resize', fakeAsync(() => {
+  it('should be resize', async () => {
     expect(context.resize).not.toHaveBeenCalled();
     context.resizeTime = 1;
     fixture.detectChanges();
-    tick();
+    await vi.advanceTimersByTimeAsync(0);
     fixture.detectChanges();
     window.dispatchEvent(new Event('resize'));
-    tick(2);
+    await vi.advanceTimersByTimeAsync(2);
     expect(context.resize).toHaveBeenCalled();
     // 销毁 fixture 解除 window 级 resize 订阅
     fixture.destroy();
-  }));
+  });
 
   it('should be load scripts by cdn', () => {
     const srv = TestBed.inject(G2Service);
-    spyOn(srv, 'libLoad');
-    spyOnProperty(G2BaseComponent.prototype, 'winG2', 'get').and.returnValue(null as NzSafeAny);
+    vi.spyOn(srv, 'libLoad').mockReturnValue(undefined as NzSafeAny);
+    vi.spyOn(G2BaseComponent.prototype, 'winG2', 'get').mockReturnValue(null as NzSafeAny);
     fixture.detectChanges();
     expect(srv.libLoad).toHaveBeenCalled();
   });

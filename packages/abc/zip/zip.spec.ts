@@ -1,14 +1,16 @@
-/* eslint-disable */
 import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
 
-import fs from 'file-saver';
+import { saveAs } from 'file-saver';
 
 import { LazyService } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { ZipService } from './zip.service';
+
+// Vite 预打包后具名导入是快照，spyOn 模块对象无法影响服务内部的 saveAs
+vi.mock('file-saver', () => ({ saveAs: vi.fn() }));
 
 let isErrorRequest = false;
 let isClassZIP = false;
@@ -58,165 +60,85 @@ describe('abc: zip', () => {
   });
 
   describe('#read', () => {
-    it('should be load zip via url', (done: () => void) => {
+    it('should be load zip via url', async () => {
       genModule();
-      srv.read('/1.zip').then(
-        () => {
-          expect(true).toBe(true);
-          done();
-        },
-        () => {
-          expect(false).toBe(true);
-          done();
-        }
-      );
+      await expect(srv.read('/1.zip')).resolves.toBeUndefined();
     });
 
-    it('should be reject when request error via url', (done: () => void) => {
+    it('should be reject when request error via url', async () => {
       isErrorRequest = true;
       genModule();
-      srv.read('/1.zip').then(
-        () => {
-          expect(false).toBe(true);
-          done();
-        },
-        () => {
-          expect(true).toBe(true);
-          done();
-        }
-      );
+      await expect(srv.read('/1.zip')).rejects.toBeNull();
     });
 
-    it('should be load zip via file object', (done: () => void) => {
+    it('should be load zip via file object', async () => {
       genModule();
-      srv.read(new File([], '1.zip')).then(
-        () => {
-          expect(true).toBe(true);
-          done();
-        },
-        () => {
-          expect(false).toBe(true);
-          done();
-        }
-      );
+      await expect(srv.read(new File([], '1.zip'))).resolves.toBeUndefined();
     });
   });
 
   describe('#create', () => {
-    it('should be working', () => {
+    it('should be working', async () => {
       isClassZIP = true;
       genModule();
-      srv.create().then(res => expect(res == null).toBe(false));
+      await expect(srv.create()).resolves.not.toBeNull();
     });
 
-    it('should be error', () => {
+    it('should be error', async () => {
       genModule();
       const lazySrv = TestBed.inject<LazyService>(LazyService);
-      spyOn(lazySrv, 'load').and.returnValue(Promise.reject());
-      srv.create().then(res => expect(res == null).toBe(true));
+      vi.spyOn(lazySrv, 'load').mockRejectedValue(undefined);
+      await expect(srv.create()).resolves.toBeNull();
     });
   });
 
   describe('#pushUrl', () => {
     let zip: NzSafeAny;
-    beforeEach((done: () => void) => {
+    beforeEach(async () => {
       isClassZIP = true;
       genModule();
-      srv.create().then(res => {
+      await srv.create().then(res => {
         zip = res;
-        done();
       });
     });
-    it('should be save zip file', (done: () => void) => {
-      srv.pushUrl(zip, '1.zip', '1.zip').then(
-        () => {
-          expect(true).toBe(true);
-          done();
-        },
-        () => {
-          expect(false).toBe(true);
-          done();
-        }
-      );
+    it('should be save zip file', async () => {
+      await expect(srv.pushUrl(zip, '1.zip', '1.zip')).resolves.toBeUndefined();
     });
-    it('should be reject when bad request', (done: () => void) => {
+    it('should be reject when bad request', async () => {
       isErrorRequest = true;
-      srv.pushUrl(zip, '1.zip', '1.zip').then(
-        () => {
-          expect(false).toBe(true);
-          done();
-        },
-        () => {
-          expect(true).toBe(true);
-          done();
-        }
-      );
+      await expect(srv.pushUrl(zip, '1.zip', '1.zip')).rejects.toBeTruthy();
     });
   });
 
   describe('#save', () => {
     let zip: NzSafeAny;
-    beforeEach((done: () => void) => {
+    beforeEach(async () => {
       isClassZIP = true;
       genModule();
-      srv.create().then(res => {
+      await srv.create().then(res => {
         zip = res;
-        done();
       });
     });
-    it('should be save zip file', (done: () => void) => {
-      spyOn(fs, 'saveAs');
-      srv.save(zip, { filename: '123.zip' }).then(
-        () => {
-          expect(fs.saveAs).toHaveBeenCalled();
-          expect(true).toBe(true);
-          done();
-        },
-        () => {
-          expect(false).toBe(true);
-          done();
-        }
-      );
+    it('should be save zip file', async () => {
+      await expect(srv.save(zip, { filename: '123.zip' })).resolves.toBeUndefined();
+      expect(saveAs).toHaveBeenCalled();
     });
-    it('should be call callback', (done: () => void) => {
-      spyOn(fs, 'saveAs');
+    it('should be call callback', async () => {
       let count = 0;
-      srv
-        .save(zip, {
-          callback: () => ++count
-        })
-        .then(
-          () => {
-            expect(count).toBe(1);
-            expect(fs.saveAs).toHaveBeenCalled();
-            done();
-          },
-          () => {
-            expect(false).toBe(true);
-            done();
-          }
-        );
+      await expect(srv.save(zip, { callback: () => ++count })).resolves.toBeUndefined();
+      expect(count).toBe(1);
+      expect(saveAs).toHaveBeenCalled();
     });
-    it('should be reject when generateAsync return error', (done: () => void) => {
+    it('should be reject when generateAsync return error', async () => {
       isErrorGenZip = true;
-      spyOn(fs, 'saveAs');
-      srv.save(zip).then(
-        () => {
-          expect(false).toBe(true);
-          done();
-        },
-        () => {
-          expect(fs.saveAs).not.toHaveBeenCalled();
-          expect(true).toBe(true);
-          done();
-        }
-      );
+      await expect(srv.save(zip)).rejects.toBe('');
+      expect(saveAs).not.toHaveBeenCalled();
     });
     it('should be throw error when invalid zip', () => {
       zip = null;
       expect(() => {
         srv.save(zip);
-      }).toThrowError();
+      }).toThrow();
     });
   });
 });

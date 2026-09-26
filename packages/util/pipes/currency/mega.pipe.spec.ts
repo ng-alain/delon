@@ -46,6 +46,6 @@ describe('Pipe: mega', () => {
   imports: [CurrencyMegaPipe]
 })
 class TestComponent {
-  value?: number;
+  value!: number;
   options: CurrencyMegaOptions = {};
 }

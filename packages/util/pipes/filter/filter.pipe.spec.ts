@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 import { FilterPipe } from './filter.pipe';
 
 describe('Pipe: filter', () => {
@@ -15,9 +17,9 @@ describe('Pipe: filter', () => {
     expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerText).toBe('2,3');
   });
   it('should be other args', () => {
-    const matcherSpy = spyOn(fixture.componentInstance, 'matcher');
+    const matcherSpy = vi.spyOn(fixture.componentInstance, 'matcher').mockReturnValue(undefined as NzSafeAny);
     fixture.detectChanges();
-    expect((matcherSpy.calls.first().args as unknown[]).length).toBe(2);
+    expect((vi.mocked(matcherSpy).mock.calls[0]! as unknown[]).length).toBe(2);
   });
 });
 

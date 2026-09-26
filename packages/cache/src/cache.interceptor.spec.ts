@@ -2,6 +2,7 @@ import { HttpClient, HttpContext, HttpResponse, provideHttpClient, withIntercept
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { firstValueFrom } from 'rxjs';
 
 import { httpCacheInterceptor } from './cache.interceptor';
 import { CacheService } from './cache.service';
@@ -26,93 +27,84 @@ describe('cache: interceptor', () => {
   beforeEach(genModule);
 
   it('should be working', () => {
-    const logSpy = spyOn(console, 'log');
+    const logSpy = vi.spyOn(console, 'log').mockReturnValue(undefined);
     http.get('/test', { responseType: 'text', context: new HttpContext().set(CACHE, { key: 'a' }) }).subscribe();
     expect(logSpy).toHaveBeenCalled();
-    expect(logSpy.calls.first().args[0]).toBe(`%c👽GET->/test->from cache(onle in development)`);
+    expect(vi.mocked(logSpy).mock.calls[0]![0]).toBe(`%c👽GET->/test->from cache(onle in development)`);
   });
 
-  it('should be truth request and cache data of response when is not cache', done => {
+  it('should be truth request and cache data of response when is not cache', async () => {
     const key = 'b';
     const res = 'ok';
-    http
-      .get('/test', { responseType: 'text', context: new HttpContext().set(CACHE, { key, expire: 60 }) })
-      .subscribe(res => {
-        expect(res).toBe(res);
-        expect((cacheSrv.getNone(key) as HttpResponse<string>)?.body).toBe(res);
-        done();
-      });
+    const res$ = firstValueFrom(
+      http.get('/test', { responseType: 'text', context: new HttpContext().set(CACHE, { key, expire: 60 }) })
+    );
     httpBed.expectOne('/test').flush(res);
+    expect(await res$).toBe(res);
+    expect((cacheSrv.getNone(key) as HttpResponse<string>)?.body).toBe(res);
   });
 
-  it('should be support cache-control', done => {
+  it('should be support cache-control', async () => {
     const key = 'b';
     const res = 'ok';
-    http.get('/test', { responseType: 'text', context: new HttpContext().set(CACHE, { key }) }).subscribe(res => {
-      expect(res).toBe(res);
-      expect((cacheSrv.getNone(key) as HttpResponse<string>)?.body).toBe(res);
-      done();
-    });
+    const res$ = firstValueFrom(
+      http.get('/test', { responseType: 'text', context: new HttpContext().set(CACHE, { key }) })
+    );
     httpBed.expectOne('/test').flush(res, { headers: { 'cache-control': 'max-age=60' } });
+    expect(await res$).toBe(res);
+    expect((cacheSrv.getNone(key) as HttpResponse<string>)?.body).toBe(res);
   });
 
-  it('should be support POST data', done => {
+  it('should be support POST data', async () => {
     const key = 'b';
     const res = 'ok';
-    http.post(key, { responseType: 'text', context: new HttpContext().set(CACHE, { key }) }).subscribe(() => {
-      expect((cacheSrv.getNone(key) as HttpResponse<string>)?.body).toBe(res);
-      done();
-    });
+    const res$ = firstValueFrom(
+      http.post(key, { responseType: 'text', context: new HttpContext().set(CACHE, { key }) })
+    );
     httpBed.expectOne(key).flush(res, { headers: { 'cache-control': 'max-age=60' } });
+    await res$;
+    expect((cacheSrv.getNone(key) as HttpResponse<string>)?.body).toBe(res);
   });
 
   describe('Ignore cache', () => {
-    it('when response cache-control', done => {
+    it('when response cache-control', async () => {
       const key = 'b';
       const res = 'ok';
-      http.get(key, { responseType: 'text' }).subscribe(res => {
-        expect(res).toBe(res);
-        expect((cacheSrv.getNone(key) as HttpResponse<string>)?.body).toBe(res);
-        done();
-      });
+      const res$ = firstValueFrom(http.get(key, { responseType: 'text' }));
       httpBed.expectOne(key).flush(res, { headers: { 'cache-control': 'max-age=60' } });
+      expect(await res$).toBe(res);
+      expect((cacheSrv.getNone(key) as HttpResponse<string>)?.body).toBe(res);
     });
 
-    it('when is not set CACHE', done => {
+    it('when is not set CACHE', async () => {
       const key = 'b';
       const res = 'ok';
-      http.get('/test', { responseType: 'text' }).subscribe(res => {
-        expect(res).toBe(res);
-        expect(cacheSrv.has(key)).toBe(false);
-        done();
-      });
+      const res$ = firstValueFrom(http.get('/test', { responseType: 'text' }));
       httpBed.expectOne('/test').flush(res);
+      expect(await res$).toBe(res);
+      expect(cacheSrv.has(key)).toBe(false);
     });
 
-    it('when enabled is false', done => {
+    it('when enabled is false', async () => {
       const key = 'b';
       const res = 'ok';
-      http
-        .get(key, { responseType: 'text', context: new HttpContext().set(CACHE, { enabled: false }) })
-        .subscribe(res => {
-          expect(res).toBe(res);
-          expect(cacheSrv.has(key)).toBe(false);
-          done();
-        });
+      const res$ = firstValueFrom(
+        http.get(key, { responseType: 'text', context: new HttpContext().set(CACHE, { enabled: false }) })
+      );
       httpBed.expectOne(key).flush(res, { headers: { 'cache-control': 'max-age=60' } });
+      expect(await res$).toBe(res);
+      expect(cacheSrv.has(key)).toBe(false);
     });
 
-    it('when expire is 0', done => {
+    it('when expire is 0', async () => {
       const key = 'b';
       const res = 'ok';
-      http
-        .get('/test', { responseType: 'text', context: new HttpContext().set(CACHE, { expire: 0 }) })
-        .subscribe(res => {
-          expect(res).toBe(res);
-          expect(cacheSrv.has(key)).toBe(false);
-          done();
-        });
+      const res$ = firstValueFrom(
+        http.get('/test', { responseType: 'text', context: new HttpContext().set(CACHE, { expire: 0 }) })
+      );
       httpBed.expectOne('/test').flush(res);
+      expect(await res$).toBe(res);
+      expect(cacheSrv.has(key)).toBe(false);
     });
   });
 });

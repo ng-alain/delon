@@ -1,18 +1,17 @@
-import { registerLocaleData } from '@angular/common';
-import zh from '@angular/common/locales/zh';
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { STFilterComponent } from '../st-filter.component';
 import { STComponent } from '../st.component';
 import { STColumnFilter } from '../st.interfaces';
 import { _STColumn } from '../st.types';
-import { PageObject, TestComponent, genModule } from './base.spec';
-
-registerLocaleData(zh);
+import { PageObject, TestComponent, genModule } from './base';
 
 describe('abc: st-filter', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let page: PageObject<TestComponent>;
   let fixture: ComponentFixture<TestComponent>;
   let context: TestComponent;
@@ -47,8 +46,8 @@ describe('abc: st-filter', () => {
     ]);
   });
 
-  it('muse provide the fn function', fakeAsync(() => {
-    spyOn(console, 'warn');
+  it('muse provide the fn function', async () => {
+    vi.spyOn(console, 'warn').mockReturnValue(undefined);
     page.context.columns()![0].filter!.fn = null;
     page.cd();
     const firstCol = page.comp._columns[0];
@@ -60,7 +59,7 @@ describe('abc: st-filter', () => {
     page.cd();
     expect(console.warn).toHaveBeenCalled();
     page.asyncEnd();
-  }));
+  });
   describe('when is single', () => {
     beforeEach(() => {
       context.columns()![0].filter!.multiple = false;
@@ -102,7 +101,7 @@ describe('abc: st-filter', () => {
       filterComp.reset();
       const res = filter.menus!.filter(w => w.checked);
       expect(res.length).toBe(0);
-      expect(page.changeSpy.calls.mostRecent().args[0].filter).toBe(undefined);
+      expect(vi.mocked(page.changeSpy).mock.lastCall![0].filter).toBe(undefined);
     });
   });
   describe('when type is keyword', () => {
@@ -126,13 +125,13 @@ describe('abc: st-filter', () => {
       expect(m.value).toBe(undefined);
     });
   });
-  it('when type is number', fakeAsync(() => {
+  it('when type is number', async () => {
     const f = page.context.columns()![0].filter!;
     f.type = 'number';
     f.number = {};
     page.cd().click(`.ant-table-filter-trigger`).cd().expectElCount('.st__filter-number', 1).asyncEnd();
-  }));
-  it('when type is date', fakeAsync(() => {
+  });
+  it('when type is date', async () => {
     page.updateColumn([
       {
         type: 'date',
@@ -144,14 +143,14 @@ describe('abc: st-filter', () => {
       }
     ]);
     page.cd().click(`.ant-table-filter-trigger`).cd().expectElCount('.st__filter-date', 1).asyncEnd();
-  }));
-  it('when type is custom', fakeAsync(() => {
+  });
+  it('when type is custom', async () => {
     const f = page.context.columns()![0].filter!;
     f.type = 'custom';
     f.custom = page.context.tpl;
     page.cd().click(`.ant-table-filter-trigger`).cd().expectElCount('.st__filter-custom', 1).asyncEnd();
-  }));
-  it('#showOPArea', fakeAsync(() => {
+  });
+  it('#showOPArea', async () => {
     const f = page.context.columns()![0].filter!;
     f.type = 'custom';
     f.custom = page.context.tpl;
@@ -162,9 +161,9 @@ describe('abc: st-filter', () => {
       .cd()
       .expectElCount('.st__filter-custom', 1)
       .expectElCount('.close_in_tpl', 1)
-      .clickEl('.close_in_tpl')
-      .cd(1000)
-      .expectElCount('.close_in_tpl', 0)
-      .asyncEnd();
-  }));
+      .clickEl('.close_in_tpl');
+    await vi.advanceTimersByTimeAsync(1000);
+    fixture.detectChanges();
+    page.expectElCount('.close_in_tpl', 0).asyncEnd();
+  });
 });

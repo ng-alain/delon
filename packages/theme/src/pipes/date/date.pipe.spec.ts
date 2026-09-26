@@ -1,17 +1,13 @@
-/* eslint-disable import-x/order */
-import { registerLocaleData } from '@angular/common';
-import localeZhHans from '@angular/common/locales/zh-Hans';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NzI18nService, NZ_DATE_LOCALE } from 'ng-zorro-antd/i18n';
-
-registerLocaleData(localeZhHans);
 import { formatDistanceToNow } from 'date-fns';
 import { zhCN as dateFnsLang } from 'date-fns/locale';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzI18nService, NZ_DATE_LOCALE } from 'ng-zorro-antd/i18n';
+
 import { DatePipe } from './date.pipe';
 
 describe('Pipe: _date', () => {
@@ -61,6 +57,6 @@ describe('Pipe: _date', () => {
   imports: [DatePipe]
 })
 class TestComponent {
-  value?: Date | string | number;
+  value!: Date | string | number;
   format?: string;
 }

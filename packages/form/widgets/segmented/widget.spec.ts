@@ -1,13 +1,16 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 
 import { SFSchema } from '@delon/form';
 import { createTestContext } from '@delon/testing';
 
 import { withSegmentedWidget, SFSegmentedWidgetSchema } from './index';
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base';
 
 describe('form: widget: segmented', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestFormComponent>;
   let dl: DebugElement;
   let context: TestFormComponent;
@@ -21,8 +24,8 @@ describe('form: widget: segmented', () => {
     page.cleanOverlay().prop(dl, context, fixture);
   });
 
-  it('should be working', fakeAsync(() => {
-    const valueChange = jasmine.createSpy();
+  it('should be working', async () => {
+    const valueChange = vi.fn();
     const s: SFSchema = {
       properties: {
         a: {
@@ -38,5 +41,5 @@ describe('form: widget: segmented', () => {
     page.newSchema(s).typeEvent('click', '.ant-segmented-item:nth-child(2)');
     expect(page.getValue('/a')).toBe('Weekly');
     expect(valueChange).toHaveBeenCalled();
-  }));
+  });
 });

@@ -3,7 +3,7 @@ import { ComponentFixture } from '@angular/core/testing';
 
 import { createTestContext } from '@delon/testing';
 
-import { configureSFTestSuite, SFPage, TestFormComponent } from './base.spec';
+import { configureSFTestSuite, SFPage, TestFormComponent } from './base';
 import { reactive } from '../src/reactive';
 import type { SFSchema } from '../src/schema';
 
@@ -134,6 +134,22 @@ describe('form: reactive', () => {
       expect(view()).toBeUndefined();
       expect(runs).toBe(1);
       expect((target as { b?: number }).b).toBeUndefined();
+    });
+
+    it('should be pass through a non-object target', () => {
+      expect(reactive(null as unknown as object)).toBeNull();
+      expect(reactive(1 as unknown as object)).toBe(1);
+    });
+
+    it('should be pass through symbol keys', () => {
+      const key = Symbol('key');
+      const target: Record<string | symbol, unknown> = { [key]: 1, a: 2 };
+      const obj = reactive(target);
+      expect(obj[key]).toBe(1);
+      obj[key] = 3;
+      expect(target[key]).toBe(3);
+      delete obj[key];
+      expect(key in target).toBe(false);
     });
   });
 

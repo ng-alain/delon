@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { cleanCdkOverlayHtml } from '@delon/testing';
 import { DelonLocaleModule } from '@delon/theme';
@@ -7,6 +7,9 @@ import { DelonLocaleModule } from '@delon/theme';
 import { LoadingService } from './loading.service';
 
 describe('abc: loading', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let srv: LoadingService;
   let fixture: ComponentFixture<TestComponent>;
 
@@ -23,62 +26,62 @@ describe('abc: loading', () => {
     cleanCdkOverlayHtml();
   });
 
-  function check(cls: string, count: number): void {
-    tick();
+  async function check(cls: string, count: number): Promise<void> {
+    await vi.advanceTimersByTimeAsync(0);
     fixture.detectChanges();
     expect(srv.instance != null).toBe(true);
     const els = document.querySelectorAll(cls);
     expect(els.length).toBe(count);
-    tick(1000);
+    await vi.advanceTimersByTimeAsync(1000);
   }
 
-  it('should be working', fakeAsync(() => {
+  it('should be working', async () => {
     srv.close();
     srv.open();
-    tick(1);
+    await vi.advanceTimersByTimeAsync(1);
     expect(srv.instance != null).toBe(true);
     fixture.detectChanges();
     srv.close();
-    tick(1);
+    await vi.advanceTimersByTimeAsync(1);
     expect(srv.instance == null).toBe(true);
-    tick(1000);
-  }));
+    await vi.advanceTimersByTimeAsync(1000);
+  });
 
   describe('#delay', () => {
-    it(`should be can appear when close without delay`, fakeAsync(() => {
+    it(`should be can appear when close without delay`, async () => {
       srv.open({ delay: 1000 });
-      tick(500);
+      await vi.advanceTimersByTimeAsync(500);
       expect(srv.instance == null).toBe(true);
-      tick(1001);
+      await vi.advanceTimersByTimeAsync(1001);
       expect(srv.instance != null).toBe(true);
-    }));
-    it(`should be won't appear when close within delay`, fakeAsync(() => {
+    });
+    it(`should be won't appear when close within delay`, async () => {
       srv.open({ delay: 1000 });
-      tick(500);
+      await vi.advanceTimersByTimeAsync(500);
       expect(srv.instance == null).toBe(true);
       srv.close();
-      tick(1001);
+      await vi.advanceTimersByTimeAsync(1001);
       expect(srv.instance == null).toBe(true);
-    }));
+    });
   });
 
   describe('#type', () => {
-    it('with text', fakeAsync(() => {
+    it('with text', async () => {
       srv.open({ type: 'text' });
-      check('.loading-default__icon', 0);
-    }));
-    it('with icon', fakeAsync(() => {
+      await check('.loading-default__icon', 0);
+    });
+    it('with icon', async () => {
       srv.open({ type: 'icon', icon: { type: 'loading' } });
-      check('.anticon-loading', 1);
-    }));
-    it('with spin', fakeAsync(() => {
+      await check('.anticon-loading', 1);
+    });
+    it('with spin', async () => {
       srv.open({ type: 'spin' });
-      check('.ant-spin', 1);
-    }));
-    it('with custom', fakeAsync(() => {
+      await check('.ant-spin', 1);
+    });
+    it('with custom', async () => {
       srv.open({ type: 'custom', custom: { html: '<div class="custom-cls"></div>' } });
-      check('.custom-cls', 1);
-    }));
+      await check('.custom-cls', 1);
+    });
   });
 });
 

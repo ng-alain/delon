@@ -44,10 +44,13 @@ describe('auth: simple.interceptor', () => {
   let http: HttpClient;
   let httpBed: HttpTestingController;
   const mockRouter = {
-    navigate: jasmine.createSpy('navigate'),
-    parseUrl: jasmine.createSpy('parseUrl').and.callFake((value: any) => {
-      return new DefaultUrlSerializer().parse(value);
-    })
+    navigate: vi.fn().mockName('navigate'),
+    parseUrl: vi
+      .fn()
+      .mockName('parseUrl')
+      .mockImplementation((value: any) => {
+        return new DefaultUrlSerializer().parse(value);
+      })
   };
 
   function genModule(options: AlainAuthConfig, tokenData?: SimpleTokenModel): void {
@@ -69,55 +72,47 @@ describe('auth: simple.interceptor', () => {
   }
 
   describe('[token position]', () => {
-    it(`in headers`, (done: () => void) => {
+    it(`in headers`, async () => {
       const basicModel = genModel();
       genModule({}, basicModel);
-      http.get('/test', { responseType: 'text' }).subscribe(() => {
-        done();
-      });
+      http.get('/test', { responseType: 'text' }).subscribe(() => {});
       const req = httpBed.expectOne('/test') as TestRequest;
       expect(req.request.headers.get('token')).toBe(basicModel.token!);
       req.flush('ok!');
     });
-    it(`in body`, (done: () => void) => {
+    it(`in body`, async () => {
       genModule(
         {
           token_send_place: 'body'
         },
         genModel('123')
       );
-      http.get('/test', { responseType: 'text' }).subscribe(() => {
-        done();
-      });
+      http.get('/test', { responseType: 'text' }).subscribe(() => {});
       const req = httpBed.expectOne('/test') as TestRequest;
       expect(req.request.body.token).toBe('123');
       req.flush('ok!');
     });
-    it(`in url`, (done: () => void) => {
+    it(`in url`, async () => {
       genModule(
         {
           token_send_place: 'url'
         },
         genModel('123')
       );
-      http.get('/test', { responseType: 'text' }).subscribe(() => {
-        done();
-      });
+      http.get('/test', { responseType: 'text' }).subscribe(() => {});
       const req = httpBed.expectOne(() => true) as TestRequest;
       expect(req.request.params.has('token')).toBe(true);
       expect(req.request.params.get('token')).toBe('123');
       req.flush('ok!');
     });
-    it(`in url via full-domain`, (done: () => void) => {
+    it(`in url via full-domain`, async () => {
       genModule(
         {
           token_send_place: 'url'
         },
         genModel('123')
       );
-      http.get('https://ng-alain.com/test', { responseType: 'text' }).subscribe(() => {
-        done();
-      });
+      http.get('https://ng-alain.com/test', { responseType: 'text' }).subscribe(() => {});
       const req = httpBed.expectOne(() => true) as TestRequest;
       expect(req.request.params.has('token')).toBe(true);
       expect(req.request.params.get('token')).toBe('123');
@@ -128,7 +123,7 @@ describe('auth: simple.interceptor', () => {
   describe('[token template]', () => {
     const basicModel = genModel();
 
-    it('should be [Bearer ${token}]', (done: () => void) => {
+    it('should be [Bearer ${token}]', async () => {
       genModule(
         {
           token_send_place: 'header',
@@ -138,15 +133,13 @@ describe('auth: simple.interceptor', () => {
         basicModel
       );
 
-      http.get('/test', { responseType: 'text' }).subscribe(() => {
-        done();
-      });
+      http.get('/test', { responseType: 'text' }).subscribe(() => {});
       const ret = httpBed.expectOne(r => r.method === 'GET' && (r.url as string).startsWith('/test')) as TestRequest;
       expect(ret.request.headers.get('Authorization')).toBe(`Bearer ${basicModel.token}`);
       ret.flush('ok!');
     });
 
-    it('should be [Bearer ${uid}-${token}]', (done: () => void) => {
+    it('should be [Bearer ${uid}-${token}]', async () => {
       genModule(
         {
           token_send_place: 'header',
@@ -156,9 +149,7 @@ describe('auth: simple.interceptor', () => {
         basicModel
       );
 
-      http.get('/test', { responseType: 'text' }).subscribe(() => {
-        done();
-      });
+      http.get('/test', { responseType: 'text' }).subscribe(() => {});
       const ret = httpBed.expectOne(r => r.method === 'GET' && (r.url as string).startsWith('/test')) as TestRequest;
       expect(ret.request.headers.get('Authorization')).toBe(`Bearer ${basicModel.uid}-${basicModel.token}`);
       ret.flush('ok!');

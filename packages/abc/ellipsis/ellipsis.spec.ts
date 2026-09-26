@@ -1,5 +1,5 @@
-import { Component, DebugElement, signal, ViewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { Component, DebugElement, Directive, signal, ViewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -8,6 +8,9 @@ import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 import { EllipsisComponent } from './ellipsis.component';
 
 describe('abc: ellipsis', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestBaseComponent>;
   let dl: DebugElement;
   let context: TestBaseComponent;
@@ -34,29 +37,29 @@ describe('abc: ellipsis', () => {
         page = new PageObject();
       });
 
-      it('should working', fakeAsync(() => {
+      it('should working', async () => {
         page.tick().check('There were...');
-      }));
+      });
 
-      it('should be tooltip', fakeAsync(() => {
+      it('should be tooltip', async () => {
         context.tooltip.set(true);
         page.tick().hasTooltip().check('There were...');
-      }));
+      });
 
-      it('should be auto hide tail', fakeAsync(() => {
+      it('should be auto hide tail', async () => {
         context.length.set(4);
         context.text.set('asdf');
         page.tick().check('asdf');
         context.length.set(1);
         context.text.set('as');
         page.tick().check('...');
-      }));
+      });
 
-      it('#fullWidthRecognition', fakeAsync(() => {
+      it('#fullWidthRecognition', async () => {
         context.fullWidthRecognition.set(true);
         context.text.set('cipchk,你好吗');
         page.tick().check('cipchk,你...');
-      }));
+      });
     });
 
     describe('#line', () => {
@@ -67,37 +70,39 @@ describe('abc: ellipsis', () => {
         page = new PageObject();
       });
       describe('when support line clamp', () => {
-        beforeEach(fakeAsync(() => {
+        beforeEach(async () => {
           page.comp['isSupportLineClamp'] = true;
           context.lines.set(1);
           page.tick();
-        }));
+          await vi.runOnlyPendingTimersAsync();
+        });
         it('should working', () => {
           expect(+page.getEl('.ellipsis')!.style!['webkitLineClamp']).toBe(context!.lines() as number);
         });
       });
       describe('when not support line clamp', () => {
-        beforeEach(fakeAsync(() => {
-          spyOn(window, 'getComputedStyle').and.returnValue({ lineHeight: 20 } as NzSafeAny);
+        beforeEach(async () => {
+          vi.spyOn(window, 'getComputedStyle').mockReturnValue({ lineHeight: 20 } as NzSafeAny);
           page.comp['isSupportLineClamp'] = false;
           context.lines.set(1);
           page.tick();
-        }));
-        it('should working', fakeAsync(() => {
+          await vi.runOnlyPendingTimersAsync();
+        });
+        it('should working', async () => {
           context.lines.set(2);
           page.tick();
           expect((dl.nativeElement as HTMLElement).innerHTML).toContain('...');
-        }));
-        it('should be not innerText', fakeAsync(() => {
+        });
+        it('should be not innerText', async () => {
           const el = page.getEl('.ellipsis__shadow');
-          spyOnProperty(el!, 'innerText').and.returnValue(null as NzSafeAny);
+          vi.spyOn(el!, 'innerText', 'get').mockReturnValue(null as NzSafeAny);
           context.lines.set(2);
           page.tick();
           expect((dl.nativeElement as HTMLElement).innerHTML).toContain('...');
-        }));
+        });
         it('should be raw response when html offsetHeight is smallest', () => {
           const el = page.getEl('.ellipsis__shadow');
-          spyOnProperty(el!, 'offsetHeight').and.returnValue(1);
+          vi.spyOn(el!, 'offsetHeight', 'get').mockReturnValue(1);
           page.comp['gen']();
           expect(page.getText()).not.toBe('There');
         });
@@ -155,13 +160,14 @@ describe('abc: ellipsis', () => {
 
     tick(): this {
       fixture.detectChanges();
-      tick(1000);
+      vi.advanceTimersByTime(1000);
       fixture.detectChanges();
       return this;
     }
   }
 });
 
+@Directive()
 class TestBaseComponent {
   @ViewChild('comp', { static: true }) comp!: EllipsisComponent;
   readonly tooltip = signal(false);

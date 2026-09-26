@@ -1,7 +1,5 @@
-import { registerLocaleData } from '@angular/common';
-import zh from '@angular/common/locales/zh';
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 
 import { format, formatISO } from 'date-fns';
 
@@ -11,12 +9,13 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { DateWidget } from './date.widget';
 import { SFDateWidgetSchema } from './schema';
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base';
 import { SFSchema } from '../../../src/schema/index';
 
-registerLocaleData(zh);
-
 describe('form: widget: date', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestFormComponent>;
   let page: SFPage;
   let context: TestFormComponent;
@@ -75,19 +74,20 @@ describe('form: widget: date', () => {
         expect(Array.isArray(comp.value)).toBe(true);
         expect(formatISO(comp.value[0])).toBe(formatISO(time));
       });
-      it('with Date value should be formatted', fakeAsync(() => {
+      it('with Date value should be formatted', async () => {
         const time = new Date(2019, 0, 1, 10, 20, 30);
         page.newSchema({
           properties: { a: { type: 'string', ui: { widget }, default: time } }
         } as SFSchema);
         page.time();
+        await page.stabilize();
 
         // 单值模式下默认值由控件回写成 `startFormat` 格式化后的字符串
         expect(page.getProperty('/a').value).toBe(format(time, getComp()['startFormat']));
         page.asyncEnd();
-      }));
+      });
     });
-    it('should be set value', fakeAsync(() => {
+    it('should be set value', async () => {
       const s: SFSchema = {
         properties: { a: { type: 'string', format: 'date-time', ui: { widget } } }
       };
@@ -96,10 +96,10 @@ describe('form: widget: date', () => {
         .checkValue('a', null)
         .setValue('a', new Date(2019, 0, 1))
         .dc(1);
-      flush();
+      await page.stabilize();
       const ipt = page.getEl('.ant-picker-input input') as HTMLInputElement;
       expect(ipt.value).toContain(`2019-01-01`);
-    }));
+    });
   });
 
   describe('#mode', () => {
@@ -211,7 +211,7 @@ describe('form: widget: date', () => {
       expect(Array.isArray(res)).toBe(true);
       expect(res![0]).toBe(time);
     });
-    it('should keep the start default when the end has no value', fakeAsync(() => {
+    it('should keep the start default when the end has no value', async () => {
       const time = new Date(2020, 0, 1, 10, 20, 30);
       page.newSchema({
         properties: {
@@ -227,8 +227,8 @@ describe('form: widget: date', () => {
       // 也不该因为这次清空而多出一次值变更
       expect(context.formChange).not.toHaveBeenCalled();
       page.asyncEnd();
-    }));
-    it('should format both start/end value after the ui.end property is reset', fakeAsync(() => {
+    });
+    it('should format both start/end value after the ui.end property is reset', async () => {
       const time = new Date(2019, 0, 1, 10, 20, 30);
       const copyS: SFSchema = {
         properties: {
@@ -238,6 +238,7 @@ describe('form: widget: date', () => {
       };
       page.newSchema(copyS);
       page.time();
+      await page.stabilize();
       const comp = getComp();
       const expectVal = format(time, comp['startFormat']);
       page.checkValue('/start', expectVal).checkValue('/end', expectVal);
@@ -247,9 +248,10 @@ describe('form: widget: date', () => {
       // 没有 widget 会再去格式化它 → 范围控件必须在**整轮 reset 之后**回写 end。
       context.comp.reset();
       page.time();
+      await page.stabilize();
       page.checkValue('/start', expectVal).checkValue('/end', expectVal);
       page.asyncEnd();
-    }));
+    });
     it('should be removed ui.end when not found end path', () => {
       const copyS = deepCopy(s);
       (copyS.properties!.start.ui as SFDateWidgetSchema).end = 'invalid-end';
@@ -287,7 +289,7 @@ describe('form: widget: date', () => {
     });
     it('should be trigger onOpenChange', () => {
       const s: SFSchema = {
-        properties: { a: { type: 'string', ui: { widget, onOpenChange: jasmine.createSpy() } } }
+        properties: { a: { type: 'string', ui: { widget, onOpenChange: vi.fn() } } }
       };
       page.newSchema(s);
       const comp = getComp();
@@ -298,7 +300,7 @@ describe('form: widget: date', () => {
     });
     it('should be trigger onOk', () => {
       const s: SFSchema = {
-        properties: { a: { type: 'string', ui: { widget, onOk: jasmine.createSpy() } } }
+        properties: { a: { type: 'string', ui: { widget, onOk: vi.fn() } } }
       };
       page.newSchema(s);
       const comp = getComp();

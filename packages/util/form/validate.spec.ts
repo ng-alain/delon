@@ -3,7 +3,7 @@ import { AbstractControl, FormControl, ValidationErrors } from '@angular/forms';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { _Validators } from './validators';
-import { TEST_DATA } from '../format/validate.spec';
+import { TEST_DATA } from '../format/validate.fixture';
 
 describe('utils: form-validate', () => {
   function process(methodName: keyof typeof _Validators, data: Array<{ k: string; v: boolean }>): void {

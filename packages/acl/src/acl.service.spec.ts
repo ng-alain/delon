@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { firstValueFrom } from 'rxjs';
 
 import { ACLService } from './acl.service';
 import { ACLType } from './acl.type';
@@ -96,23 +97,17 @@ describe('acl: service', () => {
   describe('#can()', () => {
     it('should working', () => {
       srv.attachAbility([ABILITY_NUMBER]);
-      expect(srv.can(ADMIN)).withContext(`can ${ADMIN}`).toBe(true);
-      expect(srv.can(ABILITY_NUMBER)).withContext('ability muse be true').toBe(true);
-      expect(srv.can([ABILITY_NUMBER]))
-        .withContext('ability array muse be true')
-        .toBe(true);
-      expect(srv.can([ADMIN]))
-        .withContext('role array muse be true')
-        .toBe(true);
-      expect(srv.can({ role: [ADMIN] } as ACLType))
-        .withContext('ACLType item muse be true')
-        .toBe(true);
+      expect(srv.can(ADMIN), `can ${ADMIN}`).toBe(true);
+      expect(srv.can(ABILITY_NUMBER), 'ability muse be true').toBe(true);
+      expect(srv.can([ABILITY_NUMBER]), 'ability array muse be true').toBe(true);
+      expect(srv.can([ADMIN]), 'role array muse be true').toBe(true);
+      expect(srv.can({ role: [ADMIN] } as ACLType), 'ACLType item muse be true').toBe(true);
       expect(srv.can(`${ADMIN}1`)).toBe(false);
       expect(srv.can(null)).toBe(true);
       expect(srv.can({})).toBe(false);
     });
     it('should be allow ability is string in can method by preCan', () => {
-      const preCanSpy = jasmine.createSpy();
+      const preCanSpy = vi.fn();
       (srv as any).options.preCan = preCanSpy;
       srv.attachAbility([ABILITY_CREATE]);
       srv.can(ABILITY_CREATE);
@@ -132,13 +127,9 @@ describe('acl: service', () => {
 
   it(`#canAbility()`, () => {
     srv.attachAbility([ABILITY]);
-    expect(srv.canAbility(ABILITY)).withContext('should be support number or string type').toBe(true);
-    expect(srv.canAbility([ABILITY]))
-      .withContext('should be support array type')
-      .toBe(true);
-    expect(srv.canAbility(`${ADMIN}1`))
-      .withContext('should be invalid ability')
-      .toBe(false);
+    expect(srv.canAbility(ABILITY), 'should be support number or string type').toBe(true);
+    expect(srv.canAbility([ABILITY]), 'should be support array type').toBe(true);
+    expect(srv.canAbility(`${ADMIN}1`), 'should be invalid ability').toBe(false);
   });
 
   it('should be valid when all of for is array roles', () => {
@@ -151,13 +142,10 @@ describe('acl: service', () => {
     expect(srv.canAbility({ ability: [ABILITY, ABILITY_CREATE], mode: 'allOf' })).toBe(false);
   });
 
-  it('#change', done => {
-    srv.change.subscribe(res => {
-      res = res as ACLType;
-      expect(res.role!.length).toBe(1);
-      expect(res.role![0]).toBe(ADMIN);
-      done();
-    });
+  it('#change', async () => {
+    const res = (await firstValueFrom(srv.change)) as ACLType;
+    expect(res.role!.length).toBe(1);
+    expect(res.role![0]).toBe(ADMIN);
   });
 
   describe('#except', () => {

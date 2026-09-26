@@ -69,7 +69,7 @@ describe('abc: exception', () => {
 
 @Component({
   template: `
-    <exception #comp [type]="type()" [img]="img()" [title]="title()" [desc]="desc()" backRouterLink="/">
+    <exception #comp [type]="type()!" [img]="img()" [title]="title()" [desc]="desc()" backRouterLink="/">
       <button id="btn">查看详情</button>
       <div id="action-edit">action-edit</div>
     </exception>
@@ -79,7 +79,7 @@ describe('abc: exception', () => {
 class TestComponent {
   @ViewChild('comp', { static: true })
   comp!: ExceptionComponent;
-  readonly type = signal<403 | 404 | 500 | undefined>(undefined);
+  readonly type = signal<ExceptionType | undefined>(undefined);
   readonly img = signal<string | undefined>(undefined);
   readonly title = signal<string | undefined>(undefined);
   readonly desc = signal<string | undefined>(undefined);

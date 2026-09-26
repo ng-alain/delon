@@ -1,6 +1,6 @@
 import { APP_BASE_HREF } from '@angular/common';
-import { Component, DebugElement, signal, ViewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { Component, DebugElement, Directive, signal, ViewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router, provideRouter } from '@angular/router';
 
@@ -27,6 +27,9 @@ class MockI18NServiceFake extends AlainI18NServiceFake {
 }
 
 describe('abc: page-header', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let menuSrv: MenuService;
@@ -121,7 +124,7 @@ describe('abc: page-header', () => {
           const affixComp = dl
             .query(By.directive(NzAffixComponent))
             .injector.get<NzAffixComponent>(NzAffixComponent, undefined);
-          spyOn(affixComp, 'updatePosition');
+          vi.spyOn(affixComp, 'updatePosition').mockReturnValue(undefined);
           srv.setLayout('collapsed', true);
           expect(affixComp.updatePosition).toHaveBeenCalled();
         });
@@ -165,7 +168,7 @@ describe('abc: page-header', () => {
       });
 
       it('should be', () => {
-        spyOnProperty(router, 'url').and.returnValue('/1-1/1-1-2');
+        vi.spyOn(router, 'url', 'get').mockReturnValue('/1-1/1-1-2');
         context.home.set('');
         context.autoBreadcrumb.set(true);
         fixture.detectChanges();
@@ -173,7 +176,7 @@ describe('abc: page-header', () => {
       });
 
       it('should be no breadcrumb when invalid url', () => {
-        spyOnProperty(router, 'url').and.returnValue('/1-1/a-1-1-2');
+        vi.spyOn(router, 'url', 'get').mockReturnValue('/1-1/a-1-1-2');
         context.autoBreadcrumb.set(true);
         fixture.detectChanges();
         expect(dl.queryAll(By.css('nz-breadcrumb-item')).length).toBe(0);
@@ -196,7 +199,7 @@ describe('abc: page-header', () => {
             ]
           }
         ]);
-        spyOnProperty(router, 'url').and.returnValue('/1-1/1-1-2');
+        vi.spyOn(router, 'url', 'get').mockReturnValue('/1-1/1-1-2');
         context.autoBreadcrumb.set(true);
         fixture.detectChanges();
         expect(dl.queryAll(By.css('nz-breadcrumb-item')).length).toBe(2);
@@ -204,7 +207,7 @@ describe('abc: page-header', () => {
 
       describe('#home', () => {
         it('shoule be hide home', () => {
-          spyOnProperty(router, 'url').and.returnValue('/1-1/1-1-2');
+          vi.spyOn(router, 'url', 'get').mockReturnValue('/1-1/1-1-2');
           context.home.set('');
           context.autoBreadcrumb.set(true);
           fixture.detectChanges();
@@ -212,24 +215,23 @@ describe('abc: page-header', () => {
         });
       });
 
-      xit('shoule be different breadcrumb by paths', fakeAsync(() => {
+      it.skip('shoule be different breadcrumb by paths', async () => {
         context.home.set('');
         context.autoBreadcrumb.set(true);
-        const urlSpy = spyOnProperty(router, 'url');
-        urlSpy.and.returnValue('/1-1/1-1-2');
+        const urlSpy = vi.spyOn(router, 'url', 'get');
+        urlSpy.mockReturnValue('/1-1/1-1-2');
         fixture.detectChanges();
         const firstPath: HTMLElement = dl.query(By.css('nz-breadcrumb-item:nth-child(3)')).nativeElement;
-        urlSpy.and.returnValue('/1-1/1-1-1');
+        const firstText = firstPath.innerText;
+        urlSpy.mockReturnValue('/1-1/1-1-1');
         fixture.ngZone!.run(() => {
-          router.navigateByUrl('/1-1/1-1-1');
-          fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const secondPath: HTMLElement = dl.query(By.css('nz-breadcrumb-item:nth-child(3)')).nativeElement;
-            expect(firstPath.innerText).not.toBe(secondPath.innerText);
-          });
+          void router.navigateByUrl('/1-1/1-1-1');
         });
-        flush();
-      }));
+        await fixture.whenStable();
+        fixture.detectChanges();
+        const secondPath: HTMLElement = dl.query(By.css('nz-breadcrumb-item:nth-child(3)')).nativeElement;
+        expect(firstText).not.toBe(secondPath.innerText);
+      });
     });
 
     describe('[i18n]', () => {
@@ -245,7 +247,7 @@ describe('abc: page-header', () => {
         fixture.detectChanges();
       });
       it('should be refresh when i18n changed', () => {
-        spyOn(context.comp, 'refresh');
+        vi.spyOn(context.comp, 'refresh').mockReturnValue(undefined);
         expect(context.comp.refresh).not.toHaveBeenCalled();
         i18n.use('en', {});
         expect(context.comp.refresh).toHaveBeenCalled();
@@ -267,8 +269,8 @@ describe('abc: page-header', () => {
             ]
           }
         ]);
-        spyOnProperty(router, 'url').and.returnValue('/1-1/1-1-2');
-        spyOn(i18n, 'fanyi');
+        vi.spyOn(router, 'url', 'get').mockReturnValue('/1-1/1-1-2');
+        vi.spyOn(i18n, 'fanyi').mockReturnValue(undefined as NzSafeAny);
         expect(i18n.fanyi).not.toHaveBeenCalled();
         context.autoBreadcrumb.set(true);
         fixture.detectChanges();
@@ -280,7 +282,7 @@ describe('abc: page-header', () => {
         context.title.set(null);
         context.autoTitle.set(true);
         context.autoBreadcrumb.set(true);
-        spyOn(menuSrv, 'getPathByUrl').and.returnValue([{ text, i18n }]);
+        vi.spyOn(menuSrv, 'getPathByUrl').mockReturnValue([{ text, i18n }]);
         fixture.detectChanges();
         checkValue('.page-header__title', i18n);
       });
@@ -301,8 +303,8 @@ describe('abc: page-header', () => {
           }
         ]);
         context.autoBreadcrumb.set(true);
-        spyOnProperty(router, 'url').and.returnValue('/1-1/1-1-2');
-        spyOn(i18n, 'fanyi');
+        vi.spyOn(router, 'url', 'get').mockReturnValue('/1-1/1-1-2');
+        vi.spyOn(i18n, 'fanyi').mockReturnValue(undefined as NzSafeAny);
         context.home.set('home');
         context.homeI18n.set('homeI18n');
         context.autoBreadcrumb.set(true);
@@ -324,7 +326,7 @@ describe('abc: page-header', () => {
       expect(dl.queryAll(By.css('.custom-title')).length).toBe(1);
     });
 
-    it('should be refresh title when route changed of auto generate title', fakeAsync(() => {
+    it('should be refresh title when route changed of auto generate title', async () => {
       genModule({ created: false });
       context.title.set(null);
       context.autoTitle.set(true);
@@ -332,18 +334,18 @@ describe('abc: page-header', () => {
         { text: '1', link: '/1-1/p1' },
         { text: '2', link: '/1-1/p2' }
       ]);
-      const urlSpy = spyOnProperty(router, 'url');
-      urlSpy.and.returnValue('/1-1/p1');
-      tick();
+      const urlSpy = vi.spyOn(router, 'url', 'get');
+      urlSpy.mockReturnValue('/1-1/p1');
+      await vi.advanceTimersByTimeAsync(0);
       fixture.detectChanges();
       checkValue('.page-header__title', '1');
 
-      urlSpy.and.returnValue('/1-1/p2');
+      urlSpy.mockReturnValue('/1-1/p2');
       router.navigateByUrl('/1-1/p2');
-      tick();
+      await vi.advanceTimersByTimeAsync(0);
       fixture.detectChanges();
       checkValue('.page-header__title', '2');
-    }));
+    });
 
     describe('[generateion title]', () => {
       beforeEach(() => {
@@ -363,7 +365,7 @@ describe('abc: page-header', () => {
 
       it('should be auto generate title via menu data', () => {
         const text = 'asdf';
-        spyOn(menuSrv, 'getPathByUrl').and.returnValue([{ text }]);
+        vi.spyOn(menuSrv, 'getPathByUrl').mockReturnValue([{ text }]);
         fixture.detectChanges();
         checkValue('.page-header__title', text);
       });
@@ -371,7 +373,7 @@ describe('abc: page-header', () => {
 
     describe('[auto sync title]', () => {
       class MockTitle {
-        setTitle = jasmine.createSpy();
+        setTitle = vi.fn();
       }
       class MockReuse {
         set title(_val: string) {}
@@ -400,7 +402,7 @@ describe('abc: page-header', () => {
       });
 
       it('should be auto sync title of document and result-tab', () => {
-        const spyReuseTitle = spyOnProperty(reuseSrv, 'title', 'set').and.callThrough();
+        const spyReuseTitle = vi.spyOn(reuseSrv, 'title', 'set');
         fixture.detectChanges();
         context.comp.refresh();
         expect(titleSrv.setTitle).toHaveBeenCalled();
@@ -410,6 +412,7 @@ describe('abc: page-header', () => {
   });
 });
 
+@Directive()
 class TestBaseComponent {
   @ViewChild('comp', { static: true })
   comp!: PageHeaderComponent;
@@ -419,7 +422,7 @@ class TestBaseComponent {
   readonly autoTitle = signal<boolean | undefined>(undefined);
   readonly syncTitle = signal<boolean | undefined>(undefined);
   readonly home = signal<string | undefined>(undefined);
-  homeLink?: string;
+  homeLink!: string;
   readonly homeI18n = signal<string | undefined>(undefined);
   readonly fixed = signal<boolean | undefined>(undefined);
   readonly loading = signal(false);

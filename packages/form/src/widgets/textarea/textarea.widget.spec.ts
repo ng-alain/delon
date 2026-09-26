@@ -1,13 +1,16 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 
 import { createTestContext } from '@delon/testing';
 
 import { SFTextareaWidgetSchema } from './schema';
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base';
 import { SFSchema } from '../../../src/schema/index';
 
 describe('form: widget: textarea', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestFormComponent>;
   let dl: DebugElement;
   let context: TestFormComponent;
@@ -45,7 +48,7 @@ describe('form: widget: textarea', () => {
     page.newSchema(s).checkCount('nz-textarea-count', 1).checkCount('nz-input-wrapper', 0);
   });
 
-  it('#event', fakeAsync(() => {
+  it('#event', async () => {
     const schema: SFSchema = {
       properties: {
         a: {
@@ -53,9 +56,9 @@ describe('form: widget: textarea', () => {
           ui: {
             widget,
             autosize: {},
-            change: jasmine.createSpy('change'),
-            focus: jasmine.createSpy('focus'),
-            blur: jasmine.createSpy('blur')
+            change: vi.fn().mockName('change'),
+            focus: vi.fn().mockName('focus'),
+            blur: vi.fn().mockName('blur')
           } as SFTextareaWidgetSchema
         }
       }
@@ -71,5 +74,5 @@ describe('form: widget: textarea', () => {
     // blur
     page.typeEvent('blur', 'textarea');
     expect(ui.blur).toHaveBeenCalled();
-  }));
+  });
 });

@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 
 import { createTestContext } from '@delon/testing';
 
-import { configureSFTestSuite, SFPage, TestFormComponent } from './base.spec';
+import { configureSFTestSuite, SFPage, TestFormComponent } from './base';
 import type { FormProperty, PropertyGroup } from '../src/model/form.property';
 import type { SFSchema } from '../src/schema';
 import type { SFUISchemaItem } from '../src/schema/ui';
@@ -203,7 +203,7 @@ describe('form: signal-driven change detection', () => {
       expect(dl.query(By.css('nz-input-wrapper'))).toBeNull();
 
       widget.type = 'addon'; // 普通字段，无 signal 支撑
-      flush();
+      fixture.detectChanges();
 
       expect(dl.query(By.css('nz-input-wrapper'))).toBeNull();
     });

@@ -1,5 +1,3 @@
-import { registerLocaleData } from '@angular/common';
-import zh from '@angular/common/locales/zh';
 import { Component, DebugElement, signal, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -11,8 +9,6 @@ import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { DelonFormModule } from '../src/module';
 import { SFSchema } from '../src/schema/index';
 import { SFComponent } from '../src/sf.component';
-
-registerLocaleData(zh);
 
 @Component({
   template: ` <sf [schema]="schema()" [expandable]="expandable()" [(expanded)]="expanded" /> `,
@@ -113,14 +109,14 @@ describe('form: collapse', () => {
         }
       });
       fixture.detectChanges();
-      expect(context.expanded()).toBeFalse();
+      expect(context.expanded()).toBe(false);
       const btn = dl.query(By.css('[data-type="expand"]'))!;
       btn.nativeElement.click();
       fixture.detectChanges();
-      expect(context.expanded()).toBeTrue();
+      expect(context.expanded()).toBe(true);
       btn.nativeElement.click();
       fixture.detectChanges();
-      expect(context.expanded()).toBeFalse();
+      expect(context.expanded()).toBe(false);
     });
 
     it('should update aria-expanded attribute on click', () => {
@@ -177,7 +173,7 @@ describe('form: collapse', () => {
       });
       fixture.detectChanges();
       const sfHost = dl.query(By.css('sf'));
-      expect(sfHost.nativeElement.classList.contains('sf__collapse')).toBeTrue();
+      expect(sfHost.nativeElement.classList.contains('sf__collapse')).toBe(true);
     });
 
     it('should remove sf__collapse class when expanded is true', () => {
@@ -192,7 +188,7 @@ describe('form: collapse', () => {
       context.expanded.set(true);
       fixture.detectChanges();
       const sfHost = dl.query(By.css('sf'));
-      expect(sfHost.nativeElement.classList.contains('sf__collapse')).toBeFalse();
+      expect(sfHost.nativeElement.classList.contains('sf__collapse')).toBe(false);
     });
 
     it('should not set sf__collapse class when expandable is false', () => {
@@ -206,7 +202,7 @@ describe('form: collapse', () => {
       });
       fixture.detectChanges();
       const sfHost = dl.query(By.css('sf'));
-      expect(sfHost.nativeElement.classList.contains('sf__collapse')).toBeFalse();
+      expect(sfHost.nativeElement.classList.contains('sf__collapse')).toBe(false);
     });
 
     it('should have sf__collapse class and sf__collapse-item elements when collapsed', () => {
@@ -219,7 +215,7 @@ describe('form: collapse', () => {
       });
       fixture.detectChanges();
       const sfHost = dl.query(By.css('sf'));
-      expect(sfHost.nativeElement.classList.contains('sf__collapse')).toBeTrue();
+      expect(sfHost.nativeElement.classList.contains('sf__collapse')).toBe(true);
       const collapseItem = dl.query(By.css('.sf__collapse-item'));
       expect(collapseItem).not.toBeNull();
     });

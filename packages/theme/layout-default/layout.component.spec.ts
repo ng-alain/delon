@@ -1,5 +1,5 @@
 import { Component, DebugElement, signal, TemplateRef, ViewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
   NavigationCancel,
@@ -10,6 +10,7 @@ import {
 } from '@angular/router';
 
 import { createTestContext } from '@delon/testing';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
@@ -21,6 +22,9 @@ import { SettingsService } from '../src/services/settings/settings.service';
 import { AlainThemeModule } from '../src/theme.module';
 
 describe('theme: layout-default', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let context: TestComponent;
@@ -29,8 +33,7 @@ describe('theme: layout-default', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [provideNzIconsTesting(), provideRouter([])],
-      imports: [LayoutDefaultModule, AlainThemeModule],
-      declarations: [TestComponent]
+      imports: [LayoutDefaultModule, AlainThemeModule, TestComponent]
     });
 
     ({ fixture, dl, context } = createTestContext(TestComponent));
@@ -113,72 +116,73 @@ describe('theme: layout-default', () => {
 
   describe('lazy load', () => {
     let msgSrv: NzMessageService;
-    function lazyTick(): void {
-      tick(101);
+    async function lazyTick(): Promise<void> {
+      await vi.advanceTimersByTimeAsync(101);
     }
-    function lazyStart(): void {
+    async function lazyStart(): Promise<void> {
       context.comp.processEv(new RouteConfigLoadStart({}));
-      lazyTick();
+      await lazyTick();
     }
 
-    function lazyError(): void {
+    async function lazyError(): Promise<void> {
       context.comp.processEv(new NavigationError(0, '/', {}));
-      lazyTick();
+      await lazyTick();
     }
 
-    function lazyCancel(reason: string = 'cancel'): void {
+    async function lazyCancel(reason: string = 'cancel'): Promise<void> {
       context.comp.processEv(new NavigationCancel(0, '/', reason));
-      lazyTick();
+      await lazyTick();
     }
 
-    function lazyEnd(): void {
+    async function lazyEnd(): Promise<void> {
       context.comp.processEv(new RouteConfigLoadEnd({}));
-      lazyTick();
+      await lazyTick();
     }
 
-    beforeEach(fakeAsync(() => {
-      lazyStart();
+    beforeEach(async () => {
+      await lazyStart();
       msgSrv = TestBed.inject(NzMessageService);
-    }));
+      await vi.runOnlyPendingTimersAsync();
+    });
 
-    it('should toggle fetching status when load lzay config', fakeAsync(() => {
+    it('should toggle fetching status when load lzay config', async () => {
       expect(context.comp.showFetching()).toBe(true);
-      lazyEnd();
-    }));
+      await lazyEnd();
+    });
 
     describe('when error', () => {
-      it('should be invalid module', fakeAsync(() => {
-        const spy = spyOn(msgSrv, 'error');
-        lazyError();
+      it('should be invalid module', async () => {
+        const spy = vi.spyOn(msgSrv, 'error').mockReturnValue(undefined as NzSafeAny);
+        await lazyError();
         expect(context.comp.showFetching()).toBe(false);
         expect(spy).toHaveBeenCalled();
-        expect(spy.calls.first().args[0]).toContain('Could not load ');
-        lazyEnd();
-      }));
-      it('should be custom error', fakeAsync(() => {
-        const spy = spyOn(msgSrv, 'error');
+        expect(vi.mocked(spy).mock.calls[0]![0]).toContain('Could not load ');
+        await lazyEnd();
+      });
+      it('should be custom error', async () => {
+        const spy = vi.spyOn(msgSrv, 'error').mockReturnValue(undefined as NzSafeAny);
         context.customError.set('test');
         fixture.detectChanges();
-        lazyError();
+        await lazyError();
         expect(context.comp.showFetching()).toBe(false);
         expect(spy).toHaveBeenCalled();
-        expect(spy.calls.first().args[0]).toBe('test');
-        lazyEnd();
-      }));
-      it('should be custom error is null', fakeAsync(() => {
-        const spy = spyOn(msgSrv, 'error');
+        expect(vi.mocked(spy).mock.calls[0]![0]).toBe('test');
+        await lazyEnd();
+      });
+      it('should be custom error is null', async () => {
+        const spy = vi.spyOn(msgSrv, 'error').mockReturnValue(undefined as NzSafeAny);
         context.customError.set(null);
         fixture.detectChanges();
-        lazyError();
+        await lazyError();
         expect(context.comp.showFetching()).toBe(false);
         expect(spy).not.toHaveBeenCalled();
-        lazyEnd();
-      }));
-      it('should be cancel load config', fakeAsync(() => {
-        lazyCancel();
+        await lazyEnd();
+      });
+      it('should be cancel load config', async () => {
+        await lazyCancel();
         expect(context.comp.showFetching()).toBe(false);
-        lazyEnd();
-      }));
+        await lazyEnd();
+      });
     });
 
     it('#fetchingStrictly', () => {
@@ -235,8 +239,7 @@ describe('theme: layout-default', () => {
       <span class="custom-content">custom-content</span>
     </ng-template>
   `,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [LayoutDefaultModule]
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: LayoutDefaultComponent;

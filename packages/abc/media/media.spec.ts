@@ -1,5 +1,6 @@
 import { Component, signal, ViewChild } from '@angular/core';
-import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { config } from 'rxjs';
 
 import type * as Plyr from 'plyr';
 
@@ -18,6 +19,12 @@ class MockPlyr {
 }
 
 describe('abc: media', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+  afterEach(() => {
+    config.onUnhandledError = null;
+  });
   let fixture: ComponentFixture<TestComponent>;
   // let dl: DebugElement;
   let context: TestComponent;
@@ -29,71 +36,75 @@ describe('abc: media', () => {
     ({ fixture, context } = createTestContext(TestComponent));
     page = new PageObject();
     lazySrv = TestBed.inject(LazyService);
-    spyOn(lazySrv, 'load').and.returnValue(Promise.resolve([]));
+    vi.spyOn(lazySrv, 'load').mockResolvedValue([]);
   });
 
-  it('should be throw error when not found Plyr in window', fakeAsync(() => {
-    expect(() => page.cd().end()).toThrow();
-  }));
+  it('should be throw error when not found Plyr in window', async () => {
+    let err: Error | undefined;
+    // 组件在内部订阅回调里抛错，只能从 RxJS 未处理错误钩子取回
+    config.onUnhandledError = e => (err = e as Error);
+    await page.cd();
+    await vi.advanceTimersByTimeAsync(1);
+    expect(err?.message).toContain('No window.Plyr found');
+  });
 
   describe('', () => {
-    beforeEach(() => (win.Plyr = MockPlyr));
-    afterEach(() => delete win.Plyr);
+    beforeEach(() => {
+      win.Plyr = MockPlyr;
+    });
+    afterEach(() => {
+      delete win.Plyr;
+    });
 
-    it('should be working', fakeAsync(() => {
-      page.cd();
+    it('should be working', async () => {
+      await page.cd();
       expect(page.player != null).toBe(true);
-    }));
+    });
 
-    it('should be load once libs', fakeAsync(() => {
-      page.cd();
+    it('should be load once libs', async () => {
+      await page.cd();
       expect(lazySrv.load).toHaveBeenCalledTimes(1);
       const fixture2 = TestBed.createComponent(TestComponent);
       fixture2.detectChanges();
-      tick();
+      await vi.advanceTimersByTimeAsync(0);
       fixture2.detectChanges();
       expect(lazySrv.load).toHaveBeenCalledTimes(1);
-    }));
+    });
 
-    it('should be used full source argument', fakeAsync(() => {
-      page.cd();
+    it('should be used full source argument', async () => {
+      await page.cd();
       expect(page.player.source.type).toBe('video');
       context.source.set({ type: 'audio', sources: [] });
-      console.log('change', context.source());
-      page.cd();
+      await page.cd();
       expect(page.player.source.type).toBe('audio');
-    }));
+    });
 
-    it('#ready', fakeAsync(() => {
-      spyOn(context, 'ready');
-      page.cd();
+    it('#ready', async () => {
+      vi.spyOn(context, 'ready').mockReturnValue(undefined);
+      await page.cd();
       expect(context.ready).toHaveBeenCalled();
-    }));
+    });
 
-    it('should be custom vedio dom', fakeAsync(() => {
+    it('should be custom vedio dom', async () => {
       const fixture2 = TestBed.createComponent(TestCustomVideoComponent);
       fixture2.detectChanges();
-      tick();
+      await vi.advanceTimersByTimeAsync(0);
       fixture2.detectChanges();
       expect(fixture2.componentInstance.comp['videoEl']!.dataset.type).toBe(`custom`);
-    }));
+    });
   });
 
   class PageObject {
-    cd(time: number = 0): this {
+    /** 组件初始化挂在 Promise 链上，只有异步推进定时器才会排空微任务 */
+    async cd(time: number = 0): Promise<this> {
       fixture.detectChanges();
-      tick(time);
+      await vi.advanceTimersByTimeAsync(time);
       fixture.detectChanges();
       return this;
     }
 
     get player(): NzSafeAny {
       return context.comp.player;
-    }
-
-    end(): void {
-      discardPeriodicTasks();
-      flush();
     }
   }
 });

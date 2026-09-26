@@ -30,6 +30,6 @@ describe('Pipe: cny', () => {
   imports: [CurrencyCNYPipe]
 })
 class TestComponent {
-  value?: number;
+  value!: number;
   options?: CurrencyCNYOptions;
 }

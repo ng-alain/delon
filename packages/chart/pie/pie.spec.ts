@@ -54,13 +54,13 @@ describe('chart: pie', () => {
       });
       page.context.ratio.set({ text: '占比', inverse: '反比', color: '#f50', inverseColor: '#F0F2F5' });
       page.dc();
-      // 变更会重下 spec，需真实等待 chart.render() settle
-      await new Promise(resolve => setTimeout(resolve, 700));
-      page.expectSpec(spec => {
-        const child = (spec as NzSafeAny).children[0];
-        expect(child.encode.color).toBe('x');
-        expect(child.scale.color.range).toEqual(['#f50', '#F0F2F5']);
-      });
+      await vi.waitFor(() =>
+        page.expectSpec(spec => {
+          const child = (spec as NzSafeAny).children[0];
+          expect(child.encode.color).toBe('x');
+          expect(child.scale.color.range).toEqual(['#f50', '#F0F2F5']);
+        })
+      );
     });
 
     it('should disable tooltip in percent mode', async () => {
@@ -149,10 +149,10 @@ describe('chart: pie', () => {
       expect(page.context.comp().legendData().length).toBe(3);
       expect(elementsOfType(page.chart, 'interval').length).toBe(3);
       page.context.comp()._click(0);
-      // 点击会重下 spec，需真实等待 chart.render() settle
-      await new Promise(resolve => setTimeout(resolve, 700));
-      page.isDataCount(2);
-      expect(elementsOfType(page.chart, 'interval').length).toBe(2);
+      await vi.waitFor(() => {
+        page.isDataCount(2);
+        expect(elementsOfType(page.chart, 'interval').length).toBe(2);
+      });
       page.expectSpec(spec => {
         expect(((spec as NzSafeAny).data as NzSafeAny[]).map(d => d.x)).toEqual(['2', '3']);
       });
@@ -168,23 +168,28 @@ describe('chart: pie', () => {
           .map(w => w.x)
       ).toEqual(['1', '2', '3']);
       // 必须 spy 才能证明走的是 data-only 分支；callThrough 让 options() 真正更新
-      const changeData = spyOn(page.chart, 'changeData').and.callThrough();
+      const changeData = vi.spyOn(page.chart, 'changeData');
       page.newData([
         { x: 'a', y: 10 },
         { x: 'b', y: 30 }
       ]);
       page.dc();
-      // 真实等待 changeData() settle；700ms 留 CI 余量
-      await new Promise(resolve => setTimeout(resolve, 700));
-      expect(changeData).toHaveBeenCalledTimes(1);
-      expect((changeData.calls.mostRecent().args[0] as unknown[]).length).toBe(2);
-      page.isDataCount(2);
+      await vi.waitFor(() => {
+        expect(changeData).toHaveBeenCalledTimes(1);
+        expect((vi.mocked(changeData).mock.lastCall![0] as unknown[]).length).toBe(2);
+        page.isDataCount(2);
+        expect(
+          page.context
+            .comp()
+            .legendData()
+            .map(w => w.x)
+        ).toEqual(['a', 'b']);
+        expect(elementsOfType(page.chart, 'interval').length).toBe(2);
+      });
       const legend = page.context.comp().legendData();
-      expect(legend.map(w => w.x)).toEqual(['a', 'b']);
       expect(legend.map(w => w.percent)).toEqual(['25.00', '75.00']);
       expect(legend.map(w => w.y)).toEqual([10, 30]);
       expect(legend.every(w => w.checked === true)).toBe(true);
-      expect(elementsOfType(page.chart, 'interval').length).toBe(2);
     });
   });
 

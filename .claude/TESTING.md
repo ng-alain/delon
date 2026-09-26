@@ -2,18 +2,17 @@
 
 ### Testing Framework and Tools
 
-- Use Karma and Jasmine for unit testing
+- Use Vitest for unit testing (via `@angular/build:unit-test`, browser mode / ChromiumHeadless)
 - Require 100% of code coverage
 - Follow unit testing best practices
 - Keep tests simple and focused
-- Use testing helpers. You can find the helpers in `packages/testing/src/`
+- Use testing helpers. You can find the helpers in `packages/testing/src/` and `ng-zorro-antd/core/testing`
 - Respect the existing testing structure
 - Ensure all tests pass; if not, please fix them
 
 ### Testing Scripts
 
 ```bash
-yarn test                                         # Run all tests
-yarn test -- --watch                              # Watch mode
-npx ng test --watch=false --browsers=ChromeHeadless --include="**/<spec-file>.spec.ts"  # Run a specific spec file
+pnpm test                                                     # Run all tests (headless)
+npx ng test delon --watch=false --include='packages/<pkg>/**/*.spec.ts'   # Run a subset
 ```

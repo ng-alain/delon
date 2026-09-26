@@ -1,5 +1,5 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { createTestContext } from '@delon/testing';
@@ -7,9 +7,12 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { withCascaderWidget } from './index';
 import { CascaderWidget } from './widget';
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base';
 
 describe('form: widget: cascader', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestFormComponent>;
   let dl: DebugElement;
   let context: TestFormComponent;
@@ -24,7 +27,7 @@ describe('form: widget: cascader', () => {
     page.prop(dl, context, fixture);
   });
 
-  it('#setValue', fakeAsync(() => {
+  it('#setValue', async () => {
     const data = [
       {
         value: 110000,
@@ -49,13 +52,15 @@ describe('form: widget: cascader', () => {
         }
       })
       .dc(1);
+    await page.stabilize();
     expect(page.getEl('.ant-select-selection-item').textContent!.trim()).toBe('上海');
     page.setValue('/a', 110000).dc(1);
+    await page.stabilize();
     expect(page.getEl('.ant-select-selection-item').textContent!.trim()).toBe('北京');
-  }));
+  });
 
   describe('[data source]', () => {
-    it('with enum', fakeAsync(() => {
+    it('with enum', async () => {
       const data = [
         {
           value: 110000,
@@ -77,8 +82,8 @@ describe('form: widget: cascader', () => {
       expect(comp['data']().length).toBe(1);
       expect(comp['data']()[0].checked).toBe(true);
       page.asyncEnd();
-    }));
-    it('with async', fakeAsync(() => {
+    });
+    it('with async', async () => {
       let received: NzSafeAny;
       page.newSchema({
         properties: {
@@ -87,7 +92,7 @@ describe('form: widget: cascader', () => {
             title: 'RealTime',
             ui: {
               widget: 'cascader',
-              asyncData: jasmine.createSpy().and.callFake((node: NzSafeAny) => {
+              asyncData: vi.fn().mockImplementation((node: NzSafeAny) => {
                 // 用户契约就是在回调里就地写 node.children
                 received = node;
                 node.children = [{ value: 110100, label: '北京市' }];
@@ -100,6 +105,7 @@ describe('form: widget: cascader', () => {
       });
 
       page.typeEvent('click', 'nz-cascader').time().checkCalled('a', 'asyncData').asyncEnd();
+      await page.stabilize();
 
       // ① 用户写的子节点落在传给它的那个对象上（ng-zorro 传的就是原始选项对象）
       //    注意 ng-zorro 会给选项追加 `selected` 等内部字段，所以只断言关键字段
@@ -108,11 +114,11 @@ describe('form: widget: cascader', () => {
       // ② DOM 级断言：ng-zorro 自己用 option.children 建好了第一列，widget 不做任何后处理
       const items = dl.queryAll(By.css('.ant-cascader-menu-item')).map(d => (d.nativeElement.textContent ?? '').trim());
       expect(items).toContain('北京市');
-    }));
+    });
   });
 
   describe('[events]', () => {
-    it('with defind', fakeAsync(() => {
+    it('with defind', async () => {
       page.newSchema({
         properties: {
           a: {
@@ -120,11 +126,11 @@ describe('form: widget: cascader', () => {
             enum: [],
             ui: {
               widget,
-              openChange: jasmine.createSpy(),
-              change: jasmine.createSpy(),
-              selectionChange: jasmine.createSpy(),
-              select: jasmine.createSpy(),
-              clear: jasmine.createSpy()
+              openChange: vi.fn(),
+              change: vi.fn(),
+              selectionChange: vi.fn(),
+              select: vi.fn(),
+              clear: vi.fn()
             }
           }
         }
@@ -140,6 +146,6 @@ describe('form: widget: cascader', () => {
       comp._clear();
       expect(ui.clear).toHaveBeenCalled();
       page.asyncEnd();
-    }));
+    });
   });
 });

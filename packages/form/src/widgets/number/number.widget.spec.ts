@@ -1,13 +1,16 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 
 import { createTestContext } from '@delon/testing';
 
 import { SFNumberWidgetSchema } from './schema';
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base';
 import { SFSchema } from '../../../src/schema/index';
 
 describe('form: widget: number', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestFormComponent>;
   let dl: DebugElement;
   let context: TestFormComponent;
@@ -21,14 +24,13 @@ describe('form: widget: number', () => {
     page.prop(dl, context, fixture);
   });
 
-  it('#setValue', fakeAsync(() => {
-    page
-      .newSchema({ properties: { a: { type: 'number', default: 1 } } })
-      .dc(1)
-      .checkInput('.ant-input-number-input', '1')
-      .setValue('/a', 2, 1)
-      .checkInput('.ant-input-number-input', '2');
-  }));
+  it('#setValue', async () => {
+    page.newSchema({ properties: { a: { type: 'number', default: 1 } } }).dc(1);
+    await page.stabilize();
+    page.checkInput('.ant-input-number-input', '1').setValue('/a', 2, 1);
+    await page.stabilize();
+    page.checkInput('.ant-input-number-input', '2');
+  });
 
   it('should be default true via schema.default', () => {
     const s: SFSchema = { properties: { a: { type: 'number', default: 1 } } };
@@ -51,7 +53,7 @@ describe('form: widget: number', () => {
     /**
      * TODO: https://github.com/NG-ZORRO/ng-zorro-antd/pull/8848
      */
-    xit('should be limit via schema.minimum & maximum', fakeAsync(() => {
+    it.skip('should be limit via schema.minimum & maximum', async () => {
       const minimum = 10;
       const maximum = 100;
       const s: SFSchema = { properties: { a: { type: 'number', minimum, maximum, default: 1 } } };
@@ -61,11 +63,11 @@ describe('form: widget: number', () => {
         .checkValue('a', minimum)
         .typeCharOnly(maximum + 1)
         .checkValue('a', maximum);
-    }));
+    });
     /**
      * TODO: https://github.com/NG-ZORRO/ng-zorro-antd/pull/8848
      */
-    xit('should be exclusive min(max)imum via exclusive', fakeAsync(() => {
+    it.skip('should be exclusive min(max)imum via exclusive', async () => {
       const minimum = 10;
       const maximum = 100;
       const s: SFSchema = {
@@ -79,11 +81,11 @@ describe('form: widget: number', () => {
         .checkValue('a', minimum + 1)
         .typeCharOnly(maximum + 1)
         .checkValue('a', maximum - 1);
-    }));
+    });
     /**
      * TODO: https://github.com/NG-ZORRO/ng-zorro-antd/pull/8848
      */
-    xit('should be trunc value when schema type is integer', fakeAsync(() => {
+    it.skip('should be trunc value when schema type is integer', async () => {
       const minimum = 10.8;
       const maximum = 100.8;
       const s: SFSchema = { properties: { a: { type: 'integer', minimum, maximum, default: 1 } } };
@@ -93,11 +95,11 @@ describe('form: widget: number', () => {
         .checkValue('a', 10)
         .typeCharOnly(maximum + 1)
         .checkValue('a', 100);
-    }));
+    });
   });
 
   describe('[ui]', () => {
-    it('#prefix', fakeAsync(() => {
+    it('#prefix', async () => {
       const s: SFSchema = { properties: { a: { type: 'number', default: 1, ui: { prefix: 'a' } } } };
       const property = page.newSchema(s).getProperty('/a');
       page.typeChar(1).dc();
@@ -106,9 +108,9 @@ describe('form: widget: number', () => {
       property.setValue(null, true);
       page.typeChar(null).dc();
       expect(ipt.value).toBe(``);
-    }));
+    });
 
-    it('#unit', fakeAsync(() => {
+    it('#unit', async () => {
       const s: SFSchema = { properties: { a: { type: 'number', default: 1, ui: { unit: 'b' } } } };
       const property = page.newSchema(s).getProperty('/a');
       const ipt = page.getEl('.ant-input-number-input') as HTMLInputElement;
@@ -117,27 +119,30 @@ describe('form: widget: number', () => {
       property.setValue(null, true);
       page.typeChar(null);
       expect(ipt.value).toBe('');
-    }));
+    });
 
-    it('#formatter & #parser', fakeAsync(() => {
+    it('#formatter & #parser', async () => {
       const s: SFSchema = { properties: { a: { type: 'number', default: 1 } } };
       const ui = (s.properties!.a.ui = {
-        formatter: jasmine.createSpy('formatter'),
-        parser: jasmine.createSpy('parser').and.callFake((v: string) => +v)
+        formatter: vi.fn().mockName('formatter'),
+        parser: vi
+          .fn()
+          .mockName('parser')
+          .mockImplementation((v: string) => +v)
       });
       page.newSchema(s).typeChar(10).typeEvent('blur');
       expect(ui.formatter).toHaveBeenCalled();
       expect(ui.parser).toHaveBeenCalled();
-    }));
+    });
 
-    it('#event', fakeAsync(() => {
+    it('#event', async () => {
       const schema: SFSchema = {
         properties: {
           a: {
             type: 'number',
             minimum: 0,
             maximum: 100,
-            ui: { change: jasmine.createSpy('change') } as SFNumberWidgetSchema
+            ui: { change: vi.fn().mockName('change') } as SFNumberWidgetSchema
           }
         }
       };
@@ -145,7 +150,7 @@ describe('form: widget: number', () => {
       const ui = schema.properties!.a.ui as SFNumberWidgetSchema;
       page.typeChar(1, 'input');
       expect(ui.change).toHaveBeenCalled();
-    }));
+    });
 
     describe('[changeOnWheel]', () => {
       const wheelUpEvent = new WheelEvent('wheel', {
@@ -161,7 +166,7 @@ describe('form: widget: number', () => {
         cancelable: true
       });
 
-      it('#enabled', fakeAsync(() => {
+      it('#enabled', async () => {
         page
           .newSchema({
             properties: {
@@ -176,12 +181,12 @@ describe('form: widget: number', () => {
           .typeCharOnly(0)
           .checkValue('count', 0)
           .typeEvent(wheelUpEvent)
-          .checkValue('count', 1)
-          .typeEvent(wheelDownEvent)
-          .checkValue('count', -1);
-      }));
+          .checkValue('count', 1);
+        await page.stabilize();
+        page.typeEvent(wheelDownEvent).checkValue('count', -1);
+      });
 
-      it('#disabled', fakeAsync(() => {
+      it('#disabled', async () => {
         page
           .newSchema({
             properties: {
@@ -199,24 +204,24 @@ describe('form: widget: number', () => {
           .checkValue('count', 0)
           .typeEvent(wheelDownEvent)
           .checkValue('count', 0);
-      }));
+      });
     });
 
     describe('#widgetWidth', () => {
-      it('width number', fakeAsync(() => {
+      it('width number', async () => {
         const s: SFSchema = { properties: { a: { type: 'number', ui: { widgetWidth: 10 } as SFNumberWidgetSchema } } };
         page.newSchema(s);
         const ipt = page.getEl('.ant-input-number') as HTMLDialogElement;
         expect(ipt.style.width).toBe('10px');
-      }));
-      it('width string', fakeAsync(() => {
+      });
+      it('width string', async () => {
         const s: SFSchema = {
           properties: { a: { type: 'number', ui: { widgetWidth: '10%' } as SFNumberWidgetSchema } }
         };
         page.newSchema(s);
         const ipt = page.getEl('.ant-input-number') as HTMLDialogElement;
         expect(ipt.style.width).toBe('10%');
-      }));
+      });
     });
   });
 });

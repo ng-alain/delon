@@ -23,7 +23,7 @@ describe('Schematic: ng-add', () => {
   });
 
   it('should throw errr when node version is not valid range', async () => {
-    spyOn(nodeUtils, 'getNodeMajorVersion').and.returnValue(10);
+    vi.spyOn(nodeUtils, 'getNodeMajorVersion').mockReturnValue(10);
     try {
       await createAlainApp();
       expect(true).toBe(false);

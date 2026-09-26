@@ -44,3 +44,7 @@ yarn-error.log
 .pnp.*
 docs/superpowers/
 .superpowers/
+.vitest-attachments/
+packages/**/__screenshots__/
+
+/.vitest

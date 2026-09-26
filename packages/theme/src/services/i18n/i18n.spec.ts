@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router, RouterModule } from '@angular/router';
 
@@ -10,6 +10,9 @@ import { alainI18nCanActivate, alainI18nCanActivateChild } from './i18n-url.guar
 import { I18nPipe } from './i18n.pipe';
 
 describe('theme: i18n', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestComponent>;
   let srv: AlainI18NService;
 
@@ -112,7 +115,7 @@ describe('theme: i18n', () => {
   });
 
   describe('Change i18n via url', () => {
-    it('should be working', fakeAsync(() => {
+    it('should be working', async () => {
       TestBed.configureTestingModule({
         imports: [
           RouterModule.forRoot([
@@ -127,14 +130,14 @@ describe('theme: i18n', () => {
       });
       fixture = TestBed.createComponent(TestComponent);
       srv = fixture.debugElement.injector.get(ALAIN_I18N_TOKEN);
-      spyOn(srv, 'use');
+      vi.spyOn(srv, 'use').mockReturnValue(undefined);
       const router = TestBed.inject<Router>(Router) as Router;
       router.navigateByUrl(`/zh`);
-      tick();
+      await vi.advanceTimersByTimeAsync(0);
       expect(srv.use).toHaveBeenCalled();
-    }));
+    });
 
-    it('should be can not work', fakeAsync(() => {
+    it('should be can not work', async () => {
       TestBed.configureTestingModule({
         imports: [
           RouterModule.forRoot([{ path: ':invalid', component: TestComponent, canActivate: [alainI18nCanActivate] }])
@@ -142,14 +145,14 @@ describe('theme: i18n', () => {
       });
       fixture = TestBed.createComponent(TestComponent);
       srv = fixture.debugElement.injector.get(ALAIN_I18N_TOKEN);
-      spyOn(srv, 'use');
+      vi.spyOn(srv, 'use').mockReturnValue(undefined);
       const router = TestBed.inject<Router>(Router) as Router;
       router.navigateByUrl(`/zh`);
-      tick();
+      await vi.advanceTimersByTimeAsync(0);
       expect(srv.use).not.toHaveBeenCalled();
-    }));
+    });
 
-    it('should be working', fakeAsync(() => {
+    it('should be working', async () => {
       TestBed.configureTestingModule({
         imports: [
           RouterModule.forRoot([{ path: ':lang', component: TestComponent, canActivate: [alainI18nCanActivate] }])
@@ -158,12 +161,12 @@ describe('theme: i18n', () => {
       });
       fixture = TestBed.createComponent(TestComponent);
       srv = fixture.debugElement.injector.get(ALAIN_I18N_TOKEN);
-      spyOn(srv, 'use');
+      vi.spyOn(srv, 'use').mockReturnValue(undefined);
       const router = TestBed.inject<Router>(Router) as Router;
       router.navigateByUrl(`/zh`);
-      tick();
+      await vi.advanceTimersByTimeAsync(0);
       expect(srv.use).toHaveBeenCalled();
-    }));
+    });
   });
 });
 

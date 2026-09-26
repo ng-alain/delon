@@ -52,7 +52,7 @@ describe('NgAlainSchematic: application', () => {
     });
     describe('default language', () => {
       it(`with use zh`, async () => {
-        spyOn(LANG, 'getLangData').and.returnValue({
+        vi.spyOn(LANG, 'getLangData').mockReturnValue({
           key1: 'Key1',
           key2: 'KEY2'
         });

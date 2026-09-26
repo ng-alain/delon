@@ -4,7 +4,7 @@ import { ComponentFixture } from '@angular/core/testing';
 import { createTestContext } from '@delon/testing';
 
 import { SFTextWidgetSchema } from './schema';
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base';
 import { SFSchema } from '../../../src/schema/index';
 
 describe('form: widget: text', () => {

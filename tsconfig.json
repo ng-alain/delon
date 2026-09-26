@@ -29,7 +29,7 @@
     "noImplicitThis": true,
     "resolveJsonModule": true,
     "types": [
-      "jasmine"
+      "vitest/globals"
     ]
   },
   "angularCompilerOptions": {

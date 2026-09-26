@@ -1,5 +1,5 @@
 import { Component, DebugElement, signal, viewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { createTestContext } from '@delon/testing';
@@ -15,10 +15,10 @@ class MockLazyService {
     (window as NzSafeAny).echarts = {
       init: () => {
         return {
-          setOption: jasmine.createSpy('setOption'),
-          dispose: jasmine.createSpy('dispose'),
-          on: jasmine.createSpy('on'),
-          off: jasmine.createSpy('off')
+          setOption: vi.fn().mockName('setOption'),
+          dispose: vi.fn().mockName('dispose'),
+          on: vi.fn().mockName('on'),
+          off: vi.fn().mockName('off')
         };
       }
     };
@@ -27,20 +27,24 @@ class MockLazyService {
 }
 
 describe('chart: chart-echarts', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let context: TestComponent;
 
-  beforeEach(fakeAsync(() => {
+  beforeEach(async () => {
     TestBed.configureTestingModule({
       providers: [{ provide: LazyService, useClass: MockLazyService }]
     });
     ({ fixture, dl, context } = createTestContext(TestComponent));
-    spyOn(context, 'handleEvents');
+    vi.spyOn(context, 'handleEvents').mockReturnValue(undefined);
     fixture.detectChanges();
-    tick(100);
+    await vi.advanceTimersByTimeAsync(100);
     fixture.detectChanges();
-  }));
+    await vi.runOnlyPendingTimersAsync();
+  });
 
   it('should working', () => {
     const container = dl.query(By.css('div')).nativeElement as HTMLDivElement;
@@ -60,21 +64,21 @@ describe('chart: chart-echarts', () => {
   });
 
   it('should be update option', () => {
-    spyOn(context.cmp(), 'setOption');
+    vi.spyOn(context.cmp(), 'setOption').mockReturnValue(undefined as NzSafeAny);
     context.option.set({});
     fixture.detectChanges();
     expect(context.cmp().setOption).toHaveBeenCalled();
   });
 
   it('should be update theme', () => {
-    spyOn(context.cmp(), 'install');
+    vi.spyOn(context.cmp(), 'install').mockReturnValue(undefined as NzSafeAny);
     context.theme.set('dark');
     fixture.detectChanges();
     expect(context.cmp().install).toHaveBeenCalled();
   });
 
   it('should be update initOpt', () => {
-    spyOn(context.cmp(), 'install');
+    vi.spyOn(context.cmp(), 'install').mockReturnValue(undefined as NzSafeAny);
     context.initOpt.set({});
     fixture.detectChanges();
     expect(context.cmp().install).toHaveBeenCalled();

@@ -1,8 +1,8 @@
-import { registerLocaleData } from '@angular/common';
-import zh from '@angular/common/locales/zh';
 import { Component, DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
+
+import type { Mock } from 'vitest';
 
 import { ACLService, DelonACLModule } from '@delon/acl';
 import { createTestContext } from '@delon/testing';
@@ -11,14 +11,16 @@ import { deepCopy } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzIconService } from 'ng-zorro-antd/icon';
 
-import { SCHEMA, SFPage, TestFormComponent } from './base.spec';
+import { SCHEMA, SFPage, TestFormComponent } from './base';
 import { FormPropertyFactory } from '../src/model/form.property.factory';
 import { DelonFormModule } from '../src/module';
 import { SFSchema } from '../src/schema/index';
 import { WidgetRegistry } from '../src/widget.factory';
-registerLocaleData(zh);
 
 describe('form: component', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestFormComponent>;
   let dl: DebugElement;
   let context: TestFormComponent;
@@ -53,7 +55,7 @@ describe('form: component', () => {
         expect(() => {
           const factory = context.comp['formPropertyFactory'] as FormPropertyFactory;
           factory.createProperty({}, {}, {}, { type: 'invalid', path: 'a' } as NzSafeAny, 'a');
-        }).toThrowError(`Instanciation of a FormProperty with an unknown parent type: invalid`);
+        }).toThrow(`Instanciation of a FormProperty with an unknown parent type: invalid`);
       });
 
       it('should throw error when type is invalid', () => {
@@ -66,14 +68,14 @@ describe('form: component', () => {
             }
           });
           fixture.detectChanges();
-        }).toThrowError(`Undefined type aa`);
+        }).toThrow(`Undefined type aa`);
       });
 
       it('should throw error when is invalid schema', () => {
         expect(() => {
           context.schema.set(null as NzSafeAny);
           fixture.detectChanges();
-        }).toThrowError('Invalid Schema');
+        }).toThrow('Invalid Schema');
       });
 
       it(`Don't support string with root ui property`, () => {
@@ -83,11 +85,11 @@ describe('form: component', () => {
             properties: {}
           });
           fixture.detectChanges();
-        }).toThrowError(`Don't support string with root ui property`);
+        }).toThrow(`Don't support string with root ui property`);
       });
 
       it('should be used default widget when is invalid schema type', () => {
-        spyOn(console, 'warn');
+        vi.spyOn(console, 'warn').mockReturnValue(undefined);
         expect(console.warn).not.toHaveBeenCalled();
         context.schema.set({
           type: 'string',
@@ -101,7 +103,7 @@ describe('form: component', () => {
       });
 
       it('should be console debug informations', () => {
-        spyOn(console, 'warn');
+        vi.spyOn(console, 'warn').mockReturnValue(undefined);
         expect(console.warn).not.toHaveBeenCalled();
         context.schema.set({
           properties: {
@@ -119,7 +121,7 @@ describe('form: component', () => {
       });
 
       it('should be console debug informations when ajv throw error', () => {
-        spyOn(console, 'warn');
+        vi.spyOn(console, 'warn').mockReturnValue(undefined);
         expect(console.warn).not.toHaveBeenCalled();
         context.schema.set({
           properties: {
@@ -350,7 +352,7 @@ describe('form: component', () => {
         });
       });
 
-      it('#disabled', fakeAsync(() => {
+      it('#disabled', async () => {
         const CLS: Record<string, string | NzSafeAny[]> = {
           input: '.ant-input[disabled]',
           number: '.ant-input-number-disabled',
@@ -375,7 +377,7 @@ describe('form: component', () => {
         });
         context.disabled.set(true);
         fixture.detectChanges();
-        tick(1000);
+        await vi.advanceTimersByTimeAsync(1000);
         fixture.detectChanges();
         Object.keys(CLS).forEach(key => {
           if (Array.isArray(CLS[key])) {
@@ -384,7 +386,7 @@ describe('form: component', () => {
             page.checkCount(CLS[key] as string, 1);
           }
         });
-      }));
+      });
 
       it('#loading', () => {
         context.loading.set(false);
@@ -451,7 +453,7 @@ describe('form: component', () => {
         expect(context.formChange).toHaveBeenCalled();
       });
 
-      it('#formChange, should not be triggered by the initial value push', fakeAsync(() => {
+      it('#formChange, should not be triggered by the initial value push', async () => {
         page.newSchema({
           properties: {
             color: { type: 'string', format: 'color' },
@@ -461,9 +463,10 @@ describe('form: component', () => {
           }
         } as SFSchema);
         page.time();
+        await page.stabilize();
 
         // 初值由 widget 推送 / 格式化，不是用户变更
-        expect((context.formChange as jasmine.Spy).calls.count()).toBe(0);
+        expect(vi.mocked(context.formChange as Mock).mock.calls.length).toBe(0);
         expect(page.getProperty('/color').value).toBe('#000000');
         expect(page.getProperty('/one').value).toBe('2019-01-01 00:00:00');
         expect(page.getProperty('/start').value).toBe('2019-01-01 00:00:00');
@@ -471,26 +474,26 @@ describe('form: component', () => {
 
         // 用户改动照旧上报
         page.setValue('/color', '#fff');
-        expect((context.formChange as jasmine.Spy).calls.count()).toBe(1);
+        expect(vi.mocked(context.formChange as Mock).mock.calls.length).toBe(1);
 
         // `refreshSchema()` 会重建 widget，初值推送同样不算用户变更
-        (context.formChange as jasmine.Spy).calls.reset();
+        (context.formChange as Mock).mockClear();
         context.comp.refreshSchema();
         page.time();
-        expect((context.formChange as jasmine.Spy).calls.count()).toBe(0);
+        expect(vi.mocked(context.formChange as Mock).mock.calls.length).toBe(0);
         page.asyncEnd();
-      }));
+      });
 
       describe('#formValueChange', () => {
         it('should be working', () => {
           page.setValue('/name', 'cipchk');
           expect(context.formValueChange).toHaveBeenCalled();
-          expect((context.formValueChange as jasmine.Spy).calls.mostRecent().args[0].path).toBe('/name');
+          expect(vi.mocked(context.formValueChange as Mock).mock.lastCall![0].path).toBe('/name');
         });
         it('when value is null', () => {
           page.setValue('/name', null);
           expect(context.formValueChange).toHaveBeenCalled();
-          expect((context.formValueChange as jasmine.Spy).calls.mostRecent().args[0].pathValue).toBe(null);
+          expect(vi.mocked(context.formValueChange as Mock).mock.lastCall![0].pathValue).toBe(null);
         });
       });
 
@@ -518,15 +521,15 @@ describe('form: component', () => {
           })
           .checkCls('input', 'ant-input-lg');
       });
-      it('#disabled', fakeAsync(() => {
+      it('#disabled', async () => {
         const el = page
           .newSchema({ properties: { name: { type: 'string', readOnly: true } } })
           .getEl('input') as HTMLInputElement;
-        tick();
+        await vi.advanceTimersByTimeAsync(0);
         page.dc();
         expect(el.disabled).toBe(true);
         expect(el.classList).toContain('ant-input-disabled');
-      }));
+      });
       it('should be custom class', () => {
         page
           .newSchema({
@@ -599,7 +602,7 @@ describe('form: component', () => {
             a: {
               type: 'string',
               ui: {
-                validator: jasmine.createSpy().and.returnValue([{ keyword: 'required', message: 'a' }])
+                validator: vi.fn().mockReturnValue([{ keyword: 'required', message: 'a' }])
               }
             }
           }
@@ -613,7 +616,7 @@ describe('form: component', () => {
             a: {
               type: 'string',
               ui: {
-                validator: jasmine.createSpy().and.returnValue([])
+                validator: vi.fn().mockReturnValue([])
               }
             }
           }
@@ -627,7 +630,7 @@ describe('form: component', () => {
             a: {
               type: 'string',
               ui: {
-                validator: jasmine.createSpy().and.returnValue(of([{ keyword: 'required', message: 'a' }]))
+                validator: vi.fn().mockReturnValue(of([{ keyword: 'required', message: 'a' }]))
               }
             }
           }
@@ -642,13 +645,13 @@ describe('form: component', () => {
               a: {
                 type: 'string',
                 ui: {
-                  validator: jasmine.createSpy().and.returnValue([{ keyword: 'required' }])
+                  validator: vi.fn().mockReturnValue([{ keyword: 'required' }])
                 }
               }
             }
           };
           page.newSchema(s);
-        }).toThrowError();
+        }).toThrow();
       });
       it('shoule be support custom params in message', () => {
         const s: SFSchema = {
@@ -700,7 +703,7 @@ describe('form: component', () => {
               type: 'string',
               ui: {
                 errors: {
-                  required: jasmine.createSpy().and.returnValue('A')
+                  required: vi.fn().mockReturnValue('A')
                 }
               }
             }
@@ -714,7 +717,7 @@ describe('form: component', () => {
 
       it('should be i18n', () => {
         const iconSrv = TestBed.inject(NzIconService);
-        spyOn(iconSrv, 'getRenderedContent').and.returnValue(of());
+        vi.spyOn(iconSrv, 'getRenderedContent').mockReturnValue(of());
         const s: SFSchema = {
           properties: {
             a: {
@@ -797,7 +800,7 @@ describe('form: component', () => {
     genModule();
     ({ fixture, dl, context } = createTestContext(TestFormComponent));
     context.delay.set(true);
-    spyOn(context.comp, 'refreshSchema');
+    vi.spyOn(context.comp, 'refreshSchema').mockReturnValue(undefined as NzSafeAny);
     fixture.detectChanges();
     expect(context.comp.refreshSchema).not.toHaveBeenCalled();
   });
@@ -855,7 +858,7 @@ describe('form: component', () => {
   describe('ACL', () => {
     beforeEach(() => genModule({ acl: true }));
 
-    it('should working', fakeAsync(() => {
+    it('should working', async () => {
       ({ fixture, dl, context } = createTestContext(TestFormComponent));
       createComp();
       const acl = TestBed.inject<ACLService>(ACLService);
@@ -875,21 +878,21 @@ describe('form: component', () => {
       page.newSchema(s);
       page.checkUI('/a', 'hidden', false);
       acl.setRole(['user']);
-      tick();
+      await vi.advanceTimersByTimeAsync(0);
       fixture.detectChanges();
       page.checkUI('/a', 'hidden', true);
-    }));
+    });
   });
 
   describe('I18N', () => {
     beforeEach(() => genModule({ i18n: true }));
 
-    it('should working', fakeAsync(() => {
+    it('should working', async () => {
       ({ fixture, dl, context } = createTestContext(TestFormComponent));
       createComp();
       const i18n = TestBed.inject(ALAIN_I18N_TOKEN) as AlainI18NService;
       let lang = 'en';
-      spyOn(i18n, 'fanyi').and.callFake(((key: string) => {
+      vi.spyOn(i18n, 'fanyi').mockImplementation(((key: string) => {
         if (key === 'null') return null;
         return lang === 'en' ? key : `zh-${key}`;
       }) as NzSafeAny);
@@ -928,7 +931,7 @@ describe('form: component', () => {
         .checkSchema('/a', 'title', 'zh-i18n')
         .checkSchema('/a', 'description', 'zh-descriptionI18n')
         .checkUI('/a', 'optionalHelp.text', 'zh-ohi18n');
-    }));
+    });
   });
 });
 

@@ -13,29 +13,23 @@ describe('abc: hotkey', () => {
       providers: [{ provide: Platform, useValue: { isBrowser } }]
     });
     ({ context } = createTestContext(TestComponent));
-    spyOn(context, 'focus');
+    vi.spyOn(context, 'focus').mockReturnValue(undefined);
   }
 
   afterEach(() => {
     context.comp.ngOnDestroy();
   });
 
-  it('should be working', done => {
+  it('should be working', async () => {
     genModule(true);
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'q' }));
-    setTimeout(() => {
-      expect(context.focus).toHaveBeenCalled();
-      done();
-    }, 60);
+    await vi.waitFor(() => expect(context.focus).toHaveBeenCalled());
   });
 
-  it('when in ssr', done => {
+  it('when in ssr', async () => {
     genModule(false);
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'q' }));
-    setTimeout(() => {
-      expect(context.focus).not.toHaveBeenCalled();
-      done();
-    }, 60);
+    await vi.waitFor(() => expect(context.focus).not.toHaveBeenCalled());
   });
 });
 

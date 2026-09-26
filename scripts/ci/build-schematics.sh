@@ -46,7 +46,6 @@ fi
 echo "=====BUILDING: Version ${VERSION}, Zorro Version ${ZORROVERSION}"
 
 TSC=${PWD}/node_modules/.bin/tsc
-JASMINE=${PWD}/node_modules/.bin/jasmine
 
 SOURCE=${PWD}/schematics
 DIST=${PWD}/dist/ng-alain/
@@ -163,7 +162,7 @@ buildCLI() {
   rsync -am --include="*.json" --include="*/" --exclude=* ${SOURCE}/ ${DIST}/
   rsync -am --include="*.d.ts" --include="*/" --exclude=* ${SOURCE}/ ${DIST}/
   rsync -am --include="/files" ${SOURCE}/ ${DIST}/
-  rm ${DIST}/test.ts ${DIST}/tsconfig.json ${DIST}/tsconfig.spec.json
+  rm -f ${DIST}/tsconfig.json ${DIST}/tsconfig.spec.json ${DIST}/vitest.config.mts ${DIST}/vitest.config.mjs ${DIST}/vitest.config.mjs.map
 
   if [[ ${COPY} == true ]]; then
     if [[ ${CLONE} == true ]]; then
@@ -231,7 +230,7 @@ if [[ ${TEST} == true ]]; then
   tsconfigFile=${SOURCE}/tsconfig.spec.json
   DIST=${PWD}/dist/schematics-test/
   buildCLI
-  $JASMINE "${DIST}/**/*.spec.js"
+  ${PWD}/node_modules/.bin/vitest run --config ${SOURCE}/vitest.config.mts
 fi
 
 if [[ ${INTEGRATION} == true ]]; then

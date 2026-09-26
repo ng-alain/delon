@@ -1,7 +1,9 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
+
+import type { Mock } from 'vitest';
 
 import { SFSchema } from '@delon/form';
 import { createTestContext } from '@delon/testing';
@@ -9,9 +11,12 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { withTreeSelectWidget } from './index';
 import type { TreeSelectWidget } from './widget';
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base';
 
 describe('form: widget: tree-select', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestFormComponent>;
   let page: SFPage;
   let context: TestFormComponent;
@@ -26,7 +31,7 @@ describe('form: widget: tree-select', () => {
     page.prop(dl, context, fixture);
   });
 
-  it('should working', fakeAsync(() => {
+  it('should working', async () => {
     const s: SFSchema = {
       properties: {
         a: {
@@ -52,9 +57,9 @@ describe('form: widget: tree-select', () => {
       .dc(1)
       .checkValue('a', 'TRADE_SUCCESS')
       .asyncEnd(1000);
-  }));
+  });
 
-  it('#setValue', fakeAsync(() => {
+  it('#setValue', async () => {
     const s: SFSchema = {
       properties: {
         a: {
@@ -73,12 +78,14 @@ describe('form: widget: tree-select', () => {
       }
     };
     page.newSchema(s).dc(1);
+    await page.stabilize();
     expect(page.getEl('.ant-select-selection-item').textContent!.trim()).toContain('已支付');
     page.setValue('/a', 'TRADE_FINISHED').dc(1);
+    await page.stabilize();
     expect(page.getEl('.ant-select-selection-item').textContent!.trim()).toContain('交易完成');
-  }));
+  });
 
-  it('#change', fakeAsync(() => {
+  it('#change', async () => {
     const s: SFSchema = {
       properties: {
         a: {
@@ -92,7 +99,7 @@ describe('form: widget: tree-select', () => {
           default: 'WAIT_BUYER_PAY',
           ui: {
             widget,
-            change: jasmine.createSpy()
+            change: vi.fn()
           }
         }
       }
@@ -104,9 +111,9 @@ describe('form: widget: tree-select', () => {
       .checkValue('a', 'TRADE_SUCCESS')
       .asyncEnd(1000);
     expect((s.properties!.a.ui as NzSafeAny).change).toHaveBeenCalled();
-  }));
+  });
 
-  it('#expandChange', fakeAsync(() => {
+  it('#expandChange', async () => {
     const s: SFSchema = {
       properties: {
         a: {
@@ -120,7 +127,7 @@ describe('form: widget: tree-select', () => {
           default: 'WAIT_BUYER_PAY',
           ui: {
             widget,
-            expandChange: jasmine.createSpy().and.returnValue(of([]))
+            expandChange: vi.fn().mockReturnValue(of([]))
           }
         }
       }
@@ -133,9 +140,9 @@ describe('form: widget: tree-select', () => {
       .checkValue('a', 'TRADE_SUCCESS')
       .asyncEnd(1000);
     expect((s.properties!.a.ui as NzSafeAny).expandChange).toHaveBeenCalled();
-  }));
+  });
 
-  it('#expandChange should render async children into the DOM', fakeAsync(() => {
+  it('#expandChange should render async children into the DOM', async () => {
     page.newSchema({
       properties: {
         a: {
@@ -162,7 +169,7 @@ describe('form: widget: tree-select', () => {
     // `addChildren()` 还会把子节点写回 `origin`（= data 里的对象），所以数据层也是同步的
     const w = page.getWidget<NzSafeAny>('sf-tree-select');
     expect(w['data']()[0].children.length).toBe(2);
-  }));
+  });
 
   it('#openChange', () => {
     const s: SFSchema = {
@@ -172,14 +179,14 @@ describe('form: widget: tree-select', () => {
           enum: [{ title: '待支付', key: 'WAIT_BUYER_PAY' }],
           ui: {
             widget,
-            openChange: jasmine.createSpy()
+            openChange: vi.fn()
           }
         }
       }
     };
     page.newSchema(s);
     const comp = page.getWidget<TreeSelectWidget>('sf-tree-select');
-    const ui = page.getProperty('a').ui as { openChange: jasmine.Spy };
+    const ui = page.getProperty('a').ui as { openChange: Mock };
     comp.openChange(true);
     expect(ui.openChange).toHaveBeenCalledWith(true);
   });

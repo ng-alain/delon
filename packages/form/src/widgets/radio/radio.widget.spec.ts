@@ -1,11 +1,14 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 
 import { createTestContext } from '@delon/testing';
 
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base';
 
 describe('form: widget: radio', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestFormComponent>;
   let dl: DebugElement;
   let context: TestFormComponent;
@@ -20,7 +23,7 @@ describe('form: widget: radio', () => {
     page.prop(dl, context, fixture);
   });
 
-  it('should be working', fakeAsync(() => {
+  it('should be working', async () => {
     page
       .newSchema({
         properties: {
@@ -31,7 +34,7 @@ describe('form: widget: radio', () => {
             ui: {
               widget,
               styleType: 'button',
-              change: jasmine.createSpy()
+              change: vi.fn()
             },
             default: '未知'
           }
@@ -40,17 +43,19 @@ describe('form: widget: radio', () => {
       .typeEvent('click', '.ant-radio-button-wrapper')
       .checkCalled('a', 'change')
       .asyncEnd();
-  }));
+  });
 
-  it('#setValue', fakeAsync(() => {
+  it('#setValue', async () => {
     page.newSchema({
       properties: {
         a: { type: 'string', ui: { widget }, enum: ['item1', 'item2'] }
       }
     });
     page.setValue('/a', 'item1').dc(1);
+    await page.stabilize();
     expect(page.getEl('.ant-radio-checked').nextSibling!.textContent).toBe('item1');
     page.setValue('/a', 'item2').dc(1);
+    await page.stabilize();
     expect(page.getEl('.ant-radio-checked').nextSibling!.textContent).toBe('item2');
-  }));
+  });
 });

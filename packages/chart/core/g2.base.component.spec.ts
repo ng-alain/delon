@@ -97,15 +97,9 @@ function installFakeG2(): FakeG2 {
   return state;
 }
 
-/** 等待串行链推进到目标状态（v5 渲染是异步的，本 spec 用真实 Promise 推进而非 `fakeAsync`） */
+/** 等待串行链推进到目标状态（v5 渲染是异步的，本 spec 只能靠真实 Promise 推进） */
 async function waitFor(predicate: () => boolean, timeoutMs = 200): Promise<void> {
-  const started = Date.now();
-  while (!predicate()) {
-    if (Date.now() - started > timeoutMs) {
-      return;
-    }
-    await new Promise(resolve => setTimeout(resolve, 1));
-  }
+  await vi.waitFor(() => expect(predicate()).toBe(true), { timeout: timeoutMs, interval: 1 });
 }
 
 function releaseOneRender(fake: FakeG2): void {
@@ -177,16 +171,18 @@ describe('chart: G2BaseComponent async lifecycle', () => {
   });
 
   it('should not emit ready/error when destroyed before the first render', async () => {
+    vi.useFakeTimers();
     const fixture = TestBed.createComponent(ProbeComponent);
     fixture.detectChanges();
     let emitted = 0;
     fixture.componentInstance.ready.subscribe(() => (emitted += 1));
     fixture.componentInstance.error.subscribe(() => (emitted += 1));
     fixture.destroy();
-    await new Promise(resolve => setTimeout(resolve, 50));
+    await vi.advanceTimersByTimeAsync(50);
     expect(state.created).toBe(0);
     expect(emitted).toBe(0);
     expect(fixture.componentInstance.loaded()).toBe(false);
+    vi.useRealTimers();
   });
 
   it('should route data-only changes to changeData', async () => {
@@ -195,19 +191,17 @@ describe('chart: G2BaseComponent async lifecycle', () => {
     await waitReady(fixture.componentInstance);
     fixture.componentRef.setInput('data', [2, 3]);
     fixture.detectChanges();
-    await new Promise(resolve => setTimeout(resolve, 10));
-    expect(state.changeDatas).toEqual([[2, 3]]);
+    await vi.waitFor(() => expect(state.changeDatas).toEqual([[2, 3]]));
     fixture.destroy();
   });
 
   it('should not leave unhandled rejection when render fails', async () => {
     state.fail = true;
-    const errorSpy = spyOn(console, 'error');
+    const errorSpy = vi.spyOn(console, 'error').mockReturnValue(undefined);
     const fixture = TestBed.createComponent(ProbeComponent);
     fixture.detectChanges();
-    await new Promise(resolve => setTimeout(resolve, 20));
+    await vi.waitFor(() => expect(errorSpy).toHaveBeenCalled());
     expect(fixture.componentInstance.loaded()).toBe(false);
-    expect(errorSpy).toHaveBeenCalled();
     fixture.destroy();
   });
 
@@ -236,7 +230,7 @@ describe('chart: G2BaseComponent async lifecycle', () => {
 
   it('should emit error when the first render fails', async () => {
     state.fail = true;
-    const errorSpy = spyOn(console, 'error');
+    const errorSpy = vi.spyOn(console, 'error').mockReturnValue(undefined);
     const fixture = TestBed.createComponent(ProbeComponent);
     const received: unknown[] = [];
     fixture.componentInstance.error.subscribe((err: unknown) => received.push(err));
@@ -244,8 +238,7 @@ describe('chart: G2BaseComponent async lifecycle', () => {
     fixture.componentInstance.ready.subscribe(() => (readyEmitted += 1));
     fixture.detectChanges();
 
-    await new Promise(resolve => setTimeout(resolve, 20));
-    expect(received.length).toBe(1);
+    await vi.waitFor(() => expect(received.length).toBe(1));
     expect(received[0]).toBeInstanceOf(Error);
     expect(readyEmitted).toBe(0);
     expect(fixture.componentInstance.loaded()).toBe(false);
@@ -266,7 +259,9 @@ describe('chart: G2BaseComponent async lifecycle', () => {
     expect(state.destroys).toBe(0);
 
     fixture.destroy();
-    await new Promise(resolve => setTimeout(resolve, 0));
+    vi.useFakeTimers();
+    await vi.advanceTimersByTimeAsync(0);
+    vi.useRealTimers();
     expect(state.destroys).toBe(0);
     expect(readyEmitted).toBe(0);
 
@@ -313,7 +308,9 @@ describe('chart: G2BaseComponent async lifecycle', () => {
     fixture.detectChanges();
     fixture.componentRef.setInput('theme', 'dark');
     fixture.detectChanges();
-    await new Promise(resolve => setTimeout(resolve, 10));
+    vi.useFakeTimers();
+    await vi.advanceTimersByTimeAsync(10);
+    vi.useRealTimers();
     expect(state.optionsCalls).toBe(1);
     expect(state.renders).toBe(1);
     fixture.destroy();

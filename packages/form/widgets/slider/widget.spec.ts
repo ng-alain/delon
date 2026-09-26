@@ -1,5 +1,5 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 
 import { SFSchema } from '@delon/form';
 import { createTestContext } from '@delon/testing';
@@ -8,9 +8,12 @@ import { NzSliderComponent } from 'ng-zorro-antd/slider';
 
 import { withSliderWidget } from './index';
 import { SliderWidget } from './widget';
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base';
 
 describe('form: widget: slider', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestFormComponent>;
   let dl: DebugElement;
   let context: TestFormComponent;
@@ -33,7 +36,7 @@ describe('form: widget: slider', () => {
     return page.getWidget<NzSliderComponent>('nz-slider');
   }
 
-  it('should be working', fakeAsync(() => {
+  it('should be working', async () => {
     const s: SFSchema = {
       properties: {
         a: {
@@ -49,14 +52,15 @@ describe('form: widget: slider', () => {
     };
     page.newSchema(s);
     const comp = getWidget();
-    spyOn(comp, '_formatter');
+    vi.spyOn(comp, '_formatter').mockReturnValue(undefined as NzSafeAny);
+    await page.stabilize();
     page.time();
     getWidget()._afterChange(1);
     page.dc();
     expect(comp._formatter).toHaveBeenCalled();
-  }));
+  });
 
-  it('should be using maximem value when default gt; maximum', fakeAsync(() => {
+  it('should be using maximem value when default gt; maximum', async () => {
     const s: SFSchema = {
       properties: {
         a: {
@@ -73,10 +77,11 @@ describe('form: widget: slider', () => {
       }
     };
     page.newSchema(s).time();
+    await page.stabilize();
     expect(getComp().value).toBe(5);
-  }));
+  });
 
-  it('#formatter', fakeAsync(() => {
+  it('#formatter', async () => {
     const s: SFSchema = {
       properties: {
         a: {
@@ -84,7 +89,7 @@ describe('form: widget: slider', () => {
           title: '数量',
           ui: {
             widget,
-            formatter: jasmine.createSpy()
+            formatter: vi.fn()
           },
           default: 10
         }
@@ -92,14 +97,15 @@ describe('form: widget: slider', () => {
     };
     page.newSchema(s);
     const comp = getWidget();
-    spyOn(comp, '_formatter');
+    vi.spyOn(comp, '_formatter').mockReturnValue(undefined as NzSafeAny);
+    await page.stabilize();
     page.time();
     page.dc();
     expect(comp._formatter).toHaveBeenCalled();
     expect((s.properties!.a.ui as NzSafeAny).formatter).toHaveBeenCalled();
-  }));
+  });
 
-  it('#afterChange', fakeAsync(() => {
+  it('#afterChange', async () => {
     const s: SFSchema = {
       properties: {
         a: {
@@ -107,7 +113,7 @@ describe('form: widget: slider', () => {
           title: '数量',
           ui: {
             widget,
-            afterChange: jasmine.createSpy()
+            afterChange: vi.fn()
           },
           default: 10
         }
@@ -116,7 +122,7 @@ describe('form: widget: slider', () => {
     page.newSchema(s).time();
     getWidget()._afterChange(1);
     expect((s.properties!.a.ui as NzSafeAny).afterChange).toHaveBeenCalled();
-  }));
+  });
 
   it('#step should be from multipleOf by default', () => {
     const s: SFSchema = {

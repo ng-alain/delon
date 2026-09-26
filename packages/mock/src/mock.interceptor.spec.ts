@@ -1,9 +1,16 @@
-import { HttpClient, HttpHeaders, HttpResponse, provideHttpClient, withInterceptors } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+  HttpResponse,
+  provideHttpClient,
+  withInterceptors
+} from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
-import { lastValueFrom, of } from 'rxjs';
+import { RouterOutlet, provideRouter } from '@angular/router';
+import { lastValueFrom, of, type Observable } from 'rxjs';
 
 import { AlainMockConfig, provideAlainConfig } from '@delon/util/config';
 
@@ -43,6 +50,17 @@ describe('mock: interceptor', () => {
   let http: HttpClient;
   let httpMock: HttpTestingController;
 
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
+  /** mock 响应经拦截器延迟，'/promise' 夹具自身另有 10ms，故统一推进 20ms */
+  async function response<T>(obs: Observable<T>): Promise<T> {
+    const res = lastValueFrom(obs);
+    await vi.advanceTimersByTimeAsync(20);
+    return res;
+  }
+
   function genModule(data: any, options: AlainMockConfig, spyConsole: boolean = true): void {
     TestBed.configureTestingModule({
       providers: [
@@ -51,7 +69,7 @@ describe('mock: interceptor', () => {
         provideRouter([
           {
             path: 'lazy',
-            loadChildren: jasmine.createSpy('expected')
+            loadChildren: vi.fn().mockName('expected')
           }
         ]),
         provideAlainConfig({ mock: options }),
@@ -62,162 +80,111 @@ describe('mock: interceptor', () => {
     http = TestBed.inject<HttpClient>(HttpClient);
     httpMock = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
     if (spyConsole) {
-      spyOn(console, 'log');
-      spyOn(console, 'warn');
+      vi.spyOn(console, 'log').mockReturnValue(undefined);
+      vi.spyOn(console, 'warn').mockReturnValue(undefined);
     }
   }
 
   describe('[default]', () => {
     beforeEach(() => genModule(DATA, { delay: 1 }));
-    it('should be init', done => {
-      http.get('/users').subscribe((res: any) => {
-        expect(res).not.toBeNull();
-        expect(res.users).not.toBeNull();
-        expect(res.users.length).toBe(DATA.USERS['GET /users'].users.length);
-        done();
-      });
+    it('should be init', async () => {
+      const res = await response(http.get<any>('/users'));
+      expect(res).not.toBeNull();
+      expect(res.users).not.toBeNull();
+      expect(res.users.length).toBe(DATA.USERS['GET /users'].users.length);
     });
-    it('should response array', (done: () => void) => {
-      http.get('/array').subscribe((res: any) => {
-        expect(res).not.toBeNull();
-        expect(Array.isArray(res)).toBe(true);
-        done();
-      });
+    it('should response array', async () => {
+      const res = await response(http.get<any>('/array'));
+      expect(res).not.toBeNull();
+      expect(Array.isArray(res)).toBe(true);
     });
-    it('should response via callback', (done: () => void) => {
+    it('should response via callback', async () => {
       const key = '/fn/queryString';
-      http.get(key, { params: { pi: '1' } }).subscribe((res: any) => {
-        expect(res).not.toBeNull();
-        expect(res.pi).toBe('1');
-        done();
-      });
+      const res = await response(http.get<any>(key, { params: { pi: '1' } }));
+      expect(res).not.toBeNull();
+      expect(res.pi).toBe('1');
     });
-    it('should be get the default querystring', (done: () => void) => {
+    it('should be get the default querystring', async () => {
       const key = '/fn/queryString?a=1';
-      http.get(key).subscribe((res: any) => {
-        expect(res.a).toBe('1');
-        done();
-      });
+      const res = await response(http.get<any>(key));
+      expect(res.a).toBe('1');
     });
-    it('should return route params', (done: () => void) => {
+    it('should return route params', async () => {
       const key = '/users/2';
-      http.get(key).subscribe((res: any) => {
-        expect(res).not.toBeNull();
-        expect(res.id).toBe('2');
-        done();
-      });
+      const res = await response(http.get<any>(key));
+      expect(res).not.toBeNull();
+      expect(res.id).toBe('2');
     });
-    it('should return body', (done: () => void) => {
+    it('should return body', async () => {
       const key = '/fn/body';
-      http.post(key, { token: 'asdf' }).subscribe((res: any) => {
-        expect(res).not.toBeNull();
-        expect(res.token).toBe('asdf');
-        done();
-      });
+      const res = await response(http.post<any>(key, { token: 'asdf' }));
+      expect(res).not.toBeNull();
+      expect(res.token).toBe('asdf');
     });
-    it('should return header', (done: () => void) => {
+    it('should return header', async () => {
       const key = '/fn/header';
-      http.get(key, { headers: { token: 'asdf' } }).subscribe((res: any) => {
-        expect(res).not.toBeNull();
-        expect(res.token).toBe('asdf');
-        done();
-      });
+      const res = await response(http.get<any>(key, { headers: { token: 'asdf' } }));
+      expect(res).not.toBeNull();
+      expect(res.token).toBe('asdf');
     });
-    it('should return HttpResponse', (done: () => void) => {
+    it('should return HttpResponse', async () => {
       const key = '/HttpResponse';
-      http.get(key, { observe: 'response' }).subscribe((res: HttpResponse<any>) => {
-        expect(res).not.toBeNull();
-        expect(res.body).toBe('Body');
-        expect(res.headers.get('token')).toBe('1');
-        done();
-      });
+      const res = await response(http.get<any>(key, { observe: 'response' }));
+      expect(res).not.toBeNull();
+      expect(res.body).toBe('Body');
+      expect(res.headers.get('token')).toBe('1');
     });
-    it('should response HttpStatus: 404', (done: () => void) => {
-      http.get('/404').subscribe({
-        next: () => {
-          expect(false).toBe(true);
-          done();
-        },
-        error: () => {
-          expect(true).toBe(true);
-          done();
-        }
-      });
+    it('should response HttpStatus: 404', async () => {
+      await expect(lastValueFrom(http.get('/404'))).rejects.toBeInstanceOf(HttpErrorResponse);
     });
-    it('muse be use MockStatusError to throw status error', (done: () => void) => {
-      http.get('/500').subscribe({
-        next: () => {
-          expect(false).toBe(true);
-          done();
-        },
-        error: () => {
-          expect(true).toBe(true);
-          done();
-        }
-      });
+    it('muse be use MockStatusError to throw status error', async () => {
+      await expect(lastValueFrom(http.get('/500'))).rejects.toBeInstanceOf(HttpErrorResponse);
     });
-    it('should request POST', (done: () => void) => {
-      http.post('/users/1', { data: true }, { observe: 'response' }).subscribe((res: HttpResponse<any>) => {
-        expect(res.body).not.toBeNull();
-        expect(res.body.uid).toBe(1);
-        expect(res.body.action).toBe('add');
-        done();
-      });
+    it('should request POST', async () => {
+      const res = await response(http.post<any>('/users/1', { data: true }, { observe: 'response' }));
+      expect(res.body).not.toBeNull();
+      expect(res.body.uid).toBe(1);
+      expect(res.body.action).toBe('add');
     });
-    it('should normal request if non-mock url', (done: () => void) => {
-      http.get('/non-mock', { responseType: 'text' }).subscribe(value => {
-        expect(value).toBe('ok!');
-        done();
-      });
+    it('should normal request if non-mock url', async () => {
+      const value$ = lastValueFrom(http.get('/non-mock', { responseType: 'text' }));
       httpMock.expectOne('/non-mock').flush('ok!');
+      expect(await value$).toBe('ok!');
     });
-    it('should be array of queryString', (done: () => void) => {
+    it('should be array of queryString', async () => {
       const key = '/fn/queryString?a=1&b=1&b=2&b=3';
-      http.get(key).subscribe((res: any) => {
-        expect(Array.isArray(res.b)).toBe(true);
-        expect(+res.b[0]).toBe(1);
-        expect(+res.b[1]).toBe(2);
-        done();
-      });
+      const res = await response(http.get<any>(key));
+      expect(Array.isArray(res.b)).toBe(true);
+      expect(+res.b[0]).toBe(1);
+      expect(+res.b[1]).toBe(2);
     });
-    it('should be return a observable', () => {
-      http.get('/obs').subscribe(res => {
-        expect(res).toBe(1);
-      });
+    it('should be return a observable', async () => {
+      const res = await response(http.get('/obs'));
+      expect(res).toBe(1);
     });
     it('should be return a promise', async () => {
-      const res = await lastValueFrom(http.get('/promise'));
+      const res = await response(http.get('/promise'));
       expect(res).toBe('a');
     });
   });
 
   describe('[disabled log]', () => {
-    it('with request', (done: () => void) => {
+    it('with request', async () => {
       genModule(DATA, { delay: 1, log: false });
-      http.get('/users').subscribe(() => {
-        expect(console.log).not.toHaveBeenCalled();
-        done();
-      });
+      await response(http.get('/users'));
+      expect(console.log).not.toHaveBeenCalled();
     });
-    it('with error request', (done: () => void) => {
+    it('with error request', async () => {
       genModule(DATA, { delay: 1, log: false });
-      http.get('/404').subscribe({
-        next: () => {
-          expect(false).toBe(true);
-          done();
-        },
-        error: () => {
-          expect(console.log).not.toHaveBeenCalled();
-          expect(true).toBe(true);
-          done();
-        }
-      });
+      await expect(lastValueFrom(http.get('/404'))).rejects.toBeInstanceOf(HttpErrorResponse);
+      expect(console.log).not.toHaveBeenCalled();
     });
   });
 });
 
 @Component({
   selector: 'root-cmp',
+  imports: [RouterOutlet],
   template: ` <router-outlet />`
 })
 class RootComponent {}

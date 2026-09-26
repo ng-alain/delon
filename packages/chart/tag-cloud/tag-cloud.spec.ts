@@ -10,6 +10,8 @@ describe('chart: tag-cloud', () => {
     let page: PageG2<TestComponent>;
 
     beforeEach(async () => {
+      // wordCloud 布局用随机起点与随机旋转，同一盒子里偶发挤掉一个词
+      vi.spyOn(Math, 'random').mockReturnValue(0);
       page = new PageG2<TestComponent>().genComp(TestComponent, true);
       await page.ready();
     });
@@ -29,16 +31,18 @@ describe('chart: tag-cloud', () => {
     };
 
     it('should be repaint when window resize', async () => {
-      const render = spyOn(page.chart, 'render').and.callThrough();
+      const render = vi.spyOn(page.chart, 'render');
+      vi.useFakeTimers();
       window.dispatchEvent(new Event('resize'));
-      await new Promise(resolve => setTimeout(resolve, 700));
+      await vi.advanceTimersByTimeAsync(250);
       expect(render).toHaveBeenCalled();
+      vi.useRealTimers();
       // window 级 resize 订阅必须显式销毁，避免在 `destroyAfterEach: false` 下跨 spec 累积
       page.fixture!.destroy();
     });
 
     it('should pin the key v5 spec fields ', async () => {
-      await new Promise(resolve => setTimeout(resolve, 700));
+      await vi.waitFor(() => expect(words().length).toBe(6));
       const authored = (page.comp as NzSafeAny).buildSpec() as NzSafeAny;
       expect(authored.type).toBe('wordCloud');
       expect(authored.children).toBeUndefined();
@@ -64,20 +68,21 @@ describe('chart: tag-cloud', () => {
 
     it('data-only change keeps feeding the wordCloud mark ', async () => {
       expect(markSpec().data.length).toBe(6);
-      const changeData = spyOn(page.chart, 'changeData').and.callThrough();
+      const changeData = vi.spyOn(page.chart, 'changeData');
       page.newData([
         { name: 'A', value: 1 },
         { name: 'B', value: 2 },
         { name: 'C', value: 3 }
       ]);
       page.dc();
-      await new Promise(resolve => setTimeout(resolve, 700));
-      expect(changeData).toHaveBeenCalledTimes(1);
-      expect((changeData.calls.mostRecent().args[0] as unknown[]).length).toBe(3);
-      expect(markSpec().data.length).toBe(3);
-      const rendered = words();
-      expect(rendered.map(d => d.text).sort()).toEqual(['A', 'B', 'C']);
-      expect(rendered.map(d => d.fontSize).sort((a, b) => a - b)).toEqual([8, 20, 32]);
+      await vi.waitFor(() => {
+        expect(changeData).toHaveBeenCalledTimes(1);
+        expect((vi.mocked(changeData).mock.lastCall![0] as unknown[]).length).toBe(3);
+        expect(markSpec().data.length).toBe(3);
+        const rendered = words();
+        expect(rendered.map(d => d.text).sort()).toEqual(['A', 'B', 'C']);
+        expect(rendered.map(d => d.fontSize).sort((a, b) => a - b)).toEqual([8, 20, 32]);
+      });
       expect(Object.keys(page.context.data()[0]).sort()).toEqual(['name', 'value']);
     });
   });

@@ -1,18 +1,21 @@
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, DebugElement, signal, ViewChild } from '@angular/core';
-import { ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { cleanCdkOverlayHtml, createTestContext } from '@delon/testing';
 import { DelonLocaleModule, DelonLocaleService, en_US, zh_CN } from '@delon/theme';
 
 import { NoticeIconComponent } from './notice-icon.component';
-import { NoticeItem } from './notice-icon.types';
+import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
 
 const CLICKTIME = 151;
 
 describe('abc: notice-icon', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let context: TestComponent;
@@ -31,15 +34,15 @@ describe('abc: notice-icon', () => {
 
   describe('when not data', () => {
     beforeEach(() => context.data.set([]));
-    it('should be count', fakeAsync(() => {
+    it('should be count', async () => {
       context.count.set(5);
       fixture.detectChanges();
-      tick();
+      await vi.advanceTimersByTimeAsync(0);
       fixture.detectChanges();
       const cur = dl.query(By.css('.ant-scroll-number-only .current')).nativeElement as HTMLElement;
       expect(+cur.textContent!.trim()).toBe(context.count());
-      discardPeriodicTasks();
-    }));
+      vi.clearAllTimers();
+    });
   });
 
   describe('when has data', () => {
@@ -47,80 +50,68 @@ describe('abc: notice-icon', () => {
 
     describe('should be show dropdown', () => {
       it('via popoverVisible property', () => {
-        spyOn(context, 'popupVisibleChange');
+        vi.spyOn(context, 'popupVisibleChange').mockReturnValue(undefined);
         expect(context.comp.popoverVisible()).toBe(false);
         context.popoverVisible.set(true);
         fixture.detectChanges();
         expect(context.comp.popoverVisible()).toBe(true);
       });
-      it('via click', done => {
+      it('via click', async () => {
         expect(context.popoverVisible()).toBeUndefined();
         (dl.query(By.css('.ant-badge')).nativeElement as HTMLElement).click();
         fixture.detectChanges();
-        setTimeout(() => {
-          expect(context.popoverVisible()).toBe(true);
-          done();
-        }, CLICKTIME);
+        await vi.advanceTimersByTimeAsync(CLICKTIME);
+        expect(context.popoverVisible()).toBe(true);
       });
     });
-    it('should be control loading in visible popover', done => {
+    it('should be control loading in visible popover', async () => {
       context.loading.set(true);
       context.comp.onVisibleChange(true);
       fixture.detectChanges();
-      setTimeout(() => {
-        const el = document.querySelector('.ant-spin-container') as HTMLElement;
-        expect(el.style.display).toBe('');
-        done();
-      }, CLICKTIME);
+      await vi.advanceTimersByTimeAsync(CLICKTIME);
+      const el = document.querySelector('.ant-spin-container') as HTMLElement;
+      expect(el.style.display).toBe('');
     });
-    it('should be select item', done => {
-      spyOn(context, 'select');
+    it('should be select item', async () => {
+      vi.spyOn(context, 'select').mockReturnValue(undefined);
       context.comp.onVisibleChange(true);
       fixture.detectChanges();
-      setTimeout(() => {
-        expect(context.select).not.toHaveBeenCalled();
-        (document.querySelector('nz-list-item')! as HTMLElement).click();
-        fixture.detectChanges();
-        expect(context.select).toHaveBeenCalled();
-        done();
-      }, CLICKTIME);
+      await vi.advanceTimersByTimeAsync(CLICKTIME);
+      expect(context.select).not.toHaveBeenCalled();
+      (document.querySelector('nz-list-item')! as HTMLElement).click();
+      fixture.detectChanges();
+      expect(context.select).toHaveBeenCalled();
     });
-    it('should be clear', done => {
-      spyOn(context, 'clear');
+    it('should be clear', async () => {
+      vi.spyOn(context, 'clear').mockReturnValue(undefined);
       context.comp.onVisibleChange(true);
       fixture.detectChanges();
-      setTimeout(() => {
-        expect(context.clear).not.toHaveBeenCalled();
-        (document.querySelector('.notice-icon__clear')! as HTMLElement).click();
-        fixture.detectChanges();
-        expect(context.clear).toHaveBeenCalled();
-        done();
-      }, CLICKTIME);
+      await vi.advanceTimersByTimeAsync(CLICKTIME);
+      expect(context.clear).not.toHaveBeenCalled();
+      (document.querySelector('.notice-icon__clear')! as HTMLElement).click();
+      fixture.detectChanges();
+      expect(context.clear).toHaveBeenCalled();
     });
-    it('#centered', done => {
+    it('#centered', async () => {
       context.centered.set(true);
       context.comp.onVisibleChange(true);
       fixture.detectChanges();
-      setTimeout(() => {
-        expect(document.querySelectorAll('.notice-icon__tab-left').length).toBe(0);
-        done();
-      }, CLICKTIME);
+      await vi.advanceTimersByTimeAsync(CLICKTIME);
+      expect(document.querySelectorAll('.notice-icon__tab-left').length).toBe(0);
     });
   });
 
-  it('#i18n', done => {
+  it('#i18n', async () => {
     context.comp.onVisibleChange(true);
     context.data.set([{ title: 'a1', list: [] }]);
     fixture.detectChanges();
-    setTimeout(() => {
-      const a = document.querySelector('.notice-icon__notfound')! as HTMLElement;
-      expect(a.innerText).toBe(zh_CN.noticeIcon.emptyText);
-      const srv = TestBed.inject<DelonLocaleService>(DelonLocaleService) as DelonLocaleService;
-      srv.setLocale(en_US);
-      fixture.detectChanges();
-      expect(a.innerText).toBe(en_US.noticeIcon.emptyText);
-      done();
-    }, CLICKTIME);
+    await vi.advanceTimersByTimeAsync(CLICKTIME);
+    const a = document.querySelector('.notice-icon__notfound')! as HTMLElement;
+    expect(a.innerText).toBe(zh_CN.noticeIcon.emptyText);
+    const srv = TestBed.inject<DelonLocaleService>(DelonLocaleService) as DelonLocaleService;
+    srv.setLocale(en_US);
+    fixture.detectChanges();
+    expect(a.innerText).toBe(en_US.noticeIcon.emptyText);
   });
 });
 
@@ -190,7 +181,7 @@ class TestComponent {
   readonly loading = signal(false);
   readonly centered = signal(false);
   readonly popoverVisible = signal<boolean | undefined>(undefined);
-  select(): void {}
-  clear(): void {}
-  popupVisibleChange(): void {}
+  select(_item: NoticeIconSelect): void {}
+  clear(_title: string): void {}
+  popupVisibleChange(_visible: boolean): void {}
 }

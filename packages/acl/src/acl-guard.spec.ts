@@ -1,17 +1,24 @@
 import { Component } from '@angular/core';
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { Router, provideRouter } from '@angular/router';
-import { of } from 'rxjs';
+import { firstValueFrom, of } from 'rxjs';
+
+import type { Mock } from 'vitest';
+
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { ACLGuardService, aclCanActivate, aclCanActivateChild, aclCanMatch } from './acl-guard';
 import { ACLService } from './acl.service';
 import { ACLGuardData } from './acl.type';
 
 describe('acl: guard', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let srv: ACLGuardService;
   let acl: ACLService;
   let router: Router;
-  let routerSpy: jasmine.Spy;
+  let routerSpy: Mock;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -49,140 +56,122 @@ describe('acl: guard', () => {
   });
 
   describe('', () => {
-    beforeEach(() => (routerSpy = spyOn(router, 'navigateByUrl')));
+    beforeEach(() => (routerSpy = vi.spyOn(router, 'navigateByUrl').mockReturnValue(undefined as NzSafeAny)));
 
-    it(`should load route when no-specify permission`, (done: () => void) => {
-      srv.process({}).subscribe(res => {
-        expect(res).toBeTruthy();
-        done();
-      });
+    it(`should load route when no-specify permission`, async () => {
+      const res = await firstValueFrom(srv.process({}));
+      expect(res).toBeTruthy();
     });
 
-    it(`should load route when specify permission`, (done: () => void) => {
-      srv
-        .process({
+    it(`should load route when specify permission`, async () => {
+      const res = await firstValueFrom(
+        srv.process({
           guard: 'user'
         })
-        .subscribe(res => {
-          expect(res).toBeTruthy();
-          done();
-        });
+      );
+      expect(res).toBeTruthy();
     });
 
-    it(`should unable load route if no-permission`, (done: () => void) => {
-      srv
-        .process({
+    it(`should unable load route if no-permission`, async () => {
+      const res = await firstValueFrom(
+        srv.process({
           guard: 'admin'
         })
-        .subscribe(res => {
-          expect(res).toBeFalsy();
-          done();
-        });
+      );
+      expect(res).toBeFalsy();
     });
 
-    it(`should load route via function`, (done: () => void) => {
-      srv
-        .process({
+    it(`should load route via function`, async () => {
+      const res = await firstValueFrom(
+        srv.process({
           guard: () => of('user')
         })
-        .subscribe(res => {
-          expect(res).toBeTruthy();
-          done();
-        });
+      );
+      expect(res).toBeTruthy();
     });
 
-    it(`should load route via Observable`, (done: () => void) => {
-      srv
-        .process({
+    it(`should load route via Observable`, async () => {
+      const res = await firstValueFrom(
+        srv.process({
           guard: of('user')
         })
-        .subscribe(res => {
-          expect(res).toBeTruthy();
-          done();
-        });
+      );
+      expect(res).toBeTruthy();
     });
 
-    it(`should load route using ability`, (done: () => void) => {
-      srv
-        .process({
+    it(`should load route using ability`, async () => {
+      const res = await firstValueFrom(
+        srv.process({
           guard: of(1)
         })
-        .subscribe(res => {
-          expect(res).toBeTruthy();
-          done();
-        });
+      );
+      expect(res).toBeTruthy();
     });
 
-    it(`should unable load route using ability`, (done: () => void) => {
-      srv
-        .process({
+    it(`should unable load route using ability`, async () => {
+      const res = await firstValueFrom(
+        srv.process({
           guard: of(10)
         })
-        .subscribe(res => {
-          expect(res).toBeFalsy();
-          done();
-        });
+      );
+      expect(res).toBeFalsy();
     });
 
     describe('#guard_url', () => {
-      it(`should be rediect to default url: /403`, (done: () => void) => {
-        srv
-          .process({
+      it(`should be rediect to default url: /403`, async () => {
+        await firstValueFrom(
+          srv.process({
             guard: 'admin'
           })
-          .subscribe(() => {
-            expect(routerSpy.calls.first().args[0]).toBe(`/403`);
-            done();
-          });
+        );
+        expect(vi.mocked(routerSpy).mock.calls[0]![0]).toBe(`/403`);
       });
-      it(`should be specify rediect url`, (done: () => void) => {
-        srv
-          .process({
+      it(`should be specify rediect url`, async () => {
+        await firstValueFrom(
+          srv.process({
             guard: 'admin',
             guard_url: '/no'
           })
-          .subscribe(() => {
-            expect(routerSpy.calls.first().args[0]).toBe(`/no`);
-            done();
-          });
+        );
+        expect(vi.mocked(routerSpy).mock.calls[0]![0]).toBe(`/no`);
       });
     });
   });
 
   describe('#router', () => {
-    it('canMatch', fakeAsync(async () => {
+    it('canMatch', async () => {
       acl.set({ role: ['user'] });
       const targetUrl = '/canMatch';
       await router.navigateByUrl(targetUrl);
-      tick();
+      await vi.advanceTimersByTimeAsync(0);
       expect(router.url).toBe('/403');
       acl.set({ role: ['admin'] });
       await router.navigateByUrl(targetUrl);
-      tick();
+      await vi.advanceTimersByTimeAsync(0);
       expect(router.url).toBe(targetUrl);
-    }));
-    it('canActivate', fakeAsync(async () => {
+    });
+    it('canActivate', async () => {
       acl.set({ role: ['user'] });
       const targetUrl = '/canActivate';
       await router.navigateByUrl(targetUrl);
-      tick();
+      await vi.advanceTimersByTimeAsync(0);
       expect(router.url).toBe('/403');
       acl.set({ role: ['admin'] });
       await router.navigateByUrl(targetUrl);
-      tick();
+      await vi.advanceTimersByTimeAsync(0);
       expect(router.url).toBe(targetUrl);
-    }));
-    it('canActivateChild', fakeAsync(async () => {
+    });
+    it('canActivateChild', async () => {
       acl.set({ role: ['user'] });
       const targetUrl = '/canActivateChild/1';
       await router.navigateByUrl(targetUrl);
-      tick();
+      await vi.advanceTimersByTimeAsync(0);
       expect(router.url).toBe('/403');
       acl.set({ role: ['admin'] });
       await router.navigateByUrl(targetUrl);
-      tick();
+      await vi.advanceTimersByTimeAsync(0);
       expect(router.url).toBe(targetUrl);
-    }));
+    });
   });
 });
 

@@ -1,7 +1,5 @@
-import { registerLocaleData } from '@angular/common';
-import zh from '@angular/common/locales/zh';
 import { Component, DebugElement, signal, ViewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
@@ -14,9 +12,10 @@ import { NzDatePickerComponent, NzRangePickerComponent } from 'ng-zorro-antd/dat
 
 import { RangePickerDirective } from './range.directive';
 
-registerLocaleData(zh);
-
 describe('abc: date-picker: nz-range-picker[extend]', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let context: TestComponent;
@@ -38,51 +37,51 @@ describe('abc: date-picker: nz-range-picker[extend]', () => {
     });
 
     describe('#ngModel', () => {
-      it('should be working', fakeAsync(() => {
+      it('should be working', async () => {
         const NOW = new Date();
         context.i.set({
           start: NOW,
           end: NOW
         });
-        cd();
+        await cd();
         expect(context.comp.start).not.toBeNull();
         expect(context.comp.end).not.toBeNull();
         expect(differenceInDays(context.comp.start!, context.comp.end!)).toBe(0);
-      }));
+      });
 
-      it('should be invalid value when start & end include null value', fakeAsync(() => {
+      it('should be invalid value when start & end include null value', async () => {
         context.i.set({
           start: new Date(),
           end: undefined
         });
-        cd();
+        await cd();
         expect(context.comp.start).toBeNull();
         expect(context.comp.end).toBeNull();
-      }));
+      });
     });
 
     describe('#shortcat', () => {
-      it('with true', fakeAsync(() => {
-        context.shortcut.set(true);
+      it('with true', async () => {
+        context.shortcut.set('true');
         fixture.detectChanges();
-        openPicker();
+        await openPicker();
         getPickerFooterExtra().querySelectorAll('a')[0].click();
-        cd();
+        await cd();
         expect(differenceInDays(context.i().end!, context.i().start!)).toBe(0);
-      }));
-      it('with false', fakeAsync(() => {
-        context.shortcut.set(false);
+      });
+      it('with false', async () => {
+        context.shortcut.set('false');
         fixture.detectChanges();
-        openPicker();
+        await openPicker();
         expect(dl.query(By.css('.ant-picker-footer-extra')) == null).toBe(true);
-      }));
-      it('with null', fakeAsync(() => {
+      });
+      it('with null', async () => {
         context.shortcut.set(null);
         fixture.detectChanges();
-        openPicker();
+        await openPicker();
         expect(dl.query(By.css('.ant-picker-footer-extra')) == null).toBe(true);
-      }));
-      it('with custom function', fakeAsync(() => {
+      });
+      it('with custom function', async () => {
         const start = new Date(2025, 12, 30);
         const end = new Date(2025, 12, 31);
         context.shortcut.set({
@@ -90,26 +89,26 @@ describe('abc: date-picker: nz-range-picker[extend]', () => {
           list: ['today', { text: 'test', fn: () => [start, end] }]
         });
         fixture.detectChanges();
-        openPicker();
+        await openPicker();
         console.log(getPickerFooterExtra().querySelectorAll('a'));
         getPickerFooterExtra().querySelectorAll('a')[1].click();
-        cd();
+        await cd();
         expect(context.i().start?.toLocaleDateString()).toBe(start.toLocaleDateString());
         expect(context.i().end?.toLocaleDateString()).toBe(end.toLocaleDateString());
-      }));
+      });
     });
   });
 
-  function openPicker(): HTMLInputElement {
+  async function openPicker(): Promise<HTMLInputElement> {
     const el = dl.query(By.css('.ant-picker-input input')).nativeElement as HTMLInputElement;
     el.click();
-    cd();
+    await cd();
     return el;
   }
 
-  function cd(time: number = 5000): void {
+  async function cd(time: number = 5000): Promise<void> {
     fixture.detectChanges();
-    tick(time);
+    await vi.advanceTimersByTimeAsync(time);
     fixture.detectChanges();
   }
 
@@ -133,11 +132,11 @@ describe('abc: date-picker: nz-range-picker[extend]', () => {
 class TestComponent {
   @ViewChild('comp', { static: true }) comp!: RangePickerDirective;
   readonly i = signal<{ start?: Date; end?: Date }>({});
-  readonly shortcut = signal<boolean | AlainDateRangePickerShortcut | null>(false);
+  readonly shortcut = signal<string | AlainDateRangePickerShortcut | null>('false');
 }
 
 @Component({
-  template: ` <div [(ngModel)]="i.start" extend [(ngModelEnd)]="i.end"></div> `,
+  template: ` <nz-range-picker [(ngModel)]="i.start" extend [(ngModelEnd)]="i.end" /> `,
   imports: [FormsModule, RangePickerDirective]
 })
 class TestThrowComponent {
