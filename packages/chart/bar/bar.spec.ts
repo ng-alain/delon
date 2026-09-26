@@ -5,6 +5,18 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { G2BarComponent, G2BarData } from './bar.component';
 
+/** 取 interval mark 的实测填充色：颜色比例尺解析错误只有读真实图形才看得出来 */
+function intervalFills(chart: NzSafeAny): string[] {
+  const doc = chart.getContext().canvas.document as NzSafeAny;
+  return Array.from(
+    new Set(
+      (doc.getElementsByTagName('rect') as NzSafeAny[])
+        .filter(r => r.markType === 'interval')
+        .map(r => r.attributes?.fill as string)
+    )
+  );
+}
+
 describe('chart: bar', () => {
   let page: PageG2<TestComponent>;
 
@@ -24,7 +36,7 @@ describe('chart: bar', () => {
         const ns = spec;
         expect(ns.legend).toBe(false);
         expect(ns.tooltip.title).toBe(false);
-        expect(ns.scale).toEqual({ x: { type: 'band' }, y: { zero: true } });
+        expect(ns.scale).toEqual({ x: { type: 'band' }, y: { zero: true }, color: { type: 'identity' } });
         expect(ns.axis.y).toEqual({ title: false, line: false, tick: false });
         // 夹具宽度大于 2 行 * 30px 阈值，故 axis.x 显示
 
@@ -66,9 +78,16 @@ describe('chart: bar', () => {
       page.dc();
       await page.ready();
       page.expectSpec(spec => {
-        const encode = (spec as NzSafeAny).children[0].encode;
+        const ns = spec as NzSafeAny;
+        const encode = ns.children[0].encode;
         expect(encode.color.value({ x: 1, y: 1 })).toBe(color);
+        expect(ns.scale.color).toEqual({ type: 'identity' });
       });
+      // identity 比例尺原样透传 ⇒ 真实填充必须是配置的字面颜色，而不是主题色板首色
+      // 重绘时旧图形仍在退场动画中，故只断言包含新色、且不再出现色板首色
+      const fills = intervalFills(page.chart);
+      expect(fills).toContain(color);
+      expect(fills).not.toContain('#5B8FF9');
     });
 
     it('#padding', async () => {

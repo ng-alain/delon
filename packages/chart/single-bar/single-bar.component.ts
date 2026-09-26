@@ -58,7 +58,11 @@ export class G2SingleBarComponent extends G2BaseComponent {
         style: { minWidth: barSize(), maxWidth: barSize() },
         labels: [{ text: 'value', formatter: format(), style: { ...textStyle() } }],
         // G2 从不读取 min/max，固定上下界必须用 domain
-        scale: { y: { domain: [min(), max()] } },
+        scale: {
+          y: { domain: [min(), max()] },
+          // 正负条颜色是字面颜色值，必须用 identity 原样透传，否则正负色会被主题色板映射成同一个颜色
+          color: { type: 'identity' }
+        },
         legend: false,
         axis: false,
         tooltip: false

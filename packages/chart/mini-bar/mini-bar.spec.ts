@@ -5,6 +5,18 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { G2MiniBarComponent } from './mini-bar.component';
 
+/** 取 interval mark 的实测填充色：颜色比例尺解析错误只有读真实图形才看得出来 */
+function intervalFills(chart: NzSafeAny): string[] {
+  const doc = chart.getContext().canvas.document as NzSafeAny;
+  return Array.from(
+    new Set(
+      (doc.getElementsByTagName('rect') as NzSafeAny[])
+        .filter(r => r.markType === 'interval')
+        .map(r => r.attributes?.fill as string)
+    )
+  );
+}
+
 describe('chart: mini-bar', () => {
   it('should be working', async () => {
     const page = new PageG2<TestComponent>().genComp(TestComponent, true);
@@ -16,7 +28,7 @@ describe('chart: mini-bar', () => {
     page
       .isDataCount(2)
       .isExists('canvas', true)
-      .checkSpec('scale', { x: { type: 'band' }, y: { zero: true } });
+      .checkSpec('scale', { x: { type: 'band' }, y: { zero: true }, color: { type: 'identity' } });
   });
 
   it('data length change should re-render with new rows', async () => {
@@ -38,6 +50,28 @@ describe('chart: mini-bar', () => {
       expect(changeData).toHaveBeenCalledTimes(1);
       expect((vi.mocked(changeData).mock.lastCall![0] as unknown[]).length).toBe(3);
       page.isDataCount(3);
+    });
+  });
+
+  describe('#color', () => {
+    it('color input should be painted as a literal color (identity scale)', async () => {
+      const page = new PageG2<TestComponent>().genComp(TestComponent, true);
+      page.newData([{ x: `1月`, y: 10 }]);
+      await page.ready();
+      const scale = (page.chart as NzSafeAny).getScaleByChannel('color');
+      // identity 比例尺原样透传，字面颜色不会被主题分类色板替换成 `#5B8FF9`
+      expect(scale.map('#cceafe')).toBe('#cceafe');
+      expect(intervalFills(page.chart)).toEqual(['#cceafe']);
+    });
+
+    it('per-item color should win over color input', async () => {
+      const page = new PageG2<TestComponent>().genComp(TestComponent, true);
+      page.newData([
+        { x: `1月`, y: 10, color: '#0f0' },
+        { x: `2月`, y: 20 }
+      ]);
+      await page.ready();
+      expect(intervalFills(page.chart).sort()).toEqual(['#0f0', '#cceafe']);
     });
   });
 
