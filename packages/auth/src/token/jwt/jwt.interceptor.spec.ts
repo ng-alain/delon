@@ -1,4 +1,4 @@
-import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { HttpClient, HttpContext, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { HttpTestingController, TestRequest, provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
@@ -7,10 +7,11 @@ import { firstValueFrom } from 'rxjs';
 
 import { AlainAuthConfig, provideAlainConfig } from '@delon/util/config';
 
-import { provideAuth } from '../../provide';
-import { DA_SERVICE_TOKEN } from '../interface';
 import { authJWTInterceptor } from './jwt.interceptor';
 import { JWTTokenModel } from './jwt.model';
+import { provideAuth } from '../../provide';
+import { ALLOW_ANONYMOUS } from '../../token';
+import { DA_SERVICE_TOKEN } from '../interface';
 
 function genModel(
   token:
@@ -59,6 +60,16 @@ describe('auth: jwt.interceptor', () => {
   it('should be invalid token', async () => {
     genModule({}, genModel(null));
     await expect(firstValueFrom(http.get('/test'))).rejects.toMatchObject({ status: 401 });
+  });
+
+  it('should be pass through when allow anonymous', () => {
+    genModule({}, genModel(null));
+    http
+      .get('/test', { context: new HttpContext().set(ALLOW_ANONYMOUS, true), responseType: 'text' })
+      .subscribe(() => {});
+    const req = httpBed.expectOne('/test') as TestRequest;
+    expect(req.request.headers.has('Authorization')).toBe(false);
+    req.flush('ok!');
   });
 });
 

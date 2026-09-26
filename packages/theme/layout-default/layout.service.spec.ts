@@ -77,4 +77,32 @@ describe('theme: #LayoutDefaultService', () => {
     TestBed.inject(LayoutDefaultService);
     expect(settings.layout.collapsed).toBe(true);
   });
+
+  it('should be auto collapse on mobile', () => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      imports: [AlainThemeModule],
+      providers: [
+        {
+          provide: BreakpointObserver,
+          useFactory: () => ({
+            observe: vi
+              .fn()
+              .mockName('BreakpointObserver.observe')
+              .mockReturnValue(
+                new Observable<BreakpointState>(subscriber => {
+                  subscriber.next({ matches: true, breakpoints: {} });
+                })
+              ),
+            isMatched: vi.fn().mockName('BreakpointObserver.isMatched').mockReturnValue(true)
+          })
+        }
+      ]
+    });
+
+    const settings = TestBed.inject(SettingsService);
+    settings.setLayout('collapsed', false);
+    TestBed.inject(LayoutDefaultService);
+    expect(settings.layout.collapsed).toBe(true);
+  });
 });
