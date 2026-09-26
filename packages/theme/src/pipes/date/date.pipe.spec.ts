@@ -6,7 +6,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { zhCN as dateFnsLang } from 'date-fns/locale';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzI18nService, NZ_DATE_LOCALE } from 'ng-zorro-antd/i18n';
+import { NZ_DATE_LOCALE } from 'ng-zorro-antd/i18n';
 
 import { DatePipe } from './date.pipe';
 
@@ -40,10 +40,7 @@ describe('Pipe: _date', () => {
       if (item.format) {
         fixture.componentInstance.format = item.format;
         if (item.format === 'fn') {
-          const nzI18n = TestBed.inject(NzI18nService);
-          item.result = formatDistanceToNow(item.date, {
-            locale: nzI18n.getDateLocale()
-          });
+          item.result = formatDistanceToNow(item.date, { locale: dateFnsLang });
         }
       }
       fixture.detectChanges();
