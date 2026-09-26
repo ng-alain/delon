@@ -1049,6 +1049,10 @@ services.AddSwaggerGen(c =>
 
 若是通过拦截器来处理异常消息时，订阅时只需要始终获取 `result` 字段数据时，可以通过指定 `--responseDataField="result"` 来解决。
 
+### 代码风格
+
+生成的文件带有 `/* eslint-disable */` 与 `/* eslint-enable prettier/prettier */` 两行头注释：前者让生成代码不受其它 lint 规则约束，后者把格式化交回项目自身的 `prettier/prettier` 规则。因此执行 `eslint --fix`（脚手架已通过 lint-staged 在提交时自动执行，也可以交给 IDE 保存时执行）即可让生成代码符合项目的代码风格。
+
 ---
 
 ---
@@ -2304,7 +2308,7 @@ NG-ALAIN 技术栈基于 Typescript、Angular、图表G2 和 NG-ZORRO，在开�
   - [Angular中文文档](https://angular.cn/docs)，建议一定要花时间阅读文档部分，透过它基本上就可以学会 Angular；同时，也是 Angular API 接口文档
   - [NG-ZORRO中文文档](https://ng.ant.design/docs/introduce/zh)，NG-ZORRO 作为 NG-ALAIN 的基础组件库，当你不懂某个组件时，它就是最好的文档，包含组件用法及API说明
   - [NG-ALAIN中文文档](https://ng-alain.com/)，包含所有 `@delon/*` 类型的用法及API说明
-  - [G2图表中文文档](https://g2.antv.vision/zh)，如果需要图表开发，则这份文档是必备
+  - [G2 图表中文文档](https://g2.antv.antgroup.com/)，如果需要图表开发，则这份文档是必备
 - 辅助类
   - [Ant Design 指引文章](https://ant.design/docs/spec/introduce-cn)，学习 Ant Design 的设计理念，非常值得阅读的部分
   - [NG-ZORRO 社区推荐](https://ng.ant.design/docs/recommendation/zh)，一份非常值得学习的清单
@@ -2946,8 +2950,7 @@ Schema 的 `default` 用于设置初始化，一般情况下当修改表单时�
 const statusProperty = this.sf.getProperty('/status')!;
 statusProperty.schema.enum = ['1', '2', '3'];
 statusProperty.widget.reset('2');
-// 或手动触发 `detectChanges`
-// statusProperty.widget.detectChanges();
+// 无需手动触发变更检测：状态由 signal 驱动会自动刷新
 ```
 
 如果单纯更新某个元素数据，则：
@@ -2993,7 +2996,7 @@ const alainConfig: AlainConfig = {
 ## 如何切换显示或隐藏某元素
 
 ```ts
-this.sf.getProperty('/mobile')?.setVisible(status).widget.detectChanges();
+this.sf.getProperty('/mobile')?.setVisible(status);
 ```
 
 ---
@@ -3007,6 +3010,8 @@ type: Documents
 ## 如何自适应容器宽高？
 
 G2 当前版本并不会根据容器宽高自适应，目前只会根据浏览器窗体大小才会重新变更图表尺寸，因此需要手动监听容器大小的变化并调用 `chart.forceFit()` 重新渲染图表尺寸。
+
+> **v5 起 `forceFit()` 返回 `Promise`**（v4 是同步）：需要等待尺寸变更完成时请 `await chart.forceFit()` 或 `void chart.forceFit()`；组件内部的自适应（`autoFit`）已在首帧与窗口 resize 时自动处理，通常无需手动调用。
 
 [comment]: <demo(resizable)>
 
@@ -3501,7 +3506,25 @@ title: 开始使用
 type: Documents
 ---
 
-图表是基于 [G2](https://antv.alipay.com/zh-cn/g2/3.x/index.html) (3.0) 的基础上二次封装，提供了业务中常用的图表套件，可以单独使用，也可以组合起来实现复杂的展示效果。
+图表是基于 [G2](https://g2.antv.antgroup.com/) (5.x) 的基础上二次封装，提供了业务中常用的图表套件，可以单独使用，也可以组合起来实现复杂的展示效果。
+
+## v4 → v5 升级须知
+
+`@antv/g2` 已由 v4 升级到 **v5**（`^5.4.8`）。组件公开 API（`[data]`、`[height]`、`[padding]`、`[theme]`、`(ready)`、`(clickItem)` 等）**名称与类型不变**（唯一例外：`g2-water-wave` 的 `[height]` 重命名为 `[size]`），但底层渲染模型改为**异步 spec**：
+
+- **渲染是异步的**：`ready` 事件在**首个 `AFTER_RENDER`（首帧真正画完）**时触发，且**只触发一次**；`loaded`（模板据此收起骨架屏）同时置为 `true`。要拿到图表实例，请订阅 `(ready)`：
+  ```html
+  <g2-bar [data]="data()" (ready)="onReady($event)" (error)="onError($event)" />
+  ```
+- **失败与 `ready` 是两层**：G2 类库未加载、渲染失败都会走 **`(error)`** 事件（同时 `console.error`），`ready` 不会触发、骨架屏不收起。
+- **不再有 `install()` 公开方法**：组件扩展点用受保护的 `afterCreate(chart)` / `onRendered()`；数据变更用 `changeData()`（内部走串行链，不会与首帧竞态）。
+- **交互降级**：v4 的 `active-region`、`drag-move` 在 v5 无等价实现，`[interaction]` 传入时会降级为无交互；其余交互映射见各组件文档。
+- **tooltip 限制**：`domStyles`、`itemTpl` 不再可用（v5 由内置 tooltip 渲染）；视图级 `tooltip` **不会传给子 mark**，需要在 mark 级设置。
+- **点击事件载荷类型**：`Event` → `G2Event`（`ev.data?.data` 为命中数据项）。
+- **`g2-tag-cloud`**：不再把 `x/y/size/rotate/font` 写回数据行（布局改用 v5 内置 `wordCloud` mark 完成，另需 `@antv/data-set` 已从依赖中移除）。
+- **`g2-water-wave`**：v4 的手写 canvas 换成 v5 的 [`liquid`](https://g2.antv.antgroup.com/examples/general/Liquid) mark（中心百分比由 G2 内置文本绘制）；**`[height]` 重命名为 `[size]`**（正方形边长）；`[animate]` **只控制进场动画**（水波自身的流动由 G2 内置、始终运行），尺寸自适应交给 `autoFit`。
+- **转置图表的固定柱厚**：v5 里转置（`coordinate.transform: [{ type: 'transpose' }]`）时，interval 的**屏幕厚度由 `style.minWidth`/`maxWidth` 夹取**（像素），`style.minHeight` 夹的是屏幕宽 —— 因此 v4 的 `.size(30)` 不能只靠 `encode.size` 复现，需同时写 `style: { minWidth: 30, maxWidth: 30 }`。
+
 
 > 图表的作用，是帮助我们更好地看懂数据。选择什么图表，需要回答的首要问题是『我有什么数据，需要用图表做什么』，而不是 『图表长成什么样』 。
 
@@ -3527,8 +3550,7 @@ const alainConfig: AlainConfig = {
   chart: { 
     // 以下是默认配置，如果项目无法外网访问，可以根据 `angular.json` 配置将依赖包直接使用 `./assets***` 路径
     libs: [
-      'https://gw.alipayobjects.com/os/lib/antv/g2/4.1.4/dist/g2.min.js',
-      'https://gw.alipayobjects.com/os/lib/antv/data-set/0.11.7/dist/data-set.js',
+      'https://gw.alipayobjects.com/os/lib/antv/g2/5.4.8/dist/g2.min.js',
     ],
   },
 };
@@ -3560,11 +3582,6 @@ export class DelonModule {
     "glob": "**/*",
     "input": "./node_modules/@antv/g2/dist",
     "output": "/@antv/g2/"
-  },
-  {
-    "glob": "**/*",
-    "input": "./node_modules/@antv/data-set/dist",
-    "output": "/@antv/data-set/"
   }
 ]
 ```
@@ -3575,10 +3592,7 @@ export class DelonModule {
 // global-config.module.ts
 const alainConfig: AlainConfig = {
   chart: { 
-    libs: [
-      './assets/@antv/g2/g2.min.js',
-      './assets/@antv/data-set/data-set.js',
-    ],
+    libs: ['./assets/@antv/g2/g2.min.js'],
   },
 };
 ```
@@ -5320,6 +5334,7 @@ export function withTestWidget(): SFWidgetProvideConfig {
     <!-- 开始自定义控件区域 -->
     <tinymce
       [ngModel]="value"
+      [ngModelOptions]="{ standalone: true }"
       (ngModelChange)="change($event)"
       [config]="config"
       [loading]="loading">
@@ -5354,13 +5369,23 @@ class TestWidget extends ControlWidget implements OnInit {
 }
 ```
 
+**ngModel 与表单注册**
+
+小部件模板里的 `ngModel` 只是与 `FormProperty` 同步的局部绑定，不需要也不应该注册到任何表单，因此必须声明为 `standalone`；否则 Angular v22 会在控制台给出 `NG01354` 警告。
+
+> 注意：不要按该警告的提示添加 `viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]`：这会让 `ngModel` 尝试注册到 SF 内部的表单，而它没有 `name`，会直接抛出 `NG01352`。
+
 **sf-item-wrap**
 
 在模板中唯一是利用 `sf-item-wrap` 包裹自定义内容，它内部封装表单基础元素。
 
 **变更检测**
 
-小部件在渲染过程是手动变更检测，大部分情况下 `ControlWidget` 已经很好的管理什么时机应该执行变更检测，在自定义小部件过程中可能会遇到异步操作导致界面并未渲染，此时可以调用 `detectChanges()` 方法来触发一次小部件节点的变更检测。
+小部件状态全部由 signal 驱动：`ui` / `schema` 是响应式对象，组件自身的状态也应使用 `signal`。
+因此**不再需要手动触发变更检测**（`detectChanges()` 已移除），修改状态后视图会自动刷新。
+
+> 注意：`ui` / `schema` 只能**整值替换**（如 `ui.optionalHelp = { ...ui.optionalHelp, text }`）；
+> 就地修改嵌套结构（如 `schema.enum.push(...)`）不会被跟踪。
 
 ### 注册小部件
 
@@ -6608,8 +6633,9 @@ module: import { ChartEChartsModule } from '@delon/chart/chart-echarts';
 | `[height]` | 图表高度 | `number, string` | `400px`|
 | `[option]` | [配置项](https://echarts.apache.org/zh/option.html#title) | `ChartEChartsOption` | - |
 | `[theme]` | [主题](https://echarts.apache.org/zh/theme-builder.html)配置 | `string, object` | - |
+| `[initOpt]` | [init](https://echarts.apache.org/zh/api.html#echarts.init) 的初始化参数（如 `renderer`、`devicePixelRatio`），变更会重建实例 | `object` | - |
 | `[on]` | 等同于 ECharts [on](https://echarts.apache.org/zh/api.html#echartsInstance.on) | `ChartEChartsOn[]` | - |
-| `(events)` | 事件回调 | `EventEmitter<ChartEChartsEvent>` | - |
+| `(events)` | 事件回调 | `output<ChartEChartsEvent>` | - |
 
 ---
 
@@ -6896,7 +6922,10 @@ getTimeDistance('week')
 title: decorator
 subtitle: 装饰器
 type: Tools
+deprecated: 24.0.0
 ---
+
+# 将在 v24.0.0 移除。
 
 ## @ZoneOutside
 
@@ -7376,14 +7405,15 @@ module: import { G2BarModule } from '@delon/chart/bar';
 | `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
 | `[title]` | 图表标题 | `string,TemplateRef<void>` | - |
 | `[color]` | 图表颜色 | `string` | `rgba(24, 144, 255, 0.85)` |
-| `[padding]` | 图表内部间距 | `Array<number | string> | string` | `[32, 0, 32, 40]` |
+| `[padding]` | 图表内部间距，`'auto'` 表示由 G2 自动计算 | `Array<number \| string> \| string` | `'auto'` |
 | `[height]` | 图表高度 | `number` | - |
 | `[data]` | 数据 | `G2BarData[]` | `[]` |
 | `[autoLabel]` | 在宽度不足时，自动隐藏 x 轴的 label | `boolean` | `true` |
 | `[interaction]` | 交互类型，none 无 element-active 图形元素，active-region 图表组件，brush 框选，drag-move 移动 | `InteractionType` | `none` |
-| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
-| `(clickItem)` | 点击项回调 | `EventEmitter<G2BarClickItem>` | - |
-| `(ready)` | 当G2完成初始化后调用 | `EventEmitter<Chart>` | - |
+| `[theme]` | 定制图表主题 | `string \| LooseObject` | - |
+| `(clickItem)` | 点击项回调 | `output<G2BarClickItem>` | - |
+| `(ready)` | 当G2完成初始化后调用 | `output<Chart>` | - |
+| `(error)` | 当渲染失败时调用（G2 未加载或渲染抛错），此时 `(ready)` 不会触发 | `output<unknown>` | - |
 
 ### G2BarData
 
@@ -7418,6 +7448,7 @@ module: import { G2CardModule } from '@delon/chart/card';
 | `[footer]` | 卡片底部 | `string,TemplateRef<void>` | - |
 | `[contentHeight]` | 内容区域高度（单位：`px`） | `string` | - |
 | `[bordered]` | 是否显示边框 | `boolean` | `false` |
+| `[loading]` | 是否显示加载中（内容区包裹 `nz-spin`） | `boolean` | `false` |
 
 ---
 
@@ -7457,8 +7488,8 @@ export class DemoComponent {
 
 ## 链接
 
-- [G2 文档](https://www.yuque.com/antv/g2-docs)
-- [G2 示例](https://antv.alipay.com/zh-cn/g2/3.x/demo/index.html)
+- [G2 文档](https://g2.antv.antgroup.com/)
+- [G2 示例](https://g2.antv.antgroup.com/examples)
 
 ## API
 
@@ -7466,13 +7497,16 @@ export class DemoComponent {
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
+| `[repaint]` | 数据再次变更时是否重绘 | `boolean` | `true` |
 | `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
 | `[height]` | 高 | `number` | - |
-| `[resizeTime]` | resize 事件去抖时长 | `number` | `200` |
-| `(render)` | 渲染事件 | `EventEmitter<ElementRef>` | - |
-| `(resize)` | resize 事件 | `EventEmitter<ElementRef>` | - |
-| `(destroy)` | 销毁事件 | `EventEmitter<ElementRef>` | - |
-| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
+| `[resizeTime]` | resize 事件去抖时长（`0` 表示关闭 resize 监听） | `number` | `0` |
+| `(render)` | 渲染事件 | `output<ElementRef>` | - |
+| `(resize)` | resize 事件 | `output<ElementRef>` | - |
+| `(destroy)` | 销毁事件（**当前版本不会触发，为兼容保留**） | `output<ElementRef>` | - |
+| `(ready)` | 当G2完成初始化后调用 | `output<Chart>` | - |
+| `(error)` | 当渲染失败时调用（G2 未加载或渲染抛错），此时 `(ready)` 不会触发 | `output<unknown>` | - |
+| `[theme]` | 定制图表主题 | `string \| LooseObject` | - |
 
 ---
 
@@ -7496,13 +7530,16 @@ module: import { G2GaugeModule } from '@delon/chart/gauge';
 | `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
 | `[title]` | 图表标题 | `string` | - |
 | `[height]` | 图表高度 | `number` | - |
+| `[width]` | 图表宽度 | `number` | - |
 | `[color]` | 图表颜色 | `string` | `#2F9CFF` |
 | `[bgColor]` | 图表背景色 | `string` | `#F0F2F5` |
 | `[percent]` | 进度比例 | `number` | - |
-| `[padding]` | 内边距 | `Array<number | string>` | `[10, 10, 30, 10]` |
+| `[fontSize]` | 图表字号，决定标题字号（数值为 `1.4em` 跟随缩放） | `number` | `14` |
+| `[padding]` | 内边距 | `Array<number \| string>` | `16` |
 | `[format]` | 坐标轴格式 | `(text: string, item: {}, index: number) => string` | - |
-| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
-| `(ready)` | 当G2完成初始化后调用 | `EventEmitter<Chart>` | - |
+| `[theme]` | 定制图表主题 | `string \| LooseObject` | - |
+| `(ready)` | 当G2完成初始化后调用 | `output<Chart>` | - |
+| `(error)` | 当渲染失败时调用（G2 未加载或渲染抛错），此时 `(ready)` 不会触发 | `output<unknown>` | - |
 
 ---
 
@@ -7526,18 +7563,21 @@ module: import { G2MiniAreaModule } from '@delon/chart/mini-area';
 | `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
 | `[color]` | 图表颜色 | `string` | `rgba(24, 144, 255, 0.2)` |
 | `[borderColor]` | 图表边颜色 | `string` | `#1890FF` |
+| `[borderWidth]` | 图表边粗细 | `number` | `2` |
+| `[fit]` | 是否自适应容器尺寸（`autoFit`） | `boolean` | `true` |
 | `[height]` | 图表高度 | `number` | `56` |
 | `[line]` | 是否显示描边 | `boolean` | `false` |
 | `[animate]` | 是否显示动画 | `boolean` | `true` |
 | `[padding]` | 图表内部间距 | `array` | `[8, 8, 8, 8]` |
-| `[xAxis]` | [x 轴配置](https://www.yuque.com/antv/g2-docs/api-chart#ef1eaedc) | `object` | - |
-| `[yAxis]` | [y 轴配置](https://www.yuque.com/antv/g2-docs/api-chart#ef1eaedc) | `object` | - |
+| `[xAxis]` | x 轴配置（按 v5 AxisComponent 传参） | `object` | - |
+| `[yAxis]` | y 轴配置（按 v5 AxisComponent 传参） | `object` | - |
 | `[yTooltipSuffix]` | y 轴Tooltip后缀，一般指定单位 | `string` | - |
 | `[tooltipType]` | Tooltip显示类型 | `'mini','default'` | `'default'` |
 | `[data]` | 数据 | `G2MiniAreaData[]` | - |
-| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
-| `(clickItem)` | 点击项回调 | `EventEmitter<G2MiniAreaClickItem>` | - |
-| `(ready)` | 当G2完成初始化后调用 | `EventEmitter<Chart>` | - |
+| `[theme]` | 定制图表主题 | `string \| LooseObject` | - |
+| `(clickItem)` | 点击项回调 | `output<G2MiniAreaClickItem>` | - |
+| `(ready)` | 当G2完成初始化后调用 | `output<Chart>` | - |
+| `(error)` | 当渲染失败时调用（G2 未加载或渲染抛错），此时 `(ready)` 不会触发 | `output<unknown>` | - |
 
 ### G2MiniAreaData
 
@@ -7573,9 +7613,10 @@ module: import { G2MiniBarModule } from '@delon/chart/mini-bar';
 | `[borderWidth]` | 线条粗细 | `number` | `5` |
 | `[padding]` | 图表内部间距 | `array` | `[8, 8, 8, 8]` |
 | `[data]` | 数据 | `G2MiniBarData[]` | - |
-| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
-| `(clickItem)` | 点击项回调 | `EventEmitter<G2MiniBarClickItem>` | - |
-| `(ready)` | 当G2完成初始化后调用 | `EventEmitter<Chart>` | - |
+| `[theme]` | 定制图表主题 | `string \| LooseObject` | - |
+| `(clickItem)` | 点击项回调 | `output<G2MiniBarClickItem>` | - |
+| `(ready)` | 当G2完成初始化后调用 | `output<Chart>` | - |
+| `(error)` | 当渲染失败时调用（G2 未加载或渲染抛错），此时 `(ready)` 不会触发 | `output<unknown>` | - |
 
 ### G2MiniBarData
 
@@ -7631,23 +7672,26 @@ module: import { G2PieModule } from '@delon/chart/pie';
 | `[animate]` | 是否显示动画 | `boolean` | `true` |
 | `[color]` | 图表颜色 | `string` | `rgba(24, 144, 255, 0.85)` |
 | `[height]` | 图表高度 | `number` | - |
+| `[fontSize]` | 图表文字基准字号（图例继承该字号，中心数值按 `em` 缩放） | `number` | `14` |
 | `[hasLegend]` | 是否显示 legend | `boolean` | `false` |
 | `[padding]` | 图表内部间距 | `number[]` | `[12, 0, 12, 0]` |
 | `[percent]` | 占比 | `number` | - |
+| `[select]` | 是否支持分片选中（**当前版本未实现，为兼容保留的空转输入**） | `boolean` | `true` |
 | `[lineWidth]` | 边框粗细 | `number` | `0` |
 | `[inner]` | 内部极坐标系的半径 | `number` | `0.75` |
 | `[blockMaxWidth]` | 多少宽度为块显示 | `number` | `380` |
 | `[tooltip]` | 是否显示 tooltip | `boolean` | `true` |
-| `[subTitle]` | 图表子标题 | `string,TemplateRef<void><void>` | - |
-| `[total]` | 总量 | `string,number,TemplateRef<void><void>` | - |
+| `[subTitle]` | 图表子标题 | `string,TemplateRef<void>` | - |
+| `[total]` | 总量 | `string,number,TemplateRef<void>` | - |
 | `[valueFormat]` | y轴格式化 | `(y: number) => string` | - |
 | `[data]` | 数据 | `G2PieData[]` | - |
 | `[colors]` | 颜色列表 | `string[]` | - |
 | `[interaction]` | 交互类型，none 无 element-active 图形元素，active-region 图表组件，brush 框选，drag-move 移动 | `InteractionType` | `none` |
 | `[ratio]` | 百分比配置项 | `G2PieRatio` | `{ text: '占比', inverse: '反比', color: '', inverseColor: '#F0F2F5' }` |
-| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
-| `(clickItem)` | 点击项回调 | `EventEmitter<G2PieClickItem>` | - |
-| `(ready)` | 当G2完成初始化后调用 | `EventEmitter<Chart>` | - |
+| `[theme]` | 定制图表主题 | `string \| LooseObject` | - |
+| `(clickItem)` | 点击项回调 | `output<G2PieClickItem>` | - |
+| `(ready)` | 当G2完成初始化后调用 | `output<Chart>` | - |
+| `(error)` | 当渲染失败时调用（G2 未加载或渲染抛错），此时 `(ready)` 不会触发 | `output<unknown>` | - |
 
 ### G2PieData
 
@@ -7678,13 +7722,15 @@ module: import { G2RadarModule } from '@delon/chart/radar';
 | `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
 | `[title]` | 图表标题 | `string,TemplateRef<void>` | - |
 | `[height]` | 图表高度 | `number` | - |
-| `[hasLegend]` | 是否显示 legend | `boolean` | `false` |
-| `[padding]` | 图表内部间距 | `array` | `[24, 30, 16, 30]` |
-| `[colors]` | 颜色列表 | `string[]` | - |
+| `[hasLegend]` | 是否显示 legend | `boolean` | `true` |
+| `[padding]` | 图表内部间距 | `array` | `[44, 30, 16, 30]` |
+| `[tickCount]` | y 轴刻度数量 | `number` | `4` |
+| `[colors]` | 颜色列表 | `string[]` | `['#1890FF', '#FACC14', '#2FC25B', '#8543E0', '#F04864', '#13C2C2', '#fa8c16', '#a0d911']` |
 | `[data]` | 数据 | `G2RadarData[]` | - |
-| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
-| `(clickItem)` | 点击项回调 | `EventEmitter<G2RadarClickItem>` | - |
-| `(ready)` | 当G2完成初始化后调用 | `EventEmitter<Chart>` | - |
+| `[theme]` | 定制图表主题 | `string \| LooseObject` | - |
+| `(clickItem)` | 点击项回调 | `output<G2RadarClickItem>` | - |
+| `(ready)` | 当G2完成初始化后调用 | `output<Chart>` | - |
+| `(error)` | 当渲染失败时调用（G2 未加载或渲染抛错），此时 `(ready)` 不会触发 | `output<unknown>` | - |
 
 ### G2RadarData
 
@@ -7721,11 +7767,13 @@ module: import { G2SingleBarModule } from '@delon/chart/single-bar';
 | `[min]` | 最小值 | `number` | `0` |
 | `[max]` | 最大值，若小于0表示显示负值 | `number` | `100` |
 | `[padding]` | 图表内部间距 | `any` | `0` |
+| `[line]` | 是否显示中位线（`(min + max) / 2` 处的横线） | `boolean` | `false` |
 | `[value]` | 值 | `number` | `0` |
 | `[format]` | 显示值格式 | `(value: number) => string` | - |
 | `[textStyle]` | 显示值样式 | `any` | `{ fontSize: 12, color: '#595959' }` |
-| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
-| `(ready)` | 当G2完成初始化后调用 | `EventEmitter<Chart>` | - |
+| `[theme]` | 定制图表主题 | `string \| LooseObject` | - |
+| `(ready)` | 当G2完成初始化后调用 | `output<Chart>` | - |
+| `(error)` | 当渲染失败时调用（G2 未加载或渲染抛错），此时 `(ready)` 不会触发 | `output<unknown>` | - |
 
 ---
 
@@ -7746,13 +7794,15 @@ module: import { G2TagCloudModule } from '@delon/chart/tag-cloud';
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
 | `[repaint]` | 数据再次变更时是否重绘 | `boolean` | `true` |
-| `[delay]` | 延迟渲染，单位：毫秒 | `number` | `200` |
+| `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
 | `[height]` | 高度值 | `number` | `200` |
 | `[width]` | 宽度值，若不指定自动按宿主元素的宽度 | `number` | `0` |
+| `[padding]` | 图表内部间距 | `number \| number[] \| 'auto'` | `0` |
 | `[data]` | 数据 | `G2TagCloudData[]` | `[]` |
-| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
-| `(clickItem)` | 点击项回调 | `EventEmitter<G2TagCloudClickItem>` | - |
-| `(ready)` | 当G2完成初始化后调用 | `EventEmitter<Chart>` | - |
+| `[theme]` | 定制图表主题 | `string \| LooseObject` | - |
+| `(clickItem)` | 点击项回调 | `output<G2TagCloudClickItem>` | - |
+| `(ready)` | 当G2完成初始化后调用 | `output<Chart>` | - |
+| `(error)` | 当渲染失败时调用（G2 未加载或渲染抛错），此时 `(ready)` 不会触发 | `output<unknown>` | - |
 
 ### G2TagCloudData
 
@@ -7786,22 +7836,23 @@ module: import { G2TimelineModule } from '@delon/chart/timeline';
 | `[data]` | 数据，注：根据 `maxAxis` 值传递指标数据 | `G2TimelineData[]` | - |
 | `[titleMap]` | 指标别名 | `G2TimelineMap` | - |
 | `[colorMap]` | 颜色 | `G2TimelineMap` | `{ y1: '#5B8FF9', y2: '#5AD8A6', y3: '#5D7092', y4: '#F6BD16', y5: '#E86452' }` |
-| `[height]` | 高度值 | `number` | `400` |
+| `[height]` | 高度值 | `number` | `450` |
 | `[padding]` | 图表内部间距 | `number[]` | `[40, 8, 64, 40]` |
 | `[borderWidth]` | 线条 | `number` | `2` |
 | `[mask]` | 日期格式，使用 [G2 Mask日期格式](https://g2.antv.vision/zh/docs/manual/tutorial/scale#time) | `string` | `HH:mm` |
 | `[maskSlider]` | 滑动条日期格式，使用 [date-fns 日期格式](https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table) | `string` | `HH:mm` |
 | `[position]` | 标题位置 | `'top','right','bottom','left'` | `'top'` |
 | `[slider]` | 是否需要滑动条 | `boolean` | `true` |
-| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
-| `(clickItem)` | 点击项回调 | `EventEmitter<G2TimelineClickItem>` | - |
-| `(ready)` | 当G2完成初始化后调用 | `EventEmitter<Chart>` | - |
+| `[theme]` | 定制图表主题 | `string \| LooseObject` | - |
+| `(clickItem)` | 点击项回调 | `output<G2TimelineClickItem>` | - |
+| `(ready)` | 当G2完成初始化后调用 | `output<Chart>` | - |
+| `(error)` | 当渲染失败时调用（G2 未加载或渲染抛错），此时 `(ready)` 不会触发 | `output<unknown>` | - |
 
 ### G2TimelineData
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
-| `[time]` | 日期格式 | `Date | number` | - |
+| `[time]` | 日期格式 | `Date \| number` | - |
 | `[y1]` | 指标1数据 | `number` | - |
 | `[y2]` | 指标2数据 | `number` | - |
 | `[y3]` | 指标3数据 | `number` | - |
@@ -7828,9 +7879,9 @@ type: G2
 module: import { G2WaterWaveModule } from '@delon/chart/water-wave';
 ---
 
-水波图是一种比例的展示方式，可以更直观的展示关键值的占比。
+水波图是一种比例的展示方式，可以更直观的展示关键值的占比。渲染基于 G2 v5 的 [`liquid`](https://g2.antv.antgroup.com/examples/general/Liquid) 图形标记。
 
-> 默认不支持父元素自适应，可以监听父元素的变化并使用 `render()` 方法来重置渲染。
+> 尺寸自适应由 v5 的 `autoFit` 负责；容器比 `[size]` 更窄时请直接调小 `[size]`。需要手动重绘时使用公开的 `render()`。
 
 ## API
 
@@ -7838,12 +7889,17 @@ module: import { G2WaterWaveModule } from '@delon/chart/water-wave';
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
-| `[animate]` | 是否显示动画 | `boolean` | `true` |
+| `[repaint]` | 数据再次变更时是否重绘 | `boolean` | `true` |
 | `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
+| `[animate]` | 是否显示进场动画（水波自身的流动由 G2 内置、始终运行） | `boolean` | `true` |
 | `[title]` | 图表标题 | `string,TemplateRef<void>` | - |
-| `[height]` | 图表高度 | `number` | `160` |
-| `[color]` | 图表颜色 | `string` | `#1890FF` |
-| `[percent]` | 进度比例 | `number` | - |
+| `[size]` | 图表尺寸（正方形边长） | `number` | `160` |
+| `[color]` | 图表颜色（水波与圆环同色） | `string` | `#1890FF` |
+| `[percent]` | 进度比例，取值 `0` ~ `100` | `number` | - |
+| `[padding]` | 图表内部间距 | `number \| number[] \| 'auto'` | `8` |
+| `[theme]` | 定制图表主题 | `string \| LooseObject` | - |
+| `(ready)` | 当G2完成初始化后调用 | `output<Chart>` | - |
+| `(error)` | 当渲染失败时调用（G2 未加载或渲染抛错），此时 `(ready)` 不会触发 | `output<unknown>` | - |
 
 ---
 

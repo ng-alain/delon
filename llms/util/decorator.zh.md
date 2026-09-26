@@ -2,7 +2,10 @@
 title: decorator
 subtitle: 装饰器
 type: Tools
+deprecated: 24.0.0
 ---
+
+# 将在 v24.0.0 移除。
 
 ## @ZoneOutside
 

@@ -228,8 +228,8 @@ export class FormConditionalVisibleIf implements OnInit, OnDestroy {
   }
 
   toggleMobile(status: boolean): void {
-    const mobileProperty = this.sf.getProperty('/mobile');
-    mobileProperty?.setVisible(status)?.widget?.detectChanges();
+    // 无需 detectChanges：setVisible 改的是 signal 支撑的状态，视图会自动刷新
+    this.sf.getProperty('/mobile')?.setVisible(status);
   }
 
   submit(value: {}): void {

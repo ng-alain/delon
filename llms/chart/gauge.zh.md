@@ -18,13 +18,16 @@ module: import { G2GaugeModule } from '@delon/chart/gauge';
 | `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
 | `[title]` | 图表标题 | `string` | - |
 | `[height]` | 图表高度 | `number` | - |
+| `[width]` | 图表宽度 | `number` | - |
 | `[color]` | 图表颜色 | `string` | `#2F9CFF` |
 | `[bgColor]` | 图表背景色 | `string` | `#F0F2F5` |
 | `[percent]` | 进度比例 | `number` | - |
-| `[padding]` | 内边距 | `Array<number | string>` | `[10, 10, 30, 10]` |
+| `[fontSize]` | 图表字号，决定标题字号（数值为 `1.4em` 跟随缩放） | `number` | `14` |
+| `[padding]` | 内边距 | `Array<number \| string>` | `16` |
 | `[format]` | 坐标轴格式 | `(text: string, item: {}, index: number) => string` | - |
-| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
-| `(ready)` | 当G2完成初始化后调用 | `EventEmitter<Chart>` | - |
+| `[theme]` | 定制图表主题 | `string \| LooseObject` | - |
+| `(ready)` | 当G2完成初始化后调用 | `output<Chart>` | - |
+| `(error)` | 当渲染失败时调用（G2 未加载或渲染抛错），此时 `(ready)` 不会触发 | `output<unknown>` | - |
 
 ---
 
@@ -35,35 +38,34 @@ module: import { G2GaugeModule } from '@delon/chart/gauge';
 基础用法。
 
 ```typescript
-import { Platform } from '@angular/cdk/platform';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { interval } from 'rxjs';
 
 import { G2GaugeModule } from '@delon/chart/gauge';
-import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 @Component({
   selector: 'chart-gauge-basic',
-  template: ` <g2-gauge [title]="'核销率'" height="164" [percent]="percent" [color]="color" /> `,
+  template: `
+    @let title = '核销率';
+    @let size = 164;
+    <g2-gauge [title]="title" [height]="size" [width]="size" [percent]="percent()" [color]="color()" />
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [G2GaugeModule]
 })
-export class ChartGaugeBasic implements OnDestroy {
-  percent = 36;
-  color = '#2f9cff';
-  private time$: NzSafeAny;
+export class ChartGaugeBasic {
+  readonly percent = signal(36);
+  readonly color = signal('#2f9cff');
 
-  constructor(platform: Platform, cdr: ChangeDetectorRef) {
-    if (!platform.isBrowser) return;
-
-    this.time$ = setInterval(() => {
-      this.percent = parseInt((Math.random() * 100).toString(), 10);
-      this.color = this.percent > 50 ? '#f50' : '#2f9cff';
-      cdr.detectChanges();
-    }, 1000);
-  }
-
-  ngOnDestroy(): void {
-    clearInterval(this.time$);
+  constructor() {
+    interval(1000)
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => {
+        const percent = parseInt((Math.random() * 100).toString(), 10);
+        this.percent.set(percent);
+        this.color.set(percent > 50 ? '#f50' : '#2f9cff');
+      });
   }
 }
 ```

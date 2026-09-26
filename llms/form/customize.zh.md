@@ -37,6 +37,7 @@ export function withTestWidget(): SFWidgetProvideConfig {
     <!-- 开始自定义控件区域 -->
     <tinymce
       [ngModel]="value"
+      [ngModelOptions]="{ standalone: true }"
       (ngModelChange)="change($event)"
       [config]="config"
       [loading]="loading">
@@ -71,13 +72,23 @@ class TestWidget extends ControlWidget implements OnInit {
 }
 ```
 
+**ngModel 与表单注册**
+
+小部件模板里的 `ngModel` 只是与 `FormProperty` 同步的局部绑定，不需要也不应该注册到任何表单，因此必须声明为 `standalone`；否则 Angular v22 会在控制台给出 `NG01354` 警告。
+
+> 注意：不要按该警告的提示添加 `viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]`：这会让 `ngModel` 尝试注册到 SF 内部的表单，而它没有 `name`，会直接抛出 `NG01352`。
+
 **sf-item-wrap**
 
 在模板中唯一是利用 `sf-item-wrap` 包裹自定义内容，它内部封装表单基础元素。
 
 **变更检测**
 
-小部件在渲染过程是手动变更检测，大部分情况下 `ControlWidget` 已经很好的管理什么时机应该执行变更检测，在自定义小部件过程中可能会遇到异步操作导致界面并未渲染，此时可以调用 `detectChanges()` 方法来触发一次小部件节点的变更检测。
+小部件状态全部由 signal 驱动：`ui` / `schema` 是响应式对象，组件自身的状态也应使用 `signal`。
+因此**不再需要手动触发变更检测**（`detectChanges()` 已移除），修改状态后视图会自动刷新。
+
+> 注意：`ui` / `schema` 只能**整值替换**（如 `ui.optionalHelp = { ...ui.optionalHelp, text }`）；
+> 就地修改嵌套结构（如 `schema.enum.push(...)`）不会被跟踪。
 
 ### 注册小部件
 

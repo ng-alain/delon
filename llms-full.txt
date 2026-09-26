@@ -1,6 +1,6 @@
 ﻿# @delon/* Component Documentation (English)
 
-This file contains aggregated content from all component docs. Total 92 components.
+This file contains aggregated content from all component docs. Total 106 components.
 
 ---
 
@@ -586,6 +586,7 @@ export function withTestWidget(): SFWidgetProvideConfig {
     <!-- Start area -->
     <tinymce
       [ngModel]="value"
+      [ngModelOptions]="{ standalone: true }"
       (ngModelChange)="change($event)"
       [config]="config"
       [loading]="loading">
@@ -620,13 +621,23 @@ class TestWidget extends ControlWidget implements OnInit {
 }
 ```
 
+**ngModel and form registration**
+
+The `ngModel` inside a widget template is only a local binding synchronized with `FormProperty`, it neither needs nor should be registered with any form, so it must be declared as `standalone`; otherwise Angular v22 reports a `NG01354` warning in the console.
+
+> Note: Do not follow that warning and add `viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]`: it makes `ngModel` try to register with the internal form of SF, and since it has no `name`, it throws `NG01352` immediately.
+
 **sf-item-wrap**
 
 Wrap your custom content in the template with the `sf-item-wrap` component, which encapsulates the form base elements internally.
 
 **Change detection**
 
-The widget is manually trigger changed detection during the rendering process. In most cases, the `ControlWidget` is well manage of changing detection. but the asynchronous operation may be encountered, you can call the `detectChanges()` method to trigger a change detection of the widget.
+Widget state is fully signal-driven: `ui` / `schema` are reactive objects, and your own state should use `signal`.
+Therefore **manual change detection is no longer needed** (`detectChanges()` has been removed) — the view refreshes automatically.
+
+> Note: `ui` / `schema` must be **replaced as a whole** (e.g. `ui.optionalHelp = { ...ui.optionalHelp, text }`);
+> mutating nested structures in place (e.g. `schema.enum.push(...)`) is not tracked.
 
 ### Register
 
@@ -931,8 +942,7 @@ You can get a specific attribute of Schema by calling `getProperty` function, th
 const statusProperty = this.sf.getProperty('/status')!;
 statusProperty.schema.enum = ['1', '2', '3'];
 statusProperty.widget.reset('2');
-// Or manually trigger `detectChanges`
-// statusProperty.widget.detectChanges();
+// No manual change detection needed: signal-driven state refreshes automatically
 ```
 
 If just only update a element value, then:
@@ -978,7 +988,7 @@ const alainConfig: AlainConfig = {
 ## How to toggle show or hide an element
 
 ```ts
-this.sf.getProperty('/mobile')?.setVisible(status).widget.detectChanges();
+this.sf.getProperty('/mobile')?.setVisible(status);
 ```
 
 ---
@@ -992,6 +1002,8 @@ type: Documents
 ## How to auto-resize of the container?
 
 The G2 uses `window.addEventListener('resize', this.onResize)` to detect a change in parent dom element's size. So you need to manually monitor the change in the size of the container and call `chart.forceFit()` to force resize.
+
+> **Since v5, `forceFit()` returns a `Promise`** (it was synchronous in v4): use `await chart.forceFit()` or `void chart.forceFit()`. Components already handle `autoFit` on the first frame and on window resize, so manual calls are rarely needed.
 
 [comment]: <demo(resizable)>
 
@@ -1652,7 +1664,25 @@ title: Getting Started
 type: Documents
 ---
 
-Chart provides the well-designed abstract chart components based on the [G2](https://antv.alipay.com/zh-cn/g2/3.x/index.html). These components provide the ability to use with complex mixed view or just use along for common business usage.
+Chart provides the well-designed abstract chart components based on the [G2](https://g2.antv.antgroup.com/en/).
+
+## Upgrading from v4 to v5
+
+`@antv/g2` has been upgraded from v4 to **v5** (`^5.4.8`). Component APIs (`[data]`, `[height]`, `[padding]`, `[theme]`, `(ready)`, `(clickItem)`, ...) keep their **names and types** (the only exception is `g2-water-wave`, whose `[height]` is renamed to `[size]`), but rendering is now **asynchronous and spec-driven**:
+
+- **Rendering is async**: `ready` fires on the **first `AFTER_RENDER`** (the first frame is really painted) and **only once**; `loaded` (used by the template to drop the skeleton) is set at the same moment. Subscribe to `(ready)` to get the chart instance:
+  ```html
+  <g2-bar [data]="data()" (ready)="onReady($event)" (error)="onError($event)" />
+  ```
+- **Failure is a separate layer from `ready`**: a missing G2 library or a failed render emits **`(error)`** (plus `console.error`); `ready` does not fire and the skeleton stays.
+- **`install()` is no longer public**: use the protected `afterCreate(chart)` / `onRendered()` extension points; use `changeData()` for data updates (it goes through the base class' serial queue, so it cannot race the first frame).
+- **Interactions**: v4's `active-region` and `drag-move` have no v5 equivalent and degrade to no interaction.
+- **tooltip**: `domStyles`/`itemTpl` are gone; a **view-level `tooltip` is not inherited by child marks** — set it at the mark level.
+- **Click payload type**: `Event` → `G2Event` (`ev.data?.data` is the datum).
+- **`g2-tag-cloud`**: no longer writes `x/y/size/rotate/font` back into the data rows (layout is done by the built-in `wordCloud` mark; `@antv/data-set` has been removed).
+- **`g2-water-wave`**: the hand-written v4 canvas is replaced by the v5 [`liquid`](https://g2.antv.antgroup.com/examples/general/Liquid) mark (the center percentage is drawn by G2's built-in text); **`[height]` is renamed to `[size]`** (the side length of the square); `[animate]` now controls **only the enter animation** (the wave motion is built into G2 and always runs) and sizing is handled by `autoFit`.
+- **Fixed bar thickness with a transposed coordinate**: with `coordinate.transform: [{ type: 'transpose' }]` the interval's **on-screen thickness is clamped by `style.minWidth`/`maxWidth` (pixels)** while `minHeight` clamps the on-screen width — so v4's `.size(30)` cannot be reproduced with `encode.size` alone; also write `style: { minWidth: 30, maxWidth: 30 }`.
+ These components provide the ability to use with complex mixed view or just use along for common business usage.
 
 ## Usage
 
@@ -1666,8 +1696,7 @@ const alainConfig: AlainConfig = {
   chart: { 
     // The following is the default configuration. If the project cannot be accessed from the Internet, you can directly use the `./assets***` path for the dependent package according to the `angular.json` configuration
     libs: [
-      'https://gw.alipayobjects.com/os/lib/antv/g2/4.1.4/dist/g2.min.js',
-      'https://gw.alipayobjects.com/os/lib/antv/data-set/0.11.7/dist/data-set.js',
+      'https://gw.alipayobjects.com/os/lib/antv/g2/5.4.8/dist/g2.min.js',
     ],
   },
 };
@@ -1699,11 +1728,6 @@ You can also configure the `assets` (About [assets](https://angular.io/guide/wor
     "glob": "**/*",
     "input": "./node_modules/@antv/g2/dist",
     "output": "/@antv/g2/"
-  },
-  {
-    "glob": "**/*",
-    "input": "./node_modules/@antv/data-set/dist",
-    "output": "/@antv/data-set/"
   }
 ]
 ```
@@ -1714,10 +1738,7 @@ Finally modify the `libs` parameter of the global configuration:
 // global-config.module.ts
 const alainConfig: AlainConfig = {
   chart: { 
-    libs: [
-      './assets/@antv/g2/g2.min.js',
-      './assets/@antv/data-set/data-set.js',
-    ],
+    libs: ['./assets/@antv/g2/g2.min.js'],
   },
 };
 ```
@@ -2248,7 +2269,7 @@ As you begin your business development on NG-ALAIN, i recommend that you first r
 
 + [Ant Design Guide article](//ant.design/docs/spec/introduce)
 + [Ant Design for Angular](//ng.ant.design/)
-+ [Antv chart - G2](//www.yuque.com/antv/g2-docs-en?language=en-us)
++ [Antv chart - G2](https://g2.antv.antgroup.com/en/)
 + [NG-ZORRO Community recommendation](https://ng.ant.design/docs/recommendation/en)
 
 NG-ALAIN's base component library comes from NG-ZORRO, so you can get a very detailed [API](//ng.ant.design/) documentation for its use on the official website. For ng components provided by -alain are obtained through the [component page](/components).
@@ -4379,6 +4400,10 @@ When all `path`s have a fixed output format, such as success and exceptions have
 
 If an interceptor is used to handle exception messages, when subscribing only needs to always get the data of the `result` field, it can be solved by specifying `--responseDataField="result"`.
 
+### Code style
+
+Generated files start with `/* eslint-disable */` and `/* eslint-enable prettier/prettier */`: the former keeps generated code away from every other lint rule, the latter hands formatting back to the project's own `prettier/prettier` rule. Run `eslint --fix` (the scaffold already does this on commit through lint-staged, or let your IDE do it on save) to align the generated code with the project code style.
+
 ---
 
 ---
@@ -6148,6 +6173,32 @@ export const appConfig: ApplicationConfig = {
 ---
 
 ---
+title: chart-echarts
+subtitle: ECharts
+cols: 1
+type: ECharts
+module: import { ChartEChartsModule } from '@delon/chart/chart-echarts';
+---
+
+[ECharts](https://echarts.apache.org/en/index.html) is an open-source JavaScript visualization library. The ECharts script is lazy-loaded and works out of the box.
+
+## API
+
+### chart-echarts
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[width]` | Width of the chart | `number, string` | `100%` |
+| `[height]` | Height of the chart | `number, string` | `400px` |
+| `[option]` | [Options](https://echarts.apache.org/en/option.html#title) | `ChartEChartsOption` | - |
+| `[theme]` | [Theme](https://echarts.apache.org/en/theme-builder.html) configuration | `string, object` | - |
+| `[initOpt]` | [init](https://echarts.apache.org/en/api.html#echarts.init) options (such as `renderer`, `devicePixelRatio`); changing it recreates the instance | `object` | - |
+| `[on]` | Equivalent to the ECharts [on](https://echarts.apache.org/en/api.html#echartsInstance.on) | `ChartEChartsOn[]` | - |
+| `(events)` | Event callback | `output<ChartEChartsEvent>` | - |
+
+---
+
+---
 title: checkbox
 subtitle: Checkbox
 type: Widgets
@@ -6439,7 +6490,10 @@ getTimeDistance('week')
 title: decorator
 subtitle: Decorator
 type: Tools
+deprecated: 24.0.0
 ---
+
+# Will be removed in v24.0.0.
 
 ## @ZoneOutside
 
@@ -7157,6 +7211,73 @@ There are three ways:
 ---
 
 ---
+title: g2-bar
+subtitle: Bar
+cols: 1
+type: G2
+module: import { G2BarModule } from '@delon/chart/bar';
+---
+
+Use vertical bars to compare values between categories. One axis represents the categorical dimension to compare, and the other represents the corresponding value.
+
+## API
+
+### g2-bar
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[repaint]` | Whether to repaint when the data changes again | `boolean` | `true` |
+| `[delay]` | Delayed rendering, unit: ms | `number` | `0` |
+| `[title]` | Title of the chart | `string,TemplateRef<void>` | - |
+| `[color]` | Color of the chart | `string` | `rgba(24, 144, 255, 0.85)` |
+| `[padding]` | Padding of the chart, `'auto'` means G2 calculates it automatically | `Array<number \| string> \| string` | `'auto'` |
+| `[height]` | Height of the chart | `number` | - |
+| `[data]` | Data | `G2BarData[]` | `[]` |
+| `[autoLabel]` | Automatically hide the x-axis label when the width is insufficient | `boolean` | `true` |
+| `[interaction]` | Interaction type: `none` (no interaction), `element-active` (active element), `active-region` (chart component), `brush` (brush selection), `drag-move` (drag to move) | `InteractionType` | `none` |
+| `[theme]` | Custom chart theme | `string \| LooseObject` | - |
+| `(clickItem)` | Callback when clicking an item | `output<G2BarClickItem>` | - |
+| `(ready)` | Callback when G2 is initialized | `output<Chart>` | - |
+| `(error)` | Callback when rendering fails (G2 not loaded or render throws); `(ready)` will not fire | `output<unknown>` | - |
+
+### G2BarData
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[x]` | x-axis | `any` | - |
+| `[y]` | y-axis | `any` | - |
+| `[color]` | Color of the axis | `string` | - |
+
+---
+
+---
+title: g2-card
+subtitle: Chart Card
+cols: 2
+type: G2
+module: import { G2CardModule } from '@delon/chart/card';
+---
+
+Chart card, a card container for charts, which can be easily combined with other chart suites to display rich information.
+
+## API
+
+### g2-card
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[title]` | Title of the card | `string,TemplateRef<void>` | - |
+| `[avatar]` | Avatar | `string,TemplateRef<void>` | - |
+| `[action]` | Action of the card | `string,TemplateRef<void>` | - |
+| `[total]` | Total amount of the data (HTML supported) | `string` | - |
+| `[footer]` | Footer of the card | `string,TemplateRef<void>` | - |
+| `[contentHeight]` | Height of the content area (unit: `px`) | `string` | - |
+| `[bordered]` | Whether to display the border | `boolean` | `false` |
+| `[loading]` | Whether to display the loading state (`nz-spin` wraps the content) | `boolean` | `false` |
+
+---
+
+---
 title: g2-chart
 subtitle: Custom Chart
 cols: 1
@@ -7192,8 +7313,8 @@ If throw error `G2` not found, please refer to [Frequently Asked Questions](/cha
 
 ## Links
 
-- [G2 Document](https://www.yuque.com/antv/g2-docs-en)
-- [G2 Demo](https://antv.alipay.com/zh-cn/g2/3.x/demo/index.html)
+- [G2 Documents](https://g2.antv.antgroup.com/en/)
+- [G2 Examples](https://g2.antv.antgroup.com/examples)
 
 ## API
 
@@ -7201,13 +7322,409 @@ If throw error `G2` not found, please refer to [Frequently Asked Questions](/cha
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
+| `[repaint]` | Whether to repaint when the data changes again | `boolean` | `true` |
 | `[delay]` | Delayed rendering, unit: ms | `number` | `0` |
 | `[height]` | Height of chart container | `number` | - |
-| `[resizeTime]` | Resize event debounce time | `number` | `200` |
-| `(render)` | Render event | `EventEmitter<ElementRef>` | - |
-| `(resize)` | Resize event | `EventEmitter<ElementRef>` | - |
-| `(destroy)` | Destroy event | `EventEmitter<ElementRef>` | - |
-| `[theme]` | Custom chart theme | `string | LooseObject` | - |
+| `[resizeTime]` | Resize event debounce time (`0` disables the resize listener) | `number` | `0` |
+| `(render)` | Render event | `output<ElementRef>` | - |
+| `(resize)` | Resize event | `output<ElementRef>` | - |
+| `(destroy)` | Destroy event (**not emitted in the current version, kept for compatibility**) | `output<ElementRef>` | - |
+| `(ready)` | Callback when G2 is initialized | `output<Chart>` | - |
+| `(error)` | Callback when rendering fails (G2 not loaded or render throws); `(ready)` will not fire | `output<unknown>` | - |
+| `[theme]` | Custom chart theme | `string \| LooseObject` | - |
+
+---
+
+---
+title: g2-gauge
+subtitle: Gauge
+cols: 1
+type: G2
+module: import { G2GaugeModule } from '@delon/chart/gauge';
+---
+
+A way to display progress, which shows the current progress more intuitively and can also represent a percentage.
+
+## API
+
+### g2-gauge
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[repaint]` | Whether to repaint when the data changes again | `boolean` | `true` |
+| `[delay]` | Delayed rendering, unit: ms | `number` | `0` |
+| `[title]` | Title of the chart | `string` | - |
+| `[height]` | Height of the chart | `number` | - |
+| `[width]` | Width of the chart | `number` | - |
+| `[color]` | Color of the chart | `string` | `#2F9CFF` |
+| `[bgColor]` | Background color of the chart | `string` | `#F0F2F5` |
+| `[percent]` | Percentage | `number` | - |
+| `[fontSize]` | Base font size of the chart (the center value scales with `1.4em`) | `number` | `14` |
+| `[padding]` | Padding | `Array<number \| string>` | `16` |
+| `[format]` | Formatter of the axis label | `(text: string, item: {}, index: number) => string` | - |
+| `[theme]` | Custom chart theme | `string \| LooseObject` | - |
+| `(ready)` | Callback when G2 is initialized | `output<Chart>` | - |
+| `(error)` | Callback when rendering fails (G2 not loaded or render throws); `(ready)` will not fire | `output<unknown>` | - |
+
+---
+
+---
+title: g2-mini-area
+subtitle: Mini Area
+cols: 2
+type: G2
+module: import { G2MiniAreaModule } from '@delon/chart/mini-area';
+---
+
+An area chart is also called an area graph. It is built on top of a line chart: the area between the line and the axis is filled with a color or texture, and this filled area is called an area. The color fill highlights the trend information better.
+
+## API
+
+### g2-mini-area
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[repaint]` | Whether to repaint when the data changes again | `boolean` | `true` |
+| `[delay]` | Delayed rendering, unit: ms | `number` | `0` |
+| `[color]` | Color of the chart | `string` | `rgba(24, 144, 255, 0.2)` |
+| `[borderColor]` | Border color of the chart | `string` | `#1890FF` |
+| `[borderWidth]` | Border width of the chart | `number` | `2` |
+| `[fit]` | Whether to fit the container size (`autoFit`) | `boolean` | `true` |
+| `[height]` | Height of the chart | `number` | `56` |
+| `[line]` | Whether to display the line | `boolean` | `false` |
+| `[animate]` | Whether to display the animation | `boolean` | `true` |
+| `[padding]` | Padding of the chart | `array` | `[8, 8, 8, 8]` |
+| `[xAxis]` | x-axis options (passed to the v5 `AxisComponent`) | `object` | - |
+| `[yAxis]` | y-axis options (passed to the v5 `AxisComponent`) | `object` | - |
+| `[yTooltipSuffix]` | Suffix of the y-axis tooltip, usually used to specify the unit | `string` | - |
+| `[tooltipType]` | Tooltip type | `'mini','default'` | `'default'` |
+| `[data]` | Data | `G2MiniAreaData[]` | - |
+| `[theme]` | Custom chart theme | `string \| LooseObject` | - |
+| `(clickItem)` | Callback when clicking an item | `output<G2MiniAreaClickItem>` | - |
+| `(ready)` | Callback when G2 is initialized | `output<Chart>` | - |
+| `(error)` | Callback when rendering fails (G2 not loaded or render throws); `(ready)` will not fire | `output<unknown>` | - |
+
+### G2MiniAreaData
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[x]` | x-axis | `any` | - |
+| `[y]` | y-axis | `any` | - |
+
+---
+
+---
+title: g2-mini-bar
+subtitle: Mini Bar
+cols: 2
+type: G2
+module: import { G2MiniBarModule } from '@delon/chart/mini-bar';
+---
+
+A mini bar chart is better for displaying simple interval data; its concise presentation greatly reduces the visual pressure of large amounts of data.
+
+## API
+
+### g2-mini-bar
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[repaint]` | Whether to repaint when the data changes again | `boolean` | `true` |
+| `[delay]` | Delayed rendering, unit: ms | `number` | `0` |
+| `[color]` | Color of the chart | `string` | `#1890FF` |
+| `[height]` | Height of the chart | `number` | - |
+| `[yTooltipSuffix]` | Suffix of the y-axis tooltip, usually used to specify the unit | `string` | - |
+| `[tooltipType]` | Tooltip type | `'mini','default'` | `'default'` |
+| `[borderWidth]` | Line width | `number` | `5` |
+| `[padding]` | Padding of the chart | `array` | `[8, 8, 8, 8]` |
+| `[data]` | Data | `G2MiniBarData[]` | - |
+| `[theme]` | Custom chart theme | `string \| LooseObject` | - |
+| `(clickItem)` | Callback when clicking an item | `output<G2MiniBarClickItem>` | - |
+| `(ready)` | Callback when G2 is initialized | `output<Chart>` | - |
+| `(error)` | Callback when rendering fails (G2 not loaded or render throws); `(ready)` will not fire | `output<unknown>` | - |
+
+### G2MiniBarData
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[x]` | x-axis | `any` | - |
+| `[y]` | y-axis | `any` | - |
+| `[color]` | Color of the axis | `string` | - |
+
+---
+
+---
+title: g2-mini-progress
+subtitle: Mini Progress
+cols: 1
+type: G2
+module: import { G2MiniProgressModule } from '@delon/chart/mini-progress';
+---
+
+It is ideal for displaying speed-related graphics.
+
+## API
+
+### g2-mini-progress
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[target]` | Target percentage | `number` | - |
+| `[color]` | Color of the progress bar | `string` | - |
+| `[strokeWidth]` | Height of the progress bar | `number` | - |
+| `[percent]` | Percentage | `number` | - |
+
+---
+
+---
+title: g2-pie
+subtitle: Pie
+cols: 1
+type: G2
+module: import { G2PieModule } from '@delon/chart/pie';
+---
+
+It is ideal for displaying speed-related graphics.
+
+## API
+
+### g2-pie
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[repaint]` | Whether to repaint when the data changes again | `boolean` | `true` |
+| `[delay]` | Delayed rendering, unit: ms | `number` | `0` |
+| `[animate]` | Whether to display the animation | `boolean` | `true` |
+| `[color]` | Color of the chart | `string` | `rgba(24, 144, 255, 0.85)` |
+| `[height]` | Height of the chart | `number` | - |
+| `[fontSize]` | Base font size (the legend inherits it and the center value scales with `em`) | `number` | `14` |
+| `[hasLegend]` | Whether to display the legend | `boolean` | `false` |
+| `[padding]` | Padding of the chart | `number[]` | `[12, 0, 12, 0]` |
+| `[percent]` | Percentage | `number` | - |
+| `[select]` | Whether slice selection is supported (**not implemented in the current version, kept for compatibility and has no effect**) | `boolean` | `true` |
+| `[lineWidth]` | Border width | `number` | `0` |
+| `[inner]` | Radius of the inner polar coordinate | `number` | `0.75` |
+| `[blockMaxWidth]` | Width at which the layout switches to block mode | `number` | `380` |
+| `[tooltip]` | Whether to display the tooltip | `boolean` | `true` |
+| `[subTitle]` | Subtitle of the chart | `string,TemplateRef<void>` | - |
+| `[total]` | Total amount | `string,number,TemplateRef<void>` | - |
+| `[valueFormat]` | Formatter for the y-axis value | `(y: number) => string` | - |
+| `[data]` | Data | `G2PieData[]` | - |
+| `[colors]` | Color list | `string[]` | - |
+| `[interaction]` | Interaction type: `none` (no interaction), `element-active` (active element), `active-region` (chart component), `brush` (brush selection), `drag-move` (drag to move) | `InteractionType` | `none` |
+| `[ratio]` | Percentage configuration | `G2PieRatio` | `{ text: '占比', inverse: '反比', color: '', inverseColor: '#F0F2F5' }` |
+| `[theme]` | Custom chart theme | `string \| LooseObject` | - |
+| `(clickItem)` | Callback when clicking an item | `output<G2PieClickItem>` | - |
+| `(ready)` | Callback when G2 is initialized | `output<Chart>` | - |
+| `(error)` | Callback when rendering fails (G2 not loaded or render throws); `(ready)` will not fire | `output<unknown>` | - |
+
+### G2PieData
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[x]` | x-axis | `any` | - |
+| `[y]` | y-axis | `number` | - |
+
+---
+
+---
+title: g2-radar
+subtitle: Radar
+cols: 1
+type: G2
+module: import { G2RadarModule } from '@delon/chart/radar';
+---
+
+A radar chart is a graphical method of displaying multivariate data in the form of a two-dimensional chart of three or more quantitative variables represented on axes starting from the same point. The relative position and angle of the axes are usually uninformative.
+
+## API
+
+### g2-radar
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[repaint]` | Whether to repaint when the data changes again | `boolean` | `true` |
+| `[delay]` | Delayed rendering, unit: ms | `number` | `0` |
+| `[title]` | Title of the chart | `string,TemplateRef<void>` | - |
+| `[height]` | Height of the chart | `number` | - |
+| `[hasLegend]` | Whether to display the legend | `boolean` | `true` |
+| `[padding]` | Padding of the chart | `array` | `[44, 30, 16, 30]` |
+| `[tickCount]` | Number of y-axis ticks | `number` | `4` |
+| `[colors]` | Color list | `string[]` | `['#1890FF', '#FACC14', '#2FC25B', '#8543E0', '#F04864', '#13C2C2', '#fa8c16', '#a0d911']` |
+| `[data]` | Data | `G2RadarData[]` | - |
+| `[theme]` | Custom chart theme | `string \| LooseObject` | - |
+| `(clickItem)` | Callback when clicking an item | `output<G2RadarClickItem>` | - |
+| `(ready)` | Callback when G2 is initialized | `output<Chart>` | - |
+| `(error)` | Callback when rendering fails (G2 not loaded or render throws); `(ready)` will not fire | `output<unknown>` | - |
+
+### G2RadarData
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[name]` | Name | `string` | - |
+| `[label]` | Label | `string` | - |
+| `[value]` | Value | `number` | - |
+
+---
+
+---
+title: g2-single-bar
+subtitle: Single Bar
+cols: 1
+type: G2
+module: import { G2SingleBarModule } from '@delon/chart/single-bar';
+---
+
+A single bar chart is better for displaying simple interval data in a list; its concise presentation greatly reduces the visual pressure of large amounts of data.
+
+## API
+
+### g2-single-bar
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[repaint]` | Whether to repaint when the data changes again | `boolean` | `true` |
+| `[delay]` | Delayed rendering, unit: ms | `number` | `0` |
+| `[plusColor]` | Color of the chart | `string` | `#40a9ff` |
+| `[minusColor]` | Color of the chart for negative values | `string` | `#ff4d4f` |
+| `[height]` | Height of the chart | `number` | `60` |
+| `[barSize]` | Height of the bar | `number` | `30` |
+| `[min]` | Minimum value | `number` | `0` |
+| `[max]` | Maximum value; a value less than 0 means negative values are displayed | `number` | `100` |
+| `[padding]` | Padding of the chart | `any` | `0` |
+| `[line]` | Whether to display the middle line (the horizontal line at `(min + max) / 2`) | `boolean` | `false` |
+| `[value]` | Value | `number` | `0` |
+| `[format]` | Formatter of the displayed value | `(value: number) => string` | - |
+| `[textStyle]` | Style of the displayed value | `any` | `{ fontSize: 12, color: '#595959' }` |
+| `[theme]` | Custom chart theme | `string \| LooseObject` | - |
+| `(ready)` | Callback when G2 is initialized | `output<Chart>` | - |
+| `(error)` | Callback when rendering fails (G2 not loaded or render throws); `(ready)` will not fire | `output<unknown>` | - |
+
+---
+
+---
+title: g2-tag-cloud
+subtitle: Tag Cloud
+cols: 1
+type: G2
+module: import { G2TagCloudModule } from '@delon/chart/tag-cloud';
+---
+
+A tag cloud is a way to display a set of related tags and their corresponding weights. A typical tag cloud contains 30 to 150 tags, and the weight affects the font size or other visual effects.
+
+## API
+
+### g2-tag-cloud
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[repaint]` | Whether to repaint when the data changes again | `boolean` | `true` |
+| `[delay]` | Delayed rendering, unit: ms | `number` | `0` |
+| `[height]` | Height | `number` | `200` |
+| `[width]` | Width, automatically detected from the host element if not specified | `number` | `0` |
+| `[padding]` | Padding of the chart | `number \| number[] \| 'auto'` | `0` |
+| `[data]` | Data | `G2TagCloudData[]` | `[]` |
+| `[theme]` | Custom chart theme | `string \| LooseObject` | - |
+| `(clickItem)` | Callback when clicking an item | `output<G2TagCloudClickItem>` | - |
+| `(ready)` | Callback when G2 is initialized | `output<Chart>` | - |
+| `(error)` | Callback when rendering fails (G2 not loaded or render throws); `(ready)` will not fire | `output<unknown>` | - |
+
+### G2TagCloudData
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[name]` | Name | `string` | - |
+| `[value]` | Value | `number` | - |
+
+---
+
+---
+title: g2-timeline
+subtitle: Timeline
+cols: 1
+type: G2
+module: import { G2TimelineModule } from '@delon/chart/timeline';
+---
+
+The `timeline` component renders a bar chart with a time axis, where `x` points to the time value. By default it displays up to two indicators at the same time, `y1` and `y2`.
+
+## API
+
+### g2-timeline
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[repaint]` | Whether to repaint when the data changes again | `boolean` | `true` |
+| `[delay]` | Delayed rendering, unit: ms | `number` | `0` |
+| `[title]` | Title of the chart | `string,TemplateRef<void>` | - |
+| `[maxAxis]` | Maximum number of indicators | `number` | `2` |
+| `[data]` | Data; note that the indicator data passed depends on `maxAxis` | `G2TimelineData[]` | - |
+| `[titleMap]` | Alias of the indicator | `G2TimelineMap` | - |
+| `[colorMap]` | Color of the indicator | `G2TimelineMap` | `{ y1: '#5B8FF9', y2: '#5AD8A6', y3: '#5D7092', y4: '#F6BD16', y5: '#E86452' }` |
+| `[height]` | Height | `number` | `450` |
+| `[padding]` | Padding of the chart | `number[]` | `[40, 8, 64, 40]` |
+| `[borderWidth]` | Line width | `number` | `2` |
+| `[mask]` | Date format, using the [G2 mask date format](https://g2.antv.vision/zh/docs/manual/tutorial/scale#time) | `string` | `HH:mm` |
+| `[maskSlider]` | Slider date format, using the [date-fns date format](https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table) | `string` | `HH:mm` |
+| `[position]` | Position of the title | `'top','right','bottom','left'` | `'top'` |
+| `[slider]` | Whether the slider is required | `boolean` | `true` |
+| `[theme]` | Custom chart theme | `string \| LooseObject` | - |
+| `(clickItem)` | Callback when clicking an item | `output<G2TimelineClickItem>` | - |
+| `(ready)` | Callback when G2 is initialized | `output<Chart>` | - |
+| `(error)` | Callback when rendering fails (G2 not loaded or render throws); `(ready)` will not fire | `output<unknown>` | - |
+
+### G2TimelineData
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[time]` | Date format | `Date \| number` | - |
+| `[y1]` | Data of indicator 1 | `number` | - |
+| `[y2]` | Data of indicator 2 | `number` | - |
+| `[y3]` | Data of indicator 3 | `number` | - |
+| `[y4]` | Data of indicator 4 | `number` | - |
+| `[y5]` | Data of indicator 5 | `number` | - |
+
+### G2TimelineMap
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[y1]` | Indicator 1 | `string` | - |
+| `[y2]` | Indicator 2 | `string` | - |
+| `[y3]` | Indicator 3 | `string` | - |
+| `[y4]` | Indicator 4 | `string` | - |
+| `[y5]` | Indicator 5 | `string` | - |
+
+---
+
+---
+title: g2-water-wave
+subtitle: Water Wave
+cols: 1
+type: G2
+module: import { G2WaterWaveModule } from '@delon/chart/water-wave';
+---
+
+A water wave chart is a way to display a proportion, which shows the percentage of a key value more intuitively. It is rendered with the G2 v5 [`liquid`](https://g2.antv.antgroup.com/examples/general/Liquid) mark.
+
+> Sizing is handled by the v5 `autoFit`; when the container is narrower than `[size]`, pass a smaller `[size]` instead. Use the public `render()` method to repaint manually.
+
+## API
+
+### g2-water-wave
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[repaint]` | Whether to repaint when the data changes again | `boolean` | `true` |
+| `[delay]` | Delayed rendering, unit: ms | `number` | `0` |
+| `[animate]` | Whether to display the enter animation (the wave motion itself is built into G2 and always runs) | `boolean` | `true` |
+| `[title]` | Title of the chart | `string,TemplateRef<void>` | - |
+| `[size]` | Size of the chart (the side length of the square) | `number` | `160` |
+| `[color]` | Color of the chart (the wave and the ring share it) | `string` | `#1890FF` |
+| `[percent]` | Percentage, from `0` to `100` | `number` | - |
+| `[padding]` | Padding of the chart | `number \| number[] \| 'auto'` | `8` |
+| `[theme]` | Custom chart theme | `string \| LooseObject` | - |
+| `(ready)` | Callback when G2 is initialized | `output<Chart>` | - |
+| `(error)` | Callback when rendering fails (G2 not loaded or render throws); `(ready)` will not fire | `output<unknown>` | - |
 
 ---
 
@@ -10172,6 +10689,28 @@ Non-built-in modules need to additionally register `withTreeSelectWidget` in [js
 | `[virtualMinBufferPx]` | The minimum amount of buffer rendered beyond the viewport (in pixels),same as [cdk minBufferPx](https://material.angular.io/cdk/scrolling/api) | `number` | `28` |
 
 > Asynchronous data must set initial data (Using either `enum` or `asyncData`), otherwise, `expandChange` cannot be triggered.
+
+---
+
+---
+type: G2
+title: trend
+subtitle: Trend
+cols: 1
+module: import { TrendModule } from '@delon/chart/trend';
+---
+
+Trend symbols mark rising and falling trends. Green usually means "good" and red means "bad", except in stock market scenarios.
+
+## API
+
+### trend
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[colorful]` | Whether to use colorful marks | `boolean` | `true` |
+| `[flag]` | Rising or falling flag | `'up','down'` | - |
+| `[reverseColor]` | Whether to reverse the color | `boolean` | `false` |
 
 ---
 

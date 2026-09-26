@@ -29,6 +29,8 @@ Often used in data cards for highlighting the business data.
 
 ### Basic
 
+Different ways to present number info.
+
 ```typescript
 import { Component } from '@angular/core';
 
@@ -42,7 +44,9 @@ import { NumberInfoModule } from '@delon/chart/number-info';
 export class ChartNumberInfoBasic {}
 ```
 
-### undefined
+### Theme
+
+Dark theme.
 
 ```typescript
 import { Component } from '@angular/core';

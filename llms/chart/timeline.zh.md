@@ -21,22 +21,23 @@ module: import { G2TimelineModule } from '@delon/chart/timeline';
 | `[data]` | 数据，注：根据 `maxAxis` 值传递指标数据 | `G2TimelineData[]` | - |
 | `[titleMap]` | 指标别名 | `G2TimelineMap` | - |
 | `[colorMap]` | 颜色 | `G2TimelineMap` | `{ y1: '#5B8FF9', y2: '#5AD8A6', y3: '#5D7092', y4: '#F6BD16', y5: '#E86452' }` |
-| `[height]` | 高度值 | `number` | `400` |
+| `[height]` | 高度值 | `number` | `450` |
 | `[padding]` | 图表内部间距 | `number[]` | `[40, 8, 64, 40]` |
 | `[borderWidth]` | 线条 | `number` | `2` |
 | `[mask]` | 日期格式，使用 [G2 Mask日期格式](https://g2.antv.vision/zh/docs/manual/tutorial/scale#time) | `string` | `HH:mm` |
 | `[maskSlider]` | 滑动条日期格式，使用 [date-fns 日期格式](https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table) | `string` | `HH:mm` |
 | `[position]` | 标题位置 | `'top','right','bottom','left'` | `'top'` |
 | `[slider]` | 是否需要滑动条 | `boolean` | `true` |
-| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
-| `(clickItem)` | 点击项回调 | `EventEmitter<G2TimelineClickItem>` | - |
-| `(ready)` | 当G2完成初始化后调用 | `EventEmitter<Chart>` | - |
+| `[theme]` | 定制图表主题 | `string \| LooseObject` | - |
+| `(clickItem)` | 点击项回调 | `output<G2TimelineClickItem>` | - |
+| `(ready)` | 当G2完成初始化后调用 | `output<Chart>` | - |
+| `(error)` | 当渲染失败时调用（G2 未加载或渲染抛错），此时 `(ready)` 不会触发 | `output<unknown>` | - |
 
 ### G2TimelineData
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
-| `[time]` | 日期格式 | `Date | number` | - |
+| `[time]` | 日期格式 | `Date \| number` | - |
 | `[y1]` | 指标1数据 | `number` | - |
 | `[y2]` | 指标2数据 | `number` | - |
 | `[y3]` | 指标3数据 | `number` | - |
@@ -62,7 +63,7 @@ module: import { G2TimelineModule } from '@delon/chart/timeline';
 带有时间轴的图表。
 
 ```typescript
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 
 import { G2TimelineClickItem, G2TimelineData, G2TimelineModule } from '@delon/chart/timeline';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -70,7 +71,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 @Component({
   selector: 'chart-timeline-basic',
   template: ` <g2-timeline
-    [data]="chartData"
+    [data]="chartData()"
     [titleMap]="{ y1: '客流量', y2: '支付笔数' }"
     [height]="200"
     (clickItem)="handleClick($event)"
@@ -79,16 +80,18 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 })
 export class ChartTimelineBasic implements OnInit {
   private readonly msg = inject(NzMessageService);
-  chartData: G2TimelineData[] = [];
+  readonly chartData = signal<G2TimelineData[]>([]);
 
   ngOnInit(): void {
+    const chartData: G2TimelineData[] = [];
     for (let i = 0; i < 20; i += 1) {
-      this.chartData.push({
+      chartData.push({
         time: new Date().getTime() + 1000 * 60 * 30 * i,
         y1: Math.floor(Math.random() * 100) + 1000,
         y2: Math.floor(Math.random() * 100) + 10
       });
     }
+    this.chartData.set(chartData);
   }
 
   handleClick(data: G2TimelineClickItem): void {
@@ -102,7 +105,7 @@ export class ChartTimelineBasic implements OnInit {
 利用 `maxAxis` 属性来调整多个指标，最多支持 `5` 个指标值。
 
 ```typescript
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { G2TimelineData, G2TimelineMap, G2TimelineModule } from '@delon/chart/timeline';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -114,14 +117,14 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     @for (i of axisList; track $index) {
       <button nz-button (click)="refresh(i)" nzType="primary">{{ i }} axis</button>
     }
-    <g2-timeline [maxAxis]="maxAxis" [data]="chartData" [titleMap]="titleMap" [height]="300" />
+    <g2-timeline [maxAxis]="maxAxis()" [data]="chartData()" [titleMap]="titleMap()" [height]="300" />
   `,
   imports: [G2TimelineModule, NzButtonModule]
 })
 export class ChartTimelineMaxAxis {
-  chartData: G2TimelineData[] = [];
-  titleMap: G2TimelineMap = { y1: '指标1', y2: '指标2' };
-  maxAxis = 2;
+  readonly chartData = signal<G2TimelineData[]>([]);
+  readonly titleMap = signal<G2TimelineMap>({ y1: '指标1', y2: '指标2' });
+  readonly maxAxis = signal(2);
   axisList = new Array(5).fill(0).map((_, idx) => idx + 1);
 
   constructor() {
@@ -149,10 +152,10 @@ export class ChartTimelineMaxAxis {
   }
 
   refresh(max?: number): void {
-    this.maxAxis = max ?? this.maxAxis;
-    const { titleMap, data } = this.genData(this.maxAxis);
-    this.chartData = data;
-    this.titleMap = titleMap;
+    this.maxAxis.set(max ?? this.maxAxis());
+    const { titleMap, data } = this.genData(this.maxAxis());
+    this.chartData.set(data);
+    this.titleMap.set(titleMap);
   }
 }
 ```
@@ -162,7 +165,7 @@ export class ChartTimelineMaxAxis {
 利用 `mask` 和 `maskSlider` 来改变时间格式。
 
 ```typescript
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 
 import { G2TimelineClickItem, G2TimelineData, G2TimelineModule } from '@delon/chart/timeline';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -170,7 +173,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 @Component({
   selector: 'chart-timeline-mask',
   template: ` <g2-timeline
-    [data]="chartData"
+    [data]="chartData()"
     [titleMap]="{ y1: '客流量', y2: '支付笔数' }"
     [height]="200"
     mask="MM月DD日"
@@ -181,16 +184,18 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 })
 export class ChartTimelineMask implements OnInit {
   private readonly msg = inject(NzMessageService);
-  chartData: G2TimelineData[] = [];
+  readonly chartData = signal<G2TimelineData[]>([]);
 
   ngOnInit(): void {
+    const chartData: G2TimelineData[] = [];
     for (let i = 0; i < 20; i += 1) {
-      this.chartData.push({
+      chartData.push({
         time: new Date().getTime() + 1000 * 60 * 60 * 24 * i,
         y1: Math.floor(Math.random() * 100) + 1000,
         y2: Math.floor(Math.random() * 100) + 10
       });
     }
+    this.chartData.set(chartData);
   }
 
   handleClick(data: G2TimelineClickItem): void {

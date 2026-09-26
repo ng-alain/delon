@@ -92,3 +92,7 @@ services.AddSwaggerGen(c =>
 ```
 
 若是通过拦截器来处理异常消息时，订阅时只需要始终获取 `result` 字段数据时，可以通过指定 `--responseDataField="result"` 来解决。
+
+### 代码风格
+
+生成的文件带有 `/* eslint-disable */` 与 `/* eslint-enable prettier/prettier */` 两行头注释：前者让生成代码不受其它 lint 规则约束，后者把格式化交回项目自身的 `prettier/prettier` 规则。因此执行 `eslint --fix`（脚手架已通过 lint-staged 在提交时自动执行，也可以交给 IDE 保存时执行）即可让生成代码符合项目的代码风格。

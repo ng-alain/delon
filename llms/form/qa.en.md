@@ -104,8 +104,7 @@ You can get a specific attribute of Schema by calling `getProperty` function, th
 const statusProperty = this.sf.getProperty('/status')!;
 statusProperty.schema.enum = ['1', '2', '3'];
 statusProperty.widget.reset('2');
-// Or manually trigger `detectChanges`
-// statusProperty.widget.detectChanges();
+// No manual change detection needed: signal-driven state refreshes automatically
 ```
 
 If just only update a element value, then:
@@ -151,5 +150,5 @@ const alainConfig: AlainConfig = {
 ## How to toggle show or hide an element
 
 ```ts
-this.sf.getProperty('/mobile')?.setVisible(status).widget.detectChanges();
+this.sf.getProperty('/mobile')?.setVisible(status);
 ```

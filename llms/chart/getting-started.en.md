@@ -4,7 +4,25 @@ title: Getting Started
 type: Documents
 ---
 
-Chart provides the well-designed abstract chart components based on the [G2](https://antv.alipay.com/zh-cn/g2/3.x/index.html). These components provide the ability to use with complex mixed view or just use along for common business usage.
+Chart provides the well-designed abstract chart components based on the [G2](https://g2.antv.antgroup.com/en/).
+
+## Upgrading from v4 to v5
+
+`@antv/g2` has been upgraded from v4 to **v5** (`^5.4.8`). Component APIs (`[data]`, `[height]`, `[padding]`, `[theme]`, `(ready)`, `(clickItem)`, ...) keep their **names and types** (the only exception is `g2-water-wave`, whose `[height]` is renamed to `[size]`), but rendering is now **asynchronous and spec-driven**:
+
+- **Rendering is async**: `ready` fires on the **first `AFTER_RENDER`** (the first frame is really painted) and **only once**; `loaded` (used by the template to drop the skeleton) is set at the same moment. Subscribe to `(ready)` to get the chart instance:
+  ```html
+  <g2-bar [data]="data()" (ready)="onReady($event)" (error)="onError($event)" />
+  ```
+- **Failure is a separate layer from `ready`**: a missing G2 library or a failed render emits **`(error)`** (plus `console.error`); `ready` does not fire and the skeleton stays.
+- **`install()` is no longer public**: use the protected `afterCreate(chart)` / `onRendered()` extension points; use `changeData()` for data updates (it goes through the base class' serial queue, so it cannot race the first frame).
+- **Interactions**: v4's `active-region` and `drag-move` have no v5 equivalent and degrade to no interaction.
+- **tooltip**: `domStyles`/`itemTpl` are gone; a **view-level `tooltip` is not inherited by child marks** — set it at the mark level.
+- **Click payload type**: `Event` → `G2Event` (`ev.data?.data` is the datum).
+- **`g2-tag-cloud`**: no longer writes `x/y/size/rotate/font` back into the data rows (layout is done by the built-in `wordCloud` mark; `@antv/data-set` has been removed).
+- **`g2-water-wave`**: the hand-written v4 canvas is replaced by the v5 [`liquid`](https://g2.antv.antgroup.com/examples/general/Liquid) mark (the center percentage is drawn by G2's built-in text); **`[height]` is renamed to `[size]`** (the side length of the square); `[animate]` now controls **only the enter animation** (the wave motion is built into G2 and always runs) and sizing is handled by `autoFit`.
+- **Fixed bar thickness with a transposed coordinate**: with `coordinate.transform: [{ type: 'transpose' }]` the interval's **on-screen thickness is clamped by `style.minWidth`/`maxWidth` (pixels)** while `minHeight` clamps the on-screen width — so v4's `.size(30)` cannot be reproduced with `encode.size` alone; also write `style: { minWidth: 30, maxWidth: 30 }`.
+ These components provide the ability to use with complex mixed view or just use along for common business usage.
 
 ## Usage
 
@@ -18,8 +36,7 @@ const alainConfig: AlainConfig = {
   chart: { 
     // The following is the default configuration. If the project cannot be accessed from the Internet, you can directly use the `./assets***` path for the dependent package according to the `angular.json` configuration
     libs: [
-      'https://gw.alipayobjects.com/os/lib/antv/g2/4.1.4/dist/g2.min.js',
-      'https://gw.alipayobjects.com/os/lib/antv/data-set/0.11.7/dist/data-set.js',
+      'https://gw.alipayobjects.com/os/lib/antv/g2/5.4.8/dist/g2.min.js',
     ],
   },
 };
@@ -51,11 +68,6 @@ You can also configure the `assets` (About [assets](https://angular.io/guide/wor
     "glob": "**/*",
     "input": "./node_modules/@antv/g2/dist",
     "output": "/@antv/g2/"
-  },
-  {
-    "glob": "**/*",
-    "input": "./node_modules/@antv/data-set/dist",
-    "output": "/@antv/data-set/"
   }
 ]
 ```
@@ -66,10 +78,7 @@ Finally modify the `libs` parameter of the global configuration:
 // global-config.module.ts
 const alainConfig: AlainConfig = {
   chart: { 
-    libs: [
-      './assets/@antv/g2/g2.min.js',
-      './assets/@antv/data-set/data-set.js',
-    ],
+    libs: ['./assets/@antv/g2/g2.min.js'],
   },
 };
 ```

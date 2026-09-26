@@ -21,6 +21,7 @@ module: import { G2CardModule } from '@delon/chart/card';
 | `[footer]` | 卡片底部 | `string,TemplateRef<void>` | - |
 | `[contentHeight]` | 内容区域高度（单位：`px`） | `string` | - |
 | `[bordered]` | 是否显示边框 | `boolean` | `false` |
+| `[loading]` | 是否显示加载中（内容区包裹 `nz-spin`） | `boolean` | `false` |
 
 ---
 

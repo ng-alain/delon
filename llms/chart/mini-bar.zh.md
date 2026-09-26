@@ -23,9 +23,10 @@ module: import { G2MiniBarModule } from '@delon/chart/mini-bar';
 | `[borderWidth]` | 线条粗细 | `number` | `5` |
 | `[padding]` | 图表内部间距 | `array` | `[8, 8, 8, 8]` |
 | `[data]` | 数据 | `G2MiniBarData[]` | - |
-| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
-| `(clickItem)` | 点击项回调 | `EventEmitter<G2MiniBarClickItem>` | - |
-| `(ready)` | 当G2完成初始化后调用 | `EventEmitter<Chart>` | - |
+| `[theme]` | 定制图表主题 | `string \| LooseObject` | - |
+| `(clickItem)` | 点击项回调 | `output<G2MiniBarClickItem>` | - |
+| `(ready)` | 当G2完成初始化后调用 | `output<Chart>` | - |
+| `(error)` | 当渲染失败时调用（G2 未加载或渲染抛错），此时 `(ready)` 不会触发 | `output<unknown>` | - |
 
 ### G2MiniBarData
 
@@ -44,7 +45,7 @@ module: import { G2MiniBarModule } from '@delon/chart/mini-bar';
 基础用法。
 
 ```typescript
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 
 import { format } from 'date-fns';
 
@@ -57,13 +58,13 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   selector: 'chart-mini-bar-basic',
   template: `
     <button nz-button (click)="refresh()" nzType="primary">Refresh</button>
-    <g2-mini-bar height="45" [data]="visitData" (clickItem)="handleClick($event)" />
+    <g2-mini-bar height="45" [data]="visitData()" (clickItem)="handleClick($event)" />
   `,
   imports: [NzButtonModule, G2MiniBarModule]
 })
 export class ChartMiniBarBasic {
   private readonly msg = inject(NzMessageService);
-  visitData = this.genData();
+  readonly visitData = signal(this.genData());
 
   private genData(): G2MiniAreaData[] {
     const beginDay = new Date().getTime();
@@ -78,7 +79,7 @@ export class ChartMiniBarBasic {
   }
 
   refresh(): void {
-    this.visitData = this.genData();
+    this.visitData.set(this.genData());
   }
 
   handleClick(data: G2MiniAreaClickItem): void {
@@ -92,7 +93,7 @@ export class ChartMiniBarBasic {
 指定 `tooltipType` 值来表示简化tooltip，可以更好的运用于表格。
 
 ```typescript
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 
 import { format } from 'date-fns';
 
@@ -100,19 +101,22 @@ import { G2MiniBarData, G2MiniBarModule } from '@delon/chart/mini-bar';
 
 @Component({
   selector: 'chart-mini-bar-mini',
-  template: ` <g2-mini-bar height="45" [data]="visitData" yTooltipSuffix="%" tooltipType="mini" /> `,
+  template: ` <g2-mini-bar height="45" [data]="visitData()" yTooltipSuffix="%" tooltipType="mini" /> `,
   imports: [G2MiniBarModule]
 })
 export class ChartMiniBarMini implements OnInit {
-  visitData: G2MiniBarData[] = [];
+  readonly visitData = signal<G2MiniBarData[]>([]);
+
   ngOnInit(): void {
     const beginDay = new Date().getTime();
+    const visitData: G2MiniBarData[] = [];
     for (let i = 0; i < 20; i += 1) {
-      this.visitData.push({
+      visitData.push({
         x: format(new Date(beginDay + 1000 * 60 * 60 * 24 * i), 'yyyy-MM-dd'),
         y: Math.floor(Math.random() * 100) + 10
       });
     }
+    this.visitData.set(visitData);
   }
 }
 ```
@@ -122,7 +126,7 @@ export class ChartMiniBarMini implements OnInit {
 指定 `yTooltipSuffix` 值来表示单位。
 
 ```typescript
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 
 import { format } from 'date-fns';
 
@@ -130,19 +134,22 @@ import { G2MiniBarData, G2MiniBarModule } from '@delon/chart/mini-bar';
 
 @Component({
   selector: 'chart-mini-bar-tooltip',
-  template: ` <g2-mini-bar height="45" [data]="visitData" yTooltipSuffix="%" /> `,
+  template: ` <g2-mini-bar height="45" [data]="visitData()" yTooltipSuffix="%" /> `,
   imports: [G2MiniBarModule]
 })
 export class ChartMiniBarTooltip implements OnInit {
-  visitData: G2MiniBarData[] = [];
+  readonly visitData = signal<G2MiniBarData[]>([]);
+
   ngOnInit(): void {
     const beginDay = new Date().getTime();
+    const visitData: G2MiniBarData[] = [];
     for (let i = 0; i < 20; i += 1) {
-      this.visitData.push({
+      visitData.push({
         x: format(new Date(beginDay + 1000 * 60 * 60 * 24 * i), 'yyyy-MM-dd'),
         y: Math.floor(Math.random() * 100) + 10
       });
     }
+    this.visitData.set(visitData);
   }
 }
 ```

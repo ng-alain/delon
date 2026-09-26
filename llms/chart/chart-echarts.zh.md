@@ -18,8 +18,9 @@ module: import { ChartEChartsModule } from '@delon/chart/chart-echarts';
 | `[height]` | 图表高度 | `number, string` | `400px`|
 | `[option]` | [配置项](https://echarts.apache.org/zh/option.html#title) | `ChartEChartsOption` | - |
 | `[theme]` | [主题](https://echarts.apache.org/zh/theme-builder.html)配置 | `string, object` | - |
+| `[initOpt]` | [init](https://echarts.apache.org/zh/api.html#echarts.init) 的初始化参数（如 `renderer`、`devicePixelRatio`），变更会重建实例 | `object` | - |
 | `[on]` | 等同于 ECharts [on](https://echarts.apache.org/zh/api.html#echartsInstance.on) | `ChartEChartsOn[]` | - |
-| `(events)` | 事件回调 | `EventEmitter<ChartEChartsEvent>` | - |
+| `(events)` | 事件回调 | `output<ChartEChartsEvent>` | - |
 
 ---
 
@@ -30,7 +31,7 @@ module: import { ChartEChartsModule } from '@delon/chart/chart-echarts';
 最简单的用法。
 
 ```typescript
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { ChartEChartsEvent, ChartEChartsModule, ChartEChartsOption } from '@delon/chart/chart-echarts';
@@ -42,15 +43,15 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
   template: `
     <div class="mb-md">
       <nz-switch [(ngModel)]="dark" /> Dark
-      <button nz-button (click)="two = !two" nzType="primary">Change Option</button>
+      <button nz-button (click)="two.set(!two())" nzType="primary">Change Option</button>
     </div>
-    <chart-echarts [option]="two ? option1 : option2" [theme]="dark ? 'dark' : null" (events)="handleEvents($event)" />
+    <chart-echarts [option]="two() ? option1 : option2" [theme]="dark() ? 'dark' : null" (events)="handleEvents($event)" />
   `,
   imports: [FormsModule, NzSwitchModule, NzButtonModule, ChartEChartsModule]
 })
 export class ChartChartEchartsBasic {
-  dark = false;
-  two = false;
+  readonly dark = signal(false);
+  readonly two = signal(false);
 
   option1: ChartEChartsOption = {
     tooltip: {

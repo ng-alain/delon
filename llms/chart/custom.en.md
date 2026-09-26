@@ -34,8 +34,8 @@ If throw error `G2` not found, please refer to [Frequently Asked Questions](/cha
 
 ## Links
 
-- [G2 Document](https://www.yuque.com/antv/g2-docs-en)
-- [G2 Demo](https://antv.alipay.com/zh-cn/g2/3.x/demo/index.html)
+- [G2 Documents](https://g2.antv.antgroup.com/en/)
+- [G2 Examples](https://g2.antv.antgroup.com/examples)
 
 ## API
 
@@ -43,13 +43,16 @@ If throw error `G2` not found, please refer to [Frequently Asked Questions](/cha
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
+| `[repaint]` | Whether to repaint when the data changes again | `boolean` | `true` |
 | `[delay]` | Delayed rendering, unit: ms | `number` | `0` |
 | `[height]` | Height of chart container | `number` | - |
-| `[resizeTime]` | Resize event debounce time | `number` | `200` |
-| `(render)` | Render event | `EventEmitter<ElementRef>` | - |
-| `(resize)` | Resize event | `EventEmitter<ElementRef>` | - |
-| `(destroy)` | Destroy event | `EventEmitter<ElementRef>` | - |
-| `[theme]` | Custom chart theme | `string | LooseObject` | - |
+| `[resizeTime]` | Resize event debounce time (`0` disables the resize listener) | `number` | `0` |
+| `(render)` | Render event | `output<ElementRef>` | - |
+| `(resize)` | Resize event | `output<ElementRef>` | - |
+| `(destroy)` | Destroy event (**not emitted in the current version, kept for compatibility**) | `output<ElementRef>` | - |
+| `(ready)` | Callback when G2 is initialized | `output<Chart>` | - |
+| `(error)` | Callback when rendering fails (G2 not loaded or render throws); `(ready)` will not fire | `output<unknown>` | - |
+| `[theme]` | Custom chart theme | `string \| LooseObject` | - |
 
 ---
 
@@ -57,12 +60,12 @@ If throw error `G2` not found, please refer to [Frequently Asked Questions](/cha
 
 ### Basic
 
-Copy [Basic Funnel Chart](https://antv.alipay.com/zh-cn/g2/3.x/demo/funnel/basic.html)。
+Based on the official G2 v5 [funnel example](https://g2.antv.antgroup.com/examples/general/funnel), showing how to use a raw v5 `Chart` inside `g2-custom`.
 
 ```typescript
 import { Component, ElementRef, NgZone, inject } from '@angular/core';
 
-import type { Chart } from '@antv/g2';
+import type { G2Spec } from '@antv/g2';
 
 import { G2CustomModule } from '@delon/chart/custom';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -76,105 +79,69 @@ export class ChartCustomBasic {
   private readonly ngZone = inject(NgZone);
 
   render(el: ElementRef<HTMLDivElement>): void {
-    this.ngZone.runOutsideAngular(() => this.init(el.nativeElement));
+    // v5 的 `render()` 返回 Promise，用 `void` 明确忽略（不再需要手动 detectChanges）
+    this.ngZone.runOutsideAngular(() => void this.init(el.nativeElement));
   }
 
-  private init(el: HTMLElement): void {
-    const data: Array<{ action: string; pv: number; percent: number }> = [
-      { action: '浏览网站', pv: 50000, percent: 0 },
-      { action: '放入购物车', pv: 35000, percent: 0 },
-      { action: '生成订单', pv: 25000, percent: 0 },
-      { action: '支付订单', pv: 15000, percent: 0 },
-      { action: '完成交易', pv: 8000, percent: 0 }
-    ].map(row => {
-      row.percent = row.pv / 50000;
-      return row;
-    });
-    const chart: Chart = new (window as NzSafeAny).G2.Chart({
+  private async init(el: HTMLElement): Promise<void> {
+    const data = [
+      { action: '浏览网站', pv: 50000 },
+      { action: '放入购物车', pv: 35000 },
+      { action: '生成订单', pv: 25000 },
+      { action: '支付订单', pv: 15000 },
+      { action: '完成交易', pv: 8000 }
+    ].map(row => ({ ...row, percent: row.pv / 50000 }));
+
+    const chart = new (window as NzSafeAny).G2.Chart({
       container: el,
       autoFit: true,
       height: 500,
-      width: el.clientWidth,
-      padding: [20, 120, 95]
-    });
-    chart.data(data);
-    chart.axis(false);
-    chart.tooltip({
-      showTitle: false,
-      showMarkers: false,
-      itemTpl:
-        '<li style="margin-bottom:4px;list-style-type:none;padding: 0;">' +
-        '<span style="background-color:{color};" class="g2-tooltip-marker"></span>' +
-        '{name}<br/>' +
-        '<span style="padding-left: 16px;line-height: 16px;">浏览人数：{pv}</span><br/>' +
-        '<span style="padding-left: 16px;line-height: 16px;">占比：{percent}</span><br/>' +
-        '</li>'
+      paddingTop: 20,
+      paddingRight: 120,
+      paddingBottom: 95
     });
 
-    chart.coordinate('rect').transpose().scale(1, -1);
-    chart
-      .interval()
-      .adjust('symmetric')
-      .position('action*percent')
-      .shape('funnel')
-      .color('action', ['#0050B3', '#1890FF', '#40A9FF', '#69C0FF', '#BAE7FF'])
-      .label(
-        'action*pv',
-        (action, pv) => {
-          return {
-            content: `${action} ${pv}`
-          };
+    chart.options({
+      type: 'interval',
+      data,
+      // v5 里 transpose 是**坐标变换**，必须放在 `coordinate.transform`
+      // （写成 `coordinate: { type: 'transpose' }` 会在渲染时抛错）
+      coordinate: { transform: [{ type: 'transpose' }] },
+      transform: [{ type: 'symmetryY' }],
+      axis: false,
+      legend: false,
+      encode: { x: 'action', y: 'pv', color: 'action', shape: 'funnel' },
+      scale: {
+        x: { padding: 0 },
+        color: { range: ['#0050B3', '#1890FF', '#40A9FF', '#69C0FF', '#BAE7FF'] }
+      },
+      animate: { enter: { type: 'fadeIn' } },
+      interaction: { elementHighlight: true },
+      tooltip: {
+        title: false,
+        items: [
+          (d: { action: string; pv: number; percent: number }) => ({
+            name: d.action,
+            value: `浏览人数：${d.pv} / 占比：${+(d.percent * 100).toFixed(2)}%`
+          })
+        ]
+      },
+      labels: [
+        {
+          text: (d: { action: string; pv: number }) => `${d.action} ${d.pv}`,
+          position: 'inside',
+          transform: [{ type: 'contrastReverse' }]
         },
         {
-          offset: 35,
-          labelLine: {
-            style: {
-              lineWidth: 1,
-              stroke: 'rgba(0, 0, 0, 0.15)'
-            }
-          }
+          text: (d: { percent: number }) => `${+(d.percent * 100).toFixed(2)}%`,
+          position: 'inside',
+          dy: 18,
+          transform: [{ type: 'contrastReverse' }]
         }
-      )
-      .tooltip('action*pv*percent', (action, pv, percent) => {
-        return {
-          name: action,
-          percent: `${+percent * 100}%`,
-          pv
-        };
-      })
-      .animate({
-        appear: {
-          animation: 'fade-in'
-        },
-        update: {
-          // annotation: 'fade-in'
-        }
-      });
+      ]
+    } as G2Spec);
 
-    chart.interaction('element-active');
-
-    chart.on('beforepaint', () => {
-      chart.annotation().clear(true);
-      const chartData = chart.getData();
-      // 中间标签文本
-      chartData.forEach(obj => {
-        chart.annotation().text({
-          top: true,
-          position: {
-            action: obj.action,
-            percent: 'median'
-          },
-          content: `${+obj.percent * 100}%`, // 显示的文本内容
-          style: {
-            stroke: null,
-            fill: '#fff',
-            textAlign: 'center'
-          }
-        });
-      });
-    });
-
-    chart.render();
+    await chart.render();
   }
 }
 ```
