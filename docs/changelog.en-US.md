@@ -15,6 +15,18 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+## [22.1.1](https://github.com/ng-alain/delon/compare/22.0.0...22.1.1) (2026-09-26)
+
+### Bug Fixes
+
+* **auth:** carry location.search when redirecting to login ([#2059](https://github.com/ng-alain/delon/issues/2059)) ([acb7e76](https://github.com/ng-alain/delon/commit/acb7e764e3f7d235e3cfd2ac84d778e9e2217ab0))
+* **form:** avoid NG01354 warning from widget ngModel ([#2057](https://github.com/ng-alain/delon/issues/2057)) ([2bec2c7](https://github.com/ng-alain/delon/commit/2bec2c7028579bc724913c2bbd1d4664ef5f7bcd))
+
+### Features
+
+* **chart:** migrate to @antv/g2 v5 ([#2064](https://github.com/ng-alain/delon/issues/2064)) ([d45f670](https://github.com/ng-alain/delon/commit/d45f67028824318892d9fb744e78aa944d246e93))
+
+
 # [22.0.0](https://github.com/ng-alain/delon/compare/21.3.0...22.0.0) (2026-09-11)
 
 ### Bug Fixes
