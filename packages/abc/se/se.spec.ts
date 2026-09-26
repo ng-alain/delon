@@ -1,5 +1,5 @@
-import { Component, DebugElement, EventEmitter, inject, signal, TemplateRef, ViewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { Component, DebugElement, EventEmitter, inject, signal, TemplateRef, Type, ViewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   UntypedFormBuilder,
   FormControlName,
@@ -25,6 +25,9 @@ const prefixCls = `.se__`;
 const ANT_FORM_HAS_ERROR_CLS = `.ant-form-item-has-error`;
 
 describe('abc: edit', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let context: TestComponent;
@@ -34,14 +37,10 @@ describe('abc: edit', () => {
     TestBed.configureTestingModule({});
   };
 
-  function genModule(template?: string): void {
+  function genModule(host: Type<unknown> = TestComponent): void {
     moduleAction();
-    if (template) {
-      TestBed.overrideTemplate(TestComponent, template);
-    }
-    fixture = TestBed.createComponent(TestComponent);
-    dl = fixture.debugElement;
-    context = fixture.componentInstance;
+    const ctx = createTestContext(host as Type<TestComponent>);
+    ({ fixture, dl, context } = ctx);
     fixture.detectChanges();
     page = new PageObject();
   }
@@ -67,24 +66,23 @@ describe('abc: edit', () => {
           context.val.set('');
           context.parent_size.set('default');
           ngModel = dl.query(By.directive(NgModel)).injector.get<NgModel>(NgModel);
-          spyOnProperty(ngModel, 'invalid').and.returnValue(true);
+          vi.spyOn(ngModel, 'invalid', 'get').mockReturnValue(true);
         });
-        it('with true', fakeAsync(() => {
+        it('with true', async () => {
           context.parent_firstVisual.set(true);
           fixture.detectChanges();
-          tick();
           fixture.detectChanges();
           page = new PageObject();
           page.expect(ANT_FORM_HAS_ERROR_CLS, 1);
-        }));
-        it('with false', fakeAsync(() => {
+        });
+        it('with false', async () => {
           context.parent_firstVisual.set(false);
           fixture.detectChanges();
-          tick();
+          await vi.advanceTimersByTimeAsync(0);
           fixture.detectChanges();
           page = new PageObject();
           page.expect(ANT_FORM_HAS_ERROR_CLS, 0);
-        }));
+        });
       });
       describe('#ingoreDirty', () => {
         let changes: EventEmitter<string>;
@@ -95,24 +93,24 @@ describe('abc: edit', () => {
           context.parent_firstVisual.set(false);
           context.val.set('');
           const ngModel = dl.query(By.directive(NgModel)).injector.get<NgModel>(NgModel);
-          spyOnProperty(ngModel, 'invalid').and.returnValue(true);
+          vi.spyOn(ngModel, 'invalid', 'get').mockReturnValue(true);
           changes = ngModel.statusChanges as EventEmitter<string>;
-          spyOnProperty(ngModel, 'dirty').and.returnValue(false);
+          vi.spyOn(ngModel, 'dirty', 'get').mockReturnValue(false);
         });
-        it('with true', fakeAsync(() => {
+        it('with true', async () => {
           context.parent_ingoreDirty.set(true);
           fixture.detectChanges();
           changes.emit('INVALID');
           fixture.detectChanges();
           page.expect(ANT_FORM_HAS_ERROR_CLS, 1);
-        }));
-        it('with false', fakeAsync(() => {
+        });
+        it('with false', async () => {
           context.parent_ingoreDirty.set(false);
           fixture.detectChanges();
           changes.emit('INVALID');
           fixture.detectChanges();
           page.expect(ANT_FORM_HAS_ERROR_CLS, 0);
-        }));
+        });
       });
       describe('[property]', () => {
         describe('#wrap', () => {
@@ -195,8 +193,8 @@ describe('abc: edit', () => {
             let changes: EventEmitter<string>;
             beforeEach(() => {
               ngModel = dl.query(By.directive(NgModel)).injector.get<NgModel>(NgModel);
-              spyOnProperty(ngModel, 'dirty').and.returnValue(true);
-              spyOnProperty(ngModel, 'errors').and.returnValue({ required: true });
+              vi.spyOn(ngModel, 'dirty', 'get').mockReturnValue(true);
+              vi.spyOn(ngModel, 'errors', 'get').mockReturnValue({ required: true });
               changes = ngModel.statusChanges as EventEmitter<string>;
               changes.emit('INVALID');
               fixture.detectChanges();
@@ -290,8 +288,8 @@ describe('abc: edit', () => {
         let ngModel: NgModel;
         it('should be show error', () => {
           ngModel = dl.query(By.directive(NgModel)).injector.get<NgModel>(NgModel);
-          spyOnProperty(ngModel, 'dirty').and.returnValue(true);
-          spyOnProperty(ngModel, 'errors').and.returnValue({ required: true });
+          vi.spyOn(ngModel, 'dirty', 'get').mockReturnValue(true);
+          vi.spyOn(ngModel, 'errors', 'get').mockReturnValue({ required: true });
           const changes = ngModel.statusChanges as EventEmitter<string>;
           // mock statusChanges
           changes.emit('VALID');
@@ -305,8 +303,8 @@ describe('abc: edit', () => {
           context.error.set({ required: 'A', other: 'O' });
           fixture.detectChanges();
           ngModel = dl.query(By.directive(NgModel)).injector.get<NgModel>(NgModel);
-          spyOnProperty(ngModel, 'dirty').and.returnValue(true);
-          spyOnProperty(ngModel, 'errors').and.returnValue({ other: true });
+          vi.spyOn(ngModel, 'dirty', 'get').mockReturnValue(true);
+          vi.spyOn(ngModel, 'errors', 'get').mockReturnValue({ other: true });
           const changes = ngModel.statusChanges as EventEmitter<string>;
           // mock statusChanges
           changes.emit('INVALID');
@@ -317,8 +315,8 @@ describe('abc: edit', () => {
           context.error.set('');
           fixture.detectChanges();
           ngModel = dl.query(By.directive(NgModel)).injector.get<NgModel>(NgModel);
-          spyOnProperty(ngModel, 'dirty').and.returnValue(true);
-          spyOnProperty(ngModel, 'errors').and.returnValue({ required: true });
+          vi.spyOn(ngModel, 'dirty', 'get').mockReturnValue(true);
+          vi.spyOn(ngModel, 'errors', 'get').mockReturnValue({ required: true });
           const changes = ngModel.statusChanges as EventEmitter<string>;
           // mock statusChanges
           changes.emit('VALID');
@@ -335,14 +333,7 @@ describe('abc: edit', () => {
   describe('[validate]', () => {
     let ngModel: NgModel;
     it('should be only once bind ngModel of status change', () => {
-      genModule(`
-      <form nz-form se-container>
-        <se #viewComp id="1">
-        @if (showModel()) {
-          <input id="ipt" type="text" [(ngModel)]="val" name="val" required>
-        }
-        </se>
-      </form>`);
+      genModule(NgModelStatusHostComponent);
       page.expect('#ipt');
       context.showModel.set(false);
       fixture.detectChanges();
@@ -352,12 +343,7 @@ describe('abc: edit', () => {
       page.expect('#ipt');
     });
     it('should be auto set required when control include required', () => {
-      genModule(`
-      <form nz-form se-container>
-        <se label="l">
-          <input type="text" [(ngModel)]="val" name="val" required>
-        </se>
-      </form>`);
+      genModule(RequiredHostComponent);
       page.expect('.ant-form-item-required', 1);
     });
     it('should be reactive form', () => {
@@ -368,7 +354,7 @@ describe('abc: edit', () => {
       page = new PageObject();
       const formControlName = dl.query(By.directive(FormControlName)).injector.get<FormControlName>(FormControlName);
       const changes = formControlName.statusChanges as EventEmitter<string>;
-      spyOnProperty(formControlName, 'dirty').and.returnValue(true);
+      vi.spyOn(formControlName, 'dirty', 'get').mockReturnValue(true);
       // mock statusChanges
       changes.emit('VALID');
       fixture2.detectChanges();
@@ -414,88 +400,41 @@ describe('abc: edit', () => {
 
   describe('[logic]', () => {
     it('should be custom title in se-container', () => {
-      genModule(
-        `<se-container [title]="title">
-          <ng-template #title>
-            <a id="tip">tip</a>
-          </ng-template>
-        </se-container>`
-      );
+      genModule(CustomTitleHostComponent);
       page.expect('#tip');
     });
     it('should be custom label', () => {
-      genModule(
-        `<se-container>
-          <se [label]="label">
-            <ng-template #label>
-              <a id="tip">tip</a>
-            </ng-template>
-            Custom label
-          </se>
-        </se-container>`
-      );
+      genModule(CustomLabelHostComponent);
       page.expect('#tip');
     });
     it(`should be must include 'se-container' component in se`, () => {
       expect(() => {
-        genModule(`<se></se>`);
-      }).toThrowError();
+        genModule(NoContainerHostComponent);
+      }).toThrow();
     });
     it(`should be must include 'se-container' component in se-title`, () => {
       expect(() => {
-        genModule(`<se-title></se-title>`);
-      }).toThrowError();
+        genModule(NoContainerTitleHostComponent);
+      }).toThrow();
     });
     it(`should be custom id value`, () => {
-      const id = 'aaaa';
-      genModule(`
-      <form nz-form se-container>
-        <se id="${id}" label="a">
-          <input type="text" [(ngModel)]="val" name="val">
-        </se>
-      </form>
-      `);
-      expect(page.getEl('label').getAttribute('for')).toBe(id);
+      genModule(CustomIdHostComponent);
+      expect(page.getEl('label').getAttribute('for')).toBe('aaaa');
     });
     it(`should be ingored auto id when not found invalid ngModel`, () => {
-      genModule(`
-      <form nz-form se-container>
-        <se label="a">
-          <select id="expected" name="val"></select>
-        </se>
-      </form>
-      `);
+      genModule(IngoreAutoIdHostComponent);
       expect(page.getEl('#expected').id).toBe('expected');
     });
     it(`should be ingored set id when control has id value`, () => {
-      const id = 'aaaa';
-      genModule(`
-      <form nz-form se-container>
-        <se label="a">
-          <input type="text" id="${id}" [(ngModel)]="val" name="val">
-        </se>
-      </form>
-      `);
-      expect(page.getEl('label').getAttribute('for')).toBe(id);
+      genModule(ControlWithIdHostComponent);
+      expect(page.getEl('label').getAttribute('for')).toBe('aaaa');
     });
     it(`should be ingored set id when control invalid controlAccessor`, () => {
-      genModule(`
-      <form nz-form se-container>
-        <se label="a">
-          <nz-radio-group [(ngModel)]="val" name="val">
-            <label nz-radio nzValue=""></label>
-          </nz-radio-group>
-        </se>
-      </form>
-      `);
+      genModule(InvalidControlAccessorHostComponent);
       expect(page.getEl('nz-radio-group').getAttribute('for')).toBeNull();
     });
     it(`should be keeping placeholder when content is empty`, () => {
-      genModule(`
-      <form nz-form se-container>
-        <se label="a"></se>
-      </form>
-      `);
+      genModule(EmptyContentHostComponent);
       page.expect('.se__item-empty', 1);
     });
     it('should be support global config', () => {
@@ -507,7 +446,7 @@ describe('abc: edit', () => {
       fixture2.detectChanges();
       page = new PageObject();
       expect(page.getEl('.ant-form-item-label').style.width).toBe(`10px`);
-      expect(page.getEl('.ant-col-sm-12') != null).toBeTrue();
+      expect(page.getEl('.ant-col-sm-12') != null).toBe(true);
     });
   });
 
@@ -528,12 +467,146 @@ describe('abc: edit', () => {
     }
     cd(time: number = 0): this {
       fixture.detectChanges();
-      tick(time);
+      vi.advanceTimersByTime(time);
       fixture.detectChanges();
       return this;
     }
   }
 });
+
+/** 覆盖模板的宿主必须是实体组件：AOT 产物上的 overrideTemplate 拿不到 imports */
+abstract class HostBaseComponent {
+  readonly val = signal('');
+  readonly showModel = signal(true);
+  readonly label = signal<string | undefined>(undefined);
+}
+
+@Component({
+  template: `
+    <form nz-form se-container>
+      <se #viewComp id="1">
+        @if (showModel()) {
+          <input id="ipt" type="text" [(ngModel)]="val" name="val" required />
+        }
+      </se>
+    </form>
+  `,
+  imports: [FormsModule, SEModule, NzFormModule, NzRadioModule]
+})
+class NgModelStatusHostComponent extends HostBaseComponent {}
+
+@Component({
+  template: `
+    <form nz-form se-container>
+      <se label="l">
+        <input type="text" [(ngModel)]="val" name="val" required />
+      </se>
+    </form>
+  `,
+  imports: [FormsModule, SEModule, NzFormModule, NzRadioModule]
+})
+class RequiredHostComponent extends HostBaseComponent {}
+
+@Component({
+  template: `
+    <se-container [title]="title">
+      <ng-template #title>
+        <a id="tip">tip</a>
+      </ng-template>
+    </se-container>
+  `,
+  imports: [FormsModule, SEModule, NzFormModule, NzRadioModule]
+})
+class CustomTitleHostComponent extends HostBaseComponent {}
+
+@Component({
+  template: `
+    <se-container>
+      <se [label]="label">
+        <ng-template #label>
+          <a id="tip">tip</a>
+        </ng-template>
+        Custom label
+      </se>
+    </se-container>
+  `,
+  imports: [FormsModule, SEModule, NzFormModule, NzRadioModule]
+})
+class CustomLabelHostComponent extends HostBaseComponent {}
+
+@Component({
+  selector: 'host-se-no-container',
+  template: `<se />`,
+  imports: [FormsModule, SEModule, NzFormModule, NzRadioModule]
+})
+class NoContainerHostComponent extends HostBaseComponent {}
+
+@Component({
+  selector: 'host-se-no-container-title',
+  template: `<se-title />`,
+  imports: [FormsModule, SEModule, NzFormModule, NzRadioModule]
+})
+class NoContainerTitleHostComponent extends HostBaseComponent {}
+
+@Component({
+  template: `
+    <form nz-form se-container>
+      <se id="aaaa" label="a">
+        <input type="text" [(ngModel)]="val" name="val" />
+      </se>
+    </form>
+  `,
+  imports: [FormsModule, SEModule, NzFormModule, NzRadioModule]
+})
+class CustomIdHostComponent extends HostBaseComponent {}
+
+@Component({
+  template: `
+    <form nz-form se-container>
+      <se label="a">
+        <select id="expected" name="val"></select>
+      </se>
+    </form>
+  `,
+  imports: [FormsModule, SEModule, NzFormModule, NzRadioModule]
+})
+class IngoreAutoIdHostComponent extends HostBaseComponent {}
+
+@Component({
+  template: `
+    <form nz-form se-container>
+      <se label="a">
+        <input type="text" id="aaaa" [(ngModel)]="val" name="val" />
+      </se>
+    </form>
+  `,
+  imports: [FormsModule, SEModule, NzFormModule, NzRadioModule]
+})
+class ControlWithIdHostComponent extends HostBaseComponent {}
+
+@Component({
+  template: `
+    <form nz-form se-container>
+      <se label="a">
+        <nz-radio-group [(ngModel)]="val" name="val">
+          <label nz-radio nzValue=""></label>
+        </nz-radio-group>
+      </se>
+    </form>
+  `,
+  imports: [FormsModule, SEModule, NzFormModule, NzRadioModule]
+})
+class InvalidControlAccessorHostComponent extends HostBaseComponent {}
+
+@Component({
+  template: `
+    <form nz-form se-container>
+      <se label="a" />
+    </form>
+  `,
+  imports: [FormsModule, SEModule, NzFormModule, NzRadioModule]
+})
+class EmptyContentHostComponent extends HostBaseComponent {}
 
 @Component({
   template: `
@@ -575,7 +648,7 @@ describe('abc: edit', () => {
   `,
   imports: [FormsModule, SEModule, NzFormModule, NzRadioModule]
 })
-class TestComponent {
+class TestComponent extends HostBaseComponent {
   @ViewChild('seComp', { static: true })
   seComp!: SEContainerComponent;
   @ViewChild('viewComp', { static: true })
@@ -598,7 +671,6 @@ class TestComponent {
   optionalHelp?: string;
   readonly error = signal<string | TemplateRef<void> | Record<string, string | TemplateRef<void>>>('required');
   extra?: string;
-  readonly label = signal<string | undefined>(undefined);
   readonly required = signal<boolean | null | undefined>(undefined);
   readonly line = signal<boolean | null | undefined>(undefined);
   readonly col = signal<number | null | undefined>(undefined);
@@ -607,8 +679,6 @@ class TestComponent {
   readonly noColon = signal<boolean | null | undefined>(undefined);
   readonly hideLabel = signal(false);
 
-  readonly val = signal('');
-  readonly showModel = signal(true);
   readonly disabled = signal(false);
 }
 
@@ -634,4 +704,5 @@ class TestReactiveComponent {
       dis: { value: '', disabled: true }
     });
   }
+  submitForm(): void {}
 }

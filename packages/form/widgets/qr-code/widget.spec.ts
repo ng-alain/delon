@@ -1,13 +1,16 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 
 import { SFSchema } from '@delon/form';
 import { createTestContext } from '@delon/testing';
 
 import { SFQrCodeWidgetSchema, withQrCodeWidget } from './index';
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base';
 
 describe('form: widget: qr-code', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestFormComponent>;
   let dl: DebugElement;
   let context: TestFormComponent;
@@ -21,7 +24,7 @@ describe('form: widget: qr-code', () => {
     page.cleanOverlay().prop(dl, context, fixture);
   });
 
-  it('should be working', fakeAsync(() => {
+  it('should be working', async () => {
     const s: SFSchema = {
       properties: {
         a: {
@@ -33,5 +36,5 @@ describe('form: widget: qr-code', () => {
       }
     };
     page.newSchema(s).getEl('canvas');
-  }));
+  });
 });

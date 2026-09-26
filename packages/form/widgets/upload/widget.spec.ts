@@ -1,5 +1,5 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { createTestContext } from '@delon/testing';
@@ -10,9 +10,12 @@ import { NzUploadComponent } from 'ng-zorro-antd/upload';
 
 import { withUploadWidget } from './index';
 import { UploadWidget } from './widget';
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base';
 
 describe('form: widget: upload', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestFormComponent>;
   let page: SFPage;
   let context: TestFormComponent;
@@ -44,12 +47,12 @@ describe('form: widget: upload', () => {
       properties: { a: { type: 'string', ui: { widget } } }
     });
     const comp = getComp();
-    spyOn(comp.formProperty, 'setValue');
+    vi.spyOn(comp.formProperty, 'setValue').mockReturnValue(undefined);
     comp.change({ type: 'error', fileList: [] } as NzSafeAny);
     expect(comp.formProperty.setValue).not.toHaveBeenCalled();
   });
 
-  it('#setValue', fakeAsync(() => {
+  it('#setValue', async () => {
     page
       .newSchema({
         properties: {
@@ -84,7 +87,7 @@ describe('form: widget: upload', () => {
       ])
       .dc(1);
     expect(page.getEl('.ant-upload-list-item').textContent!.trim()).toContain('zzz.png');
-  }));
+  });
 
   describe('property', () => {
     it('#fileList', () => {
@@ -108,7 +111,7 @@ describe('form: widget: upload', () => {
         properties: {
           a: {
             type: 'string',
-            ui: { widget, fileSize: 100, multiple: true, change: jasmine.createSpy() }
+            ui: { widget, fileSize: 100, multiple: true, change: vi.fn() }
           }
         }
       });
@@ -161,7 +164,7 @@ describe('form: widget: upload', () => {
           properties: {
             a: {
               type: 'string',
-              ui: { widget, preview: jasmine.createSpy() }
+              ui: { widget, preview: vi.fn() }
             }
           }
         });
@@ -180,7 +183,7 @@ describe('form: widget: upload', () => {
         });
         const comp = page.getWidget<UploadWidget>('sf-upload');
         const imgSrv = TestBed.inject(NzImageService);
-        spyOn(imgSrv, 'preview');
+        vi.spyOn(imgSrv, 'preview').mockReturnValue(undefined as NzSafeAny);
         comp.handlePreview({ url: 'a' } as NzSafeAny);
         expect(imgSrv.preview).toHaveBeenCalled();
       });
@@ -195,7 +198,7 @@ describe('form: widget: upload', () => {
         });
         const comp = page.getWidget<UploadWidget>('sf-upload');
         const imgSrv = TestBed.inject(NzImageService);
-        spyOn(imgSrv, 'preview');
+        vi.spyOn(imgSrv, 'preview').mockReturnValue(undefined as NzSafeAny);
         comp.handlePreview({} as NzSafeAny);
         expect(imgSrv.preview).not.toHaveBeenCalled();
       });

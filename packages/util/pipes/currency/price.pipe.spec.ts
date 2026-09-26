@@ -30,6 +30,6 @@ describe('Pipe: price', () => {
   imports: [CurrencyPricePipe]
 })
 class TestComponent {
-  value?: number;
+  value!: number;
   options: CurrencyFormatOptions = {};
 }

@@ -1,8 +1,8 @@
 import { DOCUMENT } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { Component, DebugElement, signal, ViewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { Component, DebugElement, signal, Type, ViewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router, RouterModule, provideRouter } from '@angular/router';
 
@@ -90,6 +90,9 @@ class MockLocation {
 }
 
 describe('theme: layout-default-nav', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let context: TestComponent;
@@ -101,8 +104,7 @@ describe('theme: layout-default-nav', () => {
 
   function createModule(): void {
     TestBed.configureTestingModule({
-      imports: [RouterModule.forRoot([]), AlainThemeModule, LayoutDefaultModule],
-      declarations: [TestComponent],
+      imports: [RouterModule.forRoot([]), AlainThemeModule, LayoutDefaultModule, TestComponent],
       providers: [
         provideNzNoAnimation(),
         provideHttpClient(),
@@ -113,8 +115,12 @@ describe('theme: layout-default-nav', () => {
     });
   }
 
-  function createComp(needMockNavigateByUrl: boolean = true, callback?: () => void): void {
-    fixture = TestBed.createComponent(TestComponent);
+  function createComp(
+    needMockNavigateByUrl: boolean = true,
+    callback?: () => void,
+    host: Type<unknown> = TestComponent
+  ): void {
+    fixture = TestBed.createComponent(host) as ComponentFixture<TestComponent>;
     dl = fixture.debugElement;
     context = fixture.componentInstance;
     fixture.detectChanges();
@@ -124,7 +130,7 @@ describe('theme: layout-default-nav', () => {
     doc = TestBed.inject(DOCUMENT);
     menuSrv.add(deepCopy(MOCKMENUS));
     page = new PageObject();
-    if (needMockNavigateByUrl) spyOn(router, 'navigateByUrl');
+    if (needMockNavigateByUrl) vi.spyOn(router, 'navigateByUrl').mockReturnValue(undefined as NzSafeAny);
     if (callback) callback();
   }
 
@@ -134,7 +140,7 @@ describe('theme: layout-default-nav', () => {
     describe('[default]', () => {
       it('should be navigate url', () => {
         createComp();
-        spyOn(context, 'select');
+        vi.spyOn(context, 'select').mockReturnValue(undefined);
         const data = deepCopy(MOCKMENUS);
         menuSrv.add(data);
         fixture.detectChanges();
@@ -152,7 +158,7 @@ describe('theme: layout-default-nav', () => {
           createComp();
           fixture.detectChanges();
           const win = TestBed.inject(WINDOW);
-          spyOn(win, 'open');
+          vi.spyOn(win, 'open').mockReturnValue(undefined as NzSafeAny);
           const itemEl = page.getEl<HTMLElement>('.sidebar-nav__item [data-id="6"]');
           itemEl!.click();
           expect(win.open).toHaveBeenCalled();
@@ -203,7 +209,7 @@ describe('theme: layout-default-nav', () => {
 
       it('should be block click menu when is disabled', () => {
         createComp();
-        spyOn(context, 'select');
+        vi.spyOn(context, 'select').mockReturnValue(undefined);
         const newMenus = [
           {
             text: '',
@@ -349,8 +355,8 @@ describe('theme: layout-default-nav', () => {
           page.showSubMenu();
         });
         it('should be displayed full submenu', () => {
-          const clientHeight = spyOnProperty(doc.documentElement, 'clientHeight').and.returnValue(0);
-          spyOnProperty(doc.querySelector('body')!, 'clientHeight').and.returnValue(0);
+          const clientHeight = vi.spyOn(doc.documentElement, 'clientHeight', 'get').mockReturnValue(0);
+          vi.spyOn(doc.querySelector('body')!, 'clientHeight', 'get').mockReturnValue(0);
           expect(clientHeight).not.toHaveBeenCalled();
           page.showSubMenu();
           expect(clientHeight).toHaveBeenCalled();
@@ -373,7 +379,7 @@ describe('theme: layout-default-nav', () => {
           expect(page.getEl<HTMLElement>('.ant-badge-count')!.childNodes.item(1).nodeValue == ' 99+ ').toBe(true);
         });
         it('should be ingore children title trigger event', () => {
-          spyOn(context, 'select');
+          vi.spyOn(context, 'select').mockReturnValue(undefined);
           expect(context.select).not.toHaveBeenCalled();
           const mockMenu = deepCopy(MOCKMENUS) as Nav[];
           mockMenu[0].children![0].children = [{ text: 'a', children: [{ text: 'b' }] }];
@@ -449,7 +455,7 @@ describe('theme: layout-default-nav', () => {
         setSrv.layout.collapsed = true;
         fixture.detectChanges();
         page.showSubMenu();
-        spyOn(context.comp['floatingEl'], 'remove');
+        vi.spyOn(context.comp['floatingEl'], 'remove').mockReturnValue(undefined);
         page.hideSubMenu();
         expect(page.getEl<HTMLElement>(floatingShowCls, true)).toBeNull();
       });
@@ -536,62 +542,55 @@ describe('theme: layout-default-nav', () => {
   describe('[underPad]', () => {
     beforeEach(createModule);
 
-    it('should be auto collapsed when less than pad', fakeAsync(() => {
-      // create test component
-      TestBed.overrideTemplate(
-        TestComponent,
-        `<layout-default-nav #comp [autoCloseUnderPad]="true"></layout-default-nav>`
-      );
+    it('should be auto collapsed when less than pad', async () => {
       const defaultCollapsed = false;
-      createComp(false, () => {
-        spyOnProperty(window, 'innerWidth').and.returnValue(767);
-        setSrv.layout.collapsed = defaultCollapsed;
-        fixture.detectChanges();
-      });
+      createComp(
+        false,
+        () => {
+          vi.spyOn(window, 'innerWidth', 'get').mockReturnValue(767);
+          setSrv.layout.collapsed = defaultCollapsed;
+          fixture.detectChanges();
+        },
+        UnderPadHostComponent
+      );
       router.navigateByUrl('/');
       fixture.detectChanges();
-      tick(20);
+      await vi.advanceTimersByTimeAsync(20);
       expect(setSrv.layout.collapsed).toBe(!defaultCollapsed);
-    }));
-    it(`should be won't collapsed when more than pad`, fakeAsync(() => {
-      // create test component
-      TestBed.overrideTemplate(
-        TestComponent,
-        `<layout-default-nav #comp [autoCloseUnderPad]="true"></layout-default-nav>`
-      );
+    });
+    it(`should be won't collapsed when more than pad`, async () => {
       const defaultCollapsed = false;
-      createComp(false, () => {
-        spyOnProperty(window, 'innerWidth').and.returnValue(769);
-        setSrv.layout.collapsed = defaultCollapsed;
-        fixture.detectChanges();
-      });
+      createComp(
+        false,
+        () => {
+          vi.spyOn(window, 'innerWidth', 'get').mockReturnValue(769);
+          setSrv.layout.collapsed = defaultCollapsed;
+          fixture.detectChanges();
+        },
+        UnderPadHostComponent
+      );
       router.navigateByUrl('/');
       fixture.detectChanges();
-      tick(1000);
+      await vi.advanceTimersByTimeAsync(1000);
       expect(setSrv.layout.collapsed).toBe(defaultCollapsed);
-    }));
-    it('should be auto expaned when less than pad trigger click', fakeAsync(() => {
-      // create test component
-      TestBed.overrideTemplate(
-        TestComponent,
-        `<layout-default-nav #comp [autoCloseUnderPad]="true"></layout-default-nav>`
-      );
-      createComp();
+    });
+    it('should be auto expaned when less than pad trigger click', async () => {
+      createComp(true, undefined, UnderPadHostComponent);
       setSrv.layout.collapsed = true;
       fixture.detectChanges();
-      spyOnProperty(window, 'innerWidth').and.returnValue(767);
+      vi.spyOn(window, 'innerWidth', 'get').mockReturnValue(767);
       expect(setSrv.layout.collapsed).toBe(true);
       page.getEl<HTMLElement>('.sidebar-nav')!.click();
       fixture.detectChanges();
-      tick(20);
+      await vi.advanceTimersByTimeAsync(20);
       expect(setSrv.layout.collapsed).toBe(false);
-    }));
+    });
   });
 
   describe('should be recursive path', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [RouterModule.forRoot([]), AlainThemeModule, LayoutDefaultModule],
+        imports: [RouterModule.forRoot([]), AlainThemeModule, LayoutDefaultModule, TestComponent],
         providers: [
           provideRouter([
             { path: 'user', component: TestRouteComponent },
@@ -599,10 +598,10 @@ describe('theme: layout-default-nav', () => {
             { path: 'user/type', component: TestRouteComponent }
           ])
         ],
-        declarations: [TestComponent, TestRouteComponent]
+        declarations: [TestRouteComponent]
       });
     });
-    beforeEach(fakeAsync(() => {
+    beforeEach(async () => {
       fixture = TestBed.createComponent(TestComponent);
       dl = fixture.debugElement;
       context = fixture.componentInstance;
@@ -620,32 +619,33 @@ describe('theme: layout-default-nav', () => {
         }
       ]);
       fixture.detectChanges();
-    }));
-    it('with true', fakeAsync(() => {
+      await vi.runOnlyPendingTimersAsync();
+    });
+    it('with true', async () => {
       context.recursivePath.set(true);
       fixture.detectChanges();
       router.navigateByUrl('/user2');
-      tick();
+      await vi.advanceTimersByTimeAsync(0);
       fixture.detectChanges();
       page.checkCount('.sidebar-nav__selected', 0);
       router.navigateByUrl('/user/type');
-      tick();
+      await vi.advanceTimersByTimeAsync(0);
       fixture.detectChanges();
       page.checkCount('.sidebar-nav__selected', 1);
-    }));
-    it('with false', fakeAsync(() => {
+    });
+    it('with false', async () => {
       context.recursivePath.set(false);
       fixture.detectChanges();
       router.navigateByUrl('/user2');
-      tick();
+      await vi.advanceTimersByTimeAsync(0);
       fixture.detectChanges();
       page.checkCount('.sidebar-nav__selected', 0);
       router.navigateByUrl('/user/type');
-      tick();
+      await vi.advanceTimersByTimeAsync(0);
       fixture.detectChanges();
       page.checkCount('.sidebar-nav__selected', 0);
-    }));
-    it('should be ingore _open when enabled openStrictly', fakeAsync(() => {
+    });
+    it('should be ingore _open when enabled openStrictly', async () => {
       context.openStrictly.set(true);
       fixture.detectChanges();
       menuSrv.add(deepCopy(MOCKOPENSTRICTLY));
@@ -654,7 +654,7 @@ describe('theme: layout-default-nav', () => {
       router.navigateByUrl('/user2');
       fixture.detectChanges();
       page.checkCount('.sidebar-nav__open', 2);
-    }));
+    });
   });
 
   class PageObject {
@@ -716,8 +716,7 @@ describe('theme: layout-default-nav', () => {
       (select)="select()"
     />
   `,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [LayoutDefaultModule]
 })
 class TestComponent {
   @ViewChild('comp', { static: true })
@@ -736,3 +735,10 @@ class TestComponent {
   standalone: false
 })
 class TestRouteComponent {}
+
+/** 覆盖模板的宿主必须是实体组件：AOT 产物上的 overrideTemplate 拿不到 imports */
+@Component({
+  template: `<layout-default-nav #comp [autoCloseUnderPad]="true" />`,
+  imports: [LayoutDefaultModule]
+})
+class UnderPadHostComponent {}

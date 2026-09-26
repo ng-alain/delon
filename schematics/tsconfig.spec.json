@@ -10,7 +10,7 @@
     "sourceMap": true,
     "experimentalDecorators": true,
     "target": "es6",
-    "types": ["jasmine", "node"]
+    "types": ["vitest/globals", "node"]
   },
   "exclude": ["*/files/**/*"]
 }

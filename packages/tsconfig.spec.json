@@ -3,16 +3,13 @@
   "compilerOptions": {
     "rootDir": "./",
     "outDir": "../out-tsc/spec",
-    "types": ["jasmine"],
+    "types": ["vitest/globals"],
     "paths": {
       "@delon/*": ["./*"]
     },
     "esModuleInterop": true,
     "noImplicitThis": false
   },
-  "files": ["test.ts"],
-  "include": [
-    "**/*.spec.ts",
-    "**/*.d.ts"
-  ]
+  "files": ["vitest-setup.ts"],
+  "include": ["**/*.spec.ts", "**/*.d.ts"]
 }

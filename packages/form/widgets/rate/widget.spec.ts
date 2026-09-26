@@ -1,12 +1,15 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 
 import { createTestContext } from '@delon/testing';
 
 import { withRateWidget } from './index';
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base';
 
 describe('form: widget: rate', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestFormComponent>;
   let dl: DebugElement;
   let context: TestFormComponent;
@@ -21,7 +24,7 @@ describe('form: widget: rate', () => {
     page.prop(dl, context, fixture);
   });
 
-  it('should be working', fakeAsync(() => {
+  it('should be working', async () => {
     page
       .newSchema({
         properties: {
@@ -35,11 +38,12 @@ describe('form: widget: rate', () => {
           }
         }
       })
-      .time()
-      .checkCount('.ant-rate-star-full', 2);
-  }));
+      .time();
+    await page.stabilize();
+    page.checkCount('.ant-rate-star-full', 2);
+  });
 
-  it('should be show text', fakeAsync(() => {
+  it('should be show text', async () => {
     page
       .newSchema({
         properties: {
@@ -55,5 +59,5 @@ describe('form: widget: rate', () => {
         }
       })
       .checkElText('.ant-rate-text', '2 A');
-  }));
+  });
 });

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
-// 注：不能用 `import * as fs`——TS6 会编译成只读 getter 的命名空间，jasmine `spyOn` 无法覆写；`import = require` 拿到真实可写的 fs 模块。
+// 注：不能用 `import * as fs`——TS6 会编译成只读 getter 的命名空间，vi.spyOn 无法覆写；`import = require` 拿到真实可写的 fs 模块。
 import fs = require('fs');
 
 import { createAlainAndModuleApp } from '../utils/testing';
@@ -38,9 +38,9 @@ describe('Schematic: list', () => {
     });
 
     it('should be throw error when directory already exists', async () => {
-      spyOn(fs, 'existsSync').and.returnValue(true);
+      vi.spyOn(fs, 'existsSync').mockReturnValue(true);
 
-      spyOn(fs, 'readdirSync').and.returnValue({ length: 1 } as any);
+      vi.spyOn(fs, 'readdirSync').mockReturnValue({ length: 1 } as any);
       try {
         tree = await runner.runSchematic('list', { name: 'list', module: 'trade', standalone: false }, tree);
         expect(true).toBe(false);
@@ -90,9 +90,9 @@ describe('Schematic: list', () => {
     });
 
     it('should be throw error when directory already exists', async () => {
-      spyOn(fs, 'existsSync').and.returnValue(true);
+      vi.spyOn(fs, 'existsSync').mockReturnValue(true);
 
-      spyOn(fs, 'readdirSync').and.returnValue({ length: 1 } as any);
+      vi.spyOn(fs, 'readdirSync').mockReturnValue({ length: 1 } as any);
       try {
         tree = await runner.runSchematic('list', { name: 'list', module: 'trade', standalone: true }, tree);
         expect(true).toBe(false);

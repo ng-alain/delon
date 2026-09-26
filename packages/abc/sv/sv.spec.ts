@@ -1,4 +1,4 @@
-import { Component, DebugElement, ViewChild, signal } from '@angular/core';
+import { Component, DebugElement, Type, ViewChild, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -17,11 +17,9 @@ describe('abc: view', () => {
   let context: TestComponent;
   let page: PageObject;
 
-  function genModule(template?: string): void {
-    if (template) {
-      TestBed.overrideTemplate(TestComponent, template);
-    }
-    ({ fixture, dl, context } = createTestContext(TestComponent));
+  function genModule(host: Type<unknown> = TestComponent): void {
+    const ctx = createTestContext(host as Type<TestComponent>);
+    ({ fixture, dl, context } = ctx);
     fixture.detectChanges();
     page = new PageObject();
   }
@@ -189,49 +187,30 @@ describe('abc: view', () => {
 
   describe('[logic]', () => {
     it('should be custom title in sv-container', () => {
-      genModule(
-        `<sv-container [title]="title">
-          <ng-template #title>
-            <a id="tip">tip</a>
-          </ng-template>
-        </sv-container>`
-      );
+      genModule(CustomTitleHostComponent);
       page.expect('#tip');
     });
     it('should be custom label', () => {
-      genModule(
-        `<sv-container>
-          <sv [label]="label">
-            <ng-template #label>
-              <a id="tip">tip</a>
-            </ng-template>
-            Custom label
-          </sv>
-        </sv-container>`
-      );
+      genModule(CustomLabelHostComponent);
       page.expect('#tip');
     });
     it(`should be must include 'sv-container' component in sv`, () => {
       expect(() => {
-        genModule(`
-        <sv></sv>
-        `);
-      }).toThrowError();
+        genModule(NoContainerHostComponent);
+      }).toThrow();
     });
     it(`should be must include 'sv-container' component in sv-title`, () => {
       expect(() => {
-        genModule(`
-        <sv-title></sv-title>
-        `);
-      }).toThrowError();
+        genModule(NoContainerTitleHostComponent);
+      }).toThrow();
     });
     it('should be support global config', () => {
       TestBed.configureTestingModule({
         providers: [provideAlain({ config: { sv: { labelWidth: 10, col: 2 } } })]
       });
-      genModule(`<div sv-container><sv label="a" /></div>`);
+      genModule(GlobalConfigHostComponent);
       expect(page.getEl('.sv__label').style.width).toBe(`10px`);
-      expect(page.getEl('.ant-col-sm-12') != null).toBeTrue();
+      expect(page.getEl('.ant-col-sm-12') != null).toBe(true);
     });
   });
 
@@ -243,9 +222,7 @@ describe('abc: view', () => {
       return dl.queryAll(By.css(cls));
     }
     expect(cls: string, count: number = 1, message?: string): this {
-      let e = expect(this.getEls(cls).length);
-      if (message) e = e.withContext(message);
-      e.toBe(count);
+      expect(this.getEls(cls).length, message).toBe(count);
       return this;
     }
   }
@@ -312,3 +289,51 @@ class TestComponent {
   readonly type = signal<'primary' | 'success' | 'danger' | 'warning' | undefined>(undefined);
   readonly hideLabel = signal(false);
 }
+
+/** 覆盖模板的宿主必须是实体组件：AOT 产物上的 overrideTemplate 拿不到 imports */
+@Component({
+  template: `
+    <sv-container [title]="title">
+      <ng-template #title>
+        <a id="tip">tip</a>
+      </ng-template>
+    </sv-container>
+  `,
+  imports: [SVModule]
+})
+class CustomTitleHostComponent {}
+
+@Component({
+  template: `
+    <sv-container>
+      <sv [label]="label">
+        <ng-template #label>
+          <a id="tip">tip</a>
+        </ng-template>
+        Custom label
+      </sv>
+    </sv-container>
+  `,
+  imports: [SVModule]
+})
+class CustomLabelHostComponent {}
+
+@Component({
+  selector: 'host-sv-no-container',
+  template: `<sv />`,
+  imports: [SVModule]
+})
+class NoContainerHostComponent {}
+
+@Component({
+  selector: 'host-sv-no-container-title',
+  template: `<sv-title />`,
+  imports: [SVModule]
+})
+class NoContainerTitleHostComponent {}
+
+@Component({
+  template: `<div sv-container><sv label="a" /></div>`,
+  imports: [SVModule]
+})
+class GlobalConfigHostComponent {}

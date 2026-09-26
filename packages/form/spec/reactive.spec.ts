@@ -3,7 +3,7 @@ import { ComponentFixture } from '@angular/core/testing';
 
 import { createTestContext } from '@delon/testing';
 
-import { configureSFTestSuite, SFPage, TestFormComponent } from './base.spec';
+import { configureSFTestSuite, SFPage, TestFormComponent } from './base';
 import { reactive } from '../src/reactive';
 import type { SFSchema } from '../src/schema';
 

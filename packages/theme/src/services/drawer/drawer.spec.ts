@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { firstValueFrom } from 'rxjs';
 
 import { provideNzNoAnimation } from 'ng-zorro-antd/core/animation';
 import { NzDrawerRef, NzDrawerService } from 'ng-zorro-antd/drawer';
@@ -7,6 +8,9 @@ import { NzDrawerRef, NzDrawerService } from 'ng-zorro-antd/drawer';
 import { DrawerHelper } from './drawer.helper';
 
 describe('theme: DrawerHelper', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let drawer: DrawerHelper;
   let fixture: ComponentFixture<TestComponent>;
 
@@ -23,58 +27,41 @@ describe('theme: DrawerHelper', () => {
     if (a) a.remove();
   });
 
-  it('should be subscribing return value', done => {
-    drawer
-      .create('', TestDrawerComponent, {
-        ret: 'true'
-      })
-      .subscribe(() => {
-        expect(true).toBeTruthy();
-        done();
-      });
+  it('should be subscribing return value', async () => {
+    const res$ = firstValueFrom(drawer.create('', TestDrawerComponent, { ret: 'true' }));
     fixture.detectChanges();
+    await vi.advanceTimersByTimeAsync(1000);
+    expect(await res$).toBe('true');
   });
 
-  it('should be only close', done => {
-    drawer
-      .create('', TestDrawerComponent, {
-        ret: 'destroy'
-      })
-      .subscribe({
-        next: () => {
-          expect(false).toBeTruthy();
-          done();
-        },
-        error: () => {},
-        complete: () => {
-          expect(true).toBeTruthy();
-          done();
-        }
-      });
+  it('should be only close', async () => {
+    const next = vi.fn();
+    const error = vi.fn();
+    const complete = vi.fn();
+    drawer.create('', TestDrawerComponent, { ret: 'destroy' }).subscribe({ next, error, complete });
     fixture.detectChanges();
+    await vi.advanceTimersByTimeAsync(1000);
+    expect(next).not.toHaveBeenCalled();
+    expect(error).not.toHaveBeenCalled();
+    expect(complete).toHaveBeenCalled();
   });
 
-  it('should be closeAll', fakeAsync(() => {
+  it('should be closeAll', async () => {
     expect(drawer.openDrawers.length).toBe(0);
     drawer.create('', TestComponent).subscribe();
     drawer.create('', TestComponent).subscribe();
     expect(drawer.openDrawers.length).toBe(2);
     drawer.closeAll();
-    tick(1000);
+    await vi.advanceTimersByTimeAsync(1000);
     fixture.detectChanges();
     expect(drawer.openDrawers.length).toBe(0);
-  }));
+  });
 
-  it('#static', done => {
-    drawer
-      .static('', TestDrawerComponent, {
-        ret: 'true'
-      })
-      .subscribe(() => {
-        expect(true).toBeTruthy();
-        done();
-      });
+  it('#static', async () => {
+    const res$ = firstValueFrom(drawer.static('', TestDrawerComponent, { ret: 'true' }));
     fixture.detectChanges();
+    await vi.advanceTimersByTimeAsync(1000);
+    expect(await res$).toBe('true');
   });
 
   describe('#size', () => {
@@ -224,7 +211,10 @@ describe('theme: DrawerHelper', () => {
   });
 
   describe('#exact', () => {
-    it('width true, should be only truth subscript', done => {
+    it('width true, should be only truth subscript', async () => {
+      const next = vi.fn();
+      const error = vi.fn();
+      const complete = vi.fn();
       drawer
         .create(
           '',
@@ -236,23 +226,16 @@ describe('theme: DrawerHelper', () => {
             exact: true
           }
         )
-        .subscribe({
-          next: () => {
-            expect(false).toBe(true);
-          },
-          error: () => {
-            expect(false).toBe(true);
-          },
-          complete: () => {
-            expect(true).toBe(true);
-            done();
-          }
-        });
+        .subscribe({ next, error, complete });
       fixture.detectChanges();
+      await vi.advanceTimersByTimeAsync(1000);
+      expect(next).not.toHaveBeenCalled();
+      expect(error).not.toHaveBeenCalled();
+      expect(complete).toHaveBeenCalled();
     });
-    it('width false, should be always subscript', done => {
-      drawer
-        .create(
+    it('width false, should be always subscript', async () => {
+      const res$ = firstValueFrom(
+        drawer.create(
           '',
           TestDrawerComponent,
           {
@@ -262,17 +245,10 @@ describe('theme: DrawerHelper', () => {
             exact: false
           }
         )
-        .subscribe({
-          next: res => {
-            expect(res).toBe(undefined);
-            done();
-          },
-          error: () => {
-            expect(false).toBe(true);
-            done();
-          }
-        });
+      );
       fixture.detectChanges();
+      await vi.advanceTimersByTimeAsync(1000);
+      expect(await res$).toBeUndefined();
     });
   });
 });

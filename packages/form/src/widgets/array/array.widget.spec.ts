@@ -6,7 +6,7 @@ import { deepCopy } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { SFArrayWidgetSchema } from './schema';
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base';
 import { ArrayProperty, FormProperty } from '../../model';
 import { SFSchema } from '../../schema';
 
@@ -28,8 +28,8 @@ describe('form: widget: array', () => {
           }
         },
         ui: {
-          add: jasmine.createSpy('add') as NzSafeAny,
-          remove: jasmine.createSpy('remove') as NzSafeAny
+          add: vi.fn().mockName('add') as NzSafeAny,
+          remove: vi.fn().mockName('remove') as NzSafeAny
         }
       }
     }
@@ -120,7 +120,7 @@ describe('form: widget: array', () => {
       const s = deepCopy(schema) as SFSchema;
       s.properties!.arr.ui = {
         removable: true,
-        remove: jasmine.createSpy('remove') as NzSafeAny
+        remove: vi.fn().mockName('remove') as NzSafeAny
       } as SFArrayWidgetSchema;
       page
         .newSchema(s)

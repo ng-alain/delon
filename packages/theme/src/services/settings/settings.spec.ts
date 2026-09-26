@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { firstValueFrom } from 'rxjs';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -11,16 +12,16 @@ describe('Service: Settings', () => {
   beforeEach(() => {
     let data: Record<string, NzSafeAny> = {};
 
-    spyOn(localStorage, 'getItem').and.callFake((key: string): string => {
+    vi.spyOn(localStorage, 'getItem').mockImplementation((key: string): string => {
       return data[key] ?? null;
     });
-    spyOn(localStorage, 'removeItem').and.callFake((key: string): void => {
+    vi.spyOn(localStorage, 'removeItem').mockImplementation((key: string): void => {
       delete data[key];
     });
-    spyOn(localStorage, 'setItem').and.callFake((key: string, value: string): string => {
+    vi.spyOn(localStorage, 'setItem').mockImplementation((key: string, value: string): string => {
       return (data[key] = value as string);
     });
-    spyOn(localStorage, 'clear').and.callFake(() => {
+    vi.spyOn(localStorage, 'clear').mockImplementation(() => {
       data = {};
     });
 
@@ -49,14 +50,13 @@ describe('Service: Settings', () => {
       expect(srv.layout.lang).toBe('zh-cn');
     });
 
-    it('should be notify', done => {
-      srv.notify.subscribe(res => {
-        expect(res.type).toBe('layout');
-        expect(res.name).toBe('collapsed');
-        expect(res.value).toBe(1);
-        done();
-      });
+    it('should be notify', async () => {
+      const res$ = firstValueFrom(srv.notify);
       srv.setLayout('collapsed', 1);
+      const res = await res$;
+      expect(res.type).toBe('layout');
+      expect(res.name).toBe('collapsed');
+      expect(res.value).toBe(1);
     });
 
     it('#layoutSignal', () => {
@@ -80,13 +80,12 @@ describe('Service: Settings', () => {
     it(`can get`, () => {
       expect(srv.app).not.toBeNull();
     });
-    it('should be notify', done => {
-      srv.notify.subscribe(res => {
-        expect(res.type).toBe('app');
-        expect(res.value.name).toBe('a');
-        done();
-      });
+    it('should be notify', async () => {
+      const res$ = firstValueFrom(srv.notify);
       srv.setApp({ name: 'a' });
+      const res = await res$;
+      expect(res.type).toBe('app');
+      expect(res.value.name).toBe('a');
     });
 
     it('#appSignal', () => {
@@ -110,13 +109,12 @@ describe('Service: Settings', () => {
     it(`can get`, () => {
       expect(srv.user).not.toBeNull();
     });
-    it('should be notify', done => {
-      srv.notify.subscribe(res => {
-        expect(res.type).toBe('user');
-        expect(res.value.name).toBe('a');
-        done();
-      });
+    it('should be notify', async () => {
+      const res$ = firstValueFrom(srv.notify);
       srv.setUser({ name: 'a' });
+      const res = await res$;
+      expect(res.type).toBe('user');
+      expect(res.value.name).toBe('a');
     });
 
     it('#userSignal', () => {

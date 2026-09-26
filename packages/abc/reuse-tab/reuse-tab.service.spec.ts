@@ -1,4 +1,4 @@
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router, RouteReuseStrategy } from '@angular/router';
 import { filter } from 'rxjs';
 
@@ -17,7 +17,7 @@ class MockMenuService {
   }
 }
 class MockRouter {
-  navigateByUrl = jasmine.createSpy().and.returnValue(Promise.resolve(true));
+  navigateByUrl = vi.fn().mockResolvedValue(true);
   get events(): NzSafeAny {
     return {
       subscribe: () => {
@@ -28,6 +28,9 @@ class MockRouter {
 }
 
 describe('abc: reuse-tab(service)', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let srv: ReuseTabService;
   let menuSrv: MenuService;
   let router: MockRouter;
@@ -125,18 +128,18 @@ describe('abc: reuse-tab(service)', () => {
           expect(srv.can(snapshot)).toBe(false);
         });
         it(`can't hit because not allowed reuse in menu`, () => {
-          const spy = spyOn(menuSrv, 'getPathByUrl');
-          spy.and.returnValue([{ text: '1', link: '/a/1', reuse: false }]);
+          const spy = vi.spyOn(menuSrv, 'getPathByUrl');
+          spy.mockReturnValue([{ text: '1', link: '/a/1', reuse: false }]);
           expect(srv.can(getSnapshot(1))).toBe(false);
-          spy.and.returnValue([{ text: '2', link: '/a/2', reuse: true }]);
+          spy.mockReturnValue([{ text: '2', link: '/a/2', reuse: true }]);
           expect(srv.can(getSnapshot(2))).toBe(true);
         });
       });
       describe('when ReuseTabMatchMode.MenuForce', () => {
         beforeEach(() => (srv.mode = ReuseTabMatchMode.MenuForce));
         it('can hit because menu data muse allow', () => {
-          const spy = spyOn(menuSrv, 'getPathByUrl');
-          spy.and.returnValue([{ text: '1', link: '/a/1', reuse: true }]);
+          const spy = vi.spyOn(menuSrv, 'getPathByUrl');
+          spy.mockReturnValue([{ text: '1', link: '/a/1', reuse: true }]);
           expect(srv.can(getSnapshot(1))).toBe(true);
         });
         it(`can't hit because not found in menu`, () => {
@@ -144,10 +147,10 @@ describe('abc: reuse-tab(service)', () => {
           expect(srv.can(snapshot)).toBe(false);
         });
         it(`can't hit because not allowed reuse in menu`, () => {
-          const spy = spyOn(menuSrv, 'getPathByUrl');
-          spy.and.returnValue([{ text: '1', link: '/a/1', reuse: false }]);
+          const spy = vi.spyOn(menuSrv, 'getPathByUrl');
+          spy.mockReturnValue([{ text: '1', link: '/a/1', reuse: false }]);
           expect(srv.can(getSnapshot(1))).toBe(false);
-          spy.and.returnValue([{ text: '2', link: '/a/2', reuse: true }]);
+          spy.mockReturnValue([{ text: '2', link: '/a/2', reuse: true }]);
           expect(srv.can(getSnapshot(2))).toBe(true);
         });
       });
@@ -166,7 +169,7 @@ describe('abc: reuse-tab(service)', () => {
     });
     describe('#debug', () => {
       beforeEach(() => {
-        spyOn(console, 'warn');
+        vi.spyOn(console, 'warn').mockReturnValue(undefined);
         genCached(1);
       });
       it('with true', () => {
@@ -198,28 +201,28 @@ describe('abc: reuse-tab(service)', () => {
       let count = 5;
       genCached(count);
       // index
-      expect(srv.index('/a/1')).withContext(`'index' muse be contain '/a/1'`).toBe(0);
-      expect(srv.index('/a/b')).withContext(`'index' muse be not contain '/a/b'`).toBe(-1);
+      expect(srv.index('/a/1'), `'index' muse be contain '/a/1'`).toBe(0);
+      expect(srv.index('/a/b'), `'index' muse be not contain '/a/b'`).toBe(-1);
       // exists
-      expect(srv.exists('/a/1')).withContext(`'exists' muse be contain '/a/1'`).toBe(true);
-      expect(srv.exists('/a/b')).withContext(`'exists' muse be not contain '/a/b'`).toBe(false);
+      expect(srv.exists('/a/1'), `'exists' muse be contain '/a/1'`).toBe(true);
+      expect(srv.exists('/a/b'), `'exists' muse be not contain '/a/b'`).toBe(false);
       // get
-      expect(srv.get('/a/1')).withContext(`'get' muse be return cache data`).not.toBeNull();
-      expect(srv.get('/a/b')).withContext(`'get' muse be return null`).toBeNull();
-      expect(srv.get()).withContext(`'get' muse be return null if null`).toBeNull();
+      expect(srv.get('/a/1'), `'get' muse be return cache data`).not.toBeNull();
+      expect(srv.get('/a/b'), `'get' muse be return null`).toBeNull();
+      expect(srv.get(), `'get' muse be return null if null`).toBeNull();
       // remove
       srv.close('/a/1');
       --count;
-      expect(srv.count).withContext(`'remove' muse be return ${count} when has removed`).toBe(count);
+      expect(srv.count, `'remove' muse be return ${count} when has removed`).toBe(count);
       srv.close('/a/b');
-      expect(srv.count).withContext(`'remove' muse be return ${count} when invalid url`).toBe(count);
+      expect(srv.count, `'remove' muse be return ${count} when invalid url`).toBe(count);
       // items
-      expect(srv.items.length).withContext(`'items' muse be return ${count} length`).toBe(count);
+      expect(srv.items.length, `'items' muse be return ${count} length`).toBe(count);
       // count
-      expect(srv.count).withContext(`'count' muse be return ${count}`).toBe(count);
+      expect(srv.count, `'count' muse be return ${count}`).toBe(count);
       // clear
       srv.clear();
-      expect(srv.count).withContext(`'clear' muse be return 0`).toBe(0);
+      expect(srv.count, `'clear' muse be return 0`).toBe(0);
     });
     describe('#title', () => {
       it('should reset title via service', () => {
@@ -259,10 +262,10 @@ describe('abc: reuse-tab(service)', () => {
         expect(srv.getClosable('/', { data: { reuseClosable: closable } } as NzSafeAny)).toBe(closable);
       });
       it('should get closable from menu data', () => {
-        const spy = spyOn(menuSrv, 'getPathByUrl');
-        spy.and.returnValue([{ text: '1', link: '/1', reuseClosable: false }]);
+        const spy = vi.spyOn(menuSrv, 'getPathByUrl');
+        spy.mockReturnValue([{ text: '1', link: '/1', reuseClosable: false }]);
         expect(srv.getClosable('/1')).toBe(false);
-        spy.and.returnValue([{ text: '2', link: '/2', reuseClosable: true }]);
+        spy.mockReturnValue([{ text: '2', link: '/2', reuseClosable: true }]);
         expect(srv.getClosable('/2')).toBe(true);
       });
       it('should use url as title when can be no found title', () => {
@@ -310,7 +313,7 @@ describe('abc: reuse-tab(service)', () => {
       it('should be destroy component instance when remove a page', () => {
         const instance = {
           componentRef: {
-            destroy: jasmine.createSpy('destroy')
+            destroy: vi.fn().mockName('destroy')
           }
         };
         srv.saveCache(getSnapshot(3), instance);
@@ -377,19 +380,19 @@ describe('abc: reuse-tab(service)', () => {
       srv.refresh(true);
     });
     describe('#replace', () => {
-      it('should be navigate to new url', fakeAsync(() => {
+      it('should be navigate to new url', async () => {
         expect(router.navigateByUrl).not.toHaveBeenCalled();
         srv.replace('/a/1');
-        tick();
+        await vi.advanceTimersByTimeAsync(0);
         expect(router.navigateByUrl).toHaveBeenCalled();
-      }));
-      it('should be closed current router after navigate to new url', fakeAsync(() => {
+      });
+      it('should be closed current router after navigate to new url', async () => {
         genCached(1, '');
         expect(router.navigateByUrl).not.toHaveBeenCalled();
         srv.replace('/b');
-        tick();
+        await vi.advanceTimersByTimeAsync(0);
         expect(router.navigateByUrl).toHaveBeenCalled();
-      }));
+      });
     });
     describe('#keepingScroll', () => {
       it('should get keepingScroll from service', () => {
@@ -403,10 +406,10 @@ describe('abc: reuse-tab(service)', () => {
         expect(srv.getKeepingScroll('/', { data: { keepingScroll: true } } as NzSafeAny)).toBe(true);
       });
       it('should get keepingScroll from menu data', () => {
-        const spy = spyOn(menuSrv, 'getPathByUrl');
-        spy.and.returnValue([{ text: '1', link: '/1', keepingScroll: false }]);
+        const spy = vi.spyOn(menuSrv, 'getPathByUrl');
+        spy.mockReturnValue([{ text: '1', link: '/1', keepingScroll: false }]);
         expect(srv.getKeepingScroll('/1')).toBe(false);
-        spy.and.returnValue([{ text: '2', link: '/2', keepingScroll: true }]);
+        spy.mockReturnValue([{ text: '2', link: '/2', keepingScroll: true }]);
         expect(srv.getKeepingScroll('/2')).toBe(true);
       });
     });
@@ -485,7 +488,7 @@ describe('abc: reuse-tab(service)', () => {
       const handle = {
         componentRef: {
           instance: {
-            _onReuseDestroy: jasmine.createSpy('_onReuseDestroy')
+            _onReuseDestroy: vi.fn().mockName('_onReuseDestroy')
           }
         }
       };
@@ -531,11 +534,11 @@ describe('abc: reuse-tab(service)', () => {
       snapshot.routeConfig.loadChildren = {};
       expect(srv.retrieve(getSnapshot(2))).toBeNull();
     });
-    it(`should be run _onReuseInit event hook`, fakeAsync(() => {
+    it(`should be run _onReuseInit event hook`, async () => {
       const handle = {
         componentRef: {
           instance: {
-            _onReuseInit: jasmine.createSpy('_onReuseInit')
+            _onReuseInit: vi.fn().mockName('_onReuseInit')
           }
         }
       };
@@ -544,15 +547,15 @@ describe('abc: reuse-tab(service)', () => {
       srv.saveCache(snapshot, handle);
       // mock activate router
       srv.store(snapshot, null);
-      tick(101);
+      await vi.advanceTimersByTimeAsync(101);
       expect(handle.componentRef.instance._onReuseInit).toHaveBeenCalled();
-    }));
+    });
   });
 
   it('#storageState', () => {
     genModule();
     const stateSrv = TestBed.inject(REUSE_TAB_STORAGE_STATE);
-    spyOn(stateSrv, 'get').and.returnValue([
+    vi.spyOn(stateSrv, 'get').mockReturnValue([
       { title: 'ti1', url: '/a' } as ReuseItem,
       { title: 'ti2', url: '/b' } as ReuseItem,
       { title: 'ti3', url: '/c' } as ReuseItem

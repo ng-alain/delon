@@ -4,6 +4,7 @@
   "description": "Schematics specific to NG-ALAIN",
   "author": "cipchk<cipchk@qq.com>",
   "license": "MIT",
+  "type": "commonjs",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ng-alain/ng-alain.git"

@@ -1,14 +1,17 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 
 import { createTestContext } from '@delon/testing';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { CheckboxWidget } from './checkbox.widget';
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base';
 import { SFSchema } from '../../schema';
 
 describe('form: widget: checkbox', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestFormComponent>;
   let dl: DebugElement;
   let context: TestFormComponent;
@@ -25,19 +28,21 @@ describe('form: widget: checkbox', () => {
     page.prop(dl, context, fixture);
   });
 
-  it('#setValue', fakeAsync(() => {
+  it('#setValue', async () => {
     page.newSchema({
       properties: {
         a: { type: 'string', ui: { widget }, enum: ['item1', 'item2'] }
       }
     });
     page.setValue('/a', 'item1').dc(1);
+    await page.stabilize();
     expect(page.getEl('.ant-checkbox-checked').nextSibling!.textContent?.trim()).toBe('item1');
     page.setValue('/a', 'item2').dc(1);
+    await page.stabilize();
     expect(page.getEl('.ant-checkbox-checked').nextSibling!.textContent?.trim()).toBe('item2');
-  }));
+  });
 
-  it('#visibleIf', fakeAsync(() => {
+  it('#visibleIf', async () => {
     page
       .newSchema({
         properties: {
@@ -49,7 +54,7 @@ describe('form: widget: checkbox', () => {
       .click(chekcWrapCls)
       .dc(100)
       .checkCount(chekcWrapCls, 2);
-  }));
+  });
 
   it('should be ingore title when not array data', () => {
     const title = 'test';
@@ -61,7 +66,7 @@ describe('form: widget: checkbox', () => {
       .checkElText(chekcWrapCls, title);
   });
 
-  it('should be show title when is array data', fakeAsync(() => {
+  it('should be show title when is array data', async () => {
     const title = 'test';
     page
       .newSchema({
@@ -73,7 +78,7 @@ describe('form: widget: checkbox', () => {
       .checkElText(labelCls, title)
       .checkElText(chekcWrapCls, 'item1')
       .asyncEnd();
-  }));
+  });
 
   describe('#checkAll', () => {
     it('should be working', () => {
@@ -119,12 +124,12 @@ describe('form: widget: checkbox', () => {
     });
   });
 
-  it('should be use nz-checkbox-group when spcify grid_span value', fakeAsync(() => {
+  it('should be use nz-checkbox-group when spcify grid_span value', async () => {
     const s: SFSchema = {
       properties: {
         a: {
           type: 'string',
-          ui: { widget, span: 8, change: jasmine.createSpy() },
+          ui: { widget, span: 8, change: vi.fn() },
           enum: ['item1', 'item2']
         }
       }
@@ -132,5 +137,5 @@ describe('form: widget: checkbox', () => {
     page.newSchema(s).time(1000).checkCount('nz-checkbox-group', 1).click('.ant-col-8 label').asyncEnd();
     expect(page.getValue('a').length).toBe(1);
     expect((s.properties!.a.ui as NzSafeAny).change).toHaveBeenCalled();
-  }));
+  });
 });

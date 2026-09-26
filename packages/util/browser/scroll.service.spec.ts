@@ -2,6 +2,8 @@ import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import { Injector, StaticProvider } from '@angular/core';
 
+import type { Mock } from 'vitest';
+
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { ScrollService } from './scroll.service';
@@ -14,15 +16,15 @@ describe('Util: ScrollService', () => {
   let srv: ScrollService;
 
   class MockElement {
-    getBoundingClientRect = jasmine.createSpy('Element getBoundingClientRect').and.returnValue({ top: 0 });
-    scrollIntoView = jasmine.createSpy('Element scrollIntoView');
-    scrollTo = jasmine.createSpy('Element scrollTo');
+    getBoundingClientRect = vi.fn().mockName('Element getBoundingClientRect').mockReturnValue({ top: 0 });
+    scrollIntoView = vi.fn().mockName('Element scrollIntoView');
+    scrollTo = vi.fn().mockName('Element scrollTo');
   }
 
   class MockDocument {
     body = new MockElement();
-    getElementById = jasmine.createSpy('Document getElementById').and.returnValue(topOfPageElem);
-    querySelector = jasmine.createSpy('Document querySelector');
+    getElementById = vi.fn().mockName('Document getElementById').mockReturnValue(topOfPageElem);
+    querySelector = vi.fn().mockName('Document querySelector');
     defaultView: NzSafeAny = null;
   }
 
@@ -43,8 +45,8 @@ describe('Util: ScrollService', () => {
       window = doc.defaultView;
       srv = injector.get(ScrollService);
 
-      spyOn(window, 'scrollBy');
-      spyOn(window, 'scrollTo');
+      vi.spyOn(window, 'scrollBy').mockReturnValue(undefined);
+      vi.spyOn(window, 'scrollTo').mockReturnValue(undefined);
     });
 
     describe('#getScrollPosition', () => {
@@ -87,15 +89,15 @@ describe('Util: ScrollService', () => {
 
       it('should not scroll more than necessary (e.g. for elements close to the bottom)', () => {
         const element: Element = new MockElement() as NzSafeAny;
-        const getBoundingClientRect = element.getBoundingClientRect as jasmine.Spy;
+        const getBoundingClientRect = element.getBoundingClientRect as Mock;
         const topOffset = 0;
 
-        getBoundingClientRect.and.returnValue({ top: topOffset + 100 });
+        getBoundingClientRect.mockReturnValue({ top: topOffset + 100 });
         srv.scrollToElement(element);
         expect(element.scrollIntoView).toHaveBeenCalledTimes(1);
         expect(window.scrollBy).toHaveBeenCalledWith(0, 100);
 
-        getBoundingClientRect.and.returnValue({ top: topOffset - 10 });
+        getBoundingClientRect.mockReturnValue({ top: topOffset - 10 });
         srv.scrollToElement(element);
         expect(element.scrollIntoView).toHaveBeenCalledTimes(2);
         expect(window.scrollBy).toHaveBeenCalledWith(0, -10);
@@ -109,7 +111,7 @@ describe('Util: ScrollService', () => {
 
         expect(element.scrollIntoView).toHaveBeenCalled();
         expect(window.scrollBy).toHaveBeenCalledWith(0, 0);
-        (window.scrollBy as jasmine.Spy).calls.reset();
+        (window.scrollBy as Mock).mockClear();
 
         (window as NzSafeAny).scrollY = 15;
         srv.scrollToElement(element);

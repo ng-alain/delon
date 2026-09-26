@@ -1,14 +1,17 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 
 import { createTestContext } from '@delon/testing';
 
 import { SFSelectWidgetSchema } from './schema';
 import { SelectWidget } from './select.widget';
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base';
 import { SFSchema, SFSchemaEnumType } from '../../../src/schema/index';
 
 describe('form: widget: select', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestFormComponent>;
   let dl: DebugElement;
   let context: TestFormComponent;
@@ -27,26 +30,28 @@ describe('form: widget: select', () => {
     return page.getWidget<SelectWidget>(`sf-${widget}`);
   }
 
-  it('#setValue', fakeAsync(() => {
+  it('#setValue', async () => {
     page.newSchema({
       properties: {
         a: { type: 'string', ui: { widget }, enum: ['item1', 'item2'] }
       }
     });
     page.setValue('/a', 'item1').dc(1);
+    await page.stabilize();
     expect(page.getEl('.ant-select-selection-item').textContent!.trim()).toBe('item1');
     // 交互方式改选 item2（Angular 22 下外部 writeValue 第二次不刷新 nz-select 显示，改走真实点击链路）
     page.typeEvent('click', 'nz-select');
+    await page.stabilize();
     const options = document.querySelectorAll('.ant-select-item-option');
     const target = Array.from(options).find(o => o.textContent!.trim() === 'item2');
     (target as HTMLElement).click();
     fixture.detectChanges();
-    tick(500);
+    await vi.advanceTimersByTimeAsync(500);
     fixture.detectChanges();
     expect(page.getEl('.ant-select-selection-item').textContent!.trim()).toBe('item2');
-  }));
+  });
 
-  it('should be disabled when readOnly is true', fakeAsync(() => {
+  it('should be disabled when readOnly is true', async () => {
     const enums: SFSchemaEnumType[] = [
       { label: '待支付', value: 'WAIT_BUYER_PAY' },
       { label: '已支付', value: 'TRADE_SUCCESS' },
@@ -68,10 +73,10 @@ describe('form: widget: select', () => {
     };
     page.newSchema(s).typeEvent('click', 'nz-select').checkCount('.ant-select-disabled', 1).asyncEnd();
     // page.checkCount('.ant-select-item-option-disabled', enums.length, true).asyncEnd();
-  }));
+  });
 
   describe('#events', () => {
-    it('#change', fakeAsync(() => {
+    it('#change', async () => {
       const s: SFSchema = {
         properties: {
           a: {
@@ -85,10 +90,10 @@ describe('form: widget: select', () => {
             default: 'WAIT_BUYER_PAY',
             ui: {
               widget,
-              change: jasmine.createSpy(),
-              openChange: jasmine.createSpy(),
-              onSearch: jasmine.createSpy().and.returnValue(Promise.resolve()),
-              scrollToBottom: jasmine.createSpy()
+              change: vi.fn(),
+              openChange: vi.fn(),
+              onSearch: vi.fn().mockResolvedValue(undefined),
+              scrollToBottom: vi.fn()
             }
           }
         }
@@ -105,8 +110,8 @@ describe('form: widget: select', () => {
       selectWidget.onSearch('1');
       page.time(500);
       expect(item.onSearch).toHaveBeenCalled();
-    }));
-    it('#change, when values is multiple', fakeAsync(() => {
+    });
+    it('#change, when values is multiple', async () => {
       const s: SFSchema = {
         properties: {
           a: {
@@ -124,7 +129,7 @@ describe('form: widget: select', () => {
             ],
             ui: {
               widget,
-              change: jasmine.createSpy()
+              change: vi.fn()
             }
           }
         }
@@ -134,10 +139,10 @@ describe('form: widget: select', () => {
       selectWidget.change(['TRADE_FINISHED', 'TRADE_SUCCESS']);
       const item = s.properties!.a.ui as SFSelectWidgetSchema;
       expect(item.change).toHaveBeenCalled();
-    }));
+    });
   });
 
-  it('should be clean value by click icon', fakeAsync(() => {
+  it('should be clean value by click icon', async () => {
     const s: SFSchema = {
       properties: {
         a: {
@@ -153,19 +158,14 @@ describe('form: widget: select', () => {
         }
       }
     };
-    page
-      .newSchema(s)
-      .checkValue('/a', 1)
-      .time()
-      .typeEvent('click', '.ant-select-close-icon')
-      .time()
-      .checkValue('/a', 2)
-      .asyncEnd();
-  }));
+    page.newSchema(s).checkValue('/a', 1).time();
+    await page.stabilize();
+    page.typeEvent('click', '.ant-select-close-icon').time().checkValue('/a', 2).asyncEnd();
+  });
 
   describe('#onSearch', () => {
-    it('should be first load when have value', fakeAsync(() => {
-      const onSearch = jasmine.createSpy().and.returnValue(Promise.resolve());
+    it('should be first load when have value', async () => {
+      const onSearch = vi.fn().mockResolvedValue(undefined);
       const s: SFSchema = {
         properties: {
           a: {
@@ -180,13 +180,13 @@ describe('form: widget: select', () => {
         }
       };
       page.newSchema(s);
-      tick(1000);
+      await vi.advanceTimersByTimeAsync(1000);
       expect(onSearch).toHaveBeenCalled();
       page.asyncEnd();
-    }));
+    });
 
-    it('should be first load when value is empty', fakeAsync(() => {
-      const onSearch = jasmine.createSpy().and.returnValue(Promise.resolve());
+    it('should be first load when value is empty', async () => {
+      const onSearch = vi.fn().mockResolvedValue(undefined);
       const s: SFSchema = {
         properties: {
           a: {
@@ -200,9 +200,9 @@ describe('form: widget: select', () => {
         }
       };
       page.newSchema(s);
-      tick(1000);
+      await vi.advanceTimersByTimeAsync(1000);
       expect(onSearch).not.toHaveBeenCalled();
       page.asyncEnd();
-    }));
+    });
   });
 });

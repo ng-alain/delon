@@ -1,5 +1,5 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 import { of } from 'rxjs';
 
 import type { SFSchema } from '@delon/form';
@@ -8,11 +8,14 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { withMentionWidget } from './index';
 import { MentionWidget } from './widget';
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base';
 
 const DATA = ['asdf', 'cipchk', '中文', 'にほんご'];
 
 describe('form: widget: mention', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestFormComponent>;
   let dl: DebugElement;
   let context: TestFormComponent;
@@ -31,10 +34,10 @@ describe('form: widget: mention', () => {
     return page.getWidget<MentionWidget>(`sf-${widget}`);
   }
 
-  it('should be working', fakeAsync(() => {
+  it('should be working', async () => {
     const s: SFSchema = {
       properties: {
-        a: { type: 'string', enum: DATA, ui: { widget, select: jasmine.createSpy() } }
+        a: { type: 'string', enum: DATA, ui: { widget, select: vi.fn() } }
       }
     };
     page
@@ -45,9 +48,9 @@ describe('form: widget: mention', () => {
       .typeEvent('click', '.ant-mentions-dropdown-menu-item');
 
     expect((s.properties!.a.ui as NzSafeAny).select).toHaveBeenCalled();
-  }));
+  });
 
-  it('should be validator mention count via minimum or maximum', fakeAsync(() => {
+  it('should be validator mention count via minimum or maximum', async () => {
     const s: SFSchema = {
       properties: {
         a: { type: 'string', minimum: 1, maximum: 2, ui: { widget, asyncData: () => of(DATA) } }
@@ -55,11 +58,11 @@ describe('form: widget: mention', () => {
     };
     page.newSchema(s).dc(1).typeChar('@').checkError(`最少提及 1 次`);
 
-    spyOn(getWidget()['mentionChild'](), 'getMentions').and.returnValue(['', '', '', '']);
+    vi.spyOn(getWidget()['mentionChild'](), 'getMentions').mockReturnValue(['', '', '', '']);
     page.dc(1).typeChar('@').checkError(`最多提及 2 次`);
-  }));
+  });
 
-  it('should be remove search', fakeAsync(() => {
+  it('should be remove search', async () => {
     const s: SFSchema = {
       properties: {
         a: {
@@ -72,12 +75,12 @@ describe('form: widget: mention', () => {
       }
     };
     page.newSchema(s).dc(1).typeChar('@').checkElText('.ant-mentions-dropdown-menu-item', '1', true);
-  }));
+  });
 
-  it('should be clear value when trigger onClear', fakeAsync(() => {
+  it('should be clear value when trigger onClear', async () => {
     const s: SFSchema = {
       properties: {
-        a: { type: 'string', default: 'text', ui: { widget, onClear: jasmine.createSpy() } }
+        a: { type: 'string', default: 'text', ui: { widget, onClear: vi.fn() } }
       }
     };
     page.newSchema(s);
@@ -85,5 +88,5 @@ describe('form: widget: mention', () => {
     page.dc(1).checkValue('a', '');
 
     expect((s.properties!.a.ui as NzSafeAny).onClear).toHaveBeenCalled();
-  }));
+  });
 });

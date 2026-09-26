@@ -33,11 +33,12 @@ describe('chart: mini-bar', () => {
       { x: `3月`, y: 30 }
     ]);
     page.dc();
-    const changeData = spyOn(page.chart, 'changeData').and.callThrough();
-    await new Promise(resolve => setTimeout(resolve, 700));
-    expect(changeData).toHaveBeenCalledTimes(1);
-    expect((changeData.calls.mostRecent().args[0] as unknown[]).length).toBe(3);
-    page.isDataCount(3);
+    const changeData = vi.spyOn(page.chart, 'changeData');
+    await vi.waitFor(() => {
+      expect(changeData).toHaveBeenCalledTimes(1);
+      expect((vi.mocked(changeData).mock.lastCall![0] as unknown[]).length).toBe(3);
+      page.isDataCount(3);
+    });
   });
 
   describe('#tooltipType', () => {

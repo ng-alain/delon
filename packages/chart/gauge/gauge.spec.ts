@@ -25,8 +25,10 @@ describe('chart: gauge', () => {
     });
 
     it('should pin the key v5 spec fields ', async () => {
-      // 等首帧渲染 settle，否则读到的是半成品
-      await new Promise(resolve => setTimeout(resolve, 700));
+      await vi.waitFor(() => {
+        expect(texts()).toContain('0%');
+        expect(texts()).toContain('100%');
+      });
       const authored = (page.comp as NzSafeAny).buildSpec() as NzSafeAny;
       expect(authored.type).toBe('view');
       expect(authored.children.length).toBe(1);
@@ -37,10 +39,10 @@ describe('chart: gauge', () => {
       expect(mark.scale.y).toBeUndefined();
       expect(mark.axis.y.labelSpacing).toBe(-30);
       expect(mark.axis.y.labelAlign).toBe('horizontal');
-      expect(mark.axis.y.labelFormatter).toEqual(jasmine.any(Function));
+      expect(mark.axis.y.labelFormatter).toEqual(expect.any(Function));
       expect(authored.legend).toBe(false);
       expect(authored.tooltip).toBe(false);
-      expect(mark.style.textContent).toEqual(jasmine.any(Function));
+      expect(mark.style.textContent).toEqual(expect.any(Function));
       expect(mark.style.pinR).toBe(4);
       page.expectSpec(spec => {
         const ns = spec as NzSafeAny;
@@ -49,7 +51,7 @@ describe('chart: gauge', () => {
         expect(ns.children[0].type).toBe('gauge');
         expect(ns.children[0].data.value.target).toBe(10);
         expect(ns.children[0].scale.color.range).toEqual(['#2f9cff', '#f0f2f5']);
-        expect(ns.children[0].axis.y.labelFormatter).toEqual(jasmine.any(Function));
+        expect(ns.children[0].axis.y.labelFormatter).toEqual(expect.any(Function));
       });
       const yScale = (page.chart as NzSafeAny).getScale().y.getOptions();
       expect(yScale.domain).toEqual([0, 100]);
@@ -62,16 +64,17 @@ describe('chart: gauge', () => {
     });
 
     it('data change must repaint the spec and take effect ', async () => {
-      const changeData = spyOn(page.chart, 'changeData').and.callThrough();
-      const render = spyOn(page.chart, 'render').and.callThrough();
+      const changeData = vi.spyOn(page.chart, 'changeData');
+      const render = vi.spyOn(page.chart, 'render');
       page.context.percent.set(30);
       page.dc();
-      await new Promise(resolve => setTimeout(resolve, 700));
+      await vi.waitFor(() => {
+        expect(render).toHaveBeenCalled();
+        expect(markSpec().data.value.target).toBe(30);
+        const center = page.fixture!.nativeElement.querySelector('.g2-gauge__center') as NzSafeAny;
+        expect(center == null ? '' : center.textContent.replace(/\s+/g, '')).toBe('核销率30%');
+      });
       expect(changeData).toHaveBeenCalledTimes(0);
-      expect(render).toHaveBeenCalled();
-      expect(markSpec().data.value.target).toBe(30);
-      const center = page.fixture!.nativeElement.querySelector('.g2-gauge__center') as NzSafeAny;
-      expect(center == null ? '' : center.textContent.replace(/\s+/g, '')).toBe('核销率30%');
       expect((page.chart as NzSafeAny).getScale().y.getOptions().domain).toEqual([0, 100]);
     });
   });

@@ -23,10 +23,10 @@ describe('chart: water-wave', () => {
 
       page.context.percent.set(34);
       page.dc();
-      // 等 repaintSpec settle（CI 余量）
-      await new Promise(resolve => setTimeout(resolve, 700));
-      expect(markSpec().data).toBe(0.34);
-      expect(texts()).toContain('34 %');
+      await vi.waitFor(() => {
+        expect(markSpec().data).toBe(0.34);
+        expect(texts()).toContain('34 %');
+      });
     });
 
     it('should pin the key v5 spec fields', () => {
@@ -35,12 +35,12 @@ describe('chart: water-wave', () => {
       // 配色必须跟随 [color]；其余样式属调校值，只钉类型
       expect(authored.style.fill).toBe('#1890FF');
       expect(authored.style.stroke).toBe('#1890FF');
-      expect(authored.style.waveLength).toEqual(jasmine.any(Number));
-      expect(authored.style.outlineBorder).toEqual(jasmine.any(Number));
-      expect(authored.style.outlineDistance).toEqual(jasmine.any(Number));
+      expect(authored.style.waveLength).toEqual(expect.any(Number));
+      expect(authored.style.outlineBorder).toEqual(expect.any(Number));
+      expect(authored.style.outlineDistance).toEqual(expect.any(Number));
       expect(authored.style.contentText).toBe('10 %');
-      expect(authored.style.contentFontSize).toEqual(jasmine.any(Number));
-      expect(authored.style.contentFill).toEqual(jasmine.any(String));
+      expect(authored.style.contentFontSize).toEqual(expect.any(Number));
+      expect(authored.style.contentFill).toEqual(expect.any(String));
       expect(authored.animate).toBeUndefined();
       expect((page.comp as NzSafeAny).size()).toBe(100);
       expect((page.comp as NzSafeAny).height).toBeUndefined();
@@ -75,14 +75,15 @@ describe('chart: water-wave', () => {
       page.context.padding.set([1, 2, 3, 4]);
       page.dc();
       expect(authored()).toEqual(
-        jasmine.objectContaining({ paddingTop: 1, paddingRight: 2, paddingBottom: 3, paddingLeft: 4 })
+        expect.objectContaining({ paddingTop: 1, paddingRight: 2, paddingBottom: 3, paddingLeft: 4 })
       );
       // 四向键必须真的留在运行时 spec 上
-      await new Promise(resolve => setTimeout(resolve, 700));
-      expect(spec().paddingTop).toBe(1);
-      expect(spec().paddingRight).toBe(2);
-      expect(spec().paddingBottom).toBe(3);
-      expect(spec().paddingLeft).toBe(4);
+      await vi.waitFor(() => {
+        expect(spec().paddingTop).toBe(1);
+        expect(spec().paddingRight).toBe(2);
+        expect(spec().paddingBottom).toBe(3);
+        expect(spec().paddingLeft).toBe(4);
+      });
     });
 
     it('should not show a tooltip on hover', async () => {
@@ -97,13 +98,15 @@ describe('chart: water-wave', () => {
         isPrimary: true,
         pointerId: 1
       };
+      vi.useFakeTimers();
       for (const type of ['pointerover', 'pointerenter', 'pointermove', 'mousemove']) {
         canvas.dispatchEvent(new PointerEvent(type, base));
       }
-      await new Promise(resolve => setTimeout(resolve, 300));
+      await vi.advanceTimersByTimeAsync(300);
       const tip = page.fixture!.nativeElement.querySelector('.g2-tooltip') as HTMLElement | null;
       const visible = !!tip && (tip.style.visibility === 'visible' || getComputedStyle(tip).visibility === 'visible');
       expect(visible ? `tooltip: ${tip!.textContent}` : 'none').toBe('none');
+      vi.useRealTimers();
     });
 
     it('should draw the wave, the ring and the built-in center text', () => {
@@ -115,15 +118,17 @@ describe('chart: water-wave', () => {
     it('should render the center text at the boundaries', async () => {
       page.context.percent.set(0);
       page.dc();
-      await new Promise(resolve => setTimeout(resolve, 700));
-      expect(markSpec().data).toBe(0);
-      expect(texts()).toContain('0 %');
+      await vi.waitFor(() => {
+        expect(markSpec().data).toBe(0);
+        expect(texts()).toContain('0 %');
+      });
 
       page.context.percent.set(100);
       page.dc();
-      await new Promise(resolve => setTimeout(resolve, 700));
-      expect(markSpec().data).toBe(1);
-      expect(texts()).toContain('100 %');
+      await vi.waitFor(() => {
+        expect(markSpec().data).toBe(1);
+        expect(texts()).toContain('100 %');
+      });
     });
   });
 

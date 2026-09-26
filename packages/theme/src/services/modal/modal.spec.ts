@@ -1,13 +1,17 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, inject, input } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed, inject as testingInject } from '@angular/core/testing';
+import { ComponentFixture, TestBed, inject as testingInject } from '@angular/core/testing';
+import { firstValueFrom } from 'rxjs';
 
-import { dispatchEvent, sleep } from 'ng-zorro-antd/core/testing';
+import { dispatchEvent } from 'ng-zorro-antd/core/testing';
 import { NZ_MODAL_DATA, NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 
 import { ModalHelper, ModalHelperOptions } from './modal.helper';
 
 describe('theme: ModalHelper', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let modal: ModalHelper;
   let overlayContainerElement: HTMLElement;
   let fixture: ComponentFixture<TestComponent>;
@@ -34,7 +38,7 @@ describe('theme: ModalHelper', () => {
       overlayContainerElement.querySelector('.ant-modal')!,
       new AnimationEvent('animationend', { animationName: 'antZoomIn' })
     );
-    await sleep(ANT_TIME);
+    await vi.advanceTimersByTimeAsync(ANT_TIME);
   }
 
   afterEach(() => {
@@ -42,68 +46,61 @@ describe('theme: ModalHelper', () => {
   });
 
   describe('#create', () => {
-    it('should be open', cb => {
-      modal.create(TestModalComponent, { ret: 'true' }, { modalOptions: { nzNoAnimation: true } }).subscribe(() => {
-        expect(true).toBeTruthy();
-        cb();
-      });
+    it('should be open', async () => {
+      const onClose = vi.fn();
+      modal.create(TestModalComponent, { ret: 'true' }, { modalOptions: { nzNoAnimation: true } }).subscribe(onClose);
+      await vi.advanceTimersByTimeAsync(1000);
+      expect(onClose).toHaveBeenCalled();
     });
-    it('should be open a tabset', fakeAsync(() => {
-      modal
-        .create(TestModalComponent, { ret: 'true' }, { includeTabs: true, modalOptions: { nzNoAnimation: true } })
-        .subscribe(() => {
-          expect(true).toBeTruthy();
-          flush();
-        });
+    it('should be open a tabset', async () => {
+      const res$ = firstValueFrom(
+        modal.create(TestModalComponent, { ret: 'true' }, { includeTabs: true, modalOptions: { nzNoAnimation: true } })
+      );
       fixture.detectChanges();
       expect(document.querySelector('.modal-include-tabs')).not.toBeNull();
-    }));
-    it('should be useNzData is true', fakeAsync(() => {
-      modal
-        .create(TestModalComponent, { ret: 'a' }, { useNzData: true, modalOptions: { nzNoAnimation: true } })
-        .subscribe(() => {
-          expect(true).toBeTruthy();
-          flush();
-        });
+      await vi.advanceTimersByTimeAsync(1000);
+      expect(await res$).toBe('true');
+    });
+    it('should be useNzData is true', async () => {
+      const res$ = firstValueFrom(
+        modal.create(TestModalComponent, { ret: 'a' }, { useNzData: true, modalOptions: { nzNoAnimation: true } })
+      );
       fixture.detectChanges();
       expect(document.querySelector<HTMLElement>('.noNzData')?.innerText.trim()).toBe('true');
       expect(document.querySelector<HTMLElement>('.nzData')?.innerText.trim()).toBe('a');
-    }));
-    it('should be params allow signal', fakeAsync(() => {
-      modal.create(TestModalComponent, { input_value: 10 }, { modalOptions: { nzNoAnimation: true } }).subscribe(() => {
-        expect(true).toBeTruthy();
-        flush();
-      });
+      await vi.advanceTimersByTimeAsync(1000);
+      expect(await res$).toBe('true');
+    });
+    it('should be params allow signal', async () => {
+      const res$ = firstValueFrom(
+        modal.create(TestModalComponent, { input_value: 10 }, { modalOptions: { nzNoAnimation: true } })
+      );
       fixture.detectChanges();
       expect(document.querySelector<HTMLElement>('.input_value')?.innerText.trim()).toBe('10');
-    }));
+      await vi.advanceTimersByTimeAsync(1000);
+      expect(await res$).toBe('true');
+    });
     describe('#exact width true', () => {
-      it('should be not trigger subscript when return a undefined value', fakeAsync(() => {
+      it('should be not trigger subscript when return a undefined value', async () => {
+        const next = vi.fn();
+        const error = vi.fn();
+        const complete = vi.fn();
         modal
           .create(
             TestModalComponent,
             { ret: undefined },
             { includeTabs: true, exact: true, modalOptions: { nzNoAnimation: true } }
           )
-          .subscribe({
-            next: () => {
-              expect(false).toBeTruthy();
-              flush();
-            },
-            error: () => {
-              expect(false).toBeTruthy();
-              flush();
-            },
-            complete: () => {
-              expect(true).toBeTruthy();
-              flush();
-            }
-          });
+          .subscribe({ next, error, complete });
         fixture.detectChanges();
-      }));
+        await vi.advanceTimersByTimeAsync(1000);
+        expect(next).not.toHaveBeenCalled();
+        expect(error).not.toHaveBeenCalled();
+        expect(complete).toHaveBeenCalled();
+      });
     });
     describe('#drag', () => {
-      it('should be working', fakeAsync(() => {
+      it('should be working', async () => {
         modal
           .create(
             TestModalComponent,
@@ -113,7 +110,7 @@ describe('theme: ModalHelper', () => {
           .subscribe();
         fixture.detectChanges();
         expect(document.querySelectorAll('.MODAL-DRAG').length).toBe(1);
-      }));
+      });
       it('#handleCls', async () => {
         modal
           .create(
@@ -150,19 +147,19 @@ describe('theme: ModalHelper', () => {
         expect(btn?.classList).toContain('ant-btn-primary');
       });
     });
-    it('should argument length is 2', fakeAsync(() => {
+    it('should argument length is 2', async () => {
       modal.create('info', { size: '23%' } as ModalHelperOptions).subscribe();
       fixture.detectChanges();
       const width = document.querySelector<HTMLElement>('.ant-modal')?.style.width;
       expect(width).toBe('23%');
-    }));
+    });
   });
 
   describe('#createStatic', () => {
-    it('should be open', fakeAsync(() => {
+    it('should be open', async () => {
       const id = `${+new Date()}`;
-      modal
-        .createStatic(
+      const res$ = firstValueFrom(
+        modal.createStatic(
           TestModalComponent,
           {
             id,
@@ -170,17 +167,15 @@ describe('theme: ModalHelper', () => {
           },
           { modalOptions: { nzNoAnimation: true } }
         )
-        .subscribe(res => {
-          fixture.detectChanges();
-          expect(res).toBe(true);
-          flush();
-        });
+      );
       fixture.detectChanges();
-    }));
-    it('should be open sm size', fakeAsync(() => {
+      await vi.advanceTimersByTimeAsync(1000);
+      expect(await res$).toBe(true);
+    });
+    it('should be open sm size', async () => {
       const id = `${+new Date()}`;
-      modal
-        .createStatic(
+      const res$ = firstValueFrom(
+        modal.createStatic(
           TestModalComponent,
           {
             id,
@@ -188,19 +183,17 @@ describe('theme: ModalHelper', () => {
           },
           { size: 'sm', modalOptions: { nzNoAnimation: true } }
         )
-        .subscribe(res => {
-          fixture.detectChanges();
-          expect(res).toBe('true');
-          flush();
-        });
+      );
       fixture.detectChanges();
-    }));
-    it('should be 80% size', fakeAsync(() => {
+      await vi.advanceTimersByTimeAsync(1000);
+      expect(await res$).toBe('true');
+    });
+    it('should be 80% size', async () => {
       modal.createStatic(TestModalComponent, { ret: 'true' }, { size: '10%' }).subscribe();
       fixture.detectChanges();
       const width = document.querySelector<HTMLElement>('.ant-modal')?.style.width;
       expect(width).toBe('10%');
-    }));
+    });
   });
 });
 
@@ -217,7 +210,9 @@ class TestModalComponent {
   input_value = input<string>('');
 
   private readonly modal = inject(NzModalRef);
-  readonly data = inject<{ ret: string }>(NZ_MODAL_DATA, { optional: true });
+  readonly data = inject<{
+    ret: string;
+  }>(NZ_MODAL_DATA, { optional: true })!;
 
   constructor() {
     setTimeout(() => {

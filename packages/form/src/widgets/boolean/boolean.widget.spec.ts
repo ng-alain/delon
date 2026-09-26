@@ -1,11 +1,14 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 
 import { createTestContext } from '@delon/testing';
 
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base';
 
 describe('form: widget: boolean', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestFormComponent>;
   let dl: DebugElement;
   let context: TestFormComponent;
@@ -20,17 +23,17 @@ describe('form: widget: boolean', () => {
     page.prop(dl, context, fixture);
   });
 
-  it('#setValue', fakeAsync(() => {
+  it('#setValue', async () => {
     page
       .newSchema({
         properties: { a: { type: 'boolean', default: true } }
       })
-      .dc(1)
-      .checkCount('.ant-switch-checked', 1)
-      .setValue('/a', false)
-      .dc(1)
-      .checkCount('.ant-switch-checked', 0);
-  }));
+      .dc(1);
+    await page.stabilize();
+    page.checkCount('.ant-switch-checked', 1).setValue('/a', false).dc(1);
+    await page.stabilize();
+    page.checkCount('.ant-switch-checked', 0);
+  });
 
   it('should be default true via schema.default', () => {
     page

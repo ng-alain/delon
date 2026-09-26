@@ -1,14 +1,19 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 import { of } from 'rxjs';
+
+import type { Mock } from 'vitest';
 
 import { createTestContext } from '@delon/testing';
 
 import { SFStringWidgetSchema } from './schema';
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base';
 import { SFSchema } from '../../schema';
 
 describe('form: widget: string', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestFormComponent>;
   let dl: DebugElement;
   let context: TestFormComponent;
@@ -65,16 +70,16 @@ describe('form: widget: string', () => {
     expect(ipt.value).toBe('#000000');
   });
 
-  it('#event', fakeAsync(() => {
+  it('#event', async () => {
     const schema: SFSchema = {
       properties: {
         a: {
           type: 'string',
           ui: {
-            change: jasmine.createSpy('change'),
-            focus: jasmine.createSpy('focus'),
-            blur: jasmine.createSpy('blur'),
-            enter: jasmine.createSpy('enter')
+            change: vi.fn().mockName('change'),
+            focus: vi.fn().mockName('focus'),
+            blur: vi.fn().mockName('blur'),
+            enter: vi.fn().mockName('enter')
           } as SFStringWidgetSchema
         }
       }
@@ -94,10 +99,10 @@ describe('form: widget: string', () => {
     const ev = new KeyboardEvent('keyup', { code: 'Enter', key: 'Enter' });
     page.typeEvent(ev);
     expect((schema.properties!.a.ui as SFStringWidgetSchema).enter).toHaveBeenCalled();
-  }));
+  });
 
   describe('Debounce', () => {
-    it('should be working', fakeAsync(() => {
+    it('should be working', async () => {
       const schema: SFSchema = {
         properties: {
           a: {
@@ -106,7 +111,7 @@ describe('form: widget: string', () => {
             ui: {
               changeDebounceTime: 1,
               changeMap: val => of(val),
-              change: jasmine.createSpy('change')
+              change: vi.fn().mockName('change')
             } as SFStringWidgetSchema
           }
         }
@@ -117,10 +122,10 @@ describe('form: widget: string', () => {
       page.typeChar('a');
       page.dc(100);
       expect(ui.change).toHaveBeenCalled();
-      expect((ui.change as jasmine.Spy<jasmine.Func>).calls.first().args[0]).toBe('a');
-    }));
+      expect(vi.mocked(ui.change as Mock).mock.calls[0]![0]).toBe('a');
+    });
 
-    it(`should be changeMap can't be set`, fakeAsync(() => {
+    it(`should be changeMap can't be set`, async () => {
       const schema: SFSchema = {
         properties: {
           a: {
@@ -128,7 +133,7 @@ describe('form: widget: string', () => {
             default: 'a',
             ui: {
               changeDebounceTime: 1,
-              change: jasmine.createSpy('change')
+              change: vi.fn().mockName('change')
             } as SFStringWidgetSchema
           }
         }
@@ -139,27 +144,27 @@ describe('form: widget: string', () => {
       page.typeChar('a');
       page.dc(100);
       expect(ui.change).toHaveBeenCalled();
-      expect((ui.change as jasmine.Spy<jasmine.Func>).calls.first().args[0]).toBe('a');
-    }));
+      expect(vi.mocked(ui.change as Mock).mock.calls[0]![0]).toBe('a');
+    });
   });
 
-  it('[autofocus]', fakeAsync(() => {
+  it('[autofocus]', async () => {
     const schema: SFSchema = {
       properties: {
         a: {
           type: 'string',
           ui: {
             autofocus: true,
-            focus: jasmine.createSpy('focus')
+            focus: vi.fn().mockName('focus')
           } as SFStringWidgetSchema
         }
       }
     };
     page.newSchema(schema);
     const el = page.getEl('.ant-input') as HTMLInputElement;
-    spyOn(el, 'focus');
-    tick(21);
+    vi.spyOn(el, 'focus').mockReturnValue(undefined);
+    await vi.advanceTimersByTimeAsync(21);
     fixture.detectChanges();
     expect(el.focus).toHaveBeenCalled();
-  }));
+  });
 });

@@ -2,13 +2,15 @@ import { CommonModule } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, DebugElement, Injectable, signal, TemplateRef, Type, ViewChild } from '@angular/core';
-import { ComponentFixture, discardPeriodicTasks, flush, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { dispatchDropDown } from '@delon/testing';
+import type { Mock } from 'vitest';
+
+import { DROPDOWN_MIN_TIME, dispatchDropDown } from '@delon/testing';
 import { ALAIN_I18N_TOKEN, DelonLocaleModule } from '@delon/theme';
 import { deepCopy, deepGet } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -139,7 +141,7 @@ export function genModule<T extends TestComponent>(
 
 export class PageObject<T extends TestComponent> {
   _changeData!: STChange;
-  changeSpy: jasmine.Spy;
+  changeSpy: Mock;
   readonly fixture: ComponentFixture<T>;
   readonly context: T;
   readonly dl: DebugElement;
@@ -162,10 +164,12 @@ export class PageObject<T extends TestComponent> {
       this.context.columns.set([{ title: '', index: 'id' }]);
     }
 
-    spyOn(this.context as NzSafeAny, 'error').and.callFake((res: STError) => (this.spyErrorData = res));
-    this.changeSpy = spyOn(this.context as NzSafeAny, 'change').and.callFake(
-      ((e: NzSafeAny) => (this._changeData = e)) as NzSafeAny
-    );
+    vi.spyOn(this.context as NzSafeAny, 'error').mockImplementation(((res: STError) => {
+      this.spyErrorData = res;
+    }) as NzSafeAny);
+    this.changeSpy = vi
+      .spyOn(this.context as NzSafeAny, 'change')
+      .mockImplementation(((e: NzSafeAny) => (this._changeData = e)) as NzSafeAny) as Mock;
     this.comp = this.context.comp;
   }
   get(cls: string): DebugElement {
@@ -269,10 +273,17 @@ export class PageObject<T extends TestComponent> {
     return this;
   }
   /** 断言组件内 `_data` 值，下标从 `1` 开始 */
-  expectData(row: number, path: string, valule: NzSafeAny, options?: { message?: string }): this {
+  expectData(
+    row: number,
+    path: string,
+    valule: NzSafeAny,
+    options?: {
+      message?: string;
+    }
+  ): this {
     const ret = deepGet(this.comp._data[row - 1], path);
     if (options?.message != null) {
-      expect(ret).withContext(options.message).toBe(valule);
+      expect(ret, options.message).toBe(valule);
     } else {
       expect(ret).toBe(valule);
     }
@@ -285,7 +296,7 @@ export class PageObject<T extends TestComponent> {
   }
   cd(time: number = 1000): this {
     this.fixture.detectChanges();
-    tick(time);
+    vi.advanceTimersByTime(time);
     this.fixture.detectChanges();
     return this;
   }
@@ -322,27 +333,21 @@ export class PageObject<T extends TestComponent> {
   }
   expectElCount(cls: string, count: number, expectationFailOutput?: string): this {
     const els = document.querySelectorAll(cls);
-    expect(els.length)
-      .withContext(expectationFailOutput ?? `HtmlElement length muse be: ${count}`)
-      .toBe(count);
+    expect(els.length, expectationFailOutput ?? `HtmlElement length muse be: ${count}`).toBe(count);
     return this;
   }
   expectElContent(cls: string, content: string, expectationFailOutput?: string): this {
     const el = document.querySelector(cls);
     if (content == null) {
-      expect(el)
-        .withContext(expectationFailOutput ?? ``)
-        .toBeNull();
+      expect(el, expectationFailOutput ?? ``).toBeNull();
     } else {
-      expect(el!.textContent!.trim())
-        .withContext(expectationFailOutput ?? ``)
-        .toBe(content);
+      expect(el!.textContent!.trim(), expectationFailOutput ?? ``).toBe(content);
     }
     return this;
   }
   expectChangeType(type: STChangeType, called: boolean = true): this {
-    const callAll = this.changeSpy.calls.all();
-    const args = callAll[callAll.length - 1].args[0];
+    const callAll = vi.mocked(this.changeSpy).mock.calls;
+    const args = callAll[callAll.length - 1]![0];
     if (called) {
       expect(args.type).toBe(type);
     } else {
@@ -350,13 +355,15 @@ export class PageObject<T extends TestComponent> {
     }
     return this;
   }
-  openDropDownInHead(nams: string): this {
+  async openDropDownInHead(nams: string): Promise<this> {
     dispatchDropDown(this.dl.query(By.css(`.ant-table-thead th[data-col="${nams}"]`)), 'click');
+    await vi.advanceTimersByTimeAsync(DROPDOWN_MIN_TIME);
     this.fixture.detectChanges();
     return this;
   }
-  openDropDownInRow(row: number = 1): this {
+  async openDropDownInRow(row: number = 1): Promise<this> {
     dispatchDropDown(this.dl.query(By.css(`.st__body tr[data-index="${row - 1}"]`)), 'mouseleave');
+    await vi.advanceTimersByTimeAsync(DROPDOWN_MIN_TIME);
     this.fixture.detectChanges();
     return this;
   }
@@ -368,21 +375,21 @@ export class PageObject<T extends TestComponent> {
       el = (this.dl.nativeElement as HTMLElement).querySelector(`.ant-table-thead th:nth-child(${col})`) as HTMLElement;
     }
     if (!el) {
-      expect(false).withContext(`not found col: ${col}, row: ${row} element`).toBe(true);
+      expect(false, `not found col: ${col}, row: ${row} element`).toBe(true);
       return this;
     }
 
     this.context.comp.onContextmenu({
       target: el,
-      preventDefault: jasmine.createSpy(),
-      stopPropagation: jasmine.createSpy(),
+      preventDefault: vi.fn(),
+      stopPropagation: vi.fn(),
       ...event
     } as NzSafeAny);
     return this.cd();
   }
   clickContentMenu(idx: number): this {
     const el = document.querySelector(`.st__contextmenu li:nth-child(${idx})`);
-    expect(el).withContext(`the index: ${idx} is invalid element of content menu container`).not.toBeNull();
+    expect(el, `the index: ${idx} is invalid element of content menu container`).not.toBeNull();
     const fn = this.context.comp.contextmenuList[idx - 1].fn;
     expect(fn).not.toHaveBeenCalled();
     (el as HTMLElement).click();
@@ -391,8 +398,8 @@ export class PageObject<T extends TestComponent> {
     return this;
   }
   asyncEnd(): this {
-    flush();
-    discardPeriodicTasks();
+    vi.advanceTimersByTime(500);
+    vi.clearAllTimers();
     return this;
   }
 }
@@ -417,7 +424,7 @@ export class PageObject<T extends TestComponent> {
       [virtualScroll]="virtualScroll()"
       [bordered]="bordered"
       [size]="size"
-      [scroll]="scroll()"
+      [scroll]="scroll()!"
       [multiSort]="multiSort()"
       [noResult]="noResult"
       [widthConfig]="widthConfig"
@@ -438,9 +445,11 @@ export class PageObject<T extends TestComponent> {
   imports: [STComponent, STRowDirective]
 })
 export class TestComponent {
-  @ViewChild('st', { static: true }) readonly comp!: STComponent;
-  @ViewChild('tpl', { static: true }) readonly tpl!: TemplateRef<NzSafeAny>;
-  readonly data = signal<string | NzSafeAny[] | Observable<NzSafeAny[]> | null>(deepCopy(USERS));
+  @ViewChild('st', { static: true })
+  readonly comp!: STComponent;
+  @ViewChild('tpl', { static: true })
+  readonly tpl!: TemplateRef<NzSafeAny>;
+  readonly data = signal<string | NzSafeAny[] | Observable<NzSafeAny[]>>(deepCopy(USERS));
   readonly res = signal<STRes>({});
   readonly req = signal<STReq>({});
   readonly columns = signal<STColumn[] | undefined>(undefined);
@@ -451,8 +460,14 @@ export class TestComponent {
   readonly loading = signal<boolean | null>(null);
   loadingDelay?: number;
   bordered?: boolean;
-  size?: 'small' | 'middle' | 'default';
-  readonly scroll = signal<{ y?: string; x?: string } | undefined>(undefined);
+  size!: 'small' | 'middle' | 'default';
+  readonly scroll = signal<
+    | {
+        y?: string;
+        x?: string;
+      }
+    | undefined
+  >(undefined);
   readonly multiSort = signal<boolean | STMultiSort | undefined>(undefined);
   noResult = 'noResult';
   widthConfig: string[] = [];
@@ -466,8 +481,8 @@ export class TestComponent {
   readonly showHeader = signal(true);
   readonly customRequest = signal<((options: STCustomRequestOptions) => Observable<NzSafeAny>) | undefined>(undefined);
   readonly contextmenu = signal<STContextmenuFn | null>(() => [
-    { text: 'a', fn: jasmine.createSpy() },
-    { text: 'b', children: [{ text: 'c', fn: jasmine.createSpy() }] }
+    { text: 'a', fn: vi.fn() },
+    { text: 'b', children: [{ text: 'c', fn: vi.fn() }] }
   ]);
 
   readonly drag = signal<STDragOptions | boolean | undefined>(false);

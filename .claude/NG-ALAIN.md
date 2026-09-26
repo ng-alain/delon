@@ -60,7 +60,7 @@ yarn install
 ```bash
 yarn start            # Start the documentation site dev server
 yarn build            # Build all packages and site
-yarn test             # Run all unit tests (Karma + Jasmine)
+yarn test             # Run all unit tests (Vitest)
 yarn test:cli         # Test Angular schematics
 yarn lint             # Run ESLint and Stylelint
 yarn lint:fix         # Auto-fix lint issues

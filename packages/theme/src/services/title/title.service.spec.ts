@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { of } from 'rxjs';
@@ -13,9 +13,12 @@ import { Menu } from '../menu/interface';
 import { MenuService } from '../menu/menu.service';
 
 describe('Service: Title', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let getPathByUrlData: NzSafeAny;
   class TestTitleService {
-    setTitle = jasmine.createSpy('reset');
+    setTitle = vi.fn().mockName('reset');
   }
 
   class TestMenuService {
@@ -48,70 +51,70 @@ describe('Service: Title', () => {
   describe('[default]', () => {
     beforeEach(() => genModule());
 
-    it('should set the default empty title', fakeAsync(() => {
+    it('should set the default empty title', async () => {
       srv.suffix = alain;
       srv.setTitle();
-      tick(srv.DELAY_TIME + 1);
+      await vi.advanceTimersByTimeAsync(srv.DELAY_TIME + 1);
       expect(title.setTitle).toHaveBeenCalledWith(`${notPageName} - ${alain}`);
-    }));
+    });
 
-    it('should be ignore when empty title & default title', fakeAsync(() => {
+    it('should be ignore when empty title & default title', async () => {
       srv.default = '';
       srv.suffix = alain;
       srv.setTitle();
-      tick(srv.DELAY_TIME + 1);
+      await vi.advanceTimersByTimeAsync(srv.DELAY_TIME + 1);
       expect(title.setTitle).toHaveBeenCalledWith(`${alain}`);
-    }));
+    });
 
-    it('should set new title', fakeAsync(() => {
+    it('should set new title', async () => {
       srv.suffix = alain;
       srv.setTitle('newTitle');
-      tick(srv.DELAY_TIME + 1);
+      await vi.advanceTimersByTimeAsync(srv.DELAY_TIME + 1);
       expect(title.setTitle).toHaveBeenCalledWith(`newTitle - ${alain}`);
-    }));
+    });
 
-    it('should set new title via array', fakeAsync(() => {
+    it('should set new title via array', async () => {
       srv.suffix = alain;
       srv.setTitle(['newTitle']);
-      tick(srv.DELAY_TIME + 1);
+      await vi.advanceTimersByTimeAsync(srv.DELAY_TIME + 1);
       expect(title.setTitle).toHaveBeenCalledWith(`newTitle - ${alain}`);
-    }));
+    });
 
-    it('#separator', fakeAsync(() => {
+    it('#separator', async () => {
       srv.suffix = alain;
       srv.separator = ' / ';
       srv.setTitle('newTitle');
-      tick(srv.DELAY_TIME + 1);
+      await vi.advanceTimersByTimeAsync(srv.DELAY_TIME + 1);
       expect(title.setTitle).toHaveBeenCalledWith(`newTitle / ${alain}`);
-    }));
+    });
 
-    it('#prefix', fakeAsync(() => {
+    it('#prefix', async () => {
       srv.prefix = alain;
       srv.setTitle('newTitle');
-      tick(srv.DELAY_TIME + 1);
+      await vi.advanceTimersByTimeAsync(srv.DELAY_TIME + 1);
       expect(title.setTitle).toHaveBeenCalledWith(`${alain} - newTitle`);
-    }));
+    });
 
-    it('#reverse', fakeAsync(() => {
+    it('#reverse', async () => {
       srv.reverse = true;
       srv.suffix = alain;
       srv.setTitle('newTitle');
-      tick(srv.DELAY_TIME + 1);
+      await vi.advanceTimersByTimeAsync(srv.DELAY_TIME + 1);
       expect(title.setTitle).toHaveBeenCalledWith(`${alain} - newTitle`);
-    }));
+    });
 
-    it('#default', fakeAsync(() => {
+    it('#default', async () => {
       const def = 'DEFAULT';
       srv.default = def;
       srv.setTitle();
-      tick(srv.DELAY_TIME + 1);
+      await vi.advanceTimersByTimeAsync(srv.DELAY_TIME + 1);
       expect(title.setTitle).toHaveBeenCalledWith(def);
-    }));
+    });
   });
 
   describe('[logic]', () => {
     describe('should be hava title via route data property', () => {
-      it('with text', fakeAsync(() => {
+      it('with text', async () => {
         genModule([
           {
             provide: ActivatedRoute,
@@ -127,10 +130,10 @@ describe('Service: Title', () => {
           }
         ]);
         srv.setTitle();
-        tick(srv.DELAY_TIME + 1);
+        await vi.advanceTimersByTimeAsync(srv.DELAY_TIME + 1);
         expect(title.setTitle).toHaveBeenCalledWith(alain);
-      }));
-      it('with observable', fakeAsync(() => {
+      });
+      it('with observable', async () => {
         genModule([
           {
             provide: ActivatedRoute,
@@ -146,10 +149,10 @@ describe('Service: Title', () => {
           }
         ]);
         srv.setTitle();
-        tick(srv.DELAY_TIME + 1);
+        await vi.advanceTimersByTimeAsync(srv.DELAY_TIME + 1);
         expect(title.setTitle).toHaveBeenCalledWith('a');
-      }));
-      it('without', fakeAsync(() => {
+      });
+      it('without', async () => {
         genModule([
           {
             provide: ActivatedRoute,
@@ -157,10 +160,10 @@ describe('Service: Title', () => {
           }
         ]);
         srv.setTitle();
-        tick(srv.DELAY_TIME + 1);
+        await vi.advanceTimersByTimeAsync(srv.DELAY_TIME + 1);
         expect(title.setTitle).toHaveBeenCalledWith(notPageName);
-      }));
-      it('with i18n', fakeAsync(() => {
+      });
+      it('with i18n', async () => {
         const titleI18n = 'a';
         genModule([
           {
@@ -174,39 +177,39 @@ describe('Service: Title', () => {
             }
           }
         ]);
-        spyOn(i18n, 'fanyi');
+        vi.spyOn(i18n, 'fanyi').mockReturnValue(undefined as NzSafeAny);
         srv.setTitle();
-        tick(srv.DELAY_TIME + 1);
+        await vi.advanceTimersByTimeAsync(srv.DELAY_TIME + 1);
         expect(i18n.fanyi).toHaveBeenCalled();
-      }));
+      });
     });
 
     describe('should be hava title via menu data property', () => {
-      it('with text', fakeAsync(() => {
+      it('with text', async () => {
         getPathByUrlData = [{ text: 'home' }];
         genModule([{ provide: MenuService, useClass: TestMenuService }]);
         srv.setTitle();
-        tick(srv.DELAY_TIME + 1);
+        await vi.advanceTimersByTimeAsync(srv.DELAY_TIME + 1);
         expect(title.setTitle).toHaveBeenCalledWith(getPathByUrlData[0].text);
-      }));
-      it('with i18n', fakeAsync(() => {
+      });
+      it('with i18n', async () => {
         getPathByUrlData = [{ text: 'home', i18n: 'a' }];
         genModule([{ provide: MenuService, useClass: TestMenuService }]);
         srv.setTitle();
-        tick(srv.DELAY_TIME + 1);
+        await vi.advanceTimersByTimeAsync(srv.DELAY_TIME + 1);
         expect(title.setTitle).toHaveBeenCalledWith(getPathByUrlData[0].i18n);
-      }));
-      it('without menu data', fakeAsync(() => {
+      });
+      it('without menu data', async () => {
         getPathByUrlData = [];
         genModule([{ provide: MenuService, useClass: TestMenuService }]);
         srv.setTitle();
-        tick(srv.DELAY_TIME + 1);
+        await vi.advanceTimersByTimeAsync(srv.DELAY_TIME + 1);
         expect(title.setTitle).toHaveBeenCalledWith(notPageName);
-      }));
+      });
     });
 
     describe('should be hava title via element', () => {
-      it('with element', fakeAsync(() => {
+      it('with element', async () => {
         class TestDocument {
           querySelector(): NzSafeAny {
             return {
@@ -227,10 +230,10 @@ describe('Service: Title', () => {
         }
         genModule([{ provide: DOCUMENT, useClass: TestDocument }]);
         srv.setTitle();
-        tick(srv.DELAY_TIME + 1);
+        await vi.advanceTimersByTimeAsync(srv.DELAY_TIME + 1);
         expect(title.setTitle).toHaveBeenCalledWith('a');
-      }));
-      it('with element and has children', fakeAsync(() => {
+      });
+      it('with element and has children', async () => {
         class TestDocument {
           querySelector(): NzSafeAny {
             return {
@@ -252,46 +255,46 @@ describe('Service: Title', () => {
         }
         genModule([{ provide: DOCUMENT, useClass: TestDocument }]);
         srv.setTitle();
-        tick(srv.DELAY_TIME + 1);
+        await vi.advanceTimersByTimeAsync(srv.DELAY_TIME + 1);
         expect(title.setTitle).toHaveBeenCalledWith('b');
-      }));
-      it('without element', fakeAsync(() => {
+      });
+      it('without element', async () => {
         genModule([]);
         srv.setTitle();
-        tick(srv.DELAY_TIME + 1);
+        await vi.advanceTimersByTimeAsync(srv.DELAY_TIME + 1);
         expect(title.setTitle).toHaveBeenCalledWith(notPageName);
-      }));
-      it('without custom selector', fakeAsync(() => {
+      });
+      it('without custom selector', async () => {
         genModule([]);
         srv.selector = 'test';
         srv.setTitle();
-        tick(srv.DELAY_TIME + 1);
+        await vi.advanceTimersByTimeAsync(srv.DELAY_TIME + 1);
         expect(title.setTitle).toHaveBeenCalledWith(notPageName);
-      }));
+      });
     });
   });
 
   describe('[i18n]', () => {
-    it('should be set when not i18n service', fakeAsync(() => {
+    it('should be set when not i18n service', async () => {
       genModule([], false);
       srv.suffix = alain;
       srv.setTitle();
-      tick(srv.DELAY_TIME + 1);
+      await vi.advanceTimersByTimeAsync(srv.DELAY_TIME + 1);
       expect(title.setTitle).toHaveBeenCalledWith(`${notPageName} - ${alain}`);
-    }));
+    });
     it('should be reset title when i18n has changed', () => {
       genModule();
-      spyOn(srv, 'setTitle');
+      vi.spyOn(srv, 'setTitle').mockReturnValue(undefined);
       i18n.use('en', {});
       expect(srv.setTitle).toHaveBeenCalled();
     });
-    it('#setTitleByI18n', fakeAsync(() => {
+    it('#setTitleByI18n', async () => {
       genModule([], true);
       srv.suffix = alain;
       const key = 'aa';
       srv.setTitleByI18n(key);
-      tick(srv.DELAY_TIME + 1);
+      await vi.advanceTimersByTimeAsync(srv.DELAY_TIME + 1);
       expect(title.setTitle).toHaveBeenCalledWith(`${key} - ${alain}`);
-    }));
+    });
   });
 });

@@ -52,9 +52,12 @@ describe('theme: #LayoutDefaultService', () => {
         {
           provide: BreakpointObserver,
           useFactory: () => {
-            const mock = jasmine.createSpyObj('BreakpointObserver', ['observe', 'isMatched']);
-            mock.isMatched.and.returnValue(false);
-            mock.observe.and.returnValue(
+            const mock = {
+              observe: vi.fn().mockName('BreakpointObserver.observe'),
+              isMatched: vi.fn().mockName('BreakpointObserver.isMatched')
+            };
+            mock.isMatched.mockReturnValue(false);
+            mock.observe.mockReturnValue(
               new Observable<BreakpointState>(subscriber => {
                 subscriber.next({ matches: false, breakpoints: {} });
               })

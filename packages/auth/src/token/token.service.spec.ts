@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { filter, firstValueFrom } from 'rxjs';
 
 import { AlainAuthConfig } from '@delon/util/config';
 
@@ -17,16 +18,16 @@ describe('auth: token.service', () => {
   beforeEach(() => {
     let data: Record<string, any> = {};
 
-    spyOn(localStorage, 'getItem').and.callFake((key: string): string => {
+    vi.spyOn(localStorage, 'getItem').mockImplementation((key: string): string => {
       return data[key] ?? null;
     });
-    spyOn(localStorage, 'removeItem').and.callFake((key: string): void => {
+    vi.spyOn(localStorage, 'removeItem').mockImplementation((key: string): void => {
       delete data[key];
     });
-    spyOn(localStorage, 'setItem').and.callFake((key: string, value: string): string => {
+    vi.spyOn(localStorage, 'setItem').mockImplementation((key: string, value: string): string => {
       return (data[key] = value as string);
     });
-    spyOn(localStorage, 'clear').and.callFake(() => {
+    vi.spyOn(localStorage, 'clear').mockImplementation(() => {
       data = {};
     });
 
@@ -76,15 +77,13 @@ describe('auth: token.service', () => {
     });
   });
 
-  it('#change', (done: () => void) => {
-    service.change().subscribe(res => {
-      if (!res) return;
-      expect(res).not.toBeNull();
-      expect(res.token).toBe(VALUE.token);
-      expect(service.get()?.token).toBe(VALUE.token);
-      done();
-    });
+  it('#change', async () => {
+    const change = firstValueFrom(service.change().pipe(filter((res): res is ITokenModel => res != null)));
     service.set(VALUE);
+    const res = await change;
+    expect(res).not.toBeNull();
+    expect(res.token).toBe(VALUE.token);
+    expect(service.get()?.token).toBe(VALUE.token);
   });
 
   describe('#refresh', () => {
@@ -93,41 +92,36 @@ describe('auth: token.service', () => {
       srvAny._options = { ...srvAny._options, enabledRefresh: true, ...config } as AlainAuthConfig;
     }
 
+    beforeEach(() => vi.useFakeTimers());
     beforeEach(() => updateConfig());
 
     afterEach(() => (service as any).ngOnDestroy());
 
-    it('should be working', done => {
+    it('should be working', async () => {
       updateConfig({ refreshTime: 1, refreshOffset: 1 });
-      service.refresh.subscribe(() => {
-        expect(true).toBe(true);
-        done();
-      });
+      const refresh = firstValueFrom(service.refresh);
       const expired = +new Date() + 20;
       service.set({ token: 'a', expired });
+      await vi.advanceTimersByTimeAsync(20);
+      expect((await refresh).token).toBe('a');
     });
 
-    it('should be working of jwt', done => {
+    it('should be working of jwt', async () => {
       updateConfig({ refreshTime: 1, refreshOffset: 1 });
-      service.refresh.subscribe(() => {
-        expect(true).toBe(true);
-        done();
-      });
+      const refresh = firstValueFrom(service.refresh);
       const exp = +new Date() + 20;
       service.set({ token: 'a', exp } as JWTTokenModel);
+      await vi.advanceTimersByTimeAsync(20);
+      expect((await refresh).token).toBe('a');
     });
 
-    it('should be can not trigger refresh when expired is not present', done => {
+    it('should be can not trigger refresh when expired is not present', async () => {
       updateConfig({ refreshTime: 1, refreshOffset: 1 });
-      service.refresh.subscribe(() => {
-        expect(true).toBe(false);
-        done();
-      });
+      const refresh = vi.fn();
+      service.refresh.subscribe(refresh);
       service.set({ token: 'a', expired: 0 });
-      setTimeout(() => {
-        expect(true).toBe(true);
-        done();
-      });
+      await vi.advanceTimersByTimeAsync(20);
+      expect(refresh).not.toHaveBeenCalled();
     });
   });
 });

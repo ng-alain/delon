@@ -1,7 +1,7 @@
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component, DebugElement, signal, ViewChild } from '@angular/core';
-import { ComponentFixture, discardPeriodicTasks, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { cleanCdkOverlayHtml, dispatchFakeEvent, typeInElement } from '@delon/testing';
@@ -37,44 +37,6 @@ export const SCHEMA = {
 let fixture: ComponentFixture<TestFormComponent>;
 let dl: DebugElement;
 let context: TestFormComponent;
-export function builder(options?: {
-  detectChanges?: boolean;
-  template?: string;
-  ingoreAntd?: boolean;
-  imports?: NzSafeAny[];
-}): {
-  fixture: ComponentFixture<TestFormComponent>;
-  dl: DebugElement;
-  context: TestFormComponent;
-  page: SFPage;
-} {
-  options = { detectChanges: true, ...options };
-  TestBed.configureTestingModule({
-    providers: [provideNzNoAnimation()],
-    imports: [AlainThemeModule, DelonFormModule.forRoot(), TestFormComponent].concat(options.imports ?? [])
-  });
-  if (options.template) {
-    TestBed.overrideTemplate(TestFormComponent, options.template);
-  }
-  fixture = TestBed.createComponent(TestFormComponent);
-  dl = fixture.debugElement;
-  context = fixture.componentInstance;
-  spyOn(context, 'formChange');
-  spyOn(context, 'formValueChange');
-  spyOn(context, 'formSubmit');
-  spyOn(context, 'formReset');
-  spyOn(context, 'formError');
-  if (options.detectChanges !== false) {
-    fixture.detectChanges();
-  }
-  const page = new SFPage(context.comp);
-  return {
-    fixture,
-    dl,
-    context,
-    page
-  };
-}
 
 export function configureSFTestSuite(options?: {
   imports?: NzSafeAny[];
@@ -102,11 +64,11 @@ export class SFPage {
     dl = _dl;
     context = _context;
     fixture = _fixture;
-    spyOn(context, 'formValueChange');
-    spyOn(context, 'formChange');
-    spyOn(context, 'formSubmit');
-    spyOn(context, 'formReset');
-    spyOn(context, 'formError');
+    vi.spyOn(context, 'formValueChange').mockReturnValue(undefined);
+    vi.spyOn(context, 'formChange').mockReturnValue(undefined);
+    vi.spyOn(context, 'formSubmit').mockReturnValue(undefined);
+    vi.spyOn(context, 'formReset').mockReturnValue(undefined);
+    vi.spyOn(context, 'formError').mockReturnValue(undefined);
     this.cleanOverlay();
   }
 
@@ -123,6 +85,14 @@ export class SFPage {
    * 这类真问题。断言 DOM 之前必须先调用它，测试不依赖产品代码里的手工 `detectChanges()`。
    */
   flush(): this {
+    fixture.detectChanges();
+    return this;
+  }
+
+  /** 断言回写 DOM 前必须先排空微任务，同步 CD 不会做这件事 */
+  async stabilize(): Promise<this> {
+    await Promise.resolve();
+    await Promise.resolve();
     fixture.detectChanges();
     return this;
   }
@@ -336,7 +306,7 @@ export class SFPage {
   typeChar(value: NzSafeAny, cls: string = 'input'): this {
     const node = this.getEl(cls) as HTMLInputElement;
     typeInElement(value, node);
-    tick();
+    vi.advanceTimersByTime(0);
     return this.dc();
   }
 
@@ -370,7 +340,7 @@ export class SFPage {
     this.flush();
     const node = typeof cls === 'string' ? (document.querySelector(cls) as HTMLInputElement) : cls;
     if (node == null) {
-      expect(true).withContext(`won't found '${cls}' class element`).toBe(false);
+      expect(true, `won't found '${cls}' class element`).toBe(false);
       return this;
     }
     dispatchFakeEvent(node, eventName);
@@ -379,7 +349,7 @@ export class SFPage {
   }
 
   time(time: number = 0): this {
-    tick(time);
+    vi.advanceTimersByTime(time);
     return this;
   }
 
@@ -394,7 +364,7 @@ export class SFPage {
 
   asyncEnd(time: number = 500): this {
     this.time(time);
-    discardPeriodicTasks();
+    vi.clearAllTimers();
     return this;
   }
 }

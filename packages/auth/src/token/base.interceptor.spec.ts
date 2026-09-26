@@ -4,9 +4,10 @@ import { HttpTestingController, TestRequest, provideHttpClientTesting } from '@a
 import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Router, provideRouter } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 
 import { AlainAuthConfig, provideAlainConfig } from '@delon/util/config';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { provideAuth } from '../provide';
 import { ALLOW_ANONYMOUS } from '../token';
@@ -44,6 +45,9 @@ class MockTokenService implements ITokenService {
 }
 
 describe('auth: base.interceptor', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let http: HttpClient;
   let httpBed: HttpTestingController;
   let router: Router;
@@ -74,7 +78,7 @@ describe('auth: base.interceptor', () => {
     if (tokenData) TestBed.inject(DA_SERVICE_TOKEN).set(tokenData);
 
     router = TestBed.inject<Router>(Router);
-    spyOn(router, 'navigateByUrl');
+    vi.spyOn(router, 'navigateByUrl').mockReturnValue(undefined as NzSafeAny);
     http = TestBed.inject<HttpClient>(HttpClient);
     httpBed = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
   }
@@ -83,26 +87,26 @@ describe('auth: base.interceptor', () => {
     describe('#with config', () => {
       const basicModel = genModel(SimpleTokenModel);
 
-      it(`should be ignore /login`, done => {
+      it(`should be ignore /login`, async () => {
         genModule({ ignores: [/assets\//, /\/login/] }, basicModel);
 
-        http.get('/login', { responseType: 'text' }).subscribe(() => done());
+        http.get('/login', { responseType: 'text' }).subscribe(() => {});
         const req = httpBed.expectOne('/login') as TestRequest;
         expect(req.request.headers.get('token')).toBeNull();
         req.flush('ok!');
       });
 
-      it('should be empty ignore', done => {
+      it('should be empty ignore', async () => {
         genModule({ ignores: [] }, basicModel);
-        http.get('/login', { responseType: 'text' }).subscribe(() => done());
+        http.get('/login', { responseType: 'text' }).subscribe(() => {});
         const req = httpBed.expectOne('/login') as TestRequest;
         expect(req.request.headers.get('token')).toBe('123');
         req.flush('ok!');
       });
 
-      it('should be undefined', done => {
+      it('should be undefined', async () => {
         genModule({ ignores: undefined }, basicModel);
-        http.get('/login', { responseType: 'text' }).subscribe(() => done());
+        http.get('/login', { responseType: 'text' }).subscribe(() => {});
         const req = httpBed.expectOne('/login') as TestRequest;
         expect(req.request.headers.get('token')).toBe('123');
         req.flush('ok!');
@@ -129,141 +133,79 @@ describe('auth: base.interceptor', () => {
 
   describe('[invalid token]', () => {
     describe('should be navigate to login', () => {
-      it('with navigateByUrl', done => {
+      it('with navigateByUrl', async () => {
         genModule({}, genModel(SimpleTokenModel, null));
-        http.get('/test', { responseType: 'text' }).subscribe({
-          next: () => {
-            expect(false).toBe(true);
-            done();
-          },
-          error: (err: any) => {
-            expect(err.status).toBe(401);
-            setTimeout(() => {
-              expect(TestBed.inject<Router>(Router).navigateByUrl).toHaveBeenCalledWith('/login');
-              done();
-            }, 20);
-          }
+        await expect(firstValueFrom(http.get('/test', { responseType: 'text' }))).rejects.toMatchObject({
+          status: 401
         });
+        await vi.advanceTimersByTimeAsync(20);
+        expect(router.navigateByUrl).toHaveBeenCalledWith('/login');
       });
-      it('with location', done => {
+      it('with location', async () => {
         const login_url = 'https://ng-alain.com/login';
         genModule({ login_url }, genModel(SimpleTokenModel, null));
-        http.get('/test', { responseType: 'text' }).subscribe({
-          next: () => {
-            expect(false).toBe(true);
-            done();
-          },
-          error: (err: any) => {
-            expect(err.status).toBe(401);
-            setTimeout(() => {
-              expect(TestBed.inject(DOCUMENT).location.href).toBe(login_url);
-              done();
-            }, 20);
-          }
+        await expect(firstValueFrom(http.get('/test', { responseType: 'text' }))).rejects.toMatchObject({
+          status: 401
         });
+        await vi.advanceTimersByTimeAsync(20);
+        expect(TestBed.inject(DOCUMENT).location.href).toBe(login_url);
       });
-      it('with navigateByUrl should be carry search', done => {
+      it('with navigateByUrl should be carry search', async () => {
         genModule({}, genModel(SimpleTokenModel, null));
         MockDoc.location.search = '?a=1&b=2';
-        http.get('/test', { responseType: 'text' }).subscribe({
-          next: () => {
-            expect(false).toBe(true);
-            done();
-          },
-          error: (err: any) => {
-            expect(err.status).toBe(401);
-            setTimeout(() => {
-              expect(TestBed.inject<Router>(Router).navigateByUrl).toHaveBeenCalledWith('/login?a=1&b=2');
-              done();
-            }, 20);
-          }
+        await expect(firstValueFrom(http.get('/test', { responseType: 'text' }))).rejects.toMatchObject({
+          status: 401
         });
+        await vi.advanceTimersByTimeAsync(20);
+        expect(router.navigateByUrl).toHaveBeenCalledWith('/login?a=1&b=2');
       });
-      it('with navigateByUrl should be append search when login_url has query', done => {
+      it('with navigateByUrl should be append search when login_url has query', async () => {
         genModule({ login_url: '/login?from=app' }, genModel(SimpleTokenModel, null));
         MockDoc.location.search = '?a=1';
-        http.get('/test', { responseType: 'text' }).subscribe({
-          next: () => {
-            expect(false).toBe(true);
-            done();
-          },
-          error: (err: any) => {
-            expect(err.status).toBe(401);
-            setTimeout(() => {
-              expect(TestBed.inject<Router>(Router).navigateByUrl).toHaveBeenCalledWith('/login?from=app&a=1');
-              done();
-            }, 20);
-          }
+        await expect(firstValueFrom(http.get('/test', { responseType: 'text' }))).rejects.toMatchObject({
+          status: 401
         });
+        await vi.advanceTimersByTimeAsync(20);
+        expect(router.navigateByUrl).toHaveBeenCalledWith('/login?from=app&a=1');
       });
-      it('with location should be carry search', done => {
+      it('with location should be carry search', async () => {
         const login_url = 'https://ng-alain.com/login';
         genModule({ login_url }, genModel(SimpleTokenModel, null));
         MockDoc.location.search = '?a=1&b=2';
-        http.get('/test', { responseType: 'text' }).subscribe({
-          next: () => {
-            expect(false).toBe(true);
-            done();
-          },
-          error: (err: any) => {
-            expect(err.status).toBe(401);
-            setTimeout(() => {
-              expect(TestBed.inject(DOCUMENT).location.href).toBe(`${login_url}?a=1&b=2`);
-              done();
-            }, 20);
-          }
+        await expect(firstValueFrom(http.get('/test', { responseType: 'text' }))).rejects.toMatchObject({
+          status: 401
         });
+        await vi.advanceTimersByTimeAsync(20);
+        expect(TestBed.inject(DOCUMENT).location.href).toBe(`${login_url}?a=1&b=2`);
       });
-      it('with location should be append search when login_url has query', done => {
+      it('with location should be append search when login_url has query', async () => {
         const login_url = 'https://ng-alain.com/login?from=app';
         genModule({ login_url }, genModel(SimpleTokenModel, null));
         MockDoc.location.search = '?a=1';
-        http.get('/test', { responseType: 'text' }).subscribe({
-          next: () => {
-            expect(false).toBe(true);
-            done();
-          },
-          error: (err: any) => {
-            expect(err.status).toBe(401);
-            setTimeout(() => {
-              expect(TestBed.inject(DOCUMENT).location.href).toBe(`${login_url}&a=1`);
-              done();
-            }, 20);
-          }
+        await expect(firstValueFrom(http.get('/test', { responseType: 'text' }))).rejects.toMatchObject({
+          status: 401
         });
+        await vi.advanceTimersByTimeAsync(20);
+        expect(TestBed.inject(DOCUMENT).location.href).toBe(`${login_url}&a=1`);
       });
     });
 
-    it('should be not navigate to login when token_invalid_redirect: false', done => {
+    it('should be not navigate to login when token_invalid_redirect: false', async () => {
       genModule({ token_invalid_redirect: false }, genModel(SimpleTokenModel, null));
-      http.get('/test', { responseType: 'text' }).subscribe({
-        next: () => {
-          expect(false).toBe(true);
-          done();
-        },
-        error: (err: any) => {
-          expect(err.status).toBe(401);
-          done();
-        }
-      });
+      await expect(firstValueFrom(http.get('/test', { responseType: 'text' }))).rejects.toMatchObject({ status: 401 });
+      expect(router.navigateByUrl).not.toHaveBeenCalled();
     });
   });
 
   describe('[referrer]', () => {
-    it('should be always router url', done => {
+    it('should be always router url', async () => {
       genModule({}, genModel(SimpleTokenModel, null));
-      http.get('/to-test', { responseType: 'text' }).subscribe({
-        next: () => {
-          expect(false).toBe(true);
-          done();
-        },
-        error: () => {
-          const tokenSrv = TestBed.inject(DA_SERVICE_TOKEN) as MockTokenService;
-          expect(tokenSrv.referrer).not.toBeNull();
-          expect(tokenSrv.referrer.url).toBe('/');
-          done();
-        }
+      await expect(firstValueFrom(http.get('/to-test', { responseType: 'text' }))).rejects.toMatchObject({
+        status: 401
       });
+      const tokenSrv = TestBed.inject(DA_SERVICE_TOKEN) as MockTokenService;
+      expect(tokenSrv.referrer).not.toBeNull();
+      expect(tokenSrv.referrer.url).toBe('/');
     });
   });
 });

@@ -1,5 +1,4 @@
 import { DebugElement } from '@angular/core';
-import { tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { NzDropdownDirective } from 'ng-zorro-antd/dropdown';
@@ -9,7 +8,7 @@ import { dispatchFakeEvent } from './dispatch-events';
 export const DROPDOWN_MIN_TIME = 1000;
 
 /**
- * 触发 dropdown
+ * 触发 dropdown；不推进时间，调用方需自行推进其假定时器
  */
 export function dispatchDropDown(
   dl: DebugElement,
@@ -26,6 +25,5 @@ export function dispatchDropDown(
   } else {
     dispatchFakeEvent(el, 'mouseenter');
   }
-  tick(DROPDOWN_MIN_TIME);
   return true;
 }

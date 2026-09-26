@@ -32,25 +32,23 @@ describe('abc: error-collect', () => {
 
   describe('[default]', () => {
     beforeEach(() => getPropertiesAndCreate());
-    it('should be collect error', (done: () => void) => {
-      setTimeout(() => {
+    it('should be collect error', async () => {
+      await vi.waitFor(() => {
         fixture.detectChanges();
         expect(getCount()).toBe(1);
-        done();
-      }, 21);
+      });
     });
 
-    it('should be click go to first error element', (done: () => void) => {
-      setTimeout(() => {
+    it('should be click go to first error element', async () => {
+      await vi.waitFor(() => {
         fixture.detectChanges();
         expect(getCount()).toBe(1);
-        const el = dl.query(By.css('.ant-form-item-has-error')).nativeElement as HTMLElement;
-        spyOn(el, 'scrollIntoView');
-        expect(el.scrollIntoView).not.toHaveBeenCalled();
-        (dl.query(By.css('error-collect')).nativeElement as HTMLElement).click();
-        expect(el.scrollIntoView).toHaveBeenCalled();
-        done();
-      }, 21);
+      });
+      const el = dl.query(By.css('.ant-form-item-has-error')).nativeElement as HTMLElement;
+      vi.spyOn(el, 'scrollIntoView').mockReturnValue(undefined);
+      expect(el.scrollIntoView).not.toHaveBeenCalled();
+      (dl.query(By.css('error-collect')).nativeElement as HTMLElement).click();
+      expect(el.scrollIntoView).toHaveBeenCalled();
     });
 
     it('#rtl', () => {
@@ -69,7 +67,7 @@ describe('abc: error-collect', () => {
     );
     getPropertiesAndCreate();
     const safeComp = context.comp as NzSafeAny;
-    spyOn(safeComp, 'findParent');
+    vi.spyOn(safeComp, 'findParent').mockReturnValue(undefined);
     (dl.query(By.css('error-collect')).nativeElement as HTMLElement).click();
     expect(safeComp.findParent).not.toHaveBeenCalled();
   });
@@ -79,7 +77,7 @@ describe('abc: error-collect', () => {
       TestBed.overrideTemplate(TestComponent, `<error-collect #ec [freq]="freq" />`)
         .createComponent(TestComponent)
         .detectChanges();
-    }).toThrowError('No found form element');
+    }).toThrow('No found form element');
   });
 });
 

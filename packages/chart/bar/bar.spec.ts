@@ -82,11 +82,12 @@ describe('chart: bar', () => {
 
     it('should be update label when window resize and autoLabel is true', async () => {
       await page.ready();
-      const render = spyOn(page.chart, 'render').and.callThrough();
+      const render = vi.spyOn(page.chart, 'render');
+      vi.useFakeTimers();
       window.dispatchEvent(new Event('resize'));
-      // 真实等待跨过 debounceTime(200)；700ms 留 CI 余量
-      await new Promise(resolve => setTimeout(resolve, 700));
+      await vi.advanceTimersByTimeAsync(250);
       expect(render).toHaveBeenCalled();
+      vi.useRealTimers();
       // 销毁 fixture 解除 window 级 resize 订阅
       page.fixture!.destroy();
     });
@@ -102,18 +103,18 @@ describe('chart: bar', () => {
     it('data length change should re-render with new rows', async () => {
       page.isDataCount(PageG2DataCount);
       // 必须 spy 才能证明走的是 data-only 分支；callThrough 让 options() 真正更新
-      const changeData = spyOn(page.chart, 'changeData').and.callThrough();
+      const changeData = vi.spyOn(page.chart, 'changeData');
       page.newData([
         { x: `1月`, y: 10 },
         { x: `2月`, y: 20 },
         { x: `3月`, y: 30 }
       ]);
       page.dc();
-      // 真实等待 changeData() settle；700ms 留 CI 余量
-      await new Promise(resolve => setTimeout(resolve, 700));
-      expect(changeData).toHaveBeenCalledTimes(1);
-      expect((changeData.calls.mostRecent().args[0] as unknown[]).length).toBe(3);
-      page.isDataCount(3);
+      await vi.waitFor(() => {
+        expect(changeData).toHaveBeenCalledTimes(1);
+        expect((vi.mocked(changeData).mock.lastCall![0] as unknown[]).length).toBe(3);
+        page.isDataCount(3);
+      });
     });
   });
 

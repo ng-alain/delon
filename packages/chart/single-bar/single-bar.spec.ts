@@ -1,5 +1,7 @@
 import { Component, signal, viewChild } from '@angular/core';
 
+import { ChartEvent } from '@antv/g2';
+
 import { checkDelay, PageG2 } from '@delon/testing';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -65,28 +67,30 @@ describe('chart: single-bar', () => {
       page.context.value.set(-10);
       page.context.line.set(true);
       page.dc();
-      await new Promise(resolve => setTimeout(resolve, 700));
-      const spec = page.chart.options() as NzSafeAny;
-      expect(spec.children[0].data[0].value).toBe(-10);
-      expect(((page.chart as NzSafeAny).getScale().y as NzSafeAny).getOptions().domain).toEqual([-100, 100]);
-      expect(spec.children.length).toBe(2);
-      expect(spec.children[1].type).toBe('lineY');
-      expect(spec.children[1].data).toEqual([0]);
+      await vi.waitFor(() => {
+        const spec = page.chart.options() as NzSafeAny;
+        expect(spec.children[0].data[0].value).toBe(-10);
+        expect(((page.chart as NzSafeAny).getScale().y as NzSafeAny).getOptions().domain).toEqual([-100, 100]);
+        expect(spec.children.length).toBe(2);
+        expect(spec.children[1].type).toBe('lineY');
+        expect(spec.children[1].data).toEqual([0]);
+      });
     });
 
     it('value change should take the data-only changeData path', async () => {
-      const changeData = spyOn(page.chart, 'changeData').and.callThrough();
+      const changeData = vi.spyOn(page.chart, 'changeData');
       page.context.value.set(-10);
       page.dc();
-      await new Promise(resolve => setTimeout(resolve, 700));
-      expect(changeData).toHaveBeenCalledTimes(1);
-      expect(changeData.calls.mostRecent().args[0]).toEqual([{ value: -10 }]);
-      page.expectSpec(spec => {
-        const ns = spec as NzSafeAny;
-        expect(ns.children[0].data[0].value).toBe(-10);
-        expect((((page.chart as NzSafeAny).getScale() as NzSafeAny).y as NzSafeAny).getOptions().domain).toEqual([
-          0, 100
-        ]);
+      await vi.waitFor(() => {
+        expect(changeData).toHaveBeenCalledTimes(1);
+        expect(vi.mocked(changeData).mock.lastCall![0]).toEqual([{ value: -10 }]);
+        page.expectSpec(spec => {
+          const ns = spec as NzSafeAny;
+          expect(ns.children[0].data[0].value).toBe(-10);
+          expect((((page.chart as NzSafeAny).getScale() as NzSafeAny).y as NzSafeAny).getOptions().domain).toEqual([
+            0, 100
+          ]);
+        });
       });
     });
 
@@ -94,9 +98,13 @@ describe('chart: single-bar', () => {
       const first = barBounds(page.chart as NzSafeAny);
       expect(Math.round(first.height)).toBe(30);
       expect(first.width).toBeGreaterThan(first.height);
+      // 必须等 `afterrender`（G2 在动画 finished 之后才 emit）再读，否则读到的是动画中间帧的几何量
+      const rendered = new Promise<void>(resolve => {
+        page.chart.on(ChartEvent.AFTER_RENDER, () => resolve());
+      });
       page.context.barSize.set(10);
       page.dc();
-      await new Promise(resolve => setTimeout(resolve, 700));
+      await rendered;
       const second = barBounds(page.chart as NzSafeAny);
       expect(Math.round(second.height)).toBe(10);
       expect(second.width).toBeGreaterThan(second.height);
@@ -105,22 +113,24 @@ describe('chart: single-bar', () => {
     it('value change with line=true must repaint so lineY keeps its data ', async () => {
       page.context.line.set(true);
       page.dc();
-      await new Promise(resolve => setTimeout(resolve, 700));
-      const first = page.chart.options() as NzSafeAny;
-      expect(first.children.length).toBe(2);
-      expect(first.children[1].type).toBe('lineY');
-      expect(first.children[1].data).toEqual([50]);
-      const changeData = spyOn(page.chart, 'changeData').and.callThrough();
-      const render = spyOn(page.chart, 'render').and.callThrough();
+      await vi.waitFor(() => {
+        const first = page.chart.options() as NzSafeAny;
+        expect(first.children.length).toBe(2);
+        expect(first.children[1].type).toBe('lineY');
+        expect(first.children[1].data).toEqual([50]);
+      });
+      const changeData = vi.spyOn(page.chart, 'changeData');
+      const render = vi.spyOn(page.chart, 'render');
       page.context.value.set(-10);
       page.dc();
-      await new Promise(resolve => setTimeout(resolve, 700));
+      await vi.waitFor(() => {
+        expect(render).toHaveBeenCalled();
+        const spec = page.chart.options() as NzSafeAny;
+        expect(spec.children[0].data[0].value).toBe(-10);
+        expect(spec.children[1].data).toEqual([50]);
+      });
       // 存在兄弟 mark ⇒ isDataOnly() 必须为 false，否则 changeData() 会把 lineY 的定位 data 覆盖掉
       expect(changeData).toHaveBeenCalledTimes(0);
-      expect(render).toHaveBeenCalled();
-      const spec = page.chart.options() as NzSafeAny;
-      expect(spec.children[0].data[0].value).toBe(-10);
-      expect(spec.children[1].data).toEqual([50]);
     });
   });
 

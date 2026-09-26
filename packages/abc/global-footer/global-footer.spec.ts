@@ -5,6 +5,7 @@ import { By } from '@angular/platform-browser';
 import { provideRouter, Router } from '@angular/router';
 
 import { WINDOW } from '@delon/util/token';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { GlobalFooterItemComponent } from './global-footer-item.component';
 import { GlobalFooterComponent } from './global-footer.component';
@@ -77,7 +78,7 @@ describe('abc: global-footer', () => {
   it('should be open new window when blankTarget is true', () => {
     createComp();
     const win = TestBed.inject(WINDOW);
-    spyOn(win, 'open');
+    vi.spyOn(win, 'open').mockReturnValue(undefined as NzSafeAny);
     context.links.set([
       {
         title: '',
@@ -107,7 +108,7 @@ describe('abc: global-footer', () => {
   it('should be navigate router', () => {
     createComp();
     const router = TestBed.inject<Router>(Router);
-    spyOn(router, 'navigateByUrl');
+    vi.spyOn(router, 'navigateByUrl').mockReturnValue(undefined as NzSafeAny);
     context.links.set([
       {
         title: '',
@@ -122,7 +123,7 @@ describe('abc: global-footer', () => {
   it('should be ingore navigate when href is empty', () => {
     createComp();
     const router = TestBed.inject<Router>(Router);
-    spyOn(router, 'navigateByUrl');
+    vi.spyOn(router, 'navigateByUrl').mockReturnValue(undefined as NzSafeAny);
     context.links.set([
       {
         title: '',

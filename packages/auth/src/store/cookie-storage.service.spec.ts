@@ -1,5 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
+import type { Mock } from 'vitest';
+
 import { CookieOptions, CookieService } from '@delon/util/browser';
 
 import { CookieStorageStore } from './cookie-storage.service';
@@ -7,7 +9,7 @@ import { ITokenModel } from '../token/interface';
 
 describe('auth: cookie-storage', () => {
   let data: Record<string, any> = {};
-  let putSpy: jasmine.Spy;
+  let putSpy: Mock;
   let store: CookieStorageStore;
   const KEY = 'token';
   const VALUE: ITokenModel = {
@@ -16,17 +18,26 @@ describe('auth: cookie-storage', () => {
 
   beforeEach(() => {
     data = {};
-    putSpy = jasmine.createSpy('put').and.callFake((key: string, value: string) => (data[key] = value));
+    putSpy = vi
+      .fn()
+      .mockName('put')
+      .mockImplementation((key: string, value: string) => (data[key] = value));
     TestBed.configureTestingModule({
       providers: [
         {
           provide: CookieService,
           useValue: {
             put: putSpy,
-            get: jasmine.createSpy('get').and.callFake((key: string) => data[key]),
-            remove: jasmine.createSpy('remove').and.callFake((key: string) => {
-              delete data[key];
-            })
+            get: vi
+              .fn()
+              .mockName('get')
+              .mockImplementation((key: string) => data[key]),
+            remove: vi
+              .fn()
+              .mockName('remove')
+              .mockImplementation((key: string) => {
+                delete data[key];
+              })
           }
         },
         CookieStorageStore
@@ -42,9 +53,11 @@ describe('auth: cookie-storage', () => {
   });
 
   it('should be parse error', () => {
+    const errorSpy = vi.spyOn(console, 'error').mockReturnValue(undefined);
     data['error'] = `{a`;
     const ret = store.get('error');
-    console.log(ret);
+    expect(ret).toEqual({});
+    expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining('Invalid key-value format'), expect.anything());
   });
 
   it('#get', () => {
@@ -73,7 +86,7 @@ describe('auth: cookie-storage', () => {
     });
     it('should be set expired', () => {
       store.set(KEY, { ...VALUE, expired: 1000 * 3 });
-      const args = putSpy.calls.first().args;
+      const args = vi.mocked(putSpy).mock.calls[0]!;
       expect(args.length).toBe(3);
       const options = args[2] as CookieOptions;
       expect(typeof options.expires === 'number' && options.expires > 0).toBe(true);

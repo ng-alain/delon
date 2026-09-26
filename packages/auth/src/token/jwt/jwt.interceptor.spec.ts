@@ -3,7 +3,7 @@ import { HttpTestingController, TestRequest, provideHttpClientTesting } from '@a
 import { Component, Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { of, catchError } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 
 import { AlainAuthConfig, provideAlainConfig } from '@delon/util/config';
 
@@ -47,29 +47,18 @@ describe('auth: jwt.interceptor', () => {
     httpBed = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
   }
 
-  it('should be add token', (done: () => void) => {
+  it('should be add token', async () => {
     const basicModel = genModel();
     genModule({}, basicModel);
-    http.get('/test', { responseType: 'text' }).subscribe(() => {
-      done();
-    });
+    http.get('/test', { responseType: 'text' }).subscribe(() => {});
     const req = httpBed.expectOne('/test') as TestRequest;
     expect(req.request.headers.get('Authorization')).toBe(`Bearer ${basicModel.token}`);
     req.flush('ok!');
   });
 
-  it('should be invalid token', (done: () => void) => {
+  it('should be invalid token', async () => {
     genModule({}, genModel(null));
-    http
-      .get('/test')
-      .pipe(
-        catchError(err => {
-          expect(err.status).toBe(401);
-          done();
-          return of(err);
-        })
-      )
-      .subscribe();
+    await expect(firstValueFrom(http.get('/test'))).rejects.toMatchObject({ status: 401 });
   });
 });
 

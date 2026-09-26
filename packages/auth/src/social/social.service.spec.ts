@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { discardPeriodicTasks, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { DefaultUrlSerializer, Router, provideRouter } from '@angular/router';
 
 import { SocialService } from './social.service';
@@ -10,11 +10,14 @@ import { SimpleTokenModel } from '../token/simple/simple.model';
 
 const mockRouter = {
   url: '',
-  navigate: jasmine.createSpy('navigate'),
-  navigateByUrl: jasmine.createSpy('navigateByUrl'),
-  parseUrl: jasmine.createSpy('parseUrl').and.callFake((value: any) => {
-    return new DefaultUrlSerializer().parse(value);
-  })
+  navigate: vi.fn().mockName('navigate'),
+  navigateByUrl: vi.fn().mockName('navigateByUrl'),
+  parseUrl: vi
+    .fn()
+    .mockName('parseUrl')
+    .mockImplementation((value: any) => {
+      return new DefaultUrlSerializer().parse(value);
+    })
 };
 
 class MockDocument {
@@ -46,6 +49,9 @@ const MockAuth0 = {
 };
 
 describe('auth: social.service', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let srv: SocialService;
 
   function genModule(tokenData?: SimpleTokenModel): void {
@@ -77,52 +83,56 @@ describe('auth: social.service', () => {
         const ret = TestBed.inject(DOCUMENT).location.href;
         Object.keys(item.be).forEach(key => {
           const expected = `${key}=${item.be[key]}`;
-          expect(ret).withContext(`muse contain "${expected}"`).toContain(expected);
+          expect(ret, `muse contain "${expected}"`).toContain(expected);
         });
       });
 
-      it(`${item.type} via window`, fakeAsync(() => {
-        const mockWindowOpen = (): { closed: boolean } => {
+      it(`${item.type} via window`, async () => {
+        const mockWindowOpen = (): {
+          closed: boolean;
+        } => {
           TestBed.inject(DA_SERVICE_TOKEN).set(item.model);
           return { closed: true };
         };
-        spyOn(window, 'open').and.callFake(mockWindowOpen as any);
+        vi.spyOn(window, 'open').mockImplementation(mockWindowOpen as any);
         srv.login(item.url).subscribe(() => {});
-        tick(130);
+        await vi.advanceTimersByTimeAsync(130);
         expect(window.open).toHaveBeenCalled();
         const token = TestBed.inject(DA_SERVICE_TOKEN).get()!;
         Object.keys(item.be).forEach(key => {
           expect(token[key]).toContain(item.be[key]);
         });
-        discardPeriodicTasks();
-      }));
+        vi.clearAllTimers();
+      });
     });
 
-    it(`should be return null model if set a null in window`, fakeAsync(() => {
-      const mockWindowOpen = (): { closed: boolean } => {
+    it(`should be return null model if set a null in window`, async () => {
+      const mockWindowOpen = (): {
+        closed: boolean;
+      } => {
         TestBed.inject(DA_SERVICE_TOKEN).set(null);
         return { closed: true };
       };
-      spyOn(window, 'open').and.callFake(mockWindowOpen as any);
+      vi.spyOn(window, 'open').mockImplementation(mockWindowOpen as any);
       srv.login(MockAuth0.url).subscribe(() => {});
-      tick(130);
+      await vi.advanceTimersByTimeAsync(130);
       expect(window.open).toHaveBeenCalled();
-      discardPeriodicTasks();
-    }));
+      vi.clearAllTimers();
+    });
 
-    it(`can't get model until closed`, fakeAsync(() => {
-      spyOn(srv, 'ngOnDestroy');
+    it(`can't get model until closed`, async () => {
+      vi.spyOn(srv, 'ngOnDestroy').mockReturnValue(undefined);
       const mockWindowOpen = (): { closed: boolean } => {
         TestBed.inject(DA_SERVICE_TOKEN).set(null);
         return { closed: false };
       };
-      spyOn(window, 'open').and.callFake(mockWindowOpen as any);
+      vi.spyOn(window, 'open').mockImplementation(mockWindowOpen as any);
       srv.login(MockAuth0.url).subscribe(() => {});
-      tick(130);
+      await vi.advanceTimersByTimeAsync(130);
       expect(window.open).toHaveBeenCalled();
       expect(srv.ngOnDestroy).not.toHaveBeenCalled();
-      discardPeriodicTasks();
-    }));
+      vi.clearAllTimers();
+    });
   });
 
   describe('#callback', () => {

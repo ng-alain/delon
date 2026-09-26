@@ -1,16 +1,19 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, discardPeriodicTasks, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 
 import { createTestContext } from '@delon/testing';
 import { deepCopy } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-import { configureSFTestSuite, SFPage, TestFormComponent } from './base.spec';
+import { configureSFTestSuite, SFPage, TestFormComponent } from './base';
 import { ObjectProperty } from '../src/model/object.property';
 import { SFSchema } from '../src/schema/index';
 import { SFUISchema, SFUISchemaItem } from '../src/schema/ui';
 
 describe('form: schema', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestFormComponent>;
   let dl: DebugElement;
   let context: TestFormComponent;
@@ -26,7 +29,7 @@ describe('form: schema', () => {
   });
 
   describe('[cover schema]', () => {
-    beforeEach(() => spyOn(console, 'warn'));
+    beforeEach(() => vi.spyOn(console, 'warn').mockReturnValue(undefined));
     it('should be using select widget when not ui and enum exists', () => {
       page
         .newSchema({
@@ -86,7 +89,7 @@ describe('form: schema', () => {
       fixture.detectChanges();
       page.checkUI('/name', 'spanLabel', null);
     });
-    it('should call refreshSchema changed schema', fakeAsync(() => {
+    it('should call refreshSchema changed schema', async () => {
       context.comp.refreshSchema(
         {
           properties: {
@@ -104,8 +107,8 @@ describe('form: schema', () => {
       page.checkUI('/user/name', 'spanLabelFixed', 100);
       page.checkUI('/user/name', 'spanControl', null); // 当指定标签为固定宽度时无须指定 `spanLabel`，`spanControl` 会强制清理
       page.checkUI('/user/name', 'offsetControl', 11);
-      discardPeriodicTasks();
-    }));
+      vi.clearAllTimers();
+    });
     it('support ui is null', () => {
       expect(() => {
         context.ui.set(null as NzSafeAny);
@@ -148,34 +151,34 @@ describe('form: schema', () => {
       });
     });
     describe('#optionalHelp', () => {
-      it('should working when value is string', fakeAsync(() => {
+      it('should working when value is string', async () => {
         context.comp.refreshSchema({
           properties: {
             name: { type: 'string', ui: { optionalHelp: 'a' } }
           }
         });
         page.checkCount('.sf__optional [nz-tooltip]', 1);
-        discardPeriodicTasks();
-      }));
-      it('should working when value is object', fakeAsync(() => {
+        vi.clearAllTimers();
+      });
+      it('should working when value is object', async () => {
         context.comp.refreshSchema({
           properties: {
             name: { type: 'string', ui: { optionalHelp: { text: 'b', placement: 'bottomRight' } } }
           }
         });
         page.checkCount('.sf__optional [nz-tooltip]', 1);
-        discardPeriodicTasks();
-      }));
-      it('should be hide when not text value in object', fakeAsync(() => {
+        vi.clearAllTimers();
+      });
+      it('should be hide when not text value in object', async () => {
         context.comp.refreshSchema({
           properties: {
             name: { type: 'string', ui: { optionalHelp: { text: '', placement: 'bottomRight' } } }
           }
         });
         page.checkCount('.sf__optional [nz-tooltip]', 0);
-        discardPeriodicTasks();
-      }));
-      it('should be inherit the root config', fakeAsync(() => {
+        vi.clearAllTimers();
+      });
+      it('should be inherit the root config', async () => {
         context.comp.refreshSchema(
           {
             properties: {
@@ -186,8 +189,8 @@ describe('form: schema', () => {
         );
         const prop = page.getProperty('/name');
         expect((prop!.ui!.optionalHelp as NzSafeAny).placement!).toBe(`bottomRight`);
-        discardPeriodicTasks();
-      }));
+        vi.clearAllTimers();
+      });
     });
     describe('#inherit', () => {
       it('should be inherit all properties with * for ui schema', () => {
@@ -382,7 +385,7 @@ describe('form: schema', () => {
           if: {},
           then: {}
         });
-      }).toThrowError(`if: does not contain 'properties'`);
+      }).toThrow(`if: does not contain 'properties'`);
     });
     it(`should be throw error when invalid key for 'properties' in if`, () => {
       expect(() => {
@@ -477,7 +480,7 @@ describe('form: schema', () => {
       labels[1].click();
       page.checkCount('.j-mobile', 0).checkCount('.j-name', 1).checkCount('.j-any', 1);
     });
-    it('logical or', fakeAsync(() => {
+    it('logical or', async () => {
       page.newSchema({
         properties: {
           show: {
@@ -502,8 +505,8 @@ describe('form: schema', () => {
       page.checkCount('.vi-show', 1);
       page.typeChar('t2', '.vi-t2 input');
       page.checkCount('.vi-show', 1);
-    }));
-    it('logical and', fakeAsync(() => {
+    });
+    it('logical and', async () => {
       page.newSchema({
         properties: {
           show: {
@@ -528,7 +531,7 @@ describe('form: schema', () => {
       page.checkCount('.vi-show', 0);
       page.typeChar('t2', '.vi-t2 input');
       page.checkCount('.vi-show', 1);
-    }));
+    });
     it('in array', () => {
       page
         .newSchema({
@@ -606,7 +609,7 @@ describe('form: schema', () => {
     });
 
     describe('should be throw error', () => {
-      beforeEach(() => spyOn(console, 'error'));
+      beforeEach(() => vi.spyOn(console, 'error').mockReturnValue(undefined));
       it('when has extraneous key', () => {
         expect(() => {
           page.newSchema({

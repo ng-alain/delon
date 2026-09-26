@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 
 import { createTestContext } from '@delon/testing';
 
-import { configureSFTestSuite, SCHEMA, SFPage, TestFormComponent } from './base.spec';
+import { configureSFTestSuite, SCHEMA, SFPage, TestFormComponent } from './base';
 import type { ArrayProperty } from '../src/model/array.property';
 import type { FormProperty, PropertyGroup } from '../src/model/form.property';
 import type { SFSchema } from '../src/schema';

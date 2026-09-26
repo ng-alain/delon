@@ -31,11 +31,11 @@ describe('mock: service', () => {
       providers: [provideAlainConfig({ mock: options }), provideMockConfig(mockOptions)]
     });
     srv = TestBed.inject<MockService>(MockService);
-    spyOn(console, 'log');
-    spyOn(console, 'group');
-    spyOn(console, 'groupEnd');
-    spyOn(console, 'warn');
-    spyOn(console, 'error');
+    vi.spyOn(console, 'log').mockReturnValue(undefined);
+    vi.spyOn(console, 'group').mockReturnValue(undefined);
+    vi.spyOn(console, 'groupEnd').mockReturnValue(undefined);
+    vi.spyOn(console, 'warn').mockReturnValue(undefined);
+    vi.spyOn(console, 'error').mockReturnValue(undefined);
   }
 
   it('shoulbe be data from forRoot', () => {
@@ -136,8 +136,8 @@ describe('mock: service', () => {
 
     it('should be throw invalid method error', () => {
       expect(() => {
-        spyOn(console, 'log');
-        spyOn(console, 'warn');
+        vi.spyOn(console, 'log').mockReturnValue(undefined);
+        vi.spyOn(console, 'warn').mockReturnValue(undefined);
         genModule(
           {},
           {
@@ -153,8 +153,8 @@ describe('mock: service', () => {
 
     it('should be throw invalid function error', () => {
       expect(() => {
-        spyOn(console, 'log');
-        spyOn(console, 'warn');
+        vi.spyOn(console, 'log').mockReturnValue(undefined);
+        vi.spyOn(console, 'warn').mockReturnValue(undefined);
         genModule(
           {},
           {
@@ -165,7 +165,7 @@ describe('mock: service', () => {
             }
           }
         );
-      }).toThrowError();
+      }).toThrow();
     });
   });
 

@@ -13,9 +13,12 @@ describe('util.#ZoneOutside', () => {
         return 'OK';
       }
     }
-    const mockZone = jasmine.createSpyObj('mockNgZone', ['run', 'runOutsideAngular']);
-    mockZone.run.and.callFake((fn: NzSafeAny) => fn());
-    mockZone.runOutsideAngular.and.callFake((fn: NzSafeAny) => fn());
+    const mockZone = {
+      run: vi.fn().mockName('mockNgZone.run'),
+      runOutsideAngular: vi.fn().mockName('mockNgZone.runOutsideAngular')
+    };
+    mockZone.run.mockImplementation((fn: NzSafeAny) => fn());
+    mockZone.runOutsideAngular.mockImplementation((fn: NzSafeAny) => fn());
     const cls = new MockClass(mockZone as NzSafeAny);
     const res = cls.scroll();
     expect(res).toBe('OK');
@@ -28,7 +31,7 @@ describe('util.#ZoneOutside', () => {
       scroll(): void {}
     }
     const mockZone = {
-      run: jasmine.createSpy()
+      run: vi.fn()
     };
     const cls = new MockClass(mockZone as NzSafeAny);
     cls.scroll();
@@ -44,7 +47,7 @@ describe('util.#ZoneOutside', () => {
       scroll(): void {}
     }
     const mockZone = {
-      runOutsideAngular: jasmine.createSpy()
+      runOutsideAngular: vi.fn()
     };
     const cls = new MockClass(mockZone as NzSafeAny);
     cls.scroll();
@@ -58,7 +61,7 @@ describe('util.#ZoneOutside', () => {
       scroll(): void {}
     }
     const mockZone = {
-      runOutsideAngular: jasmine.createSpy()
+      runOutsideAngular: vi.fn()
     };
     const cls = new MockClass(mockZone as NzSafeAny);
     cls.scroll();
@@ -71,7 +74,7 @@ describe('util.#ZoneOutside', () => {
       scroll(): void {}
     }
     const cls = new MockClass();
-    spyOn(console, 'warn');
+    vi.spyOn(console, 'warn').mockReturnValue(undefined);
     cls.scroll();
     expect(console.warn).toHaveBeenCalled();
   });

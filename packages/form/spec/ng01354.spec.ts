@@ -2,9 +2,11 @@ import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 
+import type { Mock } from 'vitest';
+
 import { createTestContext } from '@delon/testing';
 
-import { configureSFTestSuite, SFPage, TestFormComponent } from './base.spec';
+import { configureSFTestSuite, SFPage, TestFormComponent } from './base';
 import { SFSchema } from '../src/schema';
 import { ControlWidget } from '../src/widget';
 
@@ -21,7 +23,7 @@ describe('form: NG01354', () => {
   let dl: DebugElement;
   let context: TestFormComponent;
   let page: SFPage;
-  let warn: jasmine.Spy;
+  let warn: Mock;
 
   configureSFTestSuite({
     imports: [ProbeWidget],
@@ -32,13 +34,13 @@ describe('form: NG01354', () => {
     ({ fixture, dl, context } = createTestContext(TestFormComponent));
     page = new SFPage(context.comp);
     page.prop(dl, context, fixture);
-    warn = spyOn(console, 'warn').and.callFake(() => {});
+    warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
   });
 
   function ng01354(): string[] {
-    return warn.calls
-      .allArgs()
-      .map(args => args.join(' '))
+    return vi
+      .mocked(warn)
+      .mock.calls.map(args => args.join(' '))
       .filter(msg => msg.includes('NG01354'));
   }
 
@@ -76,6 +78,6 @@ describe('form: NG01354', () => {
       }
     } as SFSchema);
 
-    expect(page.getEl('form').hasAttribute('novalidate')).toBeTrue();
+    expect(page.getEl('form').hasAttribute('novalidate')).toBe(true);
   });
 });

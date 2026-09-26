@@ -62,7 +62,7 @@ describe('abc: xlsx', () => {
           }
         };
       },
-      writeFile: jasmine.createSpy('writeFile')
+      writeFile: vi.fn().mockName('writeFile')
     };
     (window as NzSafeAny).cptable = {
       utils: {
@@ -84,88 +84,51 @@ describe('abc: xlsx', () => {
       delete (window as NzSafeAny).XLSX;
       genModule();
       const lazySrv: LazyService = TestBed.inject<LazyService>(LazyService);
-      spyOn(lazySrv, 'load').and.callFake(() => Promise.reject());
+      vi.spyOn(lazySrv, 'load').mockImplementation(() => Promise.reject());
       expect(lazySrv.load).not.toHaveBeenCalled();
       srv.import('/1.xlsx').catch(() => {});
       expect(lazySrv.load).toHaveBeenCalled();
     });
 
-    it('should be load xlsx via url', (done: () => void) => {
+    it('should be load xlsx via url', async () => {
       genModule();
-      srv.import('/1.xlsx').then(
-        () => {
-          expect(true).toBe(true);
-          done();
-        },
-        () => {
-          expect(false).toBe(true);
-          done();
-        }
-      );
+      await expect(srv.import('/1.xlsx')).resolves.toBeTruthy();
     });
 
-    it('should be throw error when request error via url', (done: () => void) => {
+    it('should be throw error when request error via url', async () => {
       isErrorRequest = true;
       genModule();
-      srv.import('/1.xlsx').then(
-        () => {
-          expect(false).toBe(true);
-          done();
-        },
-        () => {
-          expect(true).toBe(true);
-          done();
-        }
-      );
+      await expect(srv.import('/1.xlsx')).rejects.toBeNull();
     });
 
-    it('should be load xlsx via file object', (done: () => void) => {
+    it('should be load xlsx via file object', async () => {
       genModule();
-      srv.import(new File([], '1.xlsx')).then(
-        () => {
-          expect(true).toBe(true);
-          done();
-        },
-        () => {
-          expect(false).toBe(true);
-          done();
-        }
-      );
+      await expect(srv.import(new File([], '1.xlsx'))).resolves.toBeTruthy();
     });
 
-    it(`should be can't load xlsx when file is error`, (done: () => void) => {
+    it(`should be can't load xlsx when file is error`, async () => {
       genModule();
 
-      spyOn(FileReader.prototype, 'readAsArrayBuffer').and.callFake(function (this: NzSafeAny) {
+      vi.spyOn(FileReader.prototype, 'readAsArrayBuffer').mockImplementation(function (this: NzSafeAny) {
         this.onerror();
       });
-      srv.import(null as NzSafeAny).then(
-        () => {
-          expect(false).toBe(true);
-          done();
-        },
-        () => {
-          expect(true).toBe(true);
-          done();
-        }
-      );
+      await expect(srv.import(null as NzSafeAny)).rejects.toBeUndefined();
     });
   });
 
   describe('[#export]', () => {
     beforeEach(() => genModule());
-    it('should be export xlsx via array', (done: () => void) => {
-      srv
+    it('should be export xlsx via array', async () => {
+      await srv
         .export({
           sheets: [{ data: null, name: 'asdf.xlsx' }, { data: null }]
         } as XlsxExportOptions)
         .then(() => {
           expect((window as NzSafeAny).XLSX.writeFile).toHaveBeenCalled();
-          done();
         });
     });
-    it('should be export xlsx via object', (done: () => void) => {
-      srv
+    it('should be export xlsx via object', async () => {
+      await srv
         .export({
           sheets: {
             name: 'asdf'
@@ -173,12 +136,11 @@ describe('abc: xlsx', () => {
         } as XlsxExportOptions)
         .then(() => {
           expect((window as NzSafeAny).XLSX.writeFile).toHaveBeenCalled();
-          done();
         });
     });
-    it('should be call callback', (done: () => void) => {
+    it('should be call callback', async () => {
       let count = 0;
-      srv
+      await srv
         .export({
           sheets: {
             name: 'asdf'
@@ -189,35 +151,26 @@ describe('abc: xlsx', () => {
         } as XlsxExportOptions)
         .then(() => {
           expect(count).toBe(1);
-          done();
         });
     });
-    it('should catch error when XLSX process error', done => {
+    it('should catch error when XLSX process error', async () => {
       (window as NzSafeAny).XLSX.utils.book_new = null;
-      srv
-        .export({
+      await expect(
+        srv.export({
           sheets: {
             name: 'asdf'
           }
         } as XlsxExportOptions)
-        .then(() => {
-          expect(true).toBe(false);
-          done();
-        })
-        .catch(() => {
-          expect(true).toBe(true);
-          done();
-        });
+      ).rejects.toBeInstanceOf(TypeError);
     });
-    it('should be export csv', (done: () => void) => {
-      srv
+    it('should be export csv', async () => {
+      await srv
         .export({
           sheets: [{ data: null, name: 'asdf.csv' }, { data: null }],
           format: 'csv'
         } as XlsxExportOptions)
         .then(() => {
           expect((window as NzSafeAny).XLSX.writeFile).toHaveBeenCalled();
-          done();
         });
     });
   });
@@ -232,7 +185,7 @@ describe('abc: xlsx', () => {
       fixture.detectChanges();
     });
     it('should be export via click', () => {
-      spyOn(srv, 'export');
+      vi.spyOn(srv, 'export').mockReturnValue(undefined as NzSafeAny);
       expect(srv.export).not.toHaveBeenCalled();
       (dl.query(By.css('button')).nativeElement as HTMLButtonElement).click();
       expect(srv.export).toHaveBeenCalled();

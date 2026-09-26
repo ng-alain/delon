@@ -8,7 +8,7 @@ import { createTestContext } from '@delon/testing';
 
 import { withTimeWidget } from './index';
 import { TimeWidget } from './widget';
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base';
 
 const FORMAT = 'yyyy-MM-dd HH:mm:ss';
 

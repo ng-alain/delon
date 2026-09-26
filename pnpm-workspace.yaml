@@ -20,3 +20,14 @@ minimumReleaseAgeExclude:
   - '@typescript-eslint/utils@8.70.1'
   - '@typescript-eslint/visitor-keys@8.70.1'
   - typescript-eslint@8.70.1
+  - '@vitest/browser-playwright@5.0.2'
+  - '@vitest/browser@5.0.2'
+  - '@vitest/coverage-istanbul@5.0.2'
+  - '@vitest/coverage-v8@5.0.2'
+  - '@vitest/mocker@5.0.2'
+  - '@vitest/pretty-format@5.0.2'
+  - '@vitest/spy@5.0.2'
+  - '@vitest/ui@5.0.2'
+  - '@vitest/utils@5.0.2'
+  - lint-staged@17.6.0
+  - vitest@5.0.2

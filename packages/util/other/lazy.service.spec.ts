@@ -54,43 +54,40 @@ describe('utils: lazy', () => {
   it('should be load via LazyLoadItem', () => {
     const res: NzSafeAny = {};
     const content = 'var a = 1;';
-    spyOn(doc, 'createElement').and.callFake(() => res);
+    vi.spyOn(doc, 'createElement').mockImplementation(() => res);
     srv.load([{ path: '1.js', options: { innerContent: content } }]);
     expect(res.innerHTML).toBe(content);
   });
 
   describe('Scripts', () => {
-    it('should be load a js resource', done => {
+    it('should be load a js resource', async () => {
       srv.change
         .pipe(take(1))
         .pipe(take(1))
         .subscribe(res => {
           expect(res[0].status).toBe('ok');
-          done();
         });
       srv.load('/1.js');
     });
     it('should be custom content', () => {
       const res: NzSafeAny = {};
       const content = 'var a = 1;';
-      spyOn(doc, 'createElement').and.callFake(() => res);
+      vi.spyOn(doc, 'createElement').mockImplementation(() => res);
       srv.loadScript('/1.js', { innerContent: content });
       expect(res.innerHTML).toBe(content);
     });
   });
 
   describe('Styles', () => {
-    it('should be load a css resource', done => {
+    it('should be load a css resource', async () => {
       srv.change.pipe(take(1)).subscribe(res => {
         expect(res[0].status).toBe('ok');
-        done();
       });
       srv.load('/1.css');
     });
-    it('should be load a less resource', done => {
-      srv.loadStyle('/1.less', { rel: 'stylesheet/less' }).then(res => {
+    it('should be load a less resource', async () => {
+      await srv.loadStyle('/1.less', { rel: 'stylesheet/less' }).then(res => {
         expect(res.status).toBe('ok');
-        done();
       });
     });
     it('should be custom content', () => {
@@ -98,7 +95,7 @@ describe('utils: lazy', () => {
         onerror(): void {}
       };
       const content = 'var a = 1;';
-      spyOn(doc, 'createElement').and.callFake(() => res);
+      vi.spyOn(doc, 'createElement').mockImplementation(() => res);
       srv.loadStyle('/1.js', { rel: 'stylesheet/less', innerContent: content });
       expect(res.innerHTML).toBe(content);
     });
@@ -106,7 +103,7 @@ describe('utils: lazy', () => {
 
   it('should be immediately when loaded a js resource', () => {
     let count = 0;
-    spyOn(doc, 'createElement').and.callFake(() => {
+    vi.spyOn(doc, 'createElement').mockImplementation(() => {
       ++count;
       return new MockDocument().createElement();
     });
@@ -118,7 +115,7 @@ describe('utils: lazy', () => {
 
   it('should be immediately when loaded a css resource', () => {
     let count = 0;
-    spyOn(doc, 'createElement').and.callFake(() => {
+    vi.spyOn(doc, 'createElement').mockImplementation(() => {
       ++count;
       return new MockDocument().createElement();
     });
@@ -128,11 +125,10 @@ describe('utils: lazy', () => {
     expect(count).toBe(1);
   });
 
-  it('should be bad resource', done => {
+  it('should be bad resource', async () => {
     testStatus = 'bad';
     srv.change.pipe(take(1)).subscribe(res => {
       expect(res[0].status).toBe('error');
-      done();
     });
     srv.load('/3.js');
   });
@@ -144,7 +140,7 @@ describe('utils: lazy', () => {
           res[key] = value;
         }
       };
-      spyOn(doc, 'createElement').and.callFake(() => res);
+      vi.spyOn(doc, 'createElement').mockImplementation(() => res);
       srv.loadScript('/1.js', { innerContent: '', attributes: { a: 'b' } });
       expect(res.a).toBe('b');
     });

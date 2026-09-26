@@ -38,9 +38,8 @@ describe('chart: timeline', () => {
         expect(ns.slider).not.toBeUndefined();
         expect(ns.legend.color.position).toBe('left');
       });
-      // `getView()` 读的是上一次 render 完成后的描述符，必须等渲染 settle
-      await new Promise(resolve => setTimeout(resolve, 700));
-      expect(componentOf('legendCategory').position).toBe('left');
+      // `getView()` 读的是上一次 render 完成后的描述符
+      await vi.waitFor(() => expect(componentOf('legendCategory').position).toBe('left'));
     });
 
     it('should be disabled slider', async () => {
@@ -48,9 +47,8 @@ describe('chart: timeline', () => {
       page.dc();
       await page.ready();
       page.expectSpec(s => expect((s as NzSafeAny).slider).toBe(false));
-      await new Promise(resolve => setTimeout(resolve, 700));
+      await vi.waitFor(() => expect(sliderEls().length).toBe(0));
       expect(componentOf('sliderX')).toBeUndefined();
-      expect(sliderEls().length).toBe(0);
     });
 
     it('should be change title count', async () => {
@@ -74,36 +72,37 @@ describe('chart: timeline', () => {
     });
 
     it('should pin the key v5 spec fields ', async () => {
-      await new Promise(resolve => setTimeout(resolve, 700));
-      page.expectSpec(spec => {
-        const ns = spec as NzSafeAny;
-        expect(ns.legend.color.position).toBe('top');
-        expect(ns.slider.x.values).toEqual([0, 1]);
-        expect(ns.slider.x.labelFormatter).toEqual(jasmine.any(Function));
-        expect(ns.children.length).toBe(1);
-        expect(ns.scale.color.domain).toEqual(['客流量', '支付笔数']);
-        expect(ns.scale.color.range).toEqual(['#1890FF', '#2FC25B']);
-        expect(ns.axis).toEqual({ x: { title: false, size: 20 }, y: { title: false } });
-        expect(ns.data.length).toBe(18);
-        expect(Object.keys(ns.data[0]).sort()).toEqual(['series', 'time', 'value']);
-        expect(ns.interaction).toEqual({ tooltip: { crosshairs: true }, legendFilter: true });
-        expect(ns.tooltip.title).toBe(false);
+      await vi.waitFor(() => {
+        page.expectSpec(spec => {
+          const ns = spec as NzSafeAny;
+          expect(ns.legend.color.position).toBe('top');
+          expect(ns.slider.x.values).toEqual([0, 1]);
+          expect(ns.slider.x.labelFormatter).toEqual(expect.any(Function));
+          expect(ns.children.length).toBe(1);
+          expect(ns.scale.color.domain).toEqual(['客流量', '支付笔数']);
+          expect(ns.scale.color.range).toEqual(['#1890FF', '#2FC25B']);
+          expect(ns.axis).toEqual({ x: { title: false, size: 20 }, y: { title: false } });
+          expect(ns.data.length).toBe(18);
+          expect(Object.keys(ns.data[0]).sort()).toEqual(['series', 'time', 'value']);
+          expect(ns.interaction).toEqual({ tooltip: { crosshairs: true }, legendFilter: true });
+          expect(ns.tooltip.title).toBe(false);
+        });
+        const slider = componentOf('sliderX');
+        expect(slider.values).toEqual([0, 1]);
+        expect(slider.labelFormatter).toEqual(expect.any(Function));
+        expect(sliderEls().length).toBe(1);
+        expect(componentOf('legendCategory').position).toBe('top');
+        const yDomain = (page.chart as NzSafeAny).getScale().y.getOptions().domain;
+        expect(yDomain[0]).toBe(0);
+        expect(yDomain[1]).toBeGreaterThan(0);
+        expect(lineMarkState().data.length).toBe(18);
+        expect(lineMarkState().data[0].value).toBeDefined();
       });
-      const slider = componentOf('sliderX');
-      expect(slider.values).toEqual([0, 1]);
-      expect(slider.labelFormatter).toEqual(jasmine.any(Function));
-      expect(sliderEls().length).toBe(1);
-      expect(componentOf('legendCategory').position).toBe('top');
-      const yDomain = (page.chart as NzSafeAny).getScale().y.getOptions().domain;
-      expect(yDomain[0]).toBe(0);
-      expect(yDomain[1]).toBeGreaterThan(0);
-      expect(lineMarkState().data.length).toBe(18);
-      expect(lineMarkState().data[0].value).toBeDefined();
     });
 
     it('data-only change must push the folded long table to the marks ', async () => {
       page.expectSpec(s => expect((s as NzSafeAny).data.length).toBe(18));
-      const changeData = spyOn(page.chart, 'changeData').and.callThrough();
+      const changeData = vi.spyOn(page.chart, 'changeData');
       const rows: G2TimelineData[] = [
         { time: new Date(2024, 0, 1).getTime(), y1: 10, y2: 20 },
         { time: new Date(2024, 0, 2).getTime(), y1: 30, y2: 40 },
@@ -111,16 +110,17 @@ describe('chart: timeline', () => {
       ];
       page.newData(rows);
       page.dc();
-      await new Promise(resolve => setTimeout(resolve, 700));
-      expect(changeData).toHaveBeenCalledTimes(1);
-      const arg = changeData.calls.mostRecent().args[0] as NzSafeAny[];
-      expect(arg.length).toBe(6);
-      expect(Object.keys(arg[0]).sort()).toEqual(['series', 'time', 'value']);
-      expect(arg.map(d => d['series']).filter((v, i, a) => a.indexOf(v) === i).length).toBe(2);
-      expect(page.context.data().length).toBe(3);
-      expect(lineMarkState().data.length).toBe(6);
-      expect(lineMarkState().data[0].value).toBeDefined();
-      expect((page.chart as NzSafeAny).getScale().color.getOptions().domain).toEqual(['客流量', '支付笔数']);
+      await vi.waitFor(() => {
+        expect(changeData).toHaveBeenCalledTimes(1);
+        const arg = vi.mocked(changeData).mock.lastCall![0] as NzSafeAny[];
+        expect(arg.length).toBe(6);
+        expect(Object.keys(arg[0]).sort()).toEqual(['series', 'time', 'value']);
+        expect(arg.map(d => d['series']).filter((v, i, a) => a.indexOf(v) === i).length).toBe(2);
+        expect(page.context.data().length).toBe(3);
+        expect(lineMarkState().data.length).toBe(6);
+        expect(lineMarkState().data[0].value).toBeDefined();
+        expect((page.chart as NzSafeAny).getScale().color.getOptions().domain).toEqual(['客流量', '支付笔数']);
+      });
     });
   });
 

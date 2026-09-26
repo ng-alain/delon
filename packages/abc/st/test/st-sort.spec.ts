@@ -1,13 +1,16 @@
-import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 
 import { provideAlainConfig } from '@delon/util/config';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { STComponent } from '../st.component';
 import { STMultiSort } from '../st.interfaces';
-import { PageObject, TestComponent, genModule } from './base.spec';
+import { PageObject, TestComponent, genModule } from './base';
 
 describe('abc: st-sort', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let page: PageObject<TestComponent>;
   let fixture: ComponentFixture<TestComponent>;
   let context: TestComponent;
@@ -35,23 +38,23 @@ describe('abc: st-sort', () => {
     });
     describe('single-sort', () => {
       beforeEach(() => context.multiSort.set(false));
-      it('muse provide the compare function', fakeAsync(() => {
-        spyOn(console, 'warn');
+      it('muse provide the compare function', async () => {
+        vi.spyOn(console, 'warn').mockReturnValue(undefined);
         page.updateColumn([{ title: '', index: 'i', sort: { compare: 'a' } as NzSafeAny }]);
         comp.sort(comp._columns[0], 'descend');
         page.cd();
         expect(console.warn).toHaveBeenCalled();
         page.asyncEnd();
-      }));
-      it('should be auto generate compose when sort is true', fakeAsync(() => {
+      });
+      it('should be auto generate compose when sort is true', async () => {
         context.data.set([{ i: 1 }, { i: 2 }]);
         page.updateColumn([{ title: '', index: 'i', sort: true }]);
         comp.sort(comp._columns[0], 'descend');
         page.cd();
         expect(context.comp.list[0].i).toBe(2);
         page.asyncEnd();
-      }));
-      it('should be sorting', fakeAsync(() => {
+      });
+      it('should be sorting', async () => {
         page.cd();
         comp.sort(comp._columns[0], 'descend');
         const sortList = comp._columns
@@ -60,11 +63,11 @@ describe('abc: st-sort', () => {
         expect(sortList.length).toBe(1);
         expect(sortList[0].default).toBe('descend');
         page.asyncEnd();
-      }));
+      });
     });
     describe('multi-sort', () => {
       beforeEach(() => context.multiSort.set(true));
-      it('should be sorting', fakeAsync(() => {
+      it('should be sorting', async () => {
         page.cd();
         comp.sort(comp._columns[0], 'descend');
         comp.sort(comp._columns[1], 'ascend');
@@ -75,7 +78,7 @@ describe('abc: st-sort', () => {
         expect(sortList[0].default).toBe('descend');
         expect(sortList[1].default).toBe('ascend');
         page.asyncEnd();
-      }));
+      });
       it('with true', () => {
         context.multiSort.set(true);
         fixture.detectChanges();

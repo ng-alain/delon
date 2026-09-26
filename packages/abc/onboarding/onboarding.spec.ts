@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { throwError } from 'rxjs';
 
@@ -12,6 +12,9 @@ import { ONBOARDING_STORE_TOKEN } from './onboarding.storage';
 import { OnboardingConfig, OnboardingOpType } from './onboarding.types';
 
 describe('abc: onboarding', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestComponent>;
   let srv: OnboardingService;
   let page: PageObject;
@@ -27,112 +30,112 @@ describe('abc: onboarding', () => {
     page = new PageObject();
   }
 
-  afterEach(fakeAsync(() => {
+  afterEach(async () => {
     if (srv) {
       srv.done();
       srv.ngOnDestroy();
       page.cd();
     }
-  }));
+  });
 
   beforeEach(() => genModule());
 
-  it('should working', fakeAsync(() => {
+  it('should working', async () => {
     page.start().checkActive().click('next').checkDone(false).click('done').checkDone();
-  }));
+  });
 
-  it('#key', fakeAsync(() => {
+  it('#key', async () => {
     const storeSrv = TestBed.inject(ONBOARDING_STORE_TOKEN);
     let storeKeyVersion: unknown = '';
-    spyOn(storeSrv, 'get').and.callFake(() => {
+    vi.spyOn(storeSrv, 'get').mockImplementation(() => {
       return storeKeyVersion;
     });
-    spyOn(storeSrv, 'set').and.callFake((_, value) => {
+    vi.spyOn(storeSrv, 'set').mockImplementation((_, value) => {
       storeKeyVersion = value;
     });
     page.start({ key: 'a', keyVersion: '1' }).checkActive().click('next').checkDone(false).click('done').checkDone();
     page.start({ key: 'a', keyVersion: '1' });
     expect(page.el == null);
-  }));
+  });
 
-  it('#skip', fakeAsync(() => {
+  it('#skip', async () => {
     page.start().checkActive().click('skip').checkDone();
-  }));
+  });
 
   describe('#next', () => {
-    it('should working', fakeAsync(() => {
+    it('should working', async () => {
       page.start().next().checkActive(1);
-    }));
-    it('should be done when next is last', fakeAsync(() => {
+    });
+    it('should be done when next is last', async () => {
       page.start().next().next().checkDone();
-    }));
+    });
   });
 
   describe('#prev', () => {
-    it('should working in op', fakeAsync(() => {
+    it('should working in op', async () => {
       page.start().click('next').checkActive(1).click('prev').checkActive(0);
-    }));
-    it('should working in service', fakeAsync(() => {
+    });
+    it('should working in service', async () => {
       page.start().next().prev().checkActive(0);
-    }));
-    it('should be ingore when prev is first', fakeAsync(() => {
+    });
+    it('should be ingore when prev is first', async () => {
       page.start().prev().checkActive(0);
-    }));
+    });
   });
 
   describe('#mask', () => {
     const maskCls = '.onboarding__mask';
-    it('with true', fakeAsync(() => {
+    it('with true', async () => {
       page.start({ mask: true, maskClosable: true }).checkEl(maskCls, true);
       page.getEl(maskCls).click();
       page.cd().checkDone();
-    }));
-    it('with false', fakeAsync(() => {
+    });
+    it('with false', async () => {
       page.start({ mask: false }).checkEl(maskCls, false);
-    }));
-    it('shoudl be disabled done when maskClosable is false', fakeAsync(() => {
+    });
+    it('shoudl be disabled done when maskClosable is false', async () => {
       page.start({ mask: true, maskClosable: false }).checkEl(maskCls, true);
       page.getEl(maskCls).click();
       page.cd().checkDone(false);
-    }));
+    });
   });
 
-  it('should be hide panel when selector is invalid', fakeAsync(() => {
-    spyOn(console, 'warn');
+  it('should be hide panel when selector is invalid', async () => {
+    vi.spyOn(console, 'warn').mockReturnValue(undefined);
     page.start({ items: [{ selectors: 'invalid-el' }] });
     expect(console.warn).toHaveBeenCalled();
-  }));
+  });
 
-  it('#showTotal', fakeAsync(() => {
+  it('#showTotal', async () => {
     page.start({ showTotal: true });
     expect(document.querySelector('.onboarding__total') != null).toBe(true);
-  }));
+  });
 
-  it('should navigate first', fakeAsync(() => {
+  it('should navigate first', async () => {
     const router = TestBed.inject<Router>(Router);
-    spyOn(router, 'navigateByUrl');
+    vi.spyOn(router, 'navigateByUrl').mockReturnValue(undefined as NzSafeAny);
     page.start({ items: [{ url: '/', selectors: '#a' }] });
     expect(router.navigateByUrl).toHaveBeenCalled();
-  }));
+  });
 
-  it('should be delay with before', fakeAsync(() => {
+  it('should be delay with before', async () => {
     page.start({ items: [{ before: 1, selectors: '#a' }] }).checkActive();
-  }));
+  });
 
-  it('should be done when before is throw error', fakeAsync(() => {
-    spyOn(srv, 'done');
+  it('should be done when before is throw error', async () => {
+    vi.spyOn(srv, 'done').mockReturnValue(undefined);
     page.start({ items: [{ before: throwError(() => Error('')), selectors: '#a' }] });
     expect(srv.done).toHaveBeenCalled();
-  }));
+  });
 
-  it('should ingore start when current is running', fakeAsync(() => {
+  it('should ingore start when current is running', async () => {
     page.start();
-    spyOnProperty(srv, 'running').and.returnValue(true);
+    vi.spyOn(srv, 'running', 'get').mockReturnValue(true);
     const srvAny = srv as NzSafeAny;
-    spyOn(srvAny as NzSafeAny, 'attach');
+    vi.spyOn(srvAny as NzSafeAny, 'attach').mockReturnValue(undefined);
     page.start();
     expect(srvAny.attach).not.toHaveBeenCalled();
-  }));
+  });
 
   class PageObject {
     get el(): HTMLElement {
@@ -179,11 +182,13 @@ describe('abc: onboarding', () => {
 
     next(): this {
       srv.next();
+      this.refreshDynamicView();
       return this.cd();
     }
 
     prev(): this {
       srv.prev();
+      this.refreshDynamicView();
       return this.cd();
     }
 
@@ -192,9 +197,14 @@ describe('abc: onboarding', () => {
       return this.cd();
     }
 
+    /** 服务直接改组件普通字段，zoneless 下不会标脏动态创建的视图 */
+    refreshDynamicView(): void {
+      (srv as NzSafeAny).compRef?.changeDetectorRef.markForCheck();
+    }
+
     cd(time: number = 301): this {
       fixture.detectChanges();
-      tick(time);
+      vi.advanceTimersByTime(time);
       fixture.detectChanges();
       return this;
     }

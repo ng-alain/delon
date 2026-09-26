@@ -1,12 +1,15 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 
 import { createTestContext } from '@delon/testing';
 
 import { SFObjectWidgetSchema } from './schema';
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base';
 
 describe('form: widget: object', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestFormComponent>;
   let dl: DebugElement;
   let context: TestFormComponent;
@@ -20,7 +23,7 @@ describe('form: widget: object', () => {
     page.prop(dl, context, fixture);
   });
 
-  it('should working', fakeAsync(() => {
+  it('should working', async () => {
     page.newSchema({
       properties: {
         a: {
@@ -35,9 +38,10 @@ describe('form: widget: object', () => {
     property.setValue({ b: 1, c: 0 }, false);
     page.time();
     page.dc();
+    await page.stabilize();
     const ipt = page.getEl('.ant-input') as HTMLInputElement;
     expect(ipt.value).toBe('1');
-  }));
+  });
 
   describe('#showTitle', () => {
     it('should be hide second title when value is undefined', () => {

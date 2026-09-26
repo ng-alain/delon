@@ -131,6 +131,18 @@
       "projectType": "library",
       "prefix": "",
       "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "tsConfig": "packages/tsconfig.lib.prod.json"
+          },
+          "configurations": {
+            "development": {
+              "polyfills": []
+            }
+          },
+          "defaultConfiguration": "development"
+        },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
@@ -142,24 +154,20 @@
           }
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "inlineStyleLanguage": "less",
-            "main": "packages/test.ts",
-            "karmaConfig": "packages/karma.conf.js",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
-            "tsConfig": "packages/tsconfig.spec.json",
-            "scripts": ["node_modules/@antv/g2/dist/g2.min.js"],
-            "codeCoverageExclude": ["schematics/**", "packages/testing/**"],
-            "include": [
-              "./test.ts",
-              // "**/st.spec.ts"
-              // "**/st/**/*.spec.ts"
-              "**/*.spec.ts"
-            ]
+            "buildTarget": "delon:build:development",
+            "runner": "vitest",
+            "runnerConfig": "packages/vitest.config.mts",
+            "browsers": ["ChromiumHeadless"],
+            "browserViewport": "800x600",
+            "providersFile": "packages/test-providers.ts",
+            "setupFiles": ["packages/vitest-setup.ts"],
+            "isolate": true,
+            "coverageReporters": ["html", "text-summary", "lcovonly", "cobertura"],
+            "coverageExclude": ["packages/testing/**", "packages/abc/st/test/**", "packages/form/spec/**"],
+            "reporters": ["default", ["junit", { "outputFile": "junit/TESTS-vitest.xml" }]],
+            "include": ["**/*.spec.ts"]
           }
         }
       }

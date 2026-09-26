@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { filter } from 'rxjs';
+import { filter, firstValueFrom } from 'rxjs';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -35,11 +35,9 @@ describe('theme: locale', () => {
     expect(Object.keys(locale.getData('invalid-key' as NzSafeAny)).length).toBe(0);
   });
 
-  it('#change', done => {
-    locale.change.pipe(filter(l => l.abbr === enUS.abbr)).subscribe(() => {
-      expect(true).toBe(true);
-      done();
-    });
+  it('#change', async () => {
+    const res$ = firstValueFrom(locale.change.pipe(filter(l => l.abbr === enUS.abbr)));
     locale.setLocale(enUS);
+    expect((await res$).abbr).toBe(enUS.abbr);
   });
 });

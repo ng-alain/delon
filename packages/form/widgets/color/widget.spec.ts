@@ -1,14 +1,17 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 
 import { SFSchema } from '@delon/form';
 import { createTestContext } from '@delon/testing';
 
 import { SFColorWidgetSchema, withColorWidget } from './index';
 import type { ColorWidget } from './widget';
-import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base.spec';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../spec/base';
 
 describe('form: widget: color', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
   let fixture: ComponentFixture<TestFormComponent>;
   let dl: DebugElement;
   let context: TestFormComponent;
@@ -22,9 +25,9 @@ describe('form: widget: color', () => {
     page.cleanOverlay().prop(dl, context, fixture);
   });
 
-  it('should be working', fakeAsync(() => {
-    const change = jasmine.createSpy();
-    const formatChange = jasmine.createSpy();
+  it('should be working', async () => {
+    const change = vi.fn();
+    const formatChange = vi.fn();
     const s: SFSchema = {
       properties: {
         a: {
@@ -38,18 +41,18 @@ describe('form: widget: color', () => {
         }
       }
     };
-    page
-      .newSchema(s)
-      .typeEvent('click', '.ant-color-picker-trigger')
-      .typeEvent('click', 'nz-select')
-      .typeEvent('click', 'nz-option-container nz-option-item:nth-child(2)');
+    page.newSchema(s).typeEvent('click', '.ant-color-picker-trigger');
+    await page.stabilize();
+    page.typeEvent('click', 'nz-select');
+    await page.stabilize();
+    page.typeEvent('click', 'nz-option-container nz-option-item:nth-child(2)');
     expect(page.getValue('/a')).toBe('hsb(20, 100%, 100%)');
     expect(change).toHaveBeenCalled();
     expect(formatChange).toHaveBeenCalled();
-  }));
+  });
 
-  it('should be clear value when trigger onClear', fakeAsync(() => {
-    const onClear = jasmine.createSpy();
+  it('should be clear value when trigger onClear', async () => {
+    const onClear = vi.fn();
     const s: SFSchema = {
       properties: {
         a: {
@@ -67,5 +70,5 @@ describe('form: widget: color', () => {
     page.getWidget<ColorWidget>('sf-color')._clear();
     page.dc(1);
     expect(onClear).toHaveBeenCalled();
-  }));
+  });
 });

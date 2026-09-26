@@ -70,7 +70,7 @@ describe('utils: array', () => {
     });
     it('should be callback', () => {
       const options = {
-        cb: jasmine.createSpy()
+        cb: vi.fn()
       };
       srv.treeToArr([{ id: 1 }], options);
       expect(options.cb).toHaveBeenCalled();
@@ -95,7 +95,7 @@ describe('utils: array', () => {
     });
     it('should be callback', () => {
       const options = {
-        cb: jasmine.createSpy()
+        cb: vi.fn()
       };
       srv.arrToTree(deepCopy(MOCK_ARR), options);
       expect(options.cb).toHaveBeenCalled();
@@ -160,7 +160,7 @@ describe('utils: array', () => {
         const options = {
           pidMapName: 'pid',
           titleMapName: 'name',
-          cb: jasmine.createSpy()
+          cb: vi.fn()
         };
         srv.arrToTreeNode(deepCopy(MOCK_ARR), options);
         expect(options.cb).toHaveBeenCalled();
@@ -194,7 +194,7 @@ describe('utils: array', () => {
       it('should be include half checked', () => {
         const treeService = new NzTreeBaseService();
         page.data.forEach((i: any) => {
-          spyOnProperty(i, 'treeService', 'get').and.returnValue(treeService);
+          vi.spyOn(i, 'treeService', 'get').mockReturnValue(treeService);
         });
         page.data[0].isHalfChecked = true;
         expect(srv.getKeysByTreeNode(page.data, { includeHalfChecked: true }).join(',')).toBe(
@@ -218,7 +218,7 @@ describe('utils: array', () => {
       });
       it('should be callback', () => {
         const options = {
-          cb: jasmine.createSpy()
+          cb: vi.fn()
         };
         srv.getKeysByTreeNode(page.data, options);
         expect(options.cb).toHaveBeenCalled();

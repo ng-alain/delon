@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 
 import { createTestContext } from '@delon/testing';
 
-import { configureSFTestSuite, SFPage, TestFormComponent } from './base.spec';
+import { configureSFTestSuite, SFPage, TestFormComponent } from './base';
 import type { SFSchema } from '../src/schema';
 
 /**

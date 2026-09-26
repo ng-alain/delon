@@ -6,13 +6,14 @@ import { of } from 'rxjs';
 
 import { cleanCdkOverlayHtml, createTestContext } from '@delon/testing';
 import { WINDOW } from '@delon/util/token';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { provideNzIconsTesting } from 'ng-zorro-antd/icon/testing';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 import { CellComponent } from './cell.component';
 import { CellModule } from './cell.module';
 import { CellService } from './cell.service';
-import { CellFuValue, CellOptions, CellTextResult } from './cell.types';
+import { CellFuValue, CellOptions, CellTextResult, CellValue } from './cell.types';
 import { provideCellWidgets } from './provide';
 
 const DATE = new Date(2022, 0, 1, 1, 2, 3);
@@ -144,28 +145,28 @@ describe('abc: cell', () => {
         describe('with link', () => {
           it('navgation router', () => {
             const router = TestBed.inject(Router);
-            spyOn(router, 'navigateByUrl');
+            vi.spyOn(router, 'navigateByUrl').mockReturnValue(undefined as NzSafeAny);
             page.update('to', { link: { url: '/router' } }).click('a');
             expect(router.navigateByUrl).toHaveBeenCalled();
           });
           it('navgation window.open', () => {
             const win = TestBed.inject(WINDOW);
-            spyOn(win, 'open');
+            vi.spyOn(win, 'open').mockReturnValue(undefined as NzSafeAny);
             page.update('to', { link: { url: 'https://a.com' } }).click('a');
             expect(win.open).toHaveBeenCalled();
           });
           it('should be disabled', () => {
             const router = TestBed.inject(Router);
-            spyOn(router, 'navigateByUrl');
+            vi.spyOn(router, 'navigateByUrl').mockReturnValue(undefined as NzSafeAny);
             const win = TestBed.inject(WINDOW);
-            spyOn(win, 'open');
+            vi.spyOn(win, 'open').mockReturnValue(undefined as NzSafeAny);
             page.update('to', { link: {} }).click('a');
             expect(router.navigateByUrl).not.toHaveBeenCalled();
             expect(win.open).not.toHaveBeenCalled();
           });
           it('should be abort when url is null', () => {
             const router = TestBed.inject(Router);
-            spyOn(router, 'navigateByUrl');
+            vi.spyOn(router, 'navigateByUrl').mockReturnValue(undefined as NzSafeAny);
             page.update('to', { link: { url: undefined } }).click('a');
             expect(router.navigateByUrl).not.toHaveBeenCalled();
           });
@@ -201,7 +202,7 @@ describe('abc: cell', () => {
             page.update('1', { widget: { key: TestWidget.KEY, data: 'new data2' } }).check('1-new data2');
           });
           it('when key is invalid', () => {
-            spyOn(console, 'warn');
+            vi.spyOn(console, 'warn').mockReturnValue(undefined);
             page.update('1', { widget: { key: 'invalid', data: 'new data' } });
             expect(console.warn).toHaveBeenCalled();
           });
@@ -220,7 +221,7 @@ describe('abc: cell', () => {
       });
 
       it('#valueChange', () => {
-        spyOn(context, 'valueChange');
+        vi.spyOn(context, 'valueChange').mockReturnValue(undefined);
         context.value.set(false);
         context.options.set({ type: 'checkbox' });
         fixture.detectChanges();
@@ -297,7 +298,7 @@ describe('abc: cell', () => {
   });
 
   class PageObject {
-    update(value: unknown, options?: CellOptions): this {
+    update(value: CellValue, options?: CellOptions): this {
       context.value.set(value);
       if (options != null) context.options.set(options);
       fixture.detectChanges();
@@ -344,7 +345,7 @@ describe('abc: cell', () => {
 });
 
 @Component({
-  template: `{{ data.result.text }}-{{ data.options.widget.data }}`
+  template: `{{ data.result.text }}-{{ data.options.widget?.data }}`
 })
 class TestWidget {
   static readonly KEY = 'test';
@@ -366,8 +367,8 @@ class TestWidget {
   imports: [CellComponent]
 })
 class TestComponent {
-  readonly value = signal<unknown>(undefined);
-  valueChange(): void {}
+  readonly value = signal<CellValue>(undefined);
+  valueChange(_value: CellValue): void {}
   readonly options = signal<CellOptions | undefined>(undefined);
   readonly loading = signal(false);
   readonly disabled = signal(false);
