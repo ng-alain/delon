@@ -8,7 +8,7 @@ import { formatDate } from '@delon/util/date-time';
 import { CurrencyService, formatMask } from '@delon/util/format';
 import { deepMerge } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzI18nService } from 'ng-zorro-antd/i18n';
+import { NZ_DATE_LOCALE, type DateLocale } from 'ng-zorro-antd/i18n';
 
 import type {
   CellFuValue,
@@ -22,7 +22,7 @@ import type {
 
 @Injectable({ providedIn: 'root' })
 export class CellService {
-  private readonly nzI18n = inject(NzI18nService);
+  private readonly dateLocale = (inject(NZ_DATE_LOCALE, { optional: true }) as DateLocale | null) ?? undefined;
   private readonly currency = inject(CurrencyService);
   private readonly dom = inject(DomSanitizer);
   private readonly configSrv = inject(AlainConfigService);
@@ -37,7 +37,7 @@ export class CellService {
       ref: (value, opt) => {
         return {
           text: formatDate(value as string, opt.date!.format!, {
-            locale: this.nzI18n.getDateLocale(),
+            locale: this.dateLocale,
             customFormat: this.configSrv.get('themePipe')?.dateFormatCustom
           })
         };

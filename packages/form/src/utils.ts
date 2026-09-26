@@ -1,8 +1,9 @@
 import { Observable, of, map } from 'rxjs';
 
+import type { Locale } from 'date-fns';
+
 import { deepCopy } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzI18nService } from 'ng-zorro-antd/i18n';
 
 import { SF_SEQ } from './const';
 import type { SFValue } from './interface';
@@ -188,9 +189,7 @@ export function getData(
 /**
  * Whether to using date-fns to format a date
  */
-export function isDateFns(srv: NzI18nService): boolean {
-  if (!srv) return false;
-  const data = srv.getDateLocale();
+export function isDateFns(dateLocale: Locale | null): boolean {
   // Compatible date-fns v1.x & v2.x
-  return data != null && !!data.formatDistance; // (!!data.distanceInWords || !!data.formatDistance);
+  return dateLocale != null && !!dateLocale.formatDistance;
 }
