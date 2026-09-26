@@ -7,6 +7,18 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { G2SingleBarComponent } from './single-bar.component';
 
+/** 取 interval mark 的实测填充色：颜色比例尺解析错误只有读真实图形才看得出来 */
+function intervalFills(chart: NzSafeAny): string[] {
+  const doc = chart.getContext().canvas.document as NzSafeAny;
+  return Array.from(
+    new Set(
+      (doc.getElementsByTagName('rect') as NzSafeAny[])
+        .filter(r => r.markType === 'interval')
+        .map(r => r.attributes?.fill as string)
+    )
+  );
+}
+
 /** 取 interval mark 的实测矩形；transpose 后屏幕高即条厚，markType 只能按元素属性读 */
 function barBounds(chart: NzSafeAny): { width: number; height: number } {
   const doc = chart.getContext().canvas.document as NzSafeAny;
@@ -48,7 +60,7 @@ describe('chart: single-bar', () => {
           'translate',
           'cartesian'
         ]);
-        expect(child.scale).toEqual({ y: { domain: [0, 100] } });
+        expect(child.scale).toEqual({ y: { domain: [0, 100] }, color: { type: 'identity' } });
         const yScale = (page.chart as NzSafeAny).getScale().y as NzSafeAny;
         expect(yScale.getOptions().domain).toEqual([0, 100]);
         expect(child.legend).toBe(false);
@@ -59,6 +71,17 @@ describe('chart: single-bar', () => {
         expect(child.encode.size).toBeUndefined();
         expect(child.style).toEqual({ minWidth: 30, maxWidth: 30 });
         expect(Math.round(barBounds(page.chart as NzSafeAny).height)).toBe(30);
+      });
+    });
+
+    it('#plusColor / #minusColor should be painted as literal colors (identity scale)', async () => {
+      expect(intervalFills(page.chart)).toEqual(['#40a9ff']);
+      page.context.min.set(-100);
+      page.context.value.set(-10);
+      page.dc();
+      await vi.waitFor(() => {
+        // 修复前正负色都会被 ordinal 色板映射成同一个 `#5B8FF9`
+        expect(intervalFills(page.chart)).toEqual(['#ff4d4f']);
       });
     });
 

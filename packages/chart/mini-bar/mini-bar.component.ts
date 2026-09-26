@@ -47,7 +47,12 @@ export class G2MiniBarComponent extends G2BaseComponent {
       ...viewSpec({ theme: theme(), padding: padding(), height: height() }),
       ...genMiniTooltipOptions(tooltipType(), { crosshairs: false }),
       data: data(),
-      scale: { x: { type: 'band' }, y: { zero: true } },
+      scale: {
+        x: { type: 'band' },
+        y: { zero: true },
+        // color 承载的是字面颜色值，必须用 identity 原样透传；否则 G2 会把它当作分类数据走 ordinal 主题色板
+        color: { type: 'identity' }
+      },
       legend: false,
       axis: false,
       children: [

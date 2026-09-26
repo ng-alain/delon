@@ -90,7 +90,12 @@ export class G2BarComponent extends G2BaseComponent {
         x: canvasWidth > list.length * 30 ? { title: false } : false,
         y: { title: false, line: false, tick: false }
       },
-      scale: { x: { type: 'band' }, y: { zero: true } },
+      scale: {
+        x: { type: 'band' },
+        y: { zero: true },
+        // color 承载的是字面颜色值，必须用 identity 原样透传；否则 G2 会把它当作分类数据走 ordinal 主题色板
+        color: { type: 'identity' }
+      },
       legend: false,
       tooltip: { title: false },
       children: [
