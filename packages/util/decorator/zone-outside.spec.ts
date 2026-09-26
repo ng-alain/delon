@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-deprecated -- 过期 API 保留至 v24.0.0，需保留其用例 */
 import { NgZone } from '@angular/core';
 
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';

@@ -9,7 +9,6 @@ import {
   ElementRef,
   EventEmitter,
   Input,
-  NgZone,
   OnChanges,
   OnDestroy,
   Output,
@@ -29,7 +28,6 @@ import { fromEvent, timer, debounceTime, filter } from 'rxjs';
 // import type { PDFViewer } from 'pdfjs-dist/types/web/pdf_viewer';
 
 import { AlainConfigService } from '@delon/util/config';
-import { ZoneOutside } from '@delon/util/decorator';
 import { LazyService } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzSkeletonComponent } from 'ng-zorro-antd/skeleton';
@@ -74,7 +72,6 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   private readonly _el: HTMLElement = inject(ElementRef).nativeElement;
   private readonly doc = inject(DOCUMENT);
   private readonly cdr = inject(ChangeDetectorRef);
-  private readonly ngZone = inject(NgZone);
   private readonly destroy$ = inject(DestroyRef);
   private readonly cogSrv = inject(AlainConfigService);
 
@@ -194,15 +191,13 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private emit(type: PdfChangeEventType, opt?: PdfChangeEvent): void {
-    this.ngZone.run(() =>
-      this.change.emit({
-        type,
-        pdf: this._pdf,
-        pi: this._pi,
-        total: this._total,
-        ...opt
-      })
-    );
+    this.change.emit({
+      type,
+      pdf: this._pdf,
+      pi: this._pi,
+      total: this._total,
+      ...opt
+    });
   }
 
   private initDelay(): void {
@@ -223,13 +218,10 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   setLoading(status: boolean): void {
-    this.ngZone.run(() => {
-      this._loading = status;
-      this.cdr.detectChanges();
-    });
+    this._loading = status;
+    this.cdr.detectChanges();
   }
 
-  @ZoneOutside()
   private load(): void {
     const { _src } = this;
     if (!this.inited || !_src) {
@@ -242,10 +234,6 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     }
 
     this.destroy();
-    this.ngZone.run(() => {
-      this._loading = true;
-      this.cdr.detectChanges();
-    });
     this.setLoading(true);
     const loadingTask: PDFDocumentLoadingTask = (this.loadingTask = this.win.pdfjsLib.getDocument(_src));
     loadingTask.onProgress = (progress: { loaded: number; total: number }) => this.emit('load-progress', { progress });
@@ -270,7 +258,6 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
       .then(() => this.setLoading(false));
   }
 
-  @ZoneOutside()
   private resetDoc(): void {
     const pdf = this._pdf;
     if (!pdf) {
@@ -316,14 +303,11 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private timeExec(fn: () => void): void {
-    this.ngZone.runOutsideAngular(() => {
-      timer(0)
-        .pipe(takeUntilDestroyed(this.destroy$))
-        .subscribe(() => this.ngZone.runOutsideAngular(() => fn()));
-    });
+    timer(0)
+      .pipe(takeUntilDestroyed(this.destroy$))
+      .subscribe(() => fn());
   }
 
-  @ZoneOutside()
   private updateSize(): void {
     const currentViewer = this.pageViewer;
     if (!currentViewer) return;
@@ -375,7 +359,6 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
     return (this._zoom * ratio) / CSS_UNITS;
   }
 
-  @ZoneOutside()
   private destroy(): void {
     const { loadingTask } = this;
     if (loadingTask && !loadingTask.destroyed) {
@@ -478,7 +461,7 @@ export class PdfComponent implements OnChanges, AfterViewInit, OnDestroy {
       .then(() => this.lazySrv.load([`${lib}web/pdf_viewer.js`, `${lib}web/pdf_viewer.css`]))
       .then(() => this.initDelay());
 
-    this.ngZone.runOutsideAngular(() => this.initResize());
+    this.initResize();
   }
 
   private initResize(): void {

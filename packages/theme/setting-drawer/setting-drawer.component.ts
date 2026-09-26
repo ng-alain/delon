@@ -8,14 +8,12 @@ import {
   inject,
   Input,
   isDevMode,
-  NgZone,
   OnInit
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { Layout, SettingsService } from '@delon/theme';
 import { copy } from '@delon/util/browser';
-import { ZoneOutside } from '@delon/util/decorator';
 import { deepCopy, LazyService } from '@delon/util/other';
 import { NzAlertComponent } from 'ng-zorro-antd/alert';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
@@ -57,7 +55,6 @@ export class SettingDrawerComponent implements OnInit {
   private readonly msg = inject(NzMessageService);
   private readonly settingSrv = inject(SettingsService);
   private readonly lazy = inject(LazyService);
-  private readonly ngZone = inject(NgZone);
   private readonly doc = inject(DOCUMENT);
 
   @Input({ transform: booleanAttribute }) autoApplyColor = true;
@@ -96,7 +93,6 @@ export class SettingDrawerComponent implements OnInit {
     }
   }
 
-  @ZoneOutside()
   private async loadLess(): Promise<void> {
     if (this.loadedLess) {
       return Promise.resolve();
@@ -130,16 +126,15 @@ export class SettingDrawerComponent implements OnInit {
     return vars;
   }
 
-  @ZoneOutside()
   private runLess(): void {
-    const { ngZone, msg, cdr } = this;
+    const { msg } = this;
     const msgId = msg.loading(this.compilingText, { nzDuration: 0 }).messageId;
     setTimeout(() => {
       this.loadLess().then(() => {
         (window as NzSafeAny).less.modifyVars(this.genVars()).then(() => {
           msg.success('成功');
           msg.remove(msgId);
-          ngZone.run(() => cdr.detectChanges());
+          this.cdr.detectChanges();
         });
       });
     }, 200);
