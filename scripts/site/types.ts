@@ -92,8 +92,12 @@ export interface ModuleDocMeta {
   tag?: string;
   /** 模块导入代码 */
   module?: string;
-  /** 是否过期 */
-  deprecated?: boolean;
+  /**
+   * 过期版本号，例如 `24.0.0`
+   *
+   * 菜单里 `menu-deprecated` 按真值判断，tooltip 直接拼接为 `Deprecated in {version}`（见 `main-menu.component.ts`）
+   */
+  deprecated?: string;
   /** 跳转 URL */
   redirect?: string;
   lib?: boolean;

@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, NgZone, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import isUtf8 from 'isutf8';
 
 import { AlainConfigService, AlainXlsxConfig } from '@delon/util/config';
-import { ZoneOutside } from '@delon/util/decorator';
 import { LazyResult, LazyService } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -17,7 +16,6 @@ declare const cptable: NzSafeAny;
 export class XlsxService {
   private readonly http = inject(HttpClient);
   private readonly lazy = inject(LazyService);
-  private readonly ngZone = inject(NgZone);
   private readonly cogSrv = inject(AlainConfigService);
 
   private cog: AlainXlsxConfig;
@@ -35,7 +33,6 @@ export class XlsxService {
       : this.lazy.load([this.cog.url!].concat(this.cog.modules!));
   }
 
-  @ZoneOutside()
   private read(data: NzSafeAny): Record<string, NzSafeAny[][]> {
     const {
       read,
@@ -63,7 +60,7 @@ export class XlsxService {
    */
   import(fileOrUrl: File | string): Promise<Record<string, NzSafeAny[][]>> {
     return new Promise<Record<string, NzSafeAny[][]>>((resolve, reject) => {
-      const r = (data: NzSafeAny): void => this.ngZone.run(() => resolve(this.read(data)));
+      const r = (data: NzSafeAny): void => resolve(this.read(data));
       this.init()
         .then(() => {
           // from url
@@ -84,7 +81,6 @@ export class XlsxService {
     });
   }
 
-  @ZoneOutside()
   async export(options: XlsxExportOptions): Promise<XlsxExportResult> {
     return new Promise<XlsxExportResult>((resolve, reject) => {
       this.init()

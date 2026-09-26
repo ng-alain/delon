@@ -1,11 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, NgZone, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { saveAs } from 'file-saver';
 import type jsZipType from 'jszip';
 
 import { AlainConfigService, AlainZipConfig } from '@delon/util/config';
-import { ZoneOutside } from '@delon/util/decorator';
 import { LazyResult, LazyService } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -17,7 +16,6 @@ declare const JSZip: jsZipType;
 export class ZipService {
   private readonly http = inject(HttpClient);
   private readonly lazy = inject(LazyService);
-  private readonly ngZone = inject(NgZone);
   private readonly cogSrv = inject(AlainConfigService);
   private cog: AlainZipConfig;
 
@@ -37,12 +35,9 @@ export class ZipService {
   }
 
   /** 解压 */
-  @ZoneOutside()
   read(fileOrUrl: File | string, options?: jsZipType.JSZipLoadOptions): Promise<jsZipType> {
     return new Promise<jsZipType>((resolve, reject) => {
-      const resolveCallback = (data: jsZipType): void => {
-        this.ngZone.run(() => resolve(data));
-      };
+      const resolveCallback = resolve;
       this.init().then(() => {
         // from url
         if (typeof fileOrUrl === 'string') {

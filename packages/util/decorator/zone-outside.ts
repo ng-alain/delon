@@ -1,6 +1,10 @@
+/* eslint-disable @typescript-eslint/no-deprecated -- 过期 API 保留至 v24.0.0，本文件为其实现在此引用自身类型 */
 import { warn } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+/**
+ * @deprecated Will be removed in v24.0.0
+ */
 export interface ZoneOptions {
   ngZoneName?: string;
 }
@@ -35,6 +39,8 @@ function makeFn(type: 'runOutsideAngular' | 'run', options?: ZoneOptions): Decor
  *
  * 装饰方法运行在 `runOutsideAngular` 内
  *
+ * @deprecated Will be removed in v24.0.0
+ *
  * ```ts
  * class MockClass {
  *  readonly ngZone = inject(NgZone);
@@ -52,6 +58,8 @@ export function ZoneOutside(options?: ZoneOptions): DecoratorType {
  * The decoration method runs in `run`
  *
  * 装饰方法运行在 `run` 内
+ *
+ * @deprecated Will be removed in v24.0.0
  *
  * ```ts
  * class MockClass {
