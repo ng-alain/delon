@@ -112,6 +112,31 @@ describe('form: widget: object', () => {
     });
   });
 
+  describe('render grid', () => {
+    it('should be working with grid', () => {
+      page
+        .newSchema({
+          properties: {
+            a: {
+              type: 'object',
+              ui: {
+                grid: { gutter: 16, span: 12, offset: 1, xs: 24, sm: 12, md: 8, lg: 6, xl: 4, xxl: 3 }
+              },
+              properties: {
+                b: { type: 'string', ui: { grid: { span: 6 } } },
+                c: { type: 'string', ui: { hidden: true } },
+                d: { type: 'string' }
+              }
+            }
+          }
+        })
+        .checkCount('sf-object > .ant-row', 1)
+        .checkCount('sf-object > .ant-row > .ant-col', 2)
+        .checkCount('sf-object > .ant-row > .ant-col-6', 1)
+        .checkCount('sf-object > .ant-row > .ant-col-12', 1);
+    });
+  });
+
   describe('render card', () => {
     it('should be working', () => {
       page
@@ -136,6 +161,30 @@ describe('form: widget: object', () => {
         .checkCount('.sf__object-card-fold', 0)
         .click('.ant-card-head-title div')
         .checkCount('.sf__object-card-fold', 0);
+    });
+    it('should be show optional text', () => {
+      page
+        .newSchema({
+          title: 'root',
+          properties: {},
+          ui: { type: 'card', optional: 'optional text' } as SFObjectWidgetSchema
+        })
+        .checkCount('.sf__optional', 1)
+        .checkCount('.sf__optional [nz-tooltip]', 0);
+    });
+    it('should be show optional help', () => {
+      page
+        .newSchema({
+          title: 'root',
+          properties: {},
+          ui: {
+            type: 'card',
+            optional: 'optional text',
+            optionalHelp: { text: 'help text', placement: 'bottomRight' }
+          } as SFObjectWidgetSchema
+        })
+        .checkCount('.sf__optional', 1)
+        .checkCount('.sf__optional [nz-tooltip]', 1);
     });
   });
 });
