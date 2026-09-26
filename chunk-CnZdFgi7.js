@@ -1,4 +1,4 @@
-import{Fr as Se,jo as ie,zs as pt}from"./chunk-Bix55avy.js";import"./chunk-3aQ3WiqM.js";import"./chunk-Ioj09ejC.js";import"./main-KISOO6CU.js";import"./chunk-46Ii5gWu.js";import"./chunk-CKkdg4oh.js";import{t as ce}from"./chunk-D8eOcErz.js";import{t as ee}from"./chunk-CjITDEOi.js";var c=class n{item={name:`acl`,langs:[`zh-CN`],content:{"zh-CN":{meta:{order:50,title:`ACL`,redirect:`/acl/getting-started`,description:``,group:`Advance`,path:`docs/acl.md`,url:`/docs/acl/zh`},text:``,api:``,toc:[],raw:`---
+import{Fr as Se,jo as ie,zs as pt}from"./chunk-Bix55avy.js";import"./chunk-3aQ3WiqM.js";import"./chunk-bq9s7eY5.js";import"./main-YYZC7LXB.js";import"./chunk-46Ii5gWu.js";import"./chunk-CKkdg4oh.js";import{t as ce}from"./chunk-AxTuKf1y.js";import{t as ee}from"./chunk-BjZZfLcG.js";var c=class n{item={name:`acl`,langs:[`zh-CN`],content:{"zh-CN":{meta:{order:50,title:`ACL`,redirect:`/acl/getting-started`,description:``,group:`Advance`,path:`docs/acl.md`,url:`/docs/acl/zh`},text:``,api:``,toc:[],raw:`---
 order: 50
 title: ACL
 type: Advance
@@ -455,7 +455,7 @@ redirect: /cache/getting-started
 <li>Major version release is not included in this schedule for breaking change and new features.</li>
 </ul>
 <hr>
-<h1 id="lessa_href=https//githubcom/ng-alain/delon/compare/22002210_target=_blank_rel=noopenergreater2210less/agreater_2026-09-26"><a class="lake-link"><i data-anchor="lessa_href=https//githubcom/ng-alain/delon/compare/22002210_target=_blank_rel=noopenergreater2210less/agreater_2026-09-26"></i></a><a href="https://github.com/ng-alain/delon/compare/22.0.0...22.1.0" target="_blank" rel="noopener">22.1.0</a> (2026-09-26)</h1><h3 id="bug_fixes"><a class="lake-link"><i data-anchor="bug_fixes"></i></a>Bug Fixes</h3><ul>
+<h2 id="lessa_href=https//githubcom/ng-alain/delon/compare/22002211_target=_blank_rel=noopenergreater2211less/agreater_2026-09-26"><a class="lake-link"><i data-anchor="lessa_href=https//githubcom/ng-alain/delon/compare/22002211_target=_blank_rel=noopenergreater2211less/agreater_2026-09-26"></i></a><a href="https://github.com/ng-alain/delon/compare/22.0.0...22.1.1" target="_blank" rel="noopener">22.1.1</a> (2026-09-26)</h2><h3 id="bug_fixes"><a class="lake-link"><i data-anchor="bug_fixes"></i></a>Bug Fixes</h3><ul>
 <li><strong>auth:</strong> carry location.search when redirecting to login (<a href="https://github.com/ng-alain/delon/issues/2059" target="_blank" rel="noopener">#2059</a>) (<a href="https://github.com/ng-alain/delon/commit/acb7e764e3f7d235e3cfd2ac84d778e9e2217ab0" target="_blank" rel="noopener">acb7e76</a>)</li>
 <li><strong>form:</strong> avoid NG01354 warning from widget ngModel (<a href="https://github.com/ng-alain/delon/issues/2057" target="_blank" rel="noopener">#2057</a>) (<a href="https://github.com/ng-alain/delon/commit/2bec2c7028579bc724913c2bbd1d4664ef5f7bcd" target="_blank" rel="noopener">2bec2c7</a>)</li>
 </ul>
@@ -472,7 +472,7 @@ redirect: /cache/getting-started
 <li><strong>st:pop:</strong> support title as function (<a href="https://github.com/ng-alain/delon/issues/2044" target="_blank" rel="noopener">#2044</a>) (<a href="https://github.com/ng-alain/delon/commit/55ba6f563b7bb299e52c205ce7c1f801377055d3" target="_blank" rel="noopener">55ba6f5</a>)</li>
 </ul>
 <h2 id="old_versions"><a class="lake-link"><i data-anchor="old_versions"></i></a>Old Versions</h2><p>All releases notes can be found <a href="https://github.com/ng-alain/ng-alain/releases" target="_blank" rel="noopener">here</a>.</p>
-`,api:``,toc:[{id:`old_versions`,title:`Old Versions`}],raw:`---
+`,api:``,toc:[{id:``,title:``,children:[{id:`bug_fixes`,title:`Bug Fixes`},{id:`features`,title:`Features`},{id:`bug_fixes`,title:`Bug Fixes`},{id:`features`,title:`Features`}]},{id:`old_versions`,title:`Old Versions`}],raw:`---
 order: 100
 title: Change Log
 type: Basic
@@ -489,7 +489,7 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
-# [22.1.0](https://github.com/ng-alain/delon/compare/22.0.0...22.1.0) (2026-09-26)
+## [22.1.1](https://github.com/ng-alain/delon/compare/22.0.0...22.1.1) (2026-09-26)
 
 ### Bug Fixes
 
@@ -523,7 +523,7 @@ All releases notes can be found [here](https://github.com/ng-alain/ng-alain/rele
 <li>\u4E3B\u7248\u672C\u53F7\uFF1A\u542B\u6709\u7834\u574F\u6027\u66F4\u65B0\u548C\u65B0\u7279\u6027\uFF0C\u4E0D\u5728\u53D1\u5E03\u5468\u671F\u5185\u3002</li>
 </ul>
 <hr>
-<h1 id="lessa_href=https//githubcom/ng-alain/delon/compare/22002210_target=_blank_rel=noopenergreater2210less/agreater_2026-09-26"><a class="lake-link"><i data-anchor="lessa_href=https//githubcom/ng-alain/delon/compare/22002210_target=_blank_rel=noopenergreater2210less/agreater_2026-09-26"></i></a><a href="https://github.com/ng-alain/delon/compare/22.0.0...22.1.0" target="_blank" rel="noopener">22.1.0</a> (2026-09-26)</h1><h3 id="bug_fixes"><a class="lake-link"><i data-anchor="bug_fixes"></i></a>Bug Fixes</h3><ul>
+<h2 id="lessa_href=https//githubcom/ng-alain/delon/compare/22002211_target=_blank_rel=noopenergreater2211less/agreater_2026-09-26"><a class="lake-link"><i data-anchor="lessa_href=https//githubcom/ng-alain/delon/compare/22002211_target=_blank_rel=noopenergreater2211less/agreater_2026-09-26"></i></a><a href="https://github.com/ng-alain/delon/compare/22.0.0...22.1.1" target="_blank" rel="noopener">22.1.1</a> (2026-09-26)</h2><h3 id="bug_fixes"><a class="lake-link"><i data-anchor="bug_fixes"></i></a>Bug Fixes</h3><ul>
 <li><strong>auth:</strong> \u8DF3\u8F6C\u5230\u767B\u5F55\u9875\u65F6\u643A\u5E26 <code>location.search</code> (<a href="https://github.com/ng-alain/delon/issues/2059" target="_blank" rel="noopener">#2059</a>) (<a href="https://github.com/ng-alain/delon/commit/acb7e764e3f7d235e3cfd2ac84d778e9e2217ab0" target="_blank" rel="noopener">acb7e76</a>)</li>
 <li><strong>form:</strong> \u907F\u514D widget ngModel \u89E6\u53D1 <code>NG01354</code> \u8B66\u544A (<a href="https://github.com/ng-alain/delon/issues/2057" target="_blank" rel="noopener">#2057</a>) (<a href="https://github.com/ng-alain/delon/commit/2bec2c7028579bc724913c2bbd1d4664ef5f7bcd" target="_blank" rel="noopener">2bec2c7</a>)</li>
 </ul>
@@ -540,7 +540,7 @@ All releases notes can be found [here](https://github.com/ng-alain/ng-alain/rele
 <li><strong>st:pop:</strong> \u652F\u6301 <code>title</code> \u4E3A\u51FD\u6570 (<a href="https://github.com/ng-alain/delon/issues/2044" target="_blank" rel="noopener">#2044</a>) (<a href="https://github.com/ng-alain/delon/commit/55ba6f563b7bb299e52c205ce7c1f801377055d3" target="_blank" rel="noopener">55ba6f5</a>)</li>
 </ul>
 <h2 id="old_versions"><a class="lake-link"><i data-anchor="old_versions"></i></a>Old Versions</h2><p>All releases notes can be found <a href="https://github.com/ng-alain/ng-alain/releases" target="_blank" rel="noopener">here</a>.</p>
-`,api:``,toc:[{id:`old_versions`,title:`Old Versions`}],raw:`---
+`,api:``,toc:[{id:``,title:``,children:[{id:`bug_fixes`,title:`Bug Fixes`},{id:`features`,title:`Features`},{id:`bug_fixes`,title:`Bug Fixes`},{id:`features`,title:`Features`}]},{id:`old_versions`,title:`Old Versions`}],raw:`---
 order: 100
 title: \u66F4\u65B0\u65E5\u5FD7
 type: Basic
@@ -557,7 +557,7 @@ NG-ALAIN \u4E25\u683C\u9075\u5FAA [Semantic Versioning 2.0.0](http://semver.org/
 
 ---
 
-# [22.1.0](https://github.com/ng-alain/delon/compare/22.0.0...22.1.0) (2026-09-26)
+## [22.1.1](https://github.com/ng-alain/delon/compare/22.0.0...22.1.1) (2026-09-26)
 
 ### Bug Fixes
 
@@ -567,6 +567,7 @@ NG-ALAIN \u4E25\u683C\u9075\u5FAA [Semantic Versioning 2.0.0](http://semver.org/
 ### Features
 
 * **chart:** \u8FC1\u79FB\u5230 \`@antv/g2\` v5 ([#2064](https://github.com/ng-alain/delon/issues/2064)) ([d45f670](https://github.com/ng-alain/delon/commit/d45f67028824318892d9fb744e78aa944d246e93))
+
 
 # [22.0.0](https://github.com/ng-alain/delon/compare/21.3.0...22.0.0) (2026-09-11)
 
