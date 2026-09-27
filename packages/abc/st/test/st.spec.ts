@@ -1,5 +1,6 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgModel } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { of, Subject, throwError } from 'rxjs';
@@ -24,7 +25,18 @@ import {
 } from '../st.interfaces';
 import { _STColumn } from '../st.types';
 import { STWidgetRegistry } from './../st-widget';
-import { PS, DEFAULTCOUNT, USERS, MOCKDATE, MOCKIMG, genData, PageObject, TestComponent, genModule } from './base';
+import {
+  PS,
+  DEFAULTCOUNT,
+  USERS,
+  MOCKDATE,
+  MOCKIMG,
+  genData,
+  PageObject,
+  TestComponent,
+  TestFormComponent,
+  genModule
+} from './base';
 
 describe('abc: st', () => {
   beforeEach(() => {
@@ -1742,6 +1754,28 @@ describe('abc: st', () => {
         }
       ];
       page.updateColumn(columns).click('.st__btn-text').cd().expectElContent('.ant-popover-message-title', '一');
+    });
+  });
+  describe('NG01354', () => {
+    beforeEach(() => {
+      genModule(TestComponent, { createComp: false });
+      // 屏蔽 nz-checkbox 内部 ng-zorro #9984 的预期警告
+      vi.spyOn(console, 'warn').mockImplementation(() => {});
+    });
+
+    it('should declare the selection ngModel as standalone so it never registers with a parent form', () => {
+      const fixture = TestBed.createComponent(TestFormComponent);
+      fixture.componentInstance.columns.set([
+        { title: '', index: 'id', type: 'checkbox', selections: [] },
+        { title: 'name', index: 'name' }
+      ]);
+      fixture.detectChanges();
+      vi.advanceTimersByTime(1000);
+      fixture.detectChanges();
+
+      const checks = fixture.debugElement.queryAll(By.css('label[nz-checkbox]'));
+      expect(checks.length).toBe(USERS.length + 1);
+      checks.forEach(de => expect(de.injector.get(NgModel).options?.standalone).toBe(true));
     });
   });
 });

@@ -1,5 +1,6 @@
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 
 import type { Mock } from 'vitest';
@@ -11,10 +12,11 @@ import { deepCopy } from '@delon/util/other';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzIconService } from 'ng-zorro-antd/icon';
 
-import { SCHEMA, SFPage, TestFormComponent } from './base';
+import { configureSFTestSuite, SCHEMA, SFPage, TestFormComponent } from './base';
 import { FormPropertyFactory } from '../src/model/form.property.factory';
 import { DelonFormModule } from '../src/module';
 import { SFSchema } from '../src/schema/index';
+import { ControlWidget } from '../src/widget';
 import { WidgetRegistry } from '../src/widget.factory';
 
 describe('form: component', () => {
@@ -933,6 +935,64 @@ describe('form: component', () => {
         .checkUI('/a', 'optionalHelp.text', 'zh-ohi18n');
     });
   });
+
+  describe('NG01354', () => {
+    configureSFTestSuite({
+      imports: [ProbeWidget],
+      widgets: [{ KEY: 'probe', type: ProbeWidget }]
+    });
+
+    beforeEach(() => {
+      ({ fixture, dl, context } = createTestContext(TestFormComponent));
+      page = new SFPage(context.comp);
+      page.prop(dl, context, fixture);
+      vi.spyOn(console, 'warn').mockImplementation(() => {});
+    });
+
+    function ng01354(): string[] {
+      return vi
+        .mocked(console.warn)
+        .mock.calls.map(args => args.join(' '))
+        .filter(msg => msg.includes('NG01354'));
+    }
+
+    it('should not warn NG01354 when built-in widgets render ngModel', () => {
+      page.newSchema({
+        properties: {
+          string: { type: 'string' },
+          number: { type: 'number' },
+          boolean: { type: 'boolean' },
+          textarea: { type: 'string', ui: { widget: 'textarea' } },
+          select: { type: 'string', enum: ['a', 'b'] },
+          radio: { type: 'string', enum: ['a', 'b'], ui: { widget: 'radio' } },
+          checkbox: { type: 'string', enum: ['a', 'b'], ui: { widget: 'checkbox' } },
+          date: { type: 'string', ui: { widget: 'date' } }
+        }
+      } as SFSchema);
+
+      expect(ng01354()).toEqual([]);
+    });
+
+    it('should not warn NG01354 when a custom widget component renders ngModel', () => {
+      page.newSchema({
+        properties: {
+          a: { type: 'string', ui: { widget: 'probe' } }
+        }
+      } as SFSchema);
+
+      expect(ng01354()).toEqual([]);
+    });
+
+    it('should keep novalidate on the inner form', () => {
+      page.newSchema({
+        properties: {
+          a: { type: 'string' }
+        }
+      } as SFSchema);
+
+      expect(page.getEl('form').hasAttribute('novalidate')).toBe(true);
+    });
+  });
 });
 
 @Component({
@@ -950,3 +1010,11 @@ describe('form: component', () => {
   imports: [DelonFormModule]
 })
 class TestModeComponent extends TestFormComponent {}
+
+/** 模拟用户自定义小部件（组件方式），内部使用 `ngModel` */
+@Component({
+  selector: 'sf-probe',
+  imports: [FormsModule],
+  template: `<input class="probe" [ngModel]="value" (ngModelChange)="setValue($event)" />`
+})
+class ProbeWidget extends ControlWidget {}

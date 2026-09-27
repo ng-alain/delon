@@ -111,7 +111,13 @@ const minimumVersion = +pkg.version.split('.')[0] - 2;
         <header-search />
         @if (!isMobile) {
           <ng-template [ngTemplateOutlet]="menu" />
-          <nz-select nzSize="small" class="version" [ngModel]="currentVersion" (ngModelChange)="toVersion($event)">
+          <nz-select
+            nzSize="small"
+            class="version"
+            [ngModel]="currentVersion"
+            [ngModelOptions]="{ standalone: true }"
+            (ngModelChange)="toVersion($event)"
+          >
             @for (version of oldVersionList; track $index) {
               <nz-option [nzLabel]="version + '.x'" [nzValue]="version" />
             }

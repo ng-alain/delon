@@ -1,5 +1,6 @@
 import { Component, DebugElement, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule, NgModel } from '@angular/forms';
 import { BrowserModule, By, DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
@@ -297,6 +298,24 @@ describe('abc: cell', () => {
     });
   });
 
+  describe('NG01354', () => {
+    it('should declare the built-in ngModel as standalone so it never registers with a parent form', () => {
+      TestBed.configureTestingModule({
+        providers: [provideNzIconsTesting()],
+        imports: [CellModule]
+      });
+      // 屏蔽 nz-checkbox 内部 ng-zorro #9984 的预期警告
+      vi.spyOn(console, 'warn').mockImplementation(() => {});
+      const { fixture, dl, context } = createTestContext(TestFormComponent);
+      fixture.detectChanges();
+      expect(dl.query(By.css('label[nz-checkbox]')).injector.get(NgModel).options?.standalone).toBe(true);
+
+      context.options.set({ type: 'radio', radio: { label: 'A' } });
+      fixture.detectChanges();
+      expect(dl.query(By.css('label[nz-radio]')).injector.get(NgModel).options?.standalone).toBe(true);
+    });
+  });
+
   class PageObject {
     update(value: CellValue, options?: CellOptions): this {
       context.value.set(value);
@@ -372,4 +391,13 @@ class TestComponent {
   readonly options = signal<CellOptions | undefined>(undefined);
   readonly loading = signal(false);
   readonly disabled = signal(false);
+}
+
+@Component({
+  template: `<form><cell [value]="value()" [options]="options()" /></form>`,
+  imports: [CellModule, FormsModule]
+})
+class TestFormComponent {
+  readonly value = signal<CellValue>(false);
+  readonly options = signal<CellOptions | undefined>({ type: 'checkbox', checkbox: { label: 'A' } });
 }
