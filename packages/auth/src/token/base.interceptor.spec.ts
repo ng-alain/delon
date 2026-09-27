@@ -1,14 +1,15 @@
 import { DOCUMENT } from '@angular/common';
 import { HttpClient, HttpContext, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { HttpTestingController, TestRequest, provideHttpClientTesting } from '@angular/common/http/testing';
-import { Type } from '@angular/core';
+import { Type, inject } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Router, provideRouter } from '@angular/router';
 import { Observable, firstValueFrom } from 'rxjs';
 
-import { AlainAuthConfig, provideAlainConfig } from '@delon/util/config';
+import { AlainAuthConfig, AlainConfigService, provideAlainConfig } from '@delon/util/config';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import { mergeConfig } from '../auth.config';
 import { provideAuth } from '../provide';
 import { ALLOW_ANONYMOUS } from '../token';
 import { AuthReferrer, DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './interface';
@@ -25,7 +26,8 @@ function genModel<T extends ITokenModel>(modelType: new () => T, token: string |
 class MockTokenService implements ITokenService {
   [key: string]: any;
   _data: any;
-  options: any;
+  // 与 `TokenService` 保持一致：拦截器改为从 token 服务读取配置
+  options = mergeConfig(inject(AlainConfigService));
   referrer: AuthReferrer = {};
   refresh!: Observable<ITokenModel>;
   set(data: ITokenModel): boolean {

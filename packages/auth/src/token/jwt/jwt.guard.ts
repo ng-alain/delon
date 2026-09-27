@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { CanActivateChildFn, CanActivateFn, CanMatchFn } from '@angular/router';
 
-import { CheckJwt, ToLogin } from '../helper';
+import { CheckJwt, toLogin } from '../helper';
 import { DA_SERVICE_TOKEN } from '../interface';
 import { JWTTokenModel } from './jwt.model';
 
@@ -13,7 +13,7 @@ export class AuthJWTGuardService {
     const cog = this.srv.options;
     const res = CheckJwt(this.srv.get<JWTTokenModel>(JWTTokenModel), cog.token_exp_offset!);
     if (!res) {
-      ToLogin(cog, url);
+      toLogin({ url });
     }
     return res;
   }

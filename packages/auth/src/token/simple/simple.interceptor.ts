@@ -1,9 +1,8 @@
 import { HttpInterceptorFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
 
-import { AlainAuthConfig, AlainConfigService } from '@delon/util/config';
+import { AlainAuthConfig } from '@delon/util/config';
 
-import { mergeConfig } from '../../auth.config';
 import { isAnonymous, throwErr } from '../base.interceptor';
 import { CheckSimple } from '../helper';
 import { DA_SERVICE_TOKEN } from '../interface';
@@ -39,11 +38,12 @@ function newReq(req: HttpRequest<unknown>, model: SimpleTokenModel, options: Ala
 }
 
 export const authSimpleInterceptor: HttpInterceptorFn = (req, next) => {
-  const options = mergeConfig(inject(AlainConfigService));
+  const src = inject(DA_SERVICE_TOKEN);
+  const options = src.options;
 
   if (isAnonymous(req, options)) return next(req);
 
-  const model = inject(DA_SERVICE_TOKEN).get() as SimpleTokenModel;
+  const model = src.get() as SimpleTokenModel;
   if (CheckSimple(model)) return next(newReq(req, model, options));
 
   return throwErr(req, options);

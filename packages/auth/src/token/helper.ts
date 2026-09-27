@@ -23,23 +23,27 @@ export function CheckJwt(model: JWTTokenModel, offset: number): boolean {
   }
 }
 
-export function ToLogin(options: AlainAuthConfig, url?: string): void {
-  const router = inject(Router);
-  const token = inject(DA_SERVICE_TOKEN) as ITokenService;
+export function getLoginUrl(o: { options: AlainAuthConfig; url?: string }): string {
   const doc = inject(DOCUMENT);
-  token.referrer!.url = url ?? router.url;
-  if (options.token_invalid_redirect === true) {
-    setTimeout(() => {
-      const loginUrl = options.login_url as string;
-      // 跳转时携带当前页查询串，便于登录页或登录成功后恢复原始参数
-      const search = doc.location.search ?? '';
-      const target =
-        search.length === 0 ? loginUrl : `${loginUrl}${loginUrl.includes('?') ? '&' : '?'}${search.slice(1)}`;
-      if (/^https?:\/\//.test(loginUrl)) {
-        doc.location.href = target;
-      } else {
-        router.navigateByUrl(target);
-      }
-    });
-  }
+  const loginUrl = o.options.login_url as string;
+  const search = doc.location.search ?? '';
+  return search.length === 0 ? loginUrl : `${loginUrl}${loginUrl.includes('?') ? '&' : '?'}${search.slice(1)}`;
+}
+
+export function toLogin(o?: { options?: AlainAuthConfig; url?: string }): void {
+  const token = inject(DA_SERVICE_TOKEN) as ITokenService;
+  const config = o?.options ?? token.options;
+  const router = inject(Router);
+  token.referrer!.url = o?.url ?? router.url;
+  if (config.token_invalid_redirect !== true) return;
+
+  const url = getLoginUrl({ options: config, url: o?.url });
+  const doc = inject(DOCUMENT);
+  setTimeout(() => {
+    if (/^https?:\/\//.test(url)) {
+      doc.location.href = url;
+    } else {
+      router.navigateByUrl(url);
+    }
+  });
 }
