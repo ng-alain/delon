@@ -13,6 +13,7 @@
     class="st__checkall"
     [nzDisabled]="_allCheckedDisabled"
     [(ngModel)]="_allChecked"
+    [ngModelOptions]="{ standalone: true }"
     [nzIndeterminate]="_indeterminate"
     (ngModelChange)="checkAll()"
     [class.ant-table-selection-select-all-custom]="custom"

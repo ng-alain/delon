@@ -42,12 +42,24 @@ import type { CellDefaultText, CellOptions, CellTextResult, CellValue } from './
       @let text = _text();
       @switch (safeOpt.type) {
         @case ('checkbox') {
-          <label nz-checkbox [nzDisabled]="disabled()" [ngModel]="value()" (ngModelChange)="value.set($event)">
+          <label
+            nz-checkbox
+            [nzDisabled]="disabled()"
+            [ngModel]="value()"
+            [ngModelOptions]="{ standalone: true }"
+            (ngModelChange)="value.set($event)"
+          >
             {{ safeOpt.checkbox?.label }}
           </label>
         }
         @case ('radio') {
-          <label nz-radio [nzDisabled]="disabled()" [ngModel]="value()" (ngModelChange)="value.set($event)">
+          <label
+            nz-radio
+            [nzDisabled]="disabled()"
+            [ngModel]="value()"
+            [ngModelOptions]="{ standalone: true }"
+            (ngModelChange)="value.set($event)"
+          >
             {{ safeOpt.radio?.label }}
           </label>
         }

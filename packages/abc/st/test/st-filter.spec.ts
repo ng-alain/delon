@@ -1,12 +1,13 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgModel } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
 import { STFilterComponent } from '../st-filter.component';
 import { STComponent } from '../st.component';
-import { STColumnFilter } from '../st.interfaces';
+import { STColumn, STColumnFilter } from '../st.interfaces';
 import { _STColumn } from '../st.types';
-import { PageObject, TestComponent, genModule } from './base';
+import { PageObject, TestComponent, TestFormComponent, genModule } from './base';
 
 describe('abc: st-filter', () => {
   beforeEach(() => {
@@ -165,5 +166,56 @@ describe('abc: st-filter', () => {
     await vi.advanceTimersByTimeAsync(1000);
     fixture.detectChanges();
     page.expectElCount('.close_in_tpl', 0).asyncEnd();
+  });
+
+  describe('NG01354', () => {
+    function setup(columns: STColumn[]): ComponentFixture<TestFormComponent> {
+      const fixture = TestBed.createComponent(TestFormComponent);
+      fixture.componentInstance.columns.set(columns);
+      fixture.detectChanges();
+      vi.advanceTimersByTime(1000);
+      fixture.detectChanges();
+      return fixture;
+    }
+
+    function openFilter(fixture: ComponentFixture<TestFormComponent>): void {
+      (fixture.nativeElement.querySelector('.ant-table-filter-trigger') as HTMLElement).click();
+      vi.advanceTimersByTime(1000);
+      fixture.detectChanges();
+    }
+
+    beforeEach(() => {
+      // 屏蔽 nz-checkbox 内部 ng-zorro #9984 的预期警告
+      vi.spyOn(console, 'warn').mockImplementation(() => {});
+    });
+
+    // 关键字分支的子树完全由 st-filter 渲染（nz-input 是纯指令），因此可以断言零警告
+    it('should not warn NG01354 from the keyword filter inside a parent form', () => {
+      const fixture = setup([{ title: 'name', index: 'name', filter: { type: 'keyword', menus: [] } }]);
+      openFilter(fixture);
+
+      expect(fixture.debugElement.queryAll(By.css('.st__filter-keyword input')).length).toBe(1);
+      const messages = vi
+        .mocked(console.warn)
+        .mock.calls.map(args => args.join(' '))
+        .filter(msg => msg.includes('NG01354'));
+      expect(messages).toEqual([]);
+    });
+
+    [true, false].forEach(multiple => {
+      it(`should declare the filter menu ngModel (multiple=${multiple}) as standalone`, () => {
+        const fixture = setup([
+          { title: 'name', index: 'name', filter: { multiple, menus: [{ text: 'f1', value: 'fv1' }] } }
+        ]);
+        openFilter(fixture);
+        const label = fixture.debugElement.query(
+          By.css(
+            multiple ? '.ant-table-filter-dropdown label[nz-checkbox]' : '.ant-table-filter-dropdown label[nz-radio]'
+          )
+        );
+        expect(label).not.toBeNull();
+        expect(label.injector.get(NgModel).options?.standalone).toBe(true);
+      });
+    });
   });
 });

@@ -48,10 +48,22 @@
   @let col = i._values[cIdx];
   @switch (c.type) {
     @case ('checkbox') {
-      <label nz-checkbox [nzDisabled]="i.disabled" [ngModel]="i.checked" (ngModelChange)="_checkbox($event)"></label>
+      <label
+        nz-checkbox
+        [nzDisabled]="i.disabled"
+        [ngModel]="i.checked"
+        [ngModelOptions]="{ standalone: true }"
+        (ngModelChange)="_checkbox($event)"
+      ></label>
     }
     @case ('radio') {
-      <label nz-radio [nzDisabled]="i.disabled" [ngModel]="i.checked" (ngModelChange)="_radio()"></label>
+      <label
+        nz-radio
+        [nzDisabled]="i.disabled"
+        [ngModel]="i.checked"
+        [ngModelOptions]="{ standalone: true }"
+        (ngModelChange)="_radio()"
+      ></label>
     }
     @case ('link') {
       <a (click)="_link($event)" [innerHTML]="col._text" [attr.title]="col.text"></a>

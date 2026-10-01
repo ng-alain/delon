@@ -521,3 +521,14 @@ export class TestWidgetComponent {
   id!: number;
   record: NzSafeAny;
 }
+
+/** 把 `<st>` 放进父级表单，用于验证内部 `ngModel` 不会注册到该表单 */
+@Component({
+  template: `<form><st [data]="data()" [columns]="columns()" [page]="page()" /></form>`,
+  imports: [FormsModule, STComponent]
+})
+export class TestFormComponent {
+  readonly data = signal(deepCopy(USERS));
+  readonly page = signal<STPage>({});
+  readonly columns = signal<STColumn[]>([]);
+}

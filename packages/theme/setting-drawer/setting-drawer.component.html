@@ -58,13 +58,19 @@
     <div class="setting-drawer__body">
       <div class="setting-drawer__body-item">
         固定头和侧边栏
-        <nz-switch nzSize="small" [(ngModel)]="layout.fixed" (ngModelChange)="setLayout('fixed', layout.fixed)" />
+        <nz-switch
+          nzSize="small"
+          [(ngModel)]="layout.fixed"
+          [ngModelOptions]="{ standalone: true }"
+          (ngModelChange)="setLayout('fixed', layout.fixed)"
+        />
       </div>
       <div class="setting-drawer__body-item">
         色弱模式
         <nz-switch
           nzSize="small"
           [(ngModel)]="layout.colorWeak"
+          [ngModelOptions]="{ standalone: true }"
           (ngModelChange)="setLayout('colorWeak', layout.colorWeak)"
         />
       </div>

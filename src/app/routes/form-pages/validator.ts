@@ -66,12 +66,12 @@ export class DemoComponent {
   template: `
     <div nz-row class="border-bottom-1 pb-sm mb-md">
       <div nz-col [nzSpan]="18">
-        <nz-select [(ngModel)]="name" (ngModelChange)="getSchema()">
+        <nz-select [(ngModel)]="name" [ngModelOptions]="{ standalone: true }" (ngModelChange)="getSchema()">
           @for (i of files; track $index) {
             <nz-option [nzValue]="i.name" [nzLabel]="i.title" />
           }
         </nz-select>
-        <nz-radio-group [(ngModel)]="layout" class="ml-sm">
+        <nz-radio-group [(ngModel)]="layout" [ngModelOptions]="{ standalone: true }" class="ml-sm">
           <label nz-radio-button nzValue="horizontal">水平</label>
           <label nz-radio-button nzValue="vertical">垂直</label>
           <label nz-radio-button nzValue="inline">行内</label>
@@ -98,6 +98,7 @@ export class DemoComponent {
             <nu-monaco-editor
               #schemaEditor
               [(ngModel)]="schema"
+              [ngModelOptions]="{ standalone: true }"
               (ngModelChange)="run()"
               [options]="editorOptions()"
               height="500px"
@@ -107,6 +108,7 @@ export class DemoComponent {
             <nu-monaco-editor
               #formCodeEditor
               [(ngModel)]="formCode"
+              [ngModelOptions]="{ standalone: true }"
               (ngModelChange)="run()"
               [options]="editorOptions()"
               height="500px"
@@ -116,6 +118,7 @@ export class DemoComponent {
             <nu-monaco-editor
               #uiEditor
               [(ngModel)]="uiCode"
+              [ngModelOptions]="{ standalone: true }"
               (ngModelChange)="run()"
               [options]="editorOptions()"
               height="500px"

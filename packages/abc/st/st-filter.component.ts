@@ -50,6 +50,7 @@ import type { _STColumn } from './st.types';
                 nz-input
                 [attr.placeholder]="f.placeholder"
                 [(ngModel)]="f.menus![0]!.value"
+                [ngModelOptions]="{ standalone: true }"
                 (ngModelChange)="n.emit($event)"
                 (keyup.enter)="confirm()"
               />
@@ -59,6 +60,7 @@ import type { _STColumn } from './st.types';
             <div class="p-sm st__filter-number">
               <nz-input-number
                 [(ngModel)]="f.menus![0]!.value"
+                [ngModelOptions]="{ standalone: true }"
                 (ngModelChange)="n.emit($event)"
                 [nzMin]="f.number!.min!"
                 [nzMax]="f.number!.max!"
@@ -76,6 +78,7 @@ import type { _STColumn } from './st.types';
                   nzInline
                   [nzMode]="$any(f.date!.mode)"
                   [(ngModel)]="f.menus![0]!.value"
+                  [ngModelOptions]="{ standalone: true }"
                   (ngModelChange)="n.emit($event)"
                   [nzShowNow]="f.date!.showNow"
                   [nzShowToday]="f.date!.showToday"
@@ -87,6 +90,7 @@ import type { _STColumn } from './st.types';
                   nzInline
                   [nzMode]="$any(f.date!.mode)"
                   [(ngModel)]="f.menus![0]!.value"
+                  [ngModelOptions]="{ standalone: true }"
                   (ngModelChange)="n.emit($event)"
                   [nzShowNow]="f.date!.showNow"
                   [nzShowToday]="f.date!.showToday"
@@ -109,11 +113,21 @@ import type { _STColumn } from './st.types';
               @for (filter of f.menus; track $index) {
                 <li nz-menu-item>
                   @if (f.multiple) {
-                    <label nz-checkbox [(ngModel)]="filter.checked" (ngModelChange)="checkboxChange()">
+                    <label
+                      nz-checkbox
+                      [(ngModel)]="filter.checked"
+                      [ngModelOptions]="{ standalone: true }"
+                      (ngModelChange)="checkboxChange()"
+                    >
                       {{ filter.text }}
                     </label>
                   } @else {
-                    <label nz-radio [ngModel]="filter.checked" (ngModelChange)="radioChange(filter)">
+                    <label
+                      nz-radio
+                      [ngModel]="filter.checked"
+                      [ngModelOptions]="{ standalone: true }"
+                      (ngModelChange)="radioChange(filter)"
+                    >
                       {{ filter.text }}
                     </label>
                   }
