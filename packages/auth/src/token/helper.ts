@@ -24,10 +24,10 @@ export function CheckJwt(model: JWTTokenModel, offset: number): boolean {
 }
 
 export function getLoginUrl(o: { options: AlainAuthConfig; url?: string }): string {
-  const doc = inject(DOCUMENT);
   const loginUrl = o.options.login_url as string;
-  const search = doc.location.search ?? '';
-  return search.length === 0 ? loginUrl : `${loginUrl}${loginUrl.includes('?') ? '&' : '?'}${search.slice(1)}`;
+  // location.search 在 hash 模式下为空，查询串只能取自 Router
+  const search = inject(Router).url.split('?')[1] ?? '';
+  return search.length === 0 ? loginUrl : `${loginUrl}${loginUrl.includes('?') ? '&' : '?'}${search}`;
 }
 
 export function toLogin(o?: { options?: AlainAuthConfig; url?: string }): void {

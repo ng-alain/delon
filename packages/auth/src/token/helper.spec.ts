@@ -20,27 +20,36 @@ describe('helper: CheckJwt', () => {
 });
 
 describe('helper: getLoginUrl', () => {
-  function genLoginUrl(login_url: string, search?: string | undefined): string {
-    TestBed.configureTestingModule({
-      providers: [{ provide: DOCUMENT, useValue: { location: { search } } }]
-    });
+  function genLoginUrl(login_url: string, routerUrl = '/'): string {
+    TestBed.configureTestingModule({ providers: [provideRouter([])] });
+    vi.spyOn(TestBed.inject(Router), 'url', 'get').mockReturnValue(routerUrl);
     return TestBed.runInInjectionContext(() => getLoginUrl({ options: { login_url } }));
   }
 
   it('should be return login_url when no search', () => {
-    expect(genLoginUrl('/login', '')).toBe('/login');
+    expect(genLoginUrl('/login')).toBe('/login');
   });
 
-  it('should be carry search with [?]', () => {
-    expect(genLoginUrl('/login', '?a=1&b=2')).toBe('/login?a=1&b=2');
+  it('should be carry search from router url', () => {
+    expect(genLoginUrl('/login', '/list?a=1&b=2')).toBe('/login?a=1&b=2');
+  });
+
+  it('should be keep duplicated search keys', () => {
+    expect(genLoginUrl('/login', '/list?a=1&a=2')).toBe('/login?a=1&a=2');
   });
 
   it('should be carry search with [&] when login_url has query', () => {
-    expect(genLoginUrl('/login?from=app', '?a=1')).toBe('/login?from=app&a=1');
+    expect(genLoginUrl('/login?from=app', '/list?a=1')).toBe('/login?from=app&a=1');
   });
 
-  it('should be tolerate empty location.search', () => {
-    expect(genLoginUrl('/login', undefined)).toBe('/login');
+  it('should be carry search when login_url is external', () => {
+    expect(genLoginUrl('https://ng-alain.com/login', '/list?a=1&b=2')).toBe('https://ng-alain.com/login?a=1&b=2');
+  });
+
+  it('should be carry search with [&] when login_url is external and has query', () => {
+    expect(genLoginUrl('https://ng-alain.com/login?from=app', '/list?a=1')).toBe(
+      'https://ng-alain.com/login?from=app&a=1'
+    );
   });
 });
 
