@@ -23,23 +23,50 @@ export function CheckJwt(model: JWTTokenModel, offset: number): boolean {
   }
 }
 
-export function ToLogin(options: AlainAuthConfig, url?: string): void {
-  const router = inject(Router);
+export function getLoginUrl(o: { options: AlainAuthConfig; url?: string }): string {
+  const loginUrl = o.options.login_url as string;
+  const search = getSearch();
+  return search.length === 0 ? loginUrl : `${loginUrl}${loginUrl.includes('?') ? '&' : '?'}${search}`;
+}
+
+/**
+ * 取当前地址的查询串
+ *
+ * - 优先取 `Router.url`；但启动期（`APP_INITIALIZER` 阶段）Router 尚未初始导航，其 url 为 `/`，需回退到浏览器地址
+ * - hash 模式（`#/list?a=1`）下查询串在 `#` 之后，`location.search` 恒为空
+ */
+function getSearch(): string {
+  const search = inject(Router).url.split('?')[1];
+  if (search != null) return search;
+
+  const { hash, search: locationSearch } = inject(DOCUMENT).location;
+  const idx = (hash ?? '').indexOf('?');
+  return idx === -1 ? (locationSearch ?? '').replace(/^\?/, '') : hash.slice(idx + 1);
+}
+
+/** 取当前浏览器地址中的路由地址（hash 模式取 `#` 之后，否则取 pathname） */
+function getLocationPath(): string {
+  const { hash, pathname } = inject(DOCUMENT).location;
+  return (hash ? hash.slice(1) : (pathname ?? '')).split('?')[0];
+}
+
+export function toLogin(o?: { options?: AlainAuthConfig; url?: string }): void {
   const token = inject(DA_SERVICE_TOKEN) as ITokenService;
+  const config = o?.options ?? token.options;
+  const router = inject(Router);
+  token.referrer!.url = o?.url ?? router.url;
+  if (config.token_invalid_redirect !== true) return;
+
+  const url = getLoginUrl({ options: config, url: o?.url });
+  // 已在登录页时无需跳转
+  if (getLocationPath() === url.split('?')[0]) return;
+
   const doc = inject(DOCUMENT);
-  token.referrer!.url = url ?? router.url;
-  if (options.token_invalid_redirect === true) {
-    setTimeout(() => {
-      const loginUrl = options.login_url as string;
-      // 跳转时携带当前页查询串，便于登录页或登录成功后恢复原始参数
-      const search = doc.location.search ?? '';
-      const target =
-        search.length === 0 ? loginUrl : `${loginUrl}${loginUrl.includes('?') ? '&' : '?'}${search.slice(1)}`;
-      if (/^https?:\/\//.test(loginUrl)) {
-        doc.location.href = target;
-      } else {
-        router.navigateByUrl(target);
-      }
-    });
-  }
+  setTimeout(() => {
+    if (/^https?:\/\//.test(url)) {
+      doc.location.href = url;
+    } else {
+      router.navigateByUrl(url);
+    }
+  });
 }

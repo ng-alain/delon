@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { CanActivateChildFn, CanActivateFn, CanMatchFn } from '@angular/router';
 
-import { CheckSimple, ToLogin } from '../helper';
+import { CheckSimple, toLogin } from '../helper';
 import { DA_SERVICE_TOKEN } from '../interface';
 import { SimpleTokenModel } from './simple.model';
 
@@ -12,7 +12,7 @@ export class AuthSimpleGuardService {
   process(url?: string): boolean {
     const res = CheckSimple(this.srv.get() as SimpleTokenModel);
     if (!res) {
-      ToLogin(this.srv.options, url);
+      toLogin({ url });
     }
     return res;
   }

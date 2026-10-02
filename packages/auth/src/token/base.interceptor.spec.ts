@@ -1,14 +1,15 @@
 import { DOCUMENT } from '@angular/common';
 import { HttpClient, HttpContext, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { HttpTestingController, TestRequest, provideHttpClientTesting } from '@angular/common/http/testing';
-import { Type } from '@angular/core';
+import { Type, inject } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Router, provideRouter } from '@angular/router';
 import { Observable, firstValueFrom } from 'rxjs';
 
-import { AlainAuthConfig, provideAlainConfig } from '@delon/util/config';
+import { AlainAuthConfig, AlainConfigService, provideAlainConfig } from '@delon/util/config';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 
+import { mergeConfig } from '../auth.config';
 import { provideAuth } from '../provide';
 import { ALLOW_ANONYMOUS } from '../token';
 import { AuthReferrer, DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './interface';
@@ -22,10 +23,15 @@ function genModel<T extends ITokenModel>(modelType: new () => T, token: string |
   return model;
 }
 
+function mockRouterUrl(router: Router, url: string): void {
+  vi.spyOn(router, 'url', 'get').mockReturnValue(url);
+}
+
 class MockTokenService implements ITokenService {
   [key: string]: any;
   _data: any;
-  options: any;
+  // 与 `TokenService` 保持一致：拦截器改为从 token 服务读取配置
+  options = mergeConfig(inject(AlainConfigService));
   referrer: AuthReferrer = {};
   refresh!: Observable<ITokenModel>;
   set(data: ITokenModel): boolean {
@@ -53,8 +59,7 @@ describe('auth: base.interceptor', () => {
   let router: Router;
   const MockDoc = {
     location: {
-      href: '',
-      search: ''
+      href: ''
     },
     querySelectorAll(): any {
       return {};
@@ -63,7 +68,6 @@ describe('auth: base.interceptor', () => {
 
   function genModule(options: AlainAuthConfig, tokenData?: ITokenModel, provider: any[] = []): void {
     MockDoc.location.href = '';
-    MockDoc.location.search = '';
     TestBed.configureTestingModule({
       providers: [
         provideRouter([]),
@@ -152,16 +156,25 @@ describe('auth: base.interceptor', () => {
       });
       it('with navigateByUrl should be carry search', async () => {
         genModule({}, genModel(SimpleTokenModel, null));
-        MockDoc.location.search = '?a=1&b=2';
+        mockRouterUrl(router, '/list?a=1&b=2');
         await expect(firstValueFrom(http.get('/test', { responseType: 'text' }))).rejects.toMatchObject({
           status: 401
         });
         await vi.advanceTimersByTimeAsync(20);
         expect(router.navigateByUrl).toHaveBeenCalledWith('/login?a=1&b=2');
       });
+      it('with navigateByUrl should be keep duplicated search keys', async () => {
+        genModule({}, genModel(SimpleTokenModel, null));
+        mockRouterUrl(router, '/list?a=1&a=2');
+        await expect(firstValueFrom(http.get('/test', { responseType: 'text' }))).rejects.toMatchObject({
+          status: 401
+        });
+        await vi.advanceTimersByTimeAsync(20);
+        expect(router.navigateByUrl).toHaveBeenCalledWith('/login?a=1&a=2');
+      });
       it('with navigateByUrl should be append search when login_url has query', async () => {
         genModule({ login_url: '/login?from=app' }, genModel(SimpleTokenModel, null));
-        MockDoc.location.search = '?a=1';
+        mockRouterUrl(router, '/list?a=1');
         await expect(firstValueFrom(http.get('/test', { responseType: 'text' }))).rejects.toMatchObject({
           status: 401
         });
@@ -171,7 +184,7 @@ describe('auth: base.interceptor', () => {
       it('with location should be carry search', async () => {
         const login_url = 'https://ng-alain.com/login';
         genModule({ login_url }, genModel(SimpleTokenModel, null));
-        MockDoc.location.search = '?a=1&b=2';
+        mockRouterUrl(router, '/list?a=1&b=2');
         await expect(firstValueFrom(http.get('/test', { responseType: 'text' }))).rejects.toMatchObject({
           status: 401
         });
@@ -181,7 +194,7 @@ describe('auth: base.interceptor', () => {
       it('with location should be append search when login_url has query', async () => {
         const login_url = 'https://ng-alain.com/login?from=app';
         genModule({ login_url }, genModel(SimpleTokenModel, null));
-        MockDoc.location.search = '?a=1';
+        mockRouterUrl(router, '/list?a=1');
         await expect(firstValueFrom(http.get('/test', { responseType: 'text' }))).rejects.toMatchObject({
           status: 401
         });

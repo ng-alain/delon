@@ -1,9 +1,6 @@
 import { HttpInterceptorFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
 
-import { AlainConfigService } from '@delon/util/config';
-
-import { mergeConfig } from '../../auth.config';
 import { isAnonymous, throwErr } from '../base.interceptor';
 import { CheckJwt } from '../helper';
 import { DA_SERVICE_TOKEN } from '../interface';
@@ -18,11 +15,12 @@ function newReq(req: HttpRequest<unknown>, model: JWTTokenModel): HttpRequest<un
 }
 
 export const authJWTInterceptor: HttpInterceptorFn = (req, next) => {
-  const options = mergeConfig(inject(AlainConfigService));
+  const src = inject(DA_SERVICE_TOKEN);
+  const options = src.options;
 
   if (isAnonymous(req, options)) return next(req);
 
-  const model = inject(DA_SERVICE_TOKEN).get<JWTTokenModel>(JWTTokenModel);
+  const model = src.get<JWTTokenModel>(JWTTokenModel);
   if (CheckJwt(model, options.token_exp_offset!)) return next(newReq(req, model));
 
   return throwErr(req, options);
