@@ -20,8 +20,15 @@ describe('helper: CheckJwt', () => {
 });
 
 describe('helper: getLoginUrl', () => {
-  function genLoginUrl(login_url: string, routerUrl = '/'): string {
-    TestBed.configureTestingModule({ providers: [provideRouter([])] });
+  // mock 浏览器地址，避免测试运行器自身的 location.search/hash 污染结果
+  function genLoginUrl(
+    login_url: string,
+    routerUrl = '/',
+    location: NzSafeAny = { href: '', search: '', hash: '', pathname: '/' }
+  ): string {
+    TestBed.configureTestingModule({
+      providers: [provideRouter([]), { provide: DOCUMENT, useValue: { location } }]
+    });
     vi.spyOn(TestBed.inject(Router), 'url', 'get').mockReturnValue(routerUrl);
     return TestBed.runInInjectionContext(() => getLoginUrl({ options: { login_url } }));
   }
@@ -32,6 +39,14 @@ describe('helper: getLoginUrl', () => {
 
   it('should be carry search from router url', () => {
     expect(genLoginUrl('/login', '/list?a=1&b=2')).toBe('/login?a=1&b=2');
+  });
+
+  it('should be carry search from location.hash when router url has no search', () => {
+    expect(genLoginUrl('/login', '/', { hash: '#/passport/login?_name=a&_pwd=b' })).toBe('/login?_name=a&_pwd=b');
+  });
+
+  it('should be carry search from location.search when router url has no search', () => {
+    expect(genLoginUrl('/login', '/', { hash: '', search: '?a=1' })).toBe('/login?a=1');
   });
 
   it('should be keep duplicated search keys', () => {
@@ -59,13 +74,17 @@ describe('helper: toLogin', () => {
   const MockDoc = {
     location: {
       href: '',
-      search: ''
+      search: '',
+      hash: '',
+      pathname: '/'
     }
   };
 
   function genModule(options: AlainAuthConfig): void {
     MockDoc.location.href = '';
     MockDoc.location.search = '';
+    MockDoc.location.hash = '';
+    MockDoc.location.pathname = '/';
     TestBed.configureTestingModule({
       providers: [
         provideRouter([]),
@@ -117,5 +136,21 @@ describe('helper: toLogin', () => {
     vi.advanceTimersByTime(10);
     expect(MockDoc.location.href).toBe('https://ng-alain.com/login');
     expect(router.navigateByUrl).not.toHaveBeenCalled();
+  });
+
+  it('should be do nothing when already at login url (hash)', () => {
+    genModule({ login_url: '/passport/login' });
+    MockDoc.location.hash = '#/passport/login?_name=a&_pwd=b';
+    TestBed.runInInjectionContext(() => toLogin());
+    vi.advanceTimersByTime(10);
+    expect(router.navigateByUrl).not.toHaveBeenCalled();
+  });
+
+  it('should be carry search from location.hash', () => {
+    genModule({ login_url: '/passport/login' });
+    MockDoc.location.hash = '#/list?_name=a&_pwd=b';
+    TestBed.runInInjectionContext(() => toLogin());
+    vi.advanceTimersByTime(10);
+    expect(router.navigateByUrl).toHaveBeenCalledWith('/passport/login?_name=a&_pwd=b');
   });
 });
