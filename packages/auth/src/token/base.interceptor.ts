@@ -4,7 +4,7 @@ import { Observable, Observer } from 'rxjs';
 import { AlainAuthConfig } from '@delon/util/config';
 
 import { ALLOW_ANONYMOUS } from '../token';
-import { ToLogin } from './helper';
+import { toLogin } from './helper';
 
 export function isAnonymous(req: HttpRequest<unknown>, options: AlainAuthConfig): boolean {
   if (req.context.get(ALLOW_ANONYMOUS)) return true;
@@ -16,8 +16,8 @@ export function isAnonymous(req: HttpRequest<unknown>, options: AlainAuthConfig)
   return false;
 }
 
-export function throwErr(req: HttpRequest<unknown>, options: AlainAuthConfig): Observable<HttpEvent<unknown>> {
-  ToLogin(options);
+export function throwErr(req: HttpRequest<unknown>, config: AlainAuthConfig): Observable<HttpEvent<unknown>> {
+  toLogin({ options: config });
 
   // Interrupt Http request, so need to generate a new Observable
   return new Observable((observer: Observer<HttpEvent<any>>) => {

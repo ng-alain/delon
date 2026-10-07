@@ -1,16 +1,17 @@
 import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { HttpTestingController, TestRequest, provideHttpClientTesting } from '@angular/common/http/testing';
-import { Type } from '@angular/core';
+import { Type, inject } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { DefaultUrlSerializer, Router, provideRouter } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { AlainAuthConfig, provideAlainConfig } from '@delon/util/config';
+import { AlainAuthConfig, AlainConfigService, provideAlainConfig } from '@delon/util/config';
 
-import { provideAuth } from '../../provide';
-import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from '../interface';
 import { authSimpleInterceptor } from './simple.interceptor';
 import { SimpleTokenModel } from './simple.model';
+import { mergeConfig } from '../../auth.config';
+import { provideAuth } from '../../provide';
+import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from '../interface';
 
 function genModel(token: string = `123`): SimpleTokenModel {
   const model = new SimpleTokenModel();
@@ -22,7 +23,8 @@ function genModel(token: string = `123`): SimpleTokenModel {
 class MockTokenService implements ITokenService {
   [key: string]: any;
   _data: any;
-  options: any;
+  // 与 `TokenService` 保持一致：拦截器改为从 token 服务读取配置
+  options = mergeConfig(inject(AlainConfigService));
   refresh!: Observable<ITokenModel>;
   set(data: ITokenModel): boolean {
     this._data = data;
