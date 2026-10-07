@@ -19,6 +19,31 @@ type: Tools
 
 用于校验 `<ng-content />` 是否为空，自定义组件时蛮有用。
 
+## colorScheme
+
+获取系统颜色方案（`light` / `dark`），并跟随 `prefers-color-scheme` 实时更新。
+
+```ts
+import { Component } from '@angular/core';
+import { colorScheme } from '@delon/util';
+
+@Component({
+  selector: 'app-root',
+  template: `{{ scheme() }}`
+})
+export class AppComponent {
+  readonly scheme = colorScheme();
+}
+```
+
+| 参数 | 类型 | 默认值 | 描述 |
+|-----|----|----|----|
+| `fallback` | `'light' \| 'dark'` | `'light'` | 运行环境不支持 `matchMedia`（如 SSR）时使用的兜底值 |
+
+全局单例，`fallback` 仅在首次调用时生效。
+
+[comment]: <demo(color-scheme)>
+
 ## updateHostClass
 
 更新宿主组件样式 `class`，例如：

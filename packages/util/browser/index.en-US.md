@@ -19,6 +19,31 @@ A set of simple Cookie manipulation classes.
 
 Used to verify `<ng-content />` is empty, useful for custom components.
 
+## colorScheme
+
+Returns the system color scheme (`light` / `dark`) and follows the `prefers-color-scheme` changes.
+
+```ts
+import { Component } from '@angular/core';
+import { colorScheme } from '@delon/util';
+
+@Component({
+  selector: 'app-root',
+  template: `{{ scheme() }}`
+})
+export class AppComponent {
+  readonly scheme = colorScheme();
+}
+```
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `fallback` | `'light' \| 'dark'` | `'light'` | Fallback value when the environment does not support `matchMedia`, e.g. SSR |
+
+It is a global singleton, so `fallback` only takes effect on the first call.
+
+[comment]: <demo(color-scheme)>
+
 ## updateHostClass
 
 Update host component style `class`, for example:
