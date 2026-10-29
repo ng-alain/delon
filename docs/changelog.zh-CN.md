@@ -15,6 +15,19 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+# [22.2.0](https://github.com/ng-alain/delon/compare/22.1.1...22.2.0) (2026-10-29)
+
+### 修复问题
+
+* **abc,theme:** 将内部 `ngModel` 声明为 `standalone`，以避免 NG01354 ([#2075](https://github.com/ng-alain/delon/issues/2075)) ([8f42ef6](https://github.com/ng-alain/delon/commit/8f42ef6145d75b3b8f1958a3bb27a61334464095))
+* **abc:st:** 导出 `STRowSource` ([#2077](https://github.com/ng-alain/delon/issues/2077)) ([082eb27](https://github.com/ng-alain/delon/commit/082eb2730e74f804aa7b009e14aa141d034213a1))
+
+### 新特性
+
+* **auth:** 导出登录辅助函数，并统一认证配置来源 ([#2074](https://github.com/ng-alain/delon/issues/2074)) ([85b2cb0](https://github.com/ng-alain/delon/commit/85b2cb0821afc34b9a2ec0e317f4a118bf9caebb))
+* **util:** 新增 `colorScheme` 信号，用于获取系统配色方案 ([#2076](https://github.com/ng-alain/delon/issues/2076)) ([cce431b](https://github.com/ng-alain/delon/commit/cce431b6c106ba83aee64357300112980f0b1948))
+
+
 ## [22.1.1](https://github.com/ng-alain/delon/compare/22.0.0...22.1.1) (2026-09-26)
 
 ### Bug Fixes
