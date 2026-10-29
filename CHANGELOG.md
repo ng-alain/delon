@@ -1,3 +1,15 @@
+# [22.2.0](https://github.com/ng-alain/delon/compare/22.1.1...22.2.0) (2026-10-29)
+
+### Bug Fixes
+
+* **abc,theme:** declare internal ngModel as standalone to avoid NG01354 ([#2075](https://github.com/ng-alain/delon/issues/2075)) ([8f42ef6](https://github.com/ng-alain/delon/commit/8f42ef6145d75b3b8f1958a3bb27a61334464095))
+* **abc:st:** export STRowSource ([#2077](https://github.com/ng-alain/delon/issues/2077)) ([082eb27](https://github.com/ng-alain/delon/commit/082eb2730e74f804aa7b009e14aa141d034213a1))
+
+### Features
+
+* **auth:** export login helpers and unify auth config source ([#2074](https://github.com/ng-alain/delon/issues/2074)) ([85b2cb0](https://github.com/ng-alain/delon/commit/85b2cb0821afc34b9a2ec0e317f4a118bf9caebb))
+* **util:** add colorScheme signal for system color scheme ([#2076](https://github.com/ng-alain/delon/issues/2076)) ([cce431b](https://github.com/ng-alain/delon/commit/cce431b6c106ba83aee64357300112980f0b1948))
+
 ## [22.1.1](https://github.com/ng-alain/delon/compare/22.0.0...22.1.1) (2026-09-26)
 
 ### Bug Fixes
