@@ -6,7 +6,7 @@ export * from './st-export';
 export * from './st-widget';
 export * from './st-widget-host.directive';
 export { STComponent } from './st.component';
-export { STRowDirective } from './st-row.directive';
+export { STRowDirective, STRowSource } from './st-row.directive';
 export * from './st.config';
 export { STModule } from './st.module';
 export * from './provide';
