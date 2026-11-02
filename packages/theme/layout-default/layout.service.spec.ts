@@ -1,10 +1,44 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
+import { Provider } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { AlainThemeModule, SettingsService } from '@delon/theme';
 
 import { LayoutDefaultService } from './layout.service';
+
+/**
+ * Desktop breakpoint observer: `isMatched` is `false`, so `checkMedia()` never calls `setLayout()`
+ */
+function desktopBreakpointObserver(): Provider {
+  return {
+    provide: BreakpointObserver,
+    useFactory: () => ({
+      observe: vi
+        .fn()
+        .mockName('BreakpointObserver.observe')
+        .mockReturnValue(of({ matches: false, breakpoints: {} })),
+      isMatched: vi.fn().mockName('BreakpointObserver.isMatched').mockReturnValue(false)
+    })
+  };
+}
+
+/**
+ * Rebuild the testing module with a persisted `layout` in localStorage, then create the service
+ *
+ * 注：模拟刷新页面 —— 布局状态来自 localStorage，应用自身不调用 `setLayout()`
+ */
+function createServiceWithLayout(layout: Record<string, unknown>): LayoutDefaultService {
+  localStorage.setItem('layout', JSON.stringify(layout));
+  TestBed.resetTestingModule();
+  TestBed.configureTestingModule({
+    imports: [AlainThemeModule],
+    providers: [desktopBreakpointObserver()]
+  });
+  // `SettingsService` must be created first, it reads the persisted layout from localStorage
+  TestBed.inject(SettingsService);
+  return TestBed.inject(LayoutDefaultService);
+}
 
 describe('theme: #LayoutDefaultService', () => {
   let srv: LayoutDefaultService;
@@ -104,5 +138,17 @@ describe('theme: #LayoutDefaultService', () => {
     settings.setLayout('collapsed', false);
     TestBed.inject(LayoutDefaultService);
     expect(settings.layout.collapsed).toBe(true);
+  });
+
+  it('should initialize collapsed icon on desktop without any layout notification #2644', () => {
+    // 桌面端刷新页面：`checkMedia()` 不会调用 `setLayout()`，应用自身也没有调用，
+    // 因此不会有任何 `layout` 通知，图标名必须在构造时按当前状态初始化
+    expect(createServiceWithLayout({ collapsed: true }).collapsedIcon()).toBe('menu-unfold');
+    expect(createServiceWithLayout({ collapsed: false }).collapsedIcon()).toBe('menu-fold');
+  });
+
+  it('should initialize collapsed icon in RTL without any layout notification #2644', () => {
+    expect(createServiceWithLayout({ collapsed: true, direction: 'rtl' }).collapsedIcon()).toBe('menu-fold');
+    expect(createServiceWithLayout({ collapsed: false, direction: 'rtl' }).collapsedIcon()).toBe('menu-unfold');
   });
 });

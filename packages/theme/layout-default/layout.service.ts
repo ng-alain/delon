@@ -1,7 +1,7 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Injectable, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { filter, map } from 'rxjs';
+import { filter } from 'rxjs';
 
 import { SettingsService } from '@delon/theme';
 
@@ -32,19 +32,30 @@ export class LayoutDefaultService {
       .subscribe(state => this.checkMedia(state.matches));
     this.checkMedia(this.bm.isMatched(mobileMedia));
 
-    const settings = this.settings;
-    settings.notify
+    this.settings.notify
       .pipe(
         filter(w => w.type === 'layout'),
-        map(() => {
-          const collapsed = settings.layout.collapsed;
-          const ret =
-            settings.layout.direction === 'rtl' ? (collapsed ? 'fold' : 'unfold') : collapsed ? 'unfold' : 'fold';
-          return ret;
-        }),
         takeUntilDestroyed()
       )
-      .subscribe(type => this.collapsedIcon.set(`menu-${type}`));
+      .subscribe(() => this.collapsedIcon.set(this.getCollapsedIcon()));
+
+    // The first value must not depend on a `layout` notification: `checkMedia()` only calls
+    // `setLayout()` on mobile, and an app may never call `setLayout()` itself. Without this,
+    // `collapsedIcon` stays empty and the header collapse trigger renders as a blank block
+    // until the user toggles it once.
+    this.collapsedIcon.set(this.getCollapsedIcon());
+  }
+
+  /**
+   * Get the icon name of the header collapse trigger based on the current layout state
+   *
+   * 根据当前布局状态计算出头部折叠按钮的图标名
+   */
+  private getCollapsedIcon(): string {
+    const { collapsed, direction } = this.settings.layout;
+    // in RTL the collapsed/expanded icons are swapped
+    const icon = direction === 'rtl' ? (collapsed ? 'fold' : 'unfold') : collapsed ? 'unfold' : 'fold';
+    return `menu-${icon}`;
   }
 
   private checkMedia(value: boolean): void {
